@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Googlebot specific directives
+User-agent: Googlebot
+Allow: /
+
+# Disallow unnecessary files
+Disallow: /css/
+Disallow: /js/
+Disallow: /images/
+
+# Sitemap location
+Sitemap: https://example.com/sitemap.xml
+
+# Crawl-delay directive
+Crawl-delay: 1
