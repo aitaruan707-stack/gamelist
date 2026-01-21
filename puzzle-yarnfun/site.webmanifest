@@ -1,0 +1,91 @@
+{
+  "name": "Puzzle: Yarn Fun - Best Offline Match-3 Cat Game",
+  "short_name": "Puzzle Yarn Fun",
+  "description": "A top trending match-3 puzzle game combining cozy yarn vibes with adorable cats for ultimate stress-relief. Play 1000+ levels offline for free on Google Play!",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF6B6B",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["games", "puzzle", "casual", "entertainment"],
+  "icons": [
+    {
+      "src": "images/PuzzleYarnFun.webp",
+      "sizes": "72x72",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/PuzzleYarnFun.webp",
+      "sizes": "96x96",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/PuzzleYarnFun.webp",
+      "sizes": "128x128",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/PuzzleYarnFun.webp",
+      "sizes": "144x144",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/PuzzleYarnFun.webp",
+      "sizes": "152x152",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/PuzzleYarnFun.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/PuzzleYarnFun.webp",
+      "sizes": "384x384",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/PuzzleYarnFun.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Play Puzzle Yarn Fun",
+      "short_name": "Play Game",
+      "description": "Start playing Puzzle: Yarn Fun - Best Offline Match-3 Cat Game",
+      "url": "/?source=pwa&action=play",
+      "icons": [{ "src": "images/PuzzleYarnFun.webp", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "images/game/PuzzleYarnFun.webp",
+      "sizes": "1280x720",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "Game Screenshot - Puzzle: Yarn Fun Main Screen"
+    }
+  ],
+  "prefer_related_applications": true,
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=cc.staemcommunity.puzzleyarnfun",
+      "id": "cc.staemcommunity.puzzleyarnfun"
+    }
+  ],
+  "iarc_rating_id": "e84d2c5d-71a4-4788-9329-536c4a195387"
+}
