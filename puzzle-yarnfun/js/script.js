@@ -173,10 +173,10 @@ function initPlayerNotifications() {
         notification.style.cssText = `
             background: linear-gradient(135deg, rgba(0, 0, 235, 0.8) 0%, rgba(117, 107, 255, 0.95) 100%);
             color: #fff;
-            padding:15px;
+            padding:10px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
            
             animation: slideInLeft 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), scaleIn 0.3s ease-out 0.2s both, fadeOut 0.6s ease-in 8.5s forwards;
             touch-action: manipulation;
@@ -520,9 +520,10 @@ function initBulletComments() {
         const randomSize = Math.random() * 0.6 + 0.7; // 0.7 to 1.3 (increased variation)
         const randomDuration = Math.random() * 10 + 8; // 8 to 18 seconds (slower speed for longer visibility)
         
-        // Start position within visible area (20% to 80% of container height)
-        const startY = containerHeight * (0.2 + Math.random() * 0.6);
+        // Start position at middle of container height (50% ± 5% random variation)
+        const startY = containerHeight * (0.5 + (Math.random() - 0.5) * 0.1);
         bullet.style.top = `${startY}px`;
+     
         
         bullet.style.left = `${randomLeft}px`;
         bullet.style.transform = `scale(${randomSize})`;
@@ -779,27 +780,29 @@ function generateGameComments() {
     }
     
     
-// Generate random ratings (2-5 stars, with 2 stars limited to 5%)
+// Generate random ratings (2-5 stars, with 2 stars and 3 stars limited to 1 each within 50 comments)
     let twoStarCount = 0;
-    const totalComments = games.length - 3; // Excluding first 3 games
-    const maxTwoStarComments = Math.ceil(totalComments * 0.05); // 5% of total comments
+    let threeStarCount = 0;
+    const maxTwoStarComments = 1; // Only 1 two-star comment allowed
+    const maxThreeStarComments = 1; // Only 1 three-star comment allowed
     
     function getRandomRating() {
-        // If we've already reached the max 2-star comments, generate 3-5 stars
-        if (twoStarCount >= maxTwoStarComments) {
-            const rating = Math.floor(Math.random() * 3) + 3; // 3-5 stars
-            return "⭐".repeat(rating);
-        }
-        
         // Generate a weighted random number
         const random = Math.random();
         
-        // 5% chance for 2 stars, 95% chance for 3-5 stars
-        if (random < 0.05) {
+        // Check if we can still generate 2-star comments
+        if (random < 0.05 && twoStarCount < maxTwoStarComments) {
             twoStarCount++;
             return "⭐⭐";
-        } else {
-            const rating = Math.floor(Math.random() * 3) + 3; // 3-5 stars
+        }
+        // Check if we can still generate 3-star comments
+        else if (random < 0.10 && threeStarCount < maxThreeStarComments) {
+            threeStarCount++;
+            return "⭐⭐⭐";
+        }
+        // Otherwise generate 4 or 5 stars
+        else {
+            const rating = Math.floor(Math.random() * 2) + 4; // 4-5 stars
             return "⭐".repeat(rating);
         }
     }

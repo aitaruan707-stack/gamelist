@@ -5,64 +5,64 @@
     
     <!-- Homepage -->
     <url>
-        <loc>https://example.com/puzzle-yarn-fun</loc>
-        <lastmod>2024-01-25</lastmod>
+        <loc>https://puzzle-yarnfun.tapzens.com/</loc>
+        <lastmod>2024-03-13</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     
     <!-- Game Introduction Section -->
     <url>
-        <loc>https://example.com/puzzle-yarn-fun#about-game</loc>
-        <lastmod>2024-01-25</lastmod>
+        <loc>https://puzzle-yarnfun.tapzens.com/#about-game</loc>
+        <lastmod>2024-03-13</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <!-- Game Categories Section -->
     <url>
-        <loc>https://example.com/puzzle-yarn-fun#game-categories</loc>
-        <lastmod>2024-01-25</lastmod>
+        <loc>https://puzzle-yarnfun.tapzens.com/#game-categories</loc>
+        <lastmod>2024-03-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <!-- Game Tags Section -->
     <url>
-        <loc>https://example.com/puzzle-yarn-fun#game-tags</loc>
-        <lastmod>2024-01-25</lastmod>
+        <loc>https://puzzle-yarnfun.tapzens.com/#game-tags</loc>
+        <lastmod>2024-03-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     
     <!-- Other Games Section -->
     <url>
-        <loc>https://example.com/puzzle-yarn-fun#other-games</loc>
-        <lastmod>2024-01-25</lastmod>
+        <loc>https://puzzle-yarnfun.tapzens.com/#other-games</loc>
+        <lastmod>2024-03-13</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
     </url>
     
     <!-- Download Information Section -->
     <url>
-        <loc>https://example.com/puzzle-yarn-fun#download-info</loc>
-        <lastmod>2024-01-25</lastmod>
+        <loc>https://puzzle-yarnfun.tapzens.com/#download-info</loc>
+        <lastmod>2024-03-13</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.7</priority>
     </url>
     
     <!-- Comments Section -->
     <url>
-        <loc>https://example.com/puzzle-yarn-fun#comments</loc>
-        <lastmod>2024-01-25</lastmod>
+        <loc>https://puzzle-yarnfun.tapzens.com/#comments</loc>
+        <lastmod>2024-03-13</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.6</priority>
     </url>
     
     <!-- Recommended Games Section -->
     <url>
-        <loc>https://example.com/puzzle-yarn-fun#recommended-games</loc>
-        <lastmod>2024-01-25</lastmod>
+        <loc>https://puzzle-yarnfun.tapzens.com/#recommended-games</loc>
+        <lastmod>2024-03-13</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -70,7 +70,7 @@
     <!-- Google Play Download Link -->
     <url>
         <loc>https://play.google.com/store/apps/details?id=cc.staemcommunity.puzzleyarnfun</loc>
-        <lastmod>2024-01-25</lastmod>
+        <lastmod>2024-03-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>

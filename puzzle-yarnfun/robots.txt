@@ -4,14 +4,16 @@ Allow: /
 # Googlebot specific directives
 User-agent: Googlebot
 Allow: /
+Allow: /css/
+Allow: /js/
+Allow: /images/
 
 # Disallow unnecessary files
-Disallow: /css/
-Disallow: /js/
-Disallow: /images/
+Disallow: /css/*.less
+Disallow: /js/*.map
 
 # Sitemap location
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://puzzle-yarnfun.tapzens.com/sitemap.xml
 
 # Crawl-delay directive
 Crawl-delay: 1
