@@ -14,6 +14,7 @@
     <meta name="copyright" content="© 2024 Puzzle Yarn Fun">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="X-Robots-Tag" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
     <meta name="theme-color" content="#FF6B6B">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -491,7 +492,7 @@
     </main>
 
     <!-- Download Button -->
-    <div class="download-button-container" onclick="window.open('https://play.google.com/store/apps/details?id=cc.staemcommunity.puzzleyarnfun', '_blank');">   
+    <div class="download-button-container" onclick="window.open('https://play.google.com/store/apps/details?id=cc.staemcommunity.puzzleyarnfun', '_blank');" title="Download Puzzle: Yarn Fun from Google Play Store">   
         <div class="dowleft">
             <img src="./images/game/puzzleyarnfun.webp" alt="Puzzle Yarn Fun Game Icon" class="download-icon" loading="lazy" width="40" height="40">
             <div class="game-info">
@@ -500,7 +501,7 @@
             </div>
         </div>
         <div class="dowright">
-            <a href="https://play.google.com/store/apps/details?id=cc.staemcommunity.puzzleyarnfun" target="_blank" rel="noopener noreferrer" class="download-button" id="download-btn">
+            <a href="https://play.google.com/store/apps/details?id=cc.staemcommunity.puzzleyarnfun" target="_blank" rel="noopener noreferrer" class="download-button" id="download-btn" title="Download Puzzle: Yarn Fun from Google Play Store">
                 <span aria-hidden="true" class="kOqhQdbox">
                     <svg class="kOqhQd" aria-hidden="true" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0,0h40v40H0V0z"></path><g><path d="M19.7,19.2L4.3,35.3c0,0,0,0,0,0c0.5,1.7,2.1,3,4,3c0.8,0,1.5-0.2,2.1-0.6l0,0l17.4-9.9L19.7,19.2z" fill="#EA4335"></path><path d="M35.3,16.4L35.3,16.4l-7.5-4.3l-8.4,7.4l8.5,8.3l7.5-4.2c1.3-0.7,2.2-2.1,2.2-3.6C37.5,18.5,36.6,17.1,35.3,16.4z" fill="#FBBC04"></path><path d="M4.3,4.7C4.2,5,4.2,5.4,4.2,5.8v28.5c0,0.4,0,0.7,0.1,1.1l16-15.7L4.3,4.7z" fill="#4285F4"></path><path d="M19.8,20l8-7.9L10.5,2.3C9.9,1.9,9.1,1.7,8.3,1.7c-1.9,0-3.6,1.3-4,3c0,0,0,0,0,0L19.8,20z" fill="#34A853"></path></g></svg>
                     Download</span>
@@ -508,10 +509,40 @@
         </div>
     </div>
 
-    <!-- Wave Elements -->
+  
+    
+    <!-- Contact Us Section -->
+    <div class="contact-section" style="text-align: center; padding: 40px 20px; ">
+        <h3 style="margin-bottom: 20px; color: #ffffff; font-size: 24px; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);">Contact Us</h3>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+            <p style="margin: 0; color: #cccccc; font-size: 16px;">Email: <span style="color: #ffffff;">aitaruan707@gmail.com</span></p>
+            <button onclick="copyEmail()" style="background-color: #513ff854; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);">
+                Copy Email
+            </button>
+        </div>
+        <p id="copy-message" style="display: none; color: #4CAF50; font-size: 14px; margin-top: 15px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);">Email copied to clipboard!</p>
+    </div>
+    
+    <script>
+        function copyEmail() {
+            const email = "aitaruan707@gmail.com";
+            navigator.clipboard.writeText(email).then(function() {
+                const message = document.getElementById('copy-message');
+                message.style.display = 'block';
+                setTimeout(function() {
+                    message.style.display = 'none';
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Failed to copy email: ', err);
+            });
+        }
+    </script>
+
+  <!-- Wave Elements -->
     <div class="wave"></div>
     <div class="wave"></div>
     <div class="wave"></div>
+
     
     <!-- Scripts -->
     <script src="js/script.js"></script>
