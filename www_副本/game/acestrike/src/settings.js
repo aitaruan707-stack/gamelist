@@ -1,1 +1,0 @@
-window._CCSettings={platform:"web-mobile",groupList:["default","virus","plane","bullet"],collisionMatrix:[[false],[false,false,true,true],[false,true,false],[false,true,false,false]],hasResourcesBundle:true,hasStartSceneBundle:false,remoteBundles:[],subpackages:[],launchScene:"db://assets/scene/GameView.fire",orientation:"",jsList:["assets/scripts/common/globals.js"]};

@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-Allow: /g/
-Allow: /c/
-Disallow: /play.html
-Disallow: /game/
-
-Sitemap: https://tapzens.com/sitemap.xml
