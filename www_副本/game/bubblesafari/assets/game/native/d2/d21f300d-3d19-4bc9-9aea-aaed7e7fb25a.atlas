@@ -1,0 +1,97 @@
+
+star_box2.png
+size: 1181,218
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bx_1
+  rotate: false
+  xy: 934, 10
+  size: 154, 104
+  orig: 154, 104
+  offset: 0, 0
+  index: -1
+bx_1_2
+  rotate: false
+  xy: 934, 116
+  size: 159, 101
+  orig: 159, 101
+  offset: 0, 0
+  index: -1
+bx_1_3
+  rotate: false
+  xy: 622, 1
+  size: 154, 104
+  orig: 154, 104
+  offset: 0, 0
+  index: -1
+bx_2
+  rotate: false
+  xy: 622, 107
+  size: 160, 110
+  orig: 160, 110
+  offset: 0, 0
+  index: -1
+bx_2_2
+  rotate: false
+  xy: 784, 16
+  size: 148, 94
+  orig: 148, 94
+  offset: 0, 0
+  index: -1
+bx_3
+  rotate: false
+  xy: 784, 112
+  size: 148, 105
+  orig: 148, 105
+  offset: 0, 0
+  index: -1
+bx_gx01
+  rotate: false
+  xy: 457, 21
+  size: 36, 36
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+bx_gx02
+  rotate: true
+  xy: 410, 13
+  size: 44, 45
+  orig: 44, 45
+  offset: 0, 0
+  index: -1
+bx_gx03
+  rotate: false
+  xy: 1090, 21
+  size: 69, 69
+  orig: 69, 69
+  offset: 0, 0
+  index: -1
+bx_liwu
+  rotate: true
+  xy: 1095, 92
+  size: 125, 85
+  orig: 125, 85
+  offset: 0, 0
+  index: -1
+bx_yy
+  rotate: false
+  xy: 410, 59
+  size: 210, 158
+  orig: 210, 158
+  offset: 0, 0
+  index: -1
+xing
+  rotate: false
+  xy: 226, 41
+  size: 182, 176
+  orig: 182, 176
+  offset: 0, 0
+  index: -1
+xingbian
+  rotate: false
+  xy: 1, 1
+  size: 223, 216
+  orig: 223, 216
+  offset: 0, 0
+  index: -1

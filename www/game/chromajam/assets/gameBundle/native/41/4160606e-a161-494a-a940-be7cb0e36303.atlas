@@ -1,0 +1,55 @@
+
+hardlevel_zhong.png
+size: 1797,458
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+di1
+  rotate: false
+  xy: 858, 154
+  size: 842, 302
+  orig: 842, 302
+  offset: 0, 0
+  index: -1
+jianbian1
+  rotate: false
+  xy: 887, 2
+  size: 750, 150
+  orig: 750, 150
+  offset: 0, 0
+  index: -1
+logo1
+  rotate: false
+  xy: 1639, 21
+  size: 97, 99
+  orig: 97, 99
+  offset: 0, 0
+  index: -1
+shangxian1
+  rotate: false
+  xy: 2, 28
+  size: 883, 112
+  orig: 883, 112
+  offset: 0, 0
+  index: -1
+xiaxian1
+  rotate: false
+  xy: 2, 28
+  size: 883, 112
+  orig: 883, 112
+  offset: 0, 0
+  index: -1
+shuiyin1
+  rotate: false
+  xy: 2, 142
+  size: 854, 314
+  orig: 854, 314
+  offset: 0, 0
+  index: -1
+zi1
+  rotate: true
+  xy: 1702, 122
+  size: 334, 93
+  orig: 334, 93
+  offset: 0, 0
+  index: -1

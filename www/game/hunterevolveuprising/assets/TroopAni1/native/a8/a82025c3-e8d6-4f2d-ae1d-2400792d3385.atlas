@@ -1,0 +1,146 @@
+
+hero_18.png
+size: 340,498
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guang
+  rotate: false
+  xy: 252, 61
+  size: 72, 72
+  orig: 81, 81
+  offset: 4, 5
+  index: -1
+shadow
+  rotate: true
+  xy: 305, 390
+  size: 106, 33
+  orig: 110, 35
+  offset: 2, 1
+  index: -1
+t15_atk_yan
+  rotate: false
+  xy: 252, 135
+  size: 84, 44
+  orig: 88, 49
+  offset: 2, 3
+  index: -1
+t18_atk1_tx1
+  rotate: true
+  xy: 303, 343
+  size: 45, 35
+  orig: 200, 200
+  offset: 13, 85
+  index: -1
+t18_atk1_tx2
+  rotate: true
+  xy: 198, 41
+  size: 60, 51
+  orig: 200, 200
+  offset: 14, 76
+  index: -1
+t18_atk1_tx3
+  rotate: true
+  xy: 268, 181
+  size: 79, 69
+  orig: 200, 200
+  offset: 16, 67
+  index: -1
+t18_atk1_tx4
+  rotate: false
+  xy: 157, 103
+  size: 93, 76
+  orig: 200, 200
+  offset: 17, 60
+  index: -1
+t18_atk1_tx5
+  rotate: false
+  xy: 195, 421
+  size: 108, 75
+  orig: 200, 200
+  offset: 18, 65
+  index: -1
+t18_atk1_tx6
+  rotate: false
+  xy: 160, 181
+  size: 106, 79
+  orig: 200, 200
+  offset: 36, 65
+  index: -1
+t18_atk_tx0
+  rotate: true
+  xy: 101, 3
+  size: 97, 95
+  orig: 111, 110
+  offset: 7, 8
+  index: -1
+t18_atk_tx1
+  rotate: false
+  xy: 2, 2
+  size: 97, 98
+  orig: 111, 110
+  offset: 7, 6
+  index: -1
+t18_atk_tx2
+  rotate: true
+  xy: 195, 314
+  size: 105, 106
+  orig: 111, 110
+  offset: 3, 2
+  index: -1
+t18_atk_tx3
+  rotate: true
+  xy: 2, 102
+  size: 99, 100
+  orig: 111, 110
+  offset: 6, 5
+  index: -1
+t18_st
+  rotate: false
+  xy: 104, 111
+  size: 51, 90
+  orig: 51, 90
+  offset: 0, 0
+  index: -1
+t18_tou
+  rotate: true
+  xy: 303, 314
+  size: 27, 31
+  orig: 29, 33
+  offset: 1, 1
+  index: -1
+t18_yf
+  rotate: true
+  xy: 166, 262
+  size: 50, 158
+  orig: 50, 158
+  offset: 0, 0
+  index: -1
+t18_ys
+  rotate: true
+  xy: 2, 326
+  size: 92, 184
+  orig: 94, 186
+  offset: 1, 1
+  index: -1
+t18_yt
+  rotate: true
+  xy: 2, 203
+  size: 59, 156
+  orig: 59, 156
+  offset: 0, 0
+  index: -1
+t18_zs
+  rotate: true
+  xy: 2, 420
+  size: 76, 191
+  orig: 78, 193
+  offset: 1, 1
+  index: -1
+t18_zt
+  rotate: true
+  xy: 2, 264
+  size: 60, 162
+  orig: 60, 162
+  offset: 0, 0
+  index: -1

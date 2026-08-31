@@ -1,0 +1,13 @@
+
+hc_zjm_jnsx_small.png
+size: 78,78
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jn_guang
+  rotate: false
+  xy: 2, 4
+  size: 74, 72
+  orig: 74, 72
+  offset: 0, 0
+  index: -1

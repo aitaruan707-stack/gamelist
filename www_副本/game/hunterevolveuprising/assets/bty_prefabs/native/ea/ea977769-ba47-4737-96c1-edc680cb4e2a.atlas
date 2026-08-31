@@ -1,0 +1,20 @@
+
+enemy_stun.png
+size: 145,145
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+xy_1
+  rotate: false
+  xy: 78, 98
+  size: 65, 45
+  orig: 71, 50
+  offset: 3, 3
+  index: -1
+xy_2
+  rotate: false
+  xy: 2, 100
+  size: 74, 43
+  orig: 80, 48
+  offset: 3, 3
+  index: -1

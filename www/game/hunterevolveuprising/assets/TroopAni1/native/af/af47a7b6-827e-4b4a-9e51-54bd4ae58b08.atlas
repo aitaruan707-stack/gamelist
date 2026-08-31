@@ -1,0 +1,83 @@
+
+hero_03.png
+size: 172,518
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+rb3_kz
+  rotate: true
+  xy: 2, 341
+  size: 175, 105
+  orig: 175, 105
+  offset: 0, 0
+  index: -1
+rb3_s
+  rotate: true
+  xy: 2, 214
+  size: 125, 120
+  orig: 125, 120
+  offset: 0, 0
+  index: -1
+rb3_t
+  rotate: false
+  xy: 124, 275
+  size: 46, 65
+  orig: 46, 65
+  offset: 0, 0
+  index: -1
+rb3_ys
+  rotate: true
+  xy: 109, 342
+  size: 79, 54
+  orig: 79, 54
+  offset: 0, 0
+  index: -1
+rb3_yt
+  rotate: false
+  xy: 75, 104
+  size: 71, 108
+  orig: 71, 109
+  offset: 0, 0
+  index: -1
+rb3_zj
+  rotate: true
+  xy: 109, 423
+  size: 93, 61
+  orig: 93, 61
+  offset: 0, 0
+  index: -1
+rb3_zj 拷贝
+  rotate: false
+  xy: 124, 215
+  size: 38, 58
+  orig: 38, 58
+  offset: 0, 0
+  index: -1
+rb3_zs
+  rotate: false
+  xy: 2, 2
+  size: 69, 97
+  orig: 69, 97
+  offset: 0, 0
+  index: -1
+rb3_zt
+  rotate: true
+  xy: 73, 12
+  size: 87, 63
+  orig: 87, 63
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 165, 410
+  size: 11, 4
+  orig: 11, 4
+  offset: 0, 0
+  index: -1
+图层 1070
+  rotate: false
+  xy: 2, 101
+  size: 71, 111
+  orig: 71, 111
+  offset: 0, 0
+  index: -1

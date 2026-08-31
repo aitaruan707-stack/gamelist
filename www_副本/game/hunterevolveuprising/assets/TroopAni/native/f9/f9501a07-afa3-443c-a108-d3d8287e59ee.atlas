@@ -1,0 +1,104 @@
+
+hero_17.png
+size: 724,207
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guang
+  rotate: false
+  xy: 445, 8
+  size: 72, 72
+  orig: 81, 81
+  offset: 4, 5
+  index: -1
+shadow
+  rotate: true
+  xy: 673, 50
+  size: 106, 33
+  orig: 112, 37
+  offset: 3, 2
+  index: -1
+tk2_atk_tx1
+  rotate: false
+  xy: 645, 158
+  size: 77, 47
+  orig: 79, 50
+  offset: 1, 1
+  index: -1
+tk2_atk_yan
+  rotate: false
+  xy: 587, 22
+  size: 84, 44
+  orig: 88, 49
+  offset: 2, 3
+  index: -1
+tk2_fei
+  rotate: false
+  xy: 587, 2
+  size: 91, 18
+  orig: 94, 22
+  offset: 1, 2
+  index: -1
+tk2_fei_mohu
+  rotate: false
+  xy: 2, 5
+  size: 198, 200
+  orig: 200, 202
+  offset: 1, 1
+  index: -1
+tk2_st
+  rotate: false
+  xy: 202, 82
+  size: 315, 123
+  orig: 317, 125
+  offset: 1, 1
+  index: -1
+tk2_st1
+  rotate: true
+  xy: 202, 5
+  size: 75, 145
+  orig: 79, 147
+  offset: 3, 1
+  index: -1
+tk2_wq
+  rotate: false
+  xy: 349, 13
+  size: 94, 67
+  orig: 96, 69
+  offset: 1, 1
+  index: -1
+yan1
+  rotate: true
+  xy: 586, 140
+  size: 65, 57
+  orig: 68, 59
+  offset: 2, 1
+  index: -1
+yan2
+  rotate: false
+  xy: 519, 2
+  size: 66, 60
+  orig: 68, 62
+  offset: 1, 1
+  index: -1
+yan3
+  rotate: true
+  xy: 519, 64
+  size: 70, 63
+  orig: 72, 65
+  offset: 1, 1
+  index: -1
+yan4
+  rotate: true
+  xy: 519, 136
+  size: 69, 65
+  orig: 71, 67
+  offset: 1, 1
+  index: -1
+yan5
+  rotate: false
+  xy: 584, 68
+  size: 60, 66
+  orig: 62, 68
+  offset: 1, 1
+  index: -1

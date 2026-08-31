@@ -1,0 +1,48 @@
+
+hero_08_hit.png
+size: 595,101
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+zq2_hit_tx1
+  rotate: true
+  xy: 544, 47
+  size: 52, 49
+  orig: 113, 97
+  offset: 33, 23
+  index: -1
+zq2_hit_tx2
+  rotate: false
+  xy: 442, 13
+  size: 100, 86
+  orig: 113, 97
+  offset: 9, 6
+  index: -1
+zq2_hit_tx3
+  rotate: false
+  xy: 117, 4
+  size: 111, 95
+  orig: 113, 97
+  offset: 1, 1
+  index: -1
+zq2_hit_tx4
+  rotate: false
+  xy: 2, 2
+  size: 113, 97
+  orig: 113, 97
+  offset: 0, 0
+  index: -1
+zq2_hit_tx5
+  rotate: false
+  xy: 230, 4
+  size: 105, 95
+  orig: 113, 97
+  offset: 4, 1
+  index: -1
+zq2_hit_tx6
+  rotate: false
+  xy: 337, 11
+  size: 103, 88
+  orig: 113, 97
+  offset: 5, 5
+  index: -1

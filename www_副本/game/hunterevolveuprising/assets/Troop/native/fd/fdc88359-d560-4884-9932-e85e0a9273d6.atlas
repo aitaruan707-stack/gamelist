@@ -1,0 +1,62 @@
+
+hero_18_hit.png
+size: 807,148
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guang
+  rotate: false
+  xy: 733, 74
+  size: 72, 72
+  orig: 81, 81
+  offset: 4, 5
+  index: -1
+h18_hit_tx1
+  rotate: false
+  xy: 733, 6
+  size: 67, 66
+  orig: 200, 200
+  offset: 69, 64
+  index: -1
+h18_hit_tx2
+  rotate: false
+  xy: 634, 48
+  size: 97, 98
+  orig: 200, 200
+  offset: 57, 47
+  index: -1
+h18_hit_tx3
+  rotate: true
+  xy: 280, 19
+  size: 127, 126
+  orig: 200, 200
+  offset: 38, 36
+  index: -1
+h18_hit_tx4
+  rotate: true
+  xy: 2, 3
+  size: 143, 138
+  orig: 200, 200
+  offset: 31, 32
+  index: -1
+h18_hit_tx5
+  rotate: true
+  xy: 142, 2
+  size: 144, 136
+  orig: 200, 200
+  offset: 30, 34
+  index: -1
+h18_hit_tx6
+  rotate: true
+  xy: 408, 11
+  size: 135, 117
+  orig: 200, 200
+  offset: 31, 46
+  index: -1
+h18_hit_tx7
+  rotate: true
+  xy: 527, 21
+  size: 125, 105
+  orig: 200, 200
+  offset: 33, 50
+  index: -1

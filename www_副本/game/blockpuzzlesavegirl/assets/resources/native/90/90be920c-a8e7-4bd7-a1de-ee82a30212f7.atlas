@@ -1,0 +1,83 @@
+
+baozha.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bz_0
+  rotate: true
+  xy: 516, 212
+  size: 65, 122
+  orig: 65, 122
+  offset: 0, 0
+  index: -1
+bz_1
+  rotate: false
+  xy: 880, 345
+  size: 101, 150
+  orig: 101, 150
+  offset: 0, 0
+  index: -1
+bz_10
+  rotate: true
+  xy: 2, 2
+  size: 21, 239
+  orig: 21, 239
+  offset: 0, 0
+  index: -1
+bz_2
+  rotate: false
+  xy: 363, 57
+  size: 144, 178
+  orig: 144, 178
+  offset: 0, 0
+  index: -1
+bz_3
+  rotate: true
+  xy: 184, 25
+  size: 180, 177
+  orig: 180, 177
+  offset: 0, 0
+  index: -1
+bz_4
+  rotate: false
+  xy: 2, 25
+  size: 180, 180
+  orig: 180, 180
+  offset: 0, 0
+  index: -1
+bz_5
+  rotate: false
+  xy: 516, 315
+  size: 180, 180
+  orig: 180, 180
+  offset: 0, 0
+  index: -1
+bz_6
+  rotate: false
+  xy: 698, 315
+  size: 180, 180
+  orig: 180, 180
+  offset: 0, 0
+  index: -1
+bz_7
+  rotate: false
+  xy: 271, 237
+  size: 243, 258
+  orig: 243, 258
+  offset: 0, 0
+  index: -1
+bz_8
+  rotate: false
+  xy: 2, 207
+  size: 267, 288
+  orig: 267, 288
+  offset: 0, 0
+  index: -1
+bz_9
+  rotate: false
+  xy: 516, 279
+  size: 182, 34
+  orig: 182, 34
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,55 @@
+
+dragon_t.png
+size: 507,282
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+shetou
+  rotate: true
+  xy: 337, 103
+  size: 26, 168
+  orig: 26, 168
+  offset: 0, 0
+  index: -1
+tou
+  rotate: true
+  xy: 2, 2
+  size: 278, 333
+  orig: 278, 333
+  offset: 0, 0
+  index: -1
+xiaba
+  rotate: false
+  xy: 337, 131
+  size: 165, 149
+  orig: 172, 149
+  offset: 7, 0
+  index: -1
+youyan_1
+  rotate: true
+  xy: 337, 5
+  size: 6, 16
+  orig: 13, 20
+  offset: 4, 2
+  index: -1
+youyan_2
+  rotate: false
+  xy: 337, 13
+  size: 36, 33
+  orig: 36, 33
+  offset: 0, 0
+  index: -1
+zuoyan_1
+  rotate: false
+  xy: 392, 82
+  size: 7, 19
+  orig: 11, 23
+  offset: 2, 2
+  index: -1
+zuoyan_2
+  rotate: false
+  xy: 337, 48
+  size: 53, 53
+  orig: 53, 53
+  offset: 0, 0
+  index: -1

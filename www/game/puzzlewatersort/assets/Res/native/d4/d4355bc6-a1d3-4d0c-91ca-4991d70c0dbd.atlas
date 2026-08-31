@@ -1,0 +1,13 @@
+
+jianzao.png
+size: 97,95
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+icon_cz
+  rotate: false
+  xy: 2, 2
+  size: 93, 91
+  orig: 95, 93
+  offset: 1, 1
+  index: -1

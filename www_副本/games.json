@@ -1,0 +1,810 @@
+{
+ "site": {
+  "name": "Tapzens",
+  "domain": "tapzens.com",
+  "tagline": "Play free online games — fast, fun, on any device.",
+  "ga": ""
+ },
+ "categories": [
+  {
+   "slug": "puzzle",
+   "name": "Puzzle",
+   "description": "Brain-teasing match, sort and logic games to keep your mind sharp."
+  },
+  {
+   "slug": "action",
+   "name": "Action",
+   "description": "Fast-paced arcade and combat games for adrenaline lovers."
+  },
+  {
+   "slug": "arcade",
+   "name": "Arcade",
+   "description": "Quick-play retro-style arcade hits you can jump into instantly."
+  }
+ ],
+ "games": [
+  {
+   "slug": "puzzleyarnfun",
+   "title": "Puzzle Yarn Fun",
+   "category": "Puzzle",
+   "tags": [
+    "match-3",
+    "casual",
+    "relaxing",
+    "mobile"
+   ],
+   "description": "Match soft, squishy yarn blocks and clear the board with satisfying pops. A cozy match-3 with adorable cats and hundreds of relaxing levels.",
+   "controls": [
+    "Swipe to swap adjacent yarn blocks.",
+    "Match 3 or more of the same color to clear them.",
+    "Reach the level goal before running out of moves."
+   ],
+   "entry": "index.html",
+   "cover": "puzzleyarnfun.webp",
+   "splash": "splash.png",
+   "orientation": "portrait",
+   "featured": true,
+   "popularWeight": 950,
+   "publishedAt": "2026-08-12",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Puzzle Yarn Fun free?",
+     "a": "Yes, it is completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "slug": "puzzlewatersort",
+   "title": "Puzzle: Water Sort",
+   "category": "Puzzle",
+   "tags": [
+    "sort",
+    "casual",
+    "relaxing",
+    "mobile"
+   ],
+   "description": "Pour and sort colored water between bottles until each holds a single color. A calming liquid-sort puzzle with hundreds of handcrafted levels.",
+   "controls": [
+    "Tap a bottle, then tap another to pour the top color.",
+    "A bottle can only pour onto the same color or an empty bottle.",
+    "Sort every bottle to a single color to win."
+   ],
+   "entry": "game.html",
+   "cover": "watersort.webp",
+   "splash": "splash.png",
+   "orientation": "portrait",
+   "featured": true,
+   "popularWeight": 920,
+   "publishedAt": "2026-08-15",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Water Sort free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "slug": "chromajam",
+   "title": "Chroma Jam",
+   "category": "Puzzle",
+   "tags": [
+    "sort",
+    "match-3",
+    "casual",
+    "mobile"
+   ],
+   "description": "Untangle a vibrant traffic jam of colored blocks by sorting them into lanes. Relaxing color-sort puzzles with clever routing across hundreds of levels.",
+   "controls": [
+    "Tap a block, then tap a lane to move it.",
+    "Fill each lane with a single color.",
+    "Clear the jam to complete the level."
+   ],
+   "entry": "index.html",
+   "cover": "chromajam.webp",
+   "splash": "splash.png",
+   "orientation": "portrait",
+   "featured": true,
+   "popularWeight": 880,
+   "publishedAt": "2026-08-10",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Chroma Jam free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "slug": "hunterevolveuprising",
+   "title": "Hunter: Evolve Uprising",
+   "category": "Action",
+   "tags": [
+    "action",
+    "rpg",
+    "strategy",
+    "mobile"
+   ],
+   "description": "Lead a squad of evolving hunters, gear up, and rise against powerful bosses. Merge and upgrade units in this action-packed strategy adventure.",
+   "controls": [
+    "Tap to deploy and move your squad.",
+    "Merge matching units to evolve them.",
+    "Gear up and defeat the boss to advance."
+   ],
+   "entry": "game.html",
+   "cover": "hunterevolveuprising.webp",
+   "splash": "splash.png",
+   "orientation": "landscape",
+   "featured": true,
+   "popularWeight": 860,
+   "publishedAt": "2026-08-08",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Hunter: Evolve Uprising free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "slug": "acestrike",
+   "title": "Ace Strike",
+   "category": "Action",
+   "tags": [
+    "action",
+    "shooter",
+    "arcade",
+    "mobile"
+   ],
+   "description": "Pilot a fighter jet and dogfight through waves of enemies in this fast-paced arcade shooter. Dodge incoming fire, lock on targets, and survive endless squadrons.",
+   "controls": [
+    "Use the on-screen joystick or arrow keys to maneuver.",
+    "Tap to fire — auto-targeting handles aiming.",
+    "Collect power-ups to upgrade your jet."
+   ],
+   "entry": "game.html",
+   "cover": "acestrike.webp",
+   "splash": "splash.png",
+   "orientation": "landscape",
+   "featured": true,
+   "popularWeight": 840,
+   "publishedAt": "2026-08-05",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Ace Strike free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and landscape screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "slug": "smashblocks",
+   "title": "Smash Blocks",
+   "category": "Arcade",
+   "tags": [
+    "arcade",
+    "block",
+    "casual",
+    "mobile"
+   ],
+   "description": "Aim and smash colorful blocks in this addictive arcade breaker. Bounce, combo, and clear every stage with satisfying chain reactions.",
+   "controls": [
+    "Drag to aim the launcher, release to throw.",
+    "Break all blocks to clear the stage.",
+    "Chain hits for bonus combos."
+   ],
+   "entry": "game.html",
+   "cover": "blockblastpop.webp",
+   "splash": null,
+   "orientation": "portrait",
+   "featured": true,
+   "popularWeight": 800,
+   "publishedAt": "2026-08-02",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Smash Blocks free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "slug": "bubblesafari",
+   "title": "Bubble Safari",
+   "category": "Puzzle",
+   "tags": [
+    "bubble",
+    "match-3",
+    "casual",
+    "mobile"
+   ],
+   "description": "Aim, match, and pop colorful bubbles on a jungle adventure. Clear the board with satisfying chain reactions and climb through hundreds of levels.",
+   "controls": [
+    "Drag to aim, release to shoot.",
+    "Match 3 or more of the same color to pop.",
+    "Drop hanging bubbles for bonus points."
+   ],
+   "entry": "index.html",
+   "cover": "bubblesafari.webp",
+   "splash": "splash.png",
+   "orientation": "portrait",
+   "featured": false,
+   "popularWeight": 780,
+   "publishedAt": "2026-07-28",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Bubble Safari free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "slug": "spinscrewjam",
+   "title": "Spin Screw Jam",
+   "category": "Puzzle",
+   "tags": [
+    "sort",
+    "physics",
+    "casual",
+    "mobile"
+   ],
+   "description": "Unscrew, spin, and sort nuts and bolts to clear mechanical puzzles. A tactile new kind of sort puzzle that tests your planning and patience.",
+   "controls": [
+    "Tap a screw, then tap an empty slot to move it.",
+    "Clear all screws from the board to solve.",
+    "Plan ahead — slots fill up fast."
+   ],
+   "entry": "index.html",
+   "cover": "spinscrewjam.webp",
+   "splash": null,
+   "orientation": "portrait",
+   "featured": false,
+   "popularWeight": 760,
+   "publishedAt": "2026-08-27",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Spin Screw Jam free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "slug": "puzzlehex",
+   "title": "Puzzle Hex",
+   "category": "Puzzle",
+   "tags": [
+    "hex",
+    "tile-match",
+    "relaxing",
+    "mobile"
+   ],
+   "description": "Match hexagonal tiles and clear the board in a relaxing hex puzzle. A fresh hex twist on classic tile-matching with endless satisfying clears.",
+   "controls": [
+    "Tap matching free hex tiles to remove them.",
+    "Clear all tiles to complete the layout.",
+    "Use hints when you are stuck."
+   ],
+   "entry": "game.html",
+   "cover": "puzzlehex.webp",
+   "splash": null,
+   "orientation": "portrait",
+   "featured": false,
+   "popularWeight": 740,
+   "publishedAt": "2026-08-28",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Puzzle Hex free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "slug": "blockpuzzlesavegirl",
+   "title": "Block Puzzle: Save Girl",
+   "category": "Puzzle",
+   "tags": [
+    "block",
+    "logic",
+    "casual",
+    "mobile"
+   ],
+   "description": "Slide blocks and clear the path to rescue the girl. A creative twist on block puzzles where every move shapes the escape route.",
+   "controls": [
+    "Drag blocks to slide them.",
+    "Clear the path to guide the girl to safety.",
+    "Use as few moves as possible for bonus stars."
+   ],
+   "entry": "game.html",
+   "cover": "blockpuzzlesavegirl.webp",
+   "splash": "splash.png",
+   "orientation": "portrait",
+   "featured": false,
+   "popularWeight": 720,
+   "publishedAt": "2026-07-20",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Block Puzzle: Save Girl free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "slug": "royalmatcher",
+   "title": "Royal Matcher",
+   "category": "Puzzle",
+   "tags": [
+    "match-3",
+    "casual",
+    "mobile"
+   ],
+   "description": "Match glittering gems across royal levels. A polished match-3 with powerful boosters, grand objectives, and hundreds of sparkling stages.",
+   "controls": [
+    "Swap adjacent gems to match 3 or more.",
+    "Reach the level goal before moves run out.",
+    "Combine boosters for explosive clears."
+   ],
+   "entry": "index.html",
+   "cover": "royalmatcher.webp",
+   "splash": null,
+   "orientation": "portrait",
+   "featured": false,
+   "popularWeight": 700,
+   "publishedAt": "2026-08-25",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Royal Matcher free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ],
+   "banner": "royalmatcher-banner.webp"
+  },
+  {
+   "slug": "arrowmazesolve",
+   "title": "Arrow Maze Solve",
+   "category": "Puzzle",
+   "tags": [
+    "maze",
+    "logic",
+    "casual",
+    "mobile"
+   ],
+   "description": "Place and rotate arrows to guide a rolling ball through tricky mazes to the goal. Solve clever routing puzzles across hand-crafted levels.",
+   "controls": [
+    "Tap arrows to rotate them.",
+    "Press Play to launch the ball through your route.",
+    "Guide the ball to the goal without falling off."
+   ],
+   "entry": "index.html",
+   "cover": "arrowmazesolve.webp",
+   "splash": "splash.png",
+   "orientation": "landscape",
+   "featured": false,
+   "popularWeight": 660,
+   "publishedAt": "2026-07-15",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Arrow Maze Solve free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and landscape screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ],
+   "banner": "arrowmazesolve-banner.webp"
+  },
+  {
+   "slug": "wizardsort",
+   "title": "Wizard Sort",
+   "category": "Puzzle",
+   "tags": [
+    "sort",
+    "magic",
+    "casual",
+    "mobile"
+   ],
+   "description": "Cast spells and sort magical potions in this enchanting sorting puzzle adventure. Brew, pour, and organize enchanted flasks across mystical levels.",
+   "controls": [
+    "Tap a flask, then tap another to pour.",
+    "Sort each flask to a single color.",
+    "Plan carefully — flasks have limited space."
+   ],
+   "entry": "index.html",
+   "cover": "wizardsort.webp",
+   "splash": "splash.png",
+   "orientation": "portrait",
+   "featured": false,
+   "popularWeight": 640,
+   "publishedAt": "2026-08-24",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Wizard Sort free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ],
+   "banner": "wizardsort-banner.webp"
+  },
+  {
+   "slug": "groceryadventuremaster",
+   "title": "Grocery Adventure: Master",
+   "category": "Puzzle",
+   "tags": [
+    "sort",
+    "organize",
+    "casual",
+    "mobile"
+   ],
+   "description": "Stock, sort and organize grocery shelves in this satisfying puzzle adventure. Tidy every aisle, master clever layouts and unlock lively new stores.",
+   "controls": [
+    "Tap a shelf, then tap another to move groceries.",
+    "Group matching items to clear the shelf.",
+    "Complete goals to unlock new stores."
+   ],
+   "entry": "index.html",
+   "cover": "groceryadventuremaster.webp",
+   "banner": "groceryadventuremaster-banner.webp",
+   "splash": null,
+   "orientation": "portrait",
+   "featured": false,
+   "popularWeight": 620,
+   "publishedAt": "2026-08-29",
+   "developer": "Tapzens",
+   "faq": [
+    {
+     "q": "Is Grocery Adventure: Master free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "entry": "index.html",
+   "splash": null,
+   "orientation": "portrait",
+   "featured": false,
+   "developer": "Tapzens",
+   "publishedAt": "2026-08-29",
+   "slug": "zombiedown",
+   "title": "Zombie Down",
+   "category": "Action",
+   "tags": [
+    "zombie",
+    "shooter",
+    "arcade",
+    "mobile"
+   ],
+   "description": "Mow down waves of zombies in this fast-paced survival shooter. Aim, fire, upgrade your arsenal and rack up the highest score you can.",
+   "controls": [
+    "Drag to aim and release to fire.",
+    "Take down zombies before they reach you.",
+    "Collect coins to unlock powerful upgrades."
+   ],
+   "cover": "zombiedown.webp",
+   "banner": "zombiedown-banner.webp",
+   "popularWeight": 610,
+   "faq": [
+    {
+     "q": "Is Zombie Down free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "entry": "index.html",
+   "splash": null,
+   "orientation": "portrait",
+   "featured": false,
+   "developer": "Tapzens",
+   "publishedAt": "2026-08-29",
+   "slug": "tankera",
+   "title": "Tank Era",
+   "category": "Action",
+   "tags": [
+    "tank",
+    "battle",
+    "military",
+    "mobile"
+   ],
+   "description": "Command battle-hardened tanks and dominate the battlefield. Destroy enemy armor, upgrade your firepower and conquer territory in explosive clashes.",
+   "controls": [
+    "Steer your tank with the on-screen controls.",
+    "Blast enemy tanks and capture the battlefield.",
+    "Upgrade armor and firepower between battles."
+   ],
+   "cover": "tankera.webp",
+   "banner": "tankera-banner.webp",
+   "popularWeight": 600,
+   "faq": [
+    {
+     "q": "Is Tank Era free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "entry": "index.html",
+   "splash": null,
+   "orientation": "portrait",
+   "featured": false,
+   "developer": "Tapzens",
+   "publishedAt": "2026-08-29",
+   "slug": "shiftdashreac",
+   "title": "Shift Dash Reac",
+   "category": "Arcade",
+   "tags": [
+    "reaction",
+    "dash",
+    "speed",
+    "casual",
+    "mobile"
+   ],
+   "description": "Test your reflexes in a lightning-fast reaction game. Shift lanes, dash through gaps and keep your streak alive as the pace keeps rising.",
+   "controls": [
+    "Tap or swipe to shift lanes and dodge obstacles.",
+    "React fast to survive as speed rises.",
+    "Chain perfect dashes for the best score."
+   ],
+   "cover": "shiftdashreac.webp",
+   "banner": "shiftdashreac-banner.webp",
+   "popularWeight": 590,
+   "faq": [
+    {
+     "q": "Is Shift Dash Reac free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  },
+  {
+   "entry": "index.html",
+   "splash": null,
+   "orientation": "portrait",
+   "featured": false,
+   "developer": "Tapzens",
+   "publishedAt": "2026-08-29",
+   "slug": "satisfyingstack",
+   "title": "Satisfying Stack",
+   "category": "Puzzle",
+   "tags": [
+    "stack",
+    "sort",
+    "satisfying",
+    "casual",
+    "mobile"
+   ],
+   "description": "A deeply satisfying sorting puzzle. Stack, swap and clear colorful items to tidy the board — every level ends with that perfect, snappy finish.",
+   "controls": [
+    "Tap a stack, then tap another to move items.",
+    "Group matching items to clear the board.",
+    "Complete goals to unlock new levels."
+   ],
+   "cover": "satisfyingstack.webp",
+   "banner": "satisfyingstack-banner.webp",
+   "popularWeight": 580,
+   "faq": [
+    {
+     "q": "Is Satisfying Stack free?",
+     "a": "Yes, completely free to play in your browser."
+    },
+    {
+     "q": "Does it work on mobile?",
+     "a": "Yes, it is optimized for touch and mobile screens."
+    },
+    {
+     "q": "Do I need to install anything?",
+     "a": "No installation required — just press Play and it loads instantly."
+    },
+    {
+     "q": "Is my progress saved?",
+     "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+
+wudi.png
+size: 301,408
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+wudi
+  rotate: false
+  xy: 2, 2
+  size: 297, 404
+  orig: 297, 404
+  offset: 0, 0
+  index: -1

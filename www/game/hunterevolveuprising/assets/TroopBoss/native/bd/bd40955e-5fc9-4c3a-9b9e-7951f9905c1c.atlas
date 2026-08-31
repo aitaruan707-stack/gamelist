@@ -1,0 +1,328 @@
+
+boss_3.png
+size: 1921,1540
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Smoke_47_00034
+  rotate: false
+  xy: 384, 199
+  size: 34, 11
+  orig: 36, 13
+  offset: 1, 1
+  index: -1
+Smoke_47_00036
+  rotate: false
+  xy: 896, 280
+  size: 121, 36
+  orig: 123, 38
+  offset: 1, 1
+  index: -1
+Smoke_47_00038
+  rotate: false
+  xy: 1741, 934
+  size: 175, 89
+  orig: 177, 91
+  offset: 1, 1
+  index: -1
+Smoke_47_00039
+  rotate: false
+  xy: 1549, 358
+  size: 215, 130
+  orig: 217, 132
+  offset: 1, 1
+  index: -1
+Smoke_47_00042
+  rotate: true
+  xy: 1737, 12
+  size: 259, 156
+  orig: 261, 158
+  offset: 1, 1
+  index: -1
+Smoke_47_00046
+  rotate: true
+  xy: 949, 2
+  size: 276, 168
+  orig: 278, 170
+  offset: 1, 1
+  index: -1
+Smoke_47_00050
+  rotate: true
+  xy: 1553, 710
+  size: 286, 174
+  orig: 288, 176
+  offset: 1, 1
+  index: -1
+Smoke_47_00055
+  rotate: true
+  xy: 1741, 1025
+  size: 295, 177
+  orig: 297, 179
+  offset: 1, 1
+  index: -1
+Smoke_47_00080
+  rotate: true
+  xy: 1552, 998
+  size: 322, 187
+  orig: 324, 189
+  offset: 1, 1
+  index: -1
+Smoke_47_00093
+  rotate: false
+  xy: 927, 324
+  size: 339, 193
+  orig: 341, 195
+  offset: 1, 1
+  index: -1
+Smoke_47_00099
+  rotate: false
+  xy: 1553, 490
+  size: 352, 200
+  orig: 354, 202
+  offset: 1, 1
+  index: -1
+Smoke_47_00106
+  rotate: true
+  xy: 1343, 636
+  size: 359, 208
+  orig: 361, 210
+  offset: 1, 1
+  index: -1
+Smoke_47_00112
+  rotate: false
+  xy: 1553, 1322
+  size: 354, 216
+  orig: 356, 218
+  offset: 1, 1
+  index: -1
+Smoke_47_00120
+  rotate: true
+  xy: 1114, 624
+  size: 371, 227
+  orig: 373, 229
+  offset: 1, 1
+  index: -1
+Smoke_47_00124
+  rotate: false
+  xy: 577, 4
+  size: 370, 232
+  orig: 372, 234
+  offset: 1, 1
+  index: -1
+Smoke_47_00130
+  rotate: true
+  xy: 1518, 23
+  size: 329, 217
+  orig: 331, 219
+  offset: 1, 1
+  index: -1
+Smoke_47_00135
+  rotate: true
+  xy: 1119, 3
+  size: 319, 182
+  orig: 321, 186
+  offset: 1, 2
+  index: -1
+Smoke_47_00136
+  rotate: true
+  xy: 1425, 354
+  size: 280, 122
+  orig: 282, 124
+  offset: 1, 1
+  index: -1
+ad5bb025af34a170b9daf3314af7f72d
+  rotate: false
+  xy: 1303, 9
+  size: 213, 313
+  orig: 267, 426
+  offset: 0, 113
+  index: -1
+shadow
+  rotate: true
+  xy: 1103, 1100
+  size: 438, 134
+  orig: 454, 146
+  offset: 8, 6
+  index: -1
+合成 1_00000
+  rotate: true
+  xy: 822, 245
+  size: 71, 35
+  orig: 73, 37
+  offset: 1, 1
+  index: -1
+合成 1_00001
+  rotate: true
+  xy: 859, 245
+  size: 71, 35
+  orig: 73, 37
+  offset: 1, 1
+  index: -1
+合成 1_00002
+  rotate: false
+  xy: 1103, 997
+  size: 175, 101
+  orig: 177, 103
+  offset: 1, 1
+  index: -1
+合成 1_00003
+  rotate: true
+  xy: 1268, 324
+  size: 298, 155
+  orig: 300, 157
+  offset: 1, 1
+  index: -1
+合成 1_00004
+  rotate: true
+  xy: 1239, 1159
+  size: 379, 182
+  orig: 381, 184
+  offset: 1, 1
+  index: -1
+合成 1_00005
+  rotate: true
+  xy: 927, 519
+  size: 463, 185
+  orig: 465, 187
+  offset: 1, 1
+  index: -1
+合成 1_00006
+  rotate: true
+  xy: 905, 984
+  size: 554, 196
+  orig: 556, 198
+  offset: 1, 1
+  index: -1
+合成 1_00007
+  rotate: false
+  xy: 2, 3
+  size: 573, 179
+  orig: 575, 181
+  offset: 1, 1
+  index: -1
+合成 1_00008
+  rotate: true
+  xy: 752, 318
+  size: 602, 173
+  orig: 604, 175
+  offset: 1, 1
+  index: -1
+合成 1_00009
+  rotate: true
+  xy: 736, 922
+  size: 616, 167
+  orig: 618, 169
+  offset: 1, 1
+  index: -1
+合成 1_00010
+  rotate: true
+  xy: 590, 268
+  size: 628, 160
+  orig: 630, 162
+  offset: 1, 1
+  index: -1
+合成 1_00011
+  rotate: true
+  xy: 580, 898
+  size: 640, 154
+  orig: 642, 156
+  offset: 1, 1
+  index: -1
+合成 1_00013
+  rotate: true
+  xy: 432, 882
+  size: 656, 146
+  orig: 658, 148
+  offset: 1, 1
+  index: -1
+合成 1_00014
+  rotate: true
+  xy: 384, 212
+  size: 658, 145
+  orig: 660, 147
+  offset: 1, 1
+  index: -1
+合成 1_00015
+  rotate: true
+  xy: 286, 872
+  size: 666, 144
+  orig: 668, 146
+  offset: 1, 1
+  index: -1
+合成 1_00016
+  rotate: true
+  xy: 238, 194
+  size: 670, 144
+  orig: 672, 146
+  offset: 1, 1
+  index: -1
+合成 1_00017
+  rotate: true
+  xy: 141, 866
+  size: 672, 143
+  orig: 674, 145
+  offset: 1, 1
+  index: -1
+合成 1_00018
+  rotate: true
+  xy: 94, 187
+  size: 673, 142
+  orig: 675, 144
+  offset: 1, 1
+  index: -1
+合成 1_00019
+  rotate: true
+  xy: 2, 862
+  size: 676, 137
+  orig: 678, 140
+  offset: 1, 1
+  index: -1
+合成 1_00020
+  rotate: true
+  xy: 2, 184
+  size: 676, 90
+  orig: 678, 92
+  offset: 1, 1
+  index: -1
+合成 1_00021
+  rotate: true
+  xy: 531, 238
+  size: 642, 57
+  orig: 644, 59
+  offset: 1, 1
+  index: -1
+图层 1498
+  rotate: true
+  xy: 1766, 273
+  size: 215, 141
+  orig: 215, 141
+  offset: 0, 0
+  index: -1
+图层 1500
+  rotate: false
+  xy: 1423, 1310
+  size: 127, 228
+  orig: 127, 228
+  offset: 0, 0
+  index: -1
+图层 1501
+  rotate: false
+  xy: 1729, 692
+  size: 190, 240
+  orig: 190, 240
+  offset: 0, 0
+  index: -1
+图层 1502
+  rotate: false
+  xy: 752, 243
+  size: 68, 73
+  orig: 68, 81
+  offset: 0, 0
+  index: -1
+图层 1503
+  rotate: false
+  xy: 1280, 997
+  size: 192, 160
+  orig: 192, 160
+  offset: 0, 0
+  index: -1

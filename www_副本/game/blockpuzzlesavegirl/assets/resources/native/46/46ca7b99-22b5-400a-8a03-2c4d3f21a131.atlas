@@ -1,0 +1,146 @@
+
+gongzhu3.png
+size: 538,268
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+aixin
+  rotate: true
+  xy: 418, 188
+  size: 16, 18
+  orig: 16, 18
+  offset: 0, 0
+  index: -1
+biaoqingdaiji
+  rotate: false
+  xy: 2, 2
+  size: 92, 79
+  orig: 92, 79
+  offset: 0, 0
+  index: -1
+biaoqinghaipa
+  rotate: false
+  xy: 96, 2
+  size: 92, 79
+  orig: 92, 79
+  offset: 0, 0
+  index: -1
+biaoqingkaixin
+  rotate: false
+  xy: 190, 2
+  size: 92, 79
+  orig: 92, 79
+  offset: 0, 0
+  index: -1
+biaoqingshangxin
+  rotate: false
+  xy: 284, 2
+  size: 92, 79
+  orig: 92, 79
+  offset: 0, 0
+  index: -1
+han
+  rotate: true
+  xy: 522, 188
+  size: 18, 8
+  orig: 18, 8
+  offset: 0, 0
+  index: -1
+pijian
+  rotate: true
+  xy: 522, 208
+  size: 58, 14
+  orig: 58, 14
+  offset: 0, 0
+  index: -1
+qunzi
+  rotate: false
+  xy: 2, 83
+  size: 178, 183
+  orig: 178, 183
+  offset: 0, 0
+  index: -1
+qunzi2
+  rotate: false
+  xy: 182, 83
+  size: 178, 183
+  orig: 178, 183
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: false
+  xy: 378, 10
+  size: 43, 77
+  orig: 43, 77
+  offset: 0, 0
+  index: -1
+toufa2
+  rotate: true
+  xy: 423, 206
+  size: 60, 97
+  orig: 60, 97
+  offset: 0, 0
+  index: -1
+youbi
+  rotate: true
+  xy: 489, 168
+  size: 18, 45
+  orig: 18, 45
+  offset: 0, 0
+  index: -1
+youbiku
+  rotate: true
+  xy: 489, 132
+  size: 34, 38
+  orig: 34, 38
+  offset: 0, 0
+  index: -1
+youshou
+  rotate: true
+  xy: 451, 5
+  size: 57, 52
+  orig: 57, 52
+  offset: 0, 0
+  index: -1
+youshoudaiji
+  rotate: false
+  xy: 454, 118
+  size: 33, 68
+  orig: 33, 68
+  offset: 0, 0
+  index: -1
+youshouku
+  rotate: false
+  xy: 423, 4
+  size: 26, 58
+  orig: 26, 58
+  offset: 0, 0
+  index: -1
+yy
+  rotate: true
+  xy: 362, 89
+  size: 177, 54
+  orig: 177, 54
+  offset: 0, 0
+  index: -1
+zuobi
+  rotate: true
+  xy: 418, 90
+  size: 24, 49
+  orig: 24, 49
+  offset: 0, 0
+  index: -1
+zuoshou
+  rotate: false
+  xy: 469, 64
+  size: 58, 52
+  orig: 58, 52
+  offset: 0, 0
+  index: -1
+zuoshoudaiji
+  rotate: false
+  xy: 418, 116
+  size: 34, 70
+  orig: 34, 70
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,125 @@
+
+huode.png
+size: 750,681
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+l_1
+  rotate: false
+  xy: 2, 177
+  size: 502, 502
+  orig: 556, 556
+  offset: 27, 27
+  index: -1
+qq_1
+  rotate: false
+  xy: 622, 370
+  size: 93, 145
+  orig: 93, 148
+  offset: 0, 0
+  index: -1
+qq_2
+  rotate: false
+  xy: 641, 2
+  size: 84, 173
+  orig: 84, 177
+  offset: 0, 0
+  index: -1
+qq_3
+  rotate: true
+  xy: 506, 256
+  size: 93, 177
+  orig: 93, 177
+  offset: 0, 0
+  index: -1
+qq_4
+  rotate: false
+  xy: 506, 351
+  size: 114, 164
+  orig: 114, 164
+  offset: 0, 0
+  index: -1
+star_1
+  rotate: false
+  xy: 506, 517
+  size: 153, 162
+  orig: 155, 165
+  offset: 1, 2
+  index: -1
+star_11
+  rotate: false
+  xy: 633, 202
+  size: 52, 52
+  orig: 54, 56
+  offset: 1, 2
+  index: -1
+star_2
+  rotate: false
+  xy: 661, 585
+  size: 87, 94
+  orig: 89, 96
+  offset: 1, 1
+  index: -1
+star_22
+  rotate: false
+  xy: 685, 328
+  size: 40, 40
+  orig: 42, 43
+  offset: 1, 2
+  index: -1
+star_33
+  rotate: true
+  xy: 571, 195
+  size: 59, 60
+  orig: 63, 64
+  offset: 2, 2
+  index: -1
+tl
+  rotate: false
+  xy: 2, 18
+  size: 637, 157
+  orig: 638, 157
+  offset: 0, 0
+  index: -1
+x1
+  rotate: false
+  xy: 685, 258
+  size: 29, 29
+  orig: 33, 33
+  offset: 2, 2
+  index: -1
+x2
+  rotate: false
+  xy: 633, 177
+  size: 23, 23
+  orig: 27, 27
+  offset: 2, 2
+  index: -1
+x3
+  rotate: false
+  xy: 685, 289
+  size: 37, 37
+  orig: 41, 41
+  offset: 2, 2
+  index: -1
+x4
+  rotate: false
+  xy: 717, 496
+  size: 23, 23
+  orig: 27, 27
+  offset: 2, 2
+  index: -1
+x5
+  rotate: false
+  xy: 661, 521
+  size: 63, 62
+  orig: 67, 66
+  offset: 2, 2
+  index: -1
+x6
+  rotate: false
+  xy: 506, 192
+  size: 63, 62
+  orig: 67, 66
+  offset: 2, 2
+  index: -1

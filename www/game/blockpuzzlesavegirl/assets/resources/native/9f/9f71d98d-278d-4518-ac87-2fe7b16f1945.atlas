@@ -1,0 +1,27 @@
+
+bingkuai_da.png
+size: 300,197
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+TX_S1_sg3_add_
+  rotate: true
+  xy: 211, 101
+  size: 94, 60
+  orig: 94, 60
+  offset: 0, 0
+  index: -1
+guangxian2
+  rotate: true
+  xy: 273, 74
+  size: 121, 25
+  orig: 121, 25
+  offset: 0, 0
+  index: -1
+ice
+  rotate: false
+  xy: 2, 2
+  size: 207, 193
+  orig: 207, 193
+  offset: 0, 0
+  index: -1

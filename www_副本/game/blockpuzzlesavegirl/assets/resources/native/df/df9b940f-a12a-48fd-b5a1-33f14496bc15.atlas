@@ -1,0 +1,20 @@
+
+longwei_ys.png
+size: 210,122
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+long_weiba
+  rotate: false
+  xy: 2, 2
+  size: 102, 118
+  orig: 102, 118
+  offset: 0, 0
+  index: -1
+long_weiba_si
+  rotate: false
+  xy: 106, 2
+  size: 102, 118
+  orig: 102, 118
+  offset: 0, 0
+  index: -1

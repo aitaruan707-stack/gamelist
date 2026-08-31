@@ -1,0 +1,62 @@
+
+djdh_11.png
+size: 147,251
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+pb_1
+  rotate: false
+  xy: 113, 2
+  size: 32, 77
+  orig: 32, 77
+  offset: 0, 0
+  index: -1
+pb_2
+  rotate: false
+  xy: 46, 11
+  size: 22, 47
+  orig: 22, 47
+  offset: 0, 0
+  index: -1
+pb_3
+  rotate: false
+  xy: 2, 19
+  size: 42, 39
+  orig: 42, 39
+  offset: 0, 0
+  index: -1
+pb_4
+  rotate: true
+  xy: 2, 60
+  size: 46, 77
+  orig: 46, 77
+  offset: 0, 0
+  index: -1
+pb_5
+  rotate: true
+  xy: 2, 108
+  size: 43, 113
+  orig: 43, 113
+  offset: 0, 0
+  index: -1
+pb_6
+  rotate: false
+  xy: 81, 2
+  size: 30, 104
+  orig: 30, 104
+  offset: 0, 0
+  index: -1
+pb_7
+  rotate: false
+  xy: 117, 81
+  size: 24, 70
+  orig: 24, 71
+  offset: 0, 1
+  index: -1
+pb_8
+  rotate: true
+  xy: 2, 153
+  size: 96, 135
+  orig: 96, 136
+  offset: 0, 0
+  index: -1

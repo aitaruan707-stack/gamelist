@@ -1,0 +1,90 @@
+
+dazhao.png
+size: 676,529
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+TX_S_st_0069
+  rotate: true
+  xy: 168, 2
+  size: 205, 96
+  orig: 205, 96
+  offset: 0, 0
+  index: -1
+TX_dmsj_0007a
+  rotate: false
+  xy: 415, 17
+  size: 150, 128
+  orig: 150, 128
+  offset: 0, 0
+  index: -1
+TX_dmsj_0008a
+  rotate: true
+  xy: 266, 9
+  size: 198, 147
+  orig: 198, 147
+  offset: 0, 0
+  index: -1
+TX_dmsj_0009a
+  rotate: true
+  xy: 518, 147
+  size: 214, 156
+  orig: 214, 156
+  offset: 0, 0
+  index: -1
+TX_dmsj_0010a
+  rotate: false
+  xy: 451, 363
+  size: 220, 164
+  orig: 220, 164
+  offset: 0, 0
+  index: -1
+TX_dmsj_0011a
+  rotate: false
+  xy: 140, 209
+  size: 219, 168
+  orig: 219, 168
+  offset: 0, 0
+  index: -1
+guangyun
+  rotate: false
+  xy: 2, 8
+  size: 164, 164
+  orig: 164, 164
+  offset: 0, 0
+  index: -1
+qiu_liuguang008
+  rotate: false
+  xy: 567, 71
+  size: 97, 74
+  orig: 97, 74
+  offset: 0, 0
+  index: -1
+skill1_guang_ADD
+  rotate: false
+  xy: 361, 212
+  size: 155, 149
+  orig: 155, 149
+  offset: 0, 0
+  index: -1
+yinying
+  rotate: false
+  xy: 567, 45
+  size: 68, 24
+  orig: 68, 24
+  offset: 0, 0
+  index: -1
+yun_w2
+  rotate: false
+  xy: 140, 379
+  size: 309, 148
+  orig: 309, 148
+  offset: 0, 0
+  index: -1
+zbt_d
+  rotate: false
+  xy: 2, 174
+  size: 136, 353
+  orig: 136, 353
+  offset: 0, 0
+  index: -1

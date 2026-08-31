@@ -1,0 +1,139 @@
+
+rl_js_skjq.png
+size: 1924,1707
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+yq_bg_tx1
+  rotate: false
+  xy: 2, 1038
+  size: 365, 667
+  orig: 365, 667
+  offset: 0, 0
+  index: -1
+yq_bg_tx10
+  rotate: true
+  xy: 671, 2
+  size: 365, 667
+  orig: 365, 667
+  offset: 0, 0
+  index: -1
+yq_bg_tx11
+  rotate: false
+  xy: 1470, 1038
+  size: 365, 667
+  orig: 365, 667
+  offset: 0, 0
+  index: -1
+yq_bg_tx2
+  rotate: false
+  xy: 2, 369
+  size: 365, 667
+  orig: 365, 667
+  offset: 0, 0
+  index: -1
+yq_bg_tx3
+  rotate: false
+  xy: 369, 1038
+  size: 365, 667
+  orig: 365, 667
+  offset: 0, 0
+  index: -1
+yq_bg_tx4
+  rotate: false
+  xy: 369, 369
+  size: 365, 667
+  orig: 365, 667
+  offset: 0, 0
+  index: -1
+yq_bg_tx5
+  rotate: true
+  xy: 2, 2
+  size: 365, 667
+  orig: 365, 667
+  offset: 0, 0
+  index: -1
+yq_bg_tx6
+  rotate: false
+  xy: 736, 1038
+  size: 365, 667
+  orig: 365, 667
+  offset: 0, 0
+  index: -1
+yq_bg_tx7
+  rotate: false
+  xy: 736, 369
+  size: 365, 667
+  orig: 365, 667
+  offset: 0, 0
+  index: -1
+yq_bg_tx8
+  rotate: false
+  xy: 1103, 1038
+  size: 365, 667
+  orig: 365, 667
+  offset: 0, 0
+  index: -1
+yq_bg_tx9
+  rotate: false
+  xy: 1103, 369
+  size: 365, 667
+  orig: 365, 667
+  offset: 0, 0
+  index: -1
+yq_di
+  rotate: false
+  xy: 1340, 37
+  size: 281, 281
+  orig: 283, 283
+  offset: 1, 1
+  index: -1
+yq_guang
+  rotate: false
+  xy: 1837, 1051
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+yq_huan
+  rotate: false
+  xy: 1470, 588
+  size: 448, 448
+  orig: 450, 450
+  offset: 1, 1
+  index: -1
+yq_huan_mh
+  rotate: false
+  xy: 1470, 320
+  size: 368, 266
+  orig: 370, 266
+  offset: 1, 0
+  index: -1
+yq_you
+  rotate: false
+  xy: 1837, 1105
+  size: 85, 289
+  orig: 87, 291
+  offset: 1, 1
+  index: -1
+yq_you_mh
+  rotate: false
+  xy: 1837, 1396
+  size: 85, 309
+  orig: 85, 309
+  offset: 0, 0
+  index: -1
+yq_zuo
+  rotate: false
+  xy: 1716, 116
+  size: 87, 202
+  orig: 89, 204
+  offset: 1, 1
+  index: -1
+yq_zuo_mh
+  rotate: false
+  xy: 1623, 97
+  size: 91, 221
+  orig: 93, 221
+  offset: 1, 0
+  index: -1

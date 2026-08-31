@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Tapzens logo">
+  <defs>
+    <linearGradient id="tz-bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F5306B"/>
+      <stop offset="0.38" stop-color="#FF3B5C"/>
+      <stop offset="0.72" stop-color="#FF9A2E"/>
+      <stop offset="1" stop-color="#FFC400"/>
+    </linearGradient>
+    <linearGradient id="tz-stem" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00AC47"/>
+      <stop offset="0.5" stop-color="#00BCD4"/>
+      <stop offset="1" stop-color="#2196F3"/>
+    </linearGradient>
+  </defs>
+  <!-- bold rounded T: vertical stem (green→blue) under horizontal bar (pink→yellow) -->
+  <rect x="48" y="36" width="32" height="72" rx="16" fill="url(#tz-stem)"/>
+  <rect x="14" y="20" width="100" height="32" rx="16" fill="url(#tz-bar)"/>
+</svg>

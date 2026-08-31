@@ -1,0 +1,76 @@
+
+hero_02.png
+size: 155,129
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+rb1_zt
+  rotate: false
+  xy: 126, 43
+  size: 27, 84
+  orig: 27, 84
+  offset: 0, 0
+  index: -1
+rb2_s
+  rotate: true
+  xy: 2, 88
+  size: 39, 87
+  orig: 39, 87
+  offset: 0, 0
+  index: -1
+rb2_t
+  rotate: true
+  xy: 89, 52
+  size: 29, 28
+  orig: 29, 28
+  offset: 0, 0
+  index: -1
+rb2_w
+  rotate: true
+  xy: 128, 22
+  size: 19, 17
+  orig: 19, 17
+  offset: 0, 0
+  index: -1
+rb2_ys
+  rotate: true
+  xy: 59, 11
+  size: 30, 67
+  orig: 30, 67
+  offset: 0, 0
+  index: -1
+rb2_yt
+  rotate: false
+  xy: 2, 2
+  size: 30, 84
+  orig: 30, 84
+  offset: 0, 0
+  index: -1
+rb2_zj
+  rotate: false
+  xy: 59, 47
+  size: 28, 39
+  orig: 28, 39
+  offset: 0, 0
+  index: -1
+rb2_zs
+  rotate: false
+  xy: 91, 83
+  size: 33, 44
+  orig: 35, 44
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 34, 7
+  size: 79, 23
+  orig: 81, 25
+  offset: 1, 1
+  index: -1
+yr_02_ysz
+  rotate: true
+  xy: 128, 8
+  size: 12, 10
+  orig: 12, 10
+  offset: 0, 0
+  index: -1

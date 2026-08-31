@@ -1,0 +1,62 @@
+
+djdh_8.png
+size: 140,149
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bb_1
+  rotate: false
+  xy: 32, 2
+  size: 46, 47
+  orig: 46, 47
+  offset: 0, 0
+  index: -1
+bb_2
+  rotate: false
+  xy: 80, 13
+  size: 28, 36
+  orig: 28, 36
+  offset: 0, 0
+  index: -1
+bb_3
+  rotate: true
+  xy: 114, 132
+  size: 15, 24
+  orig: 15, 24
+  offset: 0, 0
+  index: -1
+bb_4
+  rotate: false
+  xy: 110, 35
+  size: 28, 64
+  orig: 28, 64
+  offset: 0, 0
+  index: -1
+bb_5
+  rotate: true
+  xy: 32, 51
+  size: 53, 76
+  orig: 53, 76
+  offset: 0, 0
+  index: -1
+bb_6
+  rotate: true
+  xy: 2, 106
+  size: 41, 110
+  orig: 41, 110
+  offset: 0, 0
+  index: -1
+bb_7
+  rotate: false
+  xy: 2, 5
+  size: 28, 99
+  orig: 28, 99
+  offset: 0, 0
+  index: -1
+bb_8
+  rotate: false
+  xy: 114, 101
+  size: 19, 29
+  orig: 19, 29
+  offset: 0, 0
+  index: -1

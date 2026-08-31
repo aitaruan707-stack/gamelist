@@ -1,0 +1,27 @@
+
+taibangle.png
+size: 371,90
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+taibangle
+  rotate: false
+  xy: 2, 2
+  size: 207, 86
+  orig: 207, 86
+  offset: 0, 0
+  index: -1
+xx1
+  rotate: false
+  xy: 211, 9
+  size: 78, 79
+  orig: 78, 79
+  offset: 0, 0
+  index: -1
+xx4
+  rotate: false
+  xy: 291, 9
+  size: 78, 79
+  orig: 78, 79
+  offset: 0, 0
+  index: -1

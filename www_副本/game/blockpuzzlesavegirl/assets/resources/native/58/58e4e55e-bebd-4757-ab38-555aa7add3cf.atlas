@@ -1,0 +1,62 @@
+
+xiaochu_ys.png
+size: 82,158
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+lizi1
+  rotate: false
+  xy: 2, 119
+  size: 38, 37
+  orig: 38, 37
+  offset: 0, 0
+  index: -1
+lizi2
+  rotate: false
+  xy: 42, 119
+  size: 38, 37
+  orig: 38, 37
+  offset: 0, 0
+  index: -1
+lizi3
+  rotate: false
+  xy: 2, 80
+  size: 38, 37
+  orig: 38, 37
+  offset: 0, 0
+  index: -1
+lizi4
+  rotate: false
+  xy: 42, 80
+  size: 38, 37
+  orig: 38, 37
+  offset: 0, 0
+  index: -1
+lizi5
+  rotate: false
+  xy: 2, 41
+  size: 38, 37
+  orig: 38, 37
+  offset: 0, 0
+  index: -1
+lizi6
+  rotate: false
+  xy: 42, 41
+  size: 38, 37
+  orig: 38, 37
+  offset: 0, 0
+  index: -1
+lizi7
+  rotate: false
+  xy: 42, 2
+  size: 37, 37
+  orig: 37, 37
+  offset: 0, 0
+  index: -1
+lizi8
+  rotate: false
+  xy: 2, 2
+  size: 38, 37
+  orig: 38, 37
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,62 @@
+
+xiaoshi.png
+size: 611,282
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+TX_sz_0000
+  rotate: true
+  xy: 386, 46
+  size: 77, 71
+  orig: 77, 71
+  offset: 0, 0
+  index: -1
+TX_sz_0001
+  rotate: true
+  xy: 459, 69
+  size: 77, 71
+  orig: 77, 71
+  offset: 0, 0
+  index: -1
+TX_sz_0002
+  rotate: false
+  xy: 532, 75
+  size: 77, 71
+  orig: 77, 71
+  offset: 0, 0
+  index: -1
+TX_sz_0003
+  rotate: false
+  xy: 532, 2
+  size: 77, 71
+  orig: 77, 71
+  offset: 0, 0
+  index: -1
+gqq_1
+  rotate: true
+  xy: 2, 6
+  size: 274, 270
+  orig: 274, 270
+  offset: 0, 0
+  index: -1
+lizi6_4
+  rotate: false
+  xy: 274, 9
+  size: 110, 114
+  orig: 110, 114
+  offset: 0, 0
+  index: -1
+skill1_guang_ADD
+  rotate: true
+  xy: 274, 125
+  size: 155, 149
+  orig: 155, 149
+  offset: 0, 0
+  index: -1
+vzs_sk2_bz0005_2
+  rotate: false
+  xy: 425, 148
+  size: 130, 132
+  orig: 130, 132
+  offset: 0, 0
+  index: -1

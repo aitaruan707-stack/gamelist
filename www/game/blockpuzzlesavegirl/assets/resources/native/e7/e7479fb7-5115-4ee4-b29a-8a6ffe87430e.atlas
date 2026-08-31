@@ -1,0 +1,125 @@
+
+huakucha.png
+size: 692,94
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+biaoqinghaipa
+  rotate: false
+  xy: 2, 4
+  size: 75, 88
+  orig: 75, 88
+  offset: 0, 0
+  index: -1
+biaoqingkaixin
+  rotate: false
+  xy: 79, 4
+  size: 75, 88
+  orig: 75, 88
+  offset: 0, 0
+  index: -1
+biaoqingshibai
+  rotate: false
+  xy: 156, 4
+  size: 75, 88
+  orig: 75, 88
+  offset: 0, 0
+  index: -1
+biaqingdaiji
+  rotate: false
+  xy: 233, 4
+  size: 75, 88
+  orig: 75, 88
+  offset: 0, 0
+  index: -1
+han
+  rotate: false
+  xy: 353, 2
+  size: 18, 8
+  orig: 18, 8
+  offset: 0, 0
+  index: -1
+kuzi
+  rotate: true
+  xy: 604, 39
+  size: 53, 47
+  orig: 53, 47
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: true
+  xy: 469, 36
+  size: 56, 133
+  orig: 56, 133
+  offset: 0, 0
+  index: -1
+youbi
+  rotate: false
+  xy: 454, 2
+  size: 29, 27
+  orig: 29, 27
+  offset: 0, 0
+  index: -1
+youbi2
+  rotate: true
+  xy: 582, 18
+  size: 16, 54
+  orig: 16, 54
+  offset: 0, 0
+  index: -1
+youjiao
+  rotate: false
+  xy: 310, 11
+  size: 41, 81
+  orig: 41, 81
+  offset: 0, 0
+  index: -1
+youshou
+  rotate: false
+  xy: 396, 28
+  size: 25, 64
+  orig: 25, 64
+  offset: 0, 0
+  index: -1
+youtui
+  rotate: true
+  xy: 638, 2
+  size: 35, 48
+  orig: 35, 48
+  offset: 0, 0
+  index: -1
+yy
+  rotate: false
+  xy: 485, 4
+  size: 95, 30
+  orig: 95, 30
+  offset: 0, 0
+  index: -1
+zuobi
+  rotate: true
+  xy: 396, 6
+  size: 20, 56
+  orig: 20, 56
+  offset: 0, 0
+  index: -1
+zuojiao
+  rotate: false
+  xy: 353, 12
+  size: 41, 80
+  orig: 41, 80
+  offset: 0, 0
+  index: -1
+zuoshou
+  rotate: false
+  xy: 423, 31
+  size: 44, 61
+  orig: 44, 61
+  offset: 0, 0
+  index: -1
+zuotui
+  rotate: false
+  xy: 653, 39
+  size: 37, 53
+  orig: 37, 53
+  offset: 0, 0
+  index: -1

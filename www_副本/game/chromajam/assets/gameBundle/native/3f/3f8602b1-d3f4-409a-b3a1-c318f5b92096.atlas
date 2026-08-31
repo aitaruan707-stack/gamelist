@@ -1,0 +1,55 @@
+
+nightmare_zhong.png
+size: 1815,494
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+di2
+  rotate: false
+  xy: 873, 188
+  size: 844, 304
+  orig: 844, 304
+  offset: 0, 0
+  index: -1
+jianbian2
+  rotate: false
+  xy: 887, 36
+  size: 750, 150
+  orig: 750, 150
+  offset: 0, 0
+  index: -1
+logo2
+  rotate: true
+  xy: 1639, 53
+  size: 99, 129
+  orig: 99, 129
+  offset: 0, 0
+  index: -1
+shangxian2
+  rotate: false
+  xy: 2, 2
+  size: 883, 112
+  orig: 883, 112
+  offset: 0, 0
+  index: -1
+xiaxian2
+  rotate: false
+  xy: 2, 2
+  size: 883, 112
+  orig: 883, 112
+  offset: 0, 0
+  index: -1
+shuiyin2
+  rotate: false
+  xy: 2, 116
+  size: 869, 376
+  orig: 869, 376
+  offset: 0, 0
+  index: -1
+zi2
+  rotate: true
+  xy: 1719, 154
+  size: 338, 94
+  orig: 338, 94
+  offset: 0, 0
+  index: -1

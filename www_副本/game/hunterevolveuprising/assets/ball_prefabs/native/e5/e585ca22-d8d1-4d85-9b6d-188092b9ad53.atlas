@@ -1,0 +1,76 @@
+
+qlz_tw.png
+size: 414,414
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bin_t_1
+  rotate: true
+  xy: 143, 90
+  size: 42, 41
+  orig: 48, 49
+  offset: 3, 4
+  index: -1
+bin_t_2
+  rotate: false
+  xy: 2, 272
+  size: 111, 140
+  orig: 111, 140
+  offset: 0, 0
+  index: -1
+feng_t_1
+  rotate: true
+  xy: 143, 46
+  size: 42, 41
+  orig: 49, 49
+  offset: 3, 4
+  index: -1
+feng_t_2
+  rotate: false
+  xy: 2, 130
+  size: 111, 140
+  orig: 111, 140
+  offset: 0, 0
+  index: -1
+huo_t_1
+  rotate: true
+  xy: 143, 2
+  size: 42, 41
+  orig: 49, 49
+  offset: 3, 4
+  index: -1
+huo_t_2
+  rotate: false
+  xy: 115, 273
+  size: 111, 139
+  orig: 111, 139
+  offset: 0, 0
+  index: -1
+lei_t_1
+  rotate: true
+  xy: 186, 90
+  size: 42, 41
+  orig: 49, 49
+  offset: 3, 4
+  index: -1
+lei_t_2
+  rotate: false
+  xy: 115, 134
+  size: 111, 137
+  orig: 111, 137
+  offset: 0, 0
+  index: -1
+mofa_t_1
+  rotate: true
+  xy: 186, 46
+  size: 42, 41
+  orig: 49, 49
+  offset: 3, 4
+  index: -1
+mofa_t_2
+  rotate: true
+  xy: 2, 17
+  size: 111, 139
+  orig: 111, 139
+  offset: 0, 0
+  index: -1

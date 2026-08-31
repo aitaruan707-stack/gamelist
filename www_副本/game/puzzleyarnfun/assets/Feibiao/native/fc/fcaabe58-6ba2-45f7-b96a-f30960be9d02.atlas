@@ -1,0 +1,76 @@
+
+dx.png
+size: 1839,616
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+sb
+  rotate: false
+  xy: 1696, 25
+  size: 141, 182
+  orig: 141, 182
+  offset: 0, 0
+  index: -1
+y1
+  rotate: false
+  xy: 590, 8
+  size: 564, 201
+  orig: 682, 340
+  offset: 70, 52
+  index: -1
+y2
+  rotate: false
+  xy: 1207, 413
+  size: 578, 201
+  orig: 682, 340
+  offset: 61, 51
+  index: -1
+y3
+  rotate: false
+  xy: 602, 413
+  size: 603, 201
+  orig: 682, 340
+  offset: 47, 49
+  index: -1
+y4
+  rotate: false
+  xy: 2, 393
+  size: 598, 221
+  orig: 682, 340
+  offset: 53, 41
+  index: -1
+y5
+  rotate: false
+  xy: 602, 211
+  size: 572, 200
+  orig: 682, 340
+  offset: 44, 52
+  index: -1
+y6
+  rotate: false
+  xy: 2, 2
+  size: 583, 189
+  orig: 682, 340
+  offset: 43, 59
+  index: -1
+y7
+  rotate: false
+  xy: 2, 193
+  size: 586, 198
+  orig: 682, 340
+  offset: 44, 53
+  index: -1
+y8
+  rotate: false
+  xy: 1156, 2
+  size: 538, 205
+  orig: 682, 340
+  offset: 104, 51
+  index: -1
+y9
+  rotate: false
+  xy: 1176, 209
+  size: 565, 202
+  orig: 682, 340
+  offset: 76, 55
+  index: -1

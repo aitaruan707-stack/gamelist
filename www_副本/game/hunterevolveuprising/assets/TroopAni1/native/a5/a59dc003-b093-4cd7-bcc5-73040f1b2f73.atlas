@@ -1,0 +1,90 @@
+
+hero_03.png
+size: 1990,1141
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+shadow
+  rotate: false
+  xy: 963, 3
+  size: 53, 16
+  orig: 55, 18
+  offset: 1, 1
+  index: -1
+yr_01_yd
+  rotate: true
+  xy: 345, 423
+  size: 79, 168
+  orig: 88, 169
+  offset: 1, 1
+  index: -1
+yr_03_kz
+  rotate: true
+  xy: 1519, 21
+  size: 535, 421
+  orig: 535, 421
+  offset: 0, 0
+  index: -1
+yr_03_mj
+  rotate: false
+  xy: 1191, 50
+  size: 168, 196
+  orig: 169, 196
+  offset: 1, 0
+  index: -1
+yr_03_st
+  rotate: false
+  xy: 1519, 558
+  size: 469, 581
+  orig: 469, 581
+  offset: 0, 0
+  index: -1
+yr_03_t
+  rotate: true
+  xy: 1191, 248
+  size: 254, 314
+  orig: 254, 314
+  offset: 0, 0
+  index: -1
+yr_03_w
+  rotate: false
+  xy: 345, 504
+  size: 1172, 635
+  orig: 1172, 870
+  offset: 0, 0
+  index: -1
+yr_03_ys
+  rotate: false
+  xy: 2, 348
+  size: 341, 791
+  orig: 341, 801
+  offset: 0, 0
+  index: -1
+yr_03_yt
+  rotate: false
+  xy: 963, 119
+  size: 226, 383
+  orig: 226, 383
+  offset: 0, 0
+  index: -1
+yr_03_zt
+  rotate: false
+  xy: 963, 119
+  size: 226, 383
+  orig: 226, 383
+  offset: 0, 0
+  index: -1
+yr_03_zj
+  rotate: false
+  xy: 555, 2
+  size: 406, 500
+  orig: 406, 500
+  offset: 0, 0
+  index: -1
+yr_03_zs
+  rotate: true
+  xy: 2, 3
+  size: 343, 551
+  orig: 343, 551
+  offset: 0, 0
+  index: -1

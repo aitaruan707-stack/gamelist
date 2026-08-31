@@ -1,0 +1,27 @@
+
+jiesuo.png
+size: 298,413
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guangquan
+  rotate: false
+  xy: 2, 117
+  size: 294, 294
+  orig: 294, 294
+  offset: 0, 0
+  index: -1
+jiantou
+  rotate: true
+  xy: 2, 2
+  size: 113, 245
+  orig: 113, 245
+  offset: 0, 0
+  index: -1
+xx
+  rotate: false
+  xy: 249, 73
+  size: 41, 42
+  orig: 41, 42
+  offset: 0, 0
+  index: -1

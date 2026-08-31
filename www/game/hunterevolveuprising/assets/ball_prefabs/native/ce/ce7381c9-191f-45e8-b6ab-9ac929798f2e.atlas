@@ -1,0 +1,48 @@
+
+qlz_mb.png
+size: 562,562
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jian_dian_tx1
+  rotate: false
+  xy: 138, 286
+  size: 117, 274
+  orig: 117, 274
+  offset: 0, 0
+  index: -1
+jian_dian_tx2
+  rotate: false
+  xy: 147, 11
+  size: 111, 273
+  orig: 111, 273
+  offset: 0, 0
+  index: -1
+jian_dian_tx3
+  rotate: false
+  xy: 257, 287
+  size: 102, 273
+  orig: 102, 273
+  offset: 0, 0
+  index: -1
+jian_dian_tx4
+  rotate: false
+  xy: 260, 13
+  size: 115, 272
+  orig: 115, 272
+  offset: 0, 0
+  index: -1
+jian_dian_tx5
+  rotate: false
+  xy: 2, 2
+  size: 143, 277
+  orig: 143, 277
+  offset: 0, 0
+  index: -1
+jian_dian_tx6
+  rotate: false
+  xy: 2, 281
+  size: 134, 279
+  orig: 134, 279
+  offset: 0, 0
+  index: -1

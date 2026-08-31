@@ -1,0 +1,76 @@
+
+haoyou.png
+size: 123,72
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+R_B_1
+  rotate: false
+  xy: 2, 2
+  size: 57, 68
+  orig: 59, 70
+  offset: 1, 1
+  index: -1
+R_B_2
+  rotate: false
+  xy: 107, 40
+  size: 12, 14
+  orig: 14, 16
+  offset: 1, 1
+  index: -1
+R_B_3
+  rotate: true
+  xy: 61, 2
+  size: 12, 15
+  orig: 14, 17
+  offset: 1, 1
+  index: -1
+R_B_4
+  rotate: false
+  xy: 107, 56
+  size: 14, 14
+  orig: 16, 16
+  offset: 1, 1
+  index: -1
+R_B_5
+  rotate: false
+  xy: 78, 5
+  size: 13, 9
+  orig: 15, 11
+  offset: 1, 1
+  index: -1
+R_Y_1
+  rotate: false
+  xy: 61, 16
+  size: 44, 54
+  orig: 46, 56
+  offset: 1, 1
+  index: -1
+R_Y_2
+  rotate: true
+  xy: 93, 5
+  size: 9, 11
+  orig: 11, 13
+  offset: 1, 1
+  index: -1
+R_Y_3
+  rotate: false
+  xy: 107, 15
+  size: 10, 10
+  orig: 12, 12
+  offset: 1, 1
+  index: -1
+R_Y_4
+  rotate: false
+  xy: 107, 27
+  size: 10, 11
+  orig: 12, 13
+  offset: 1, 1
+  index: -1
+R_Y_5
+  rotate: false
+  xy: 106, 5
+  size: 13, 8
+  orig: 15, 10
+  offset: 1, 1
+  index: -1

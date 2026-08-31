@@ -1,0 +1,20 @@
+
+skeleton.png
+size: 1175,263
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+chuansongdai2
+  rotate: false
+  xy: 2, 2
+  size: 731, 167
+  orig: 733, 169
+  offset: 1, 1
+  index: -1
+chuansongdaiyinying
+  rotate: false
+  xy: 2, 171
+  size: 1171, 90
+  orig: 1171, 99
+  offset: 0, 0
+  index: -1

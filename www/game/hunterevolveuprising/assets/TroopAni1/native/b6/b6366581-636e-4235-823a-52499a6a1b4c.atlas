@@ -1,0 +1,83 @@
+
+hero_07.png
+size: 2002,522
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+aj1_kz
+  rotate: false
+  xy: 1554, 209
+  size: 237, 311
+  orig: 237, 311
+  offset: 0, 0
+  index: -1
+aj1_pf
+  rotate: true
+  xy: 2, 114
+  size: 406, 549
+  orig: 406, 549
+  offset: 0, 0
+  index: -1
+aj1_pf1
+  rotate: true
+  xy: 553, 177
+  size: 343, 523
+  orig: 343, 523
+  offset: 0, 0
+  index: -1
+aj1_st
+  rotate: true
+  xy: 1281, 3
+  size: 183, 268
+  orig: 183, 268
+  offset: 0, 0
+  index: -1
+aj1_t
+  rotate: false
+  xy: 1823, 307
+  size: 177, 213
+  orig: 177, 262
+  offset: 0, 0
+  index: -1
+aj1_w
+  rotate: false
+  xy: 1078, 188
+  size: 474, 332
+  orig: 474, 332
+  offset: 0, 0
+  index: -1
+aj1_ys
+  rotate: true
+  xy: 553, 2
+  size: 173, 333
+  orig: 173, 333
+  offset: 0, 0
+  index: -1
+aj1_yt
+  rotate: false
+  xy: 1823, 66
+  size: 149, 239
+  orig: 149, 239
+  offset: 0, 0
+  index: -1
+aj1_zs
+  rotate: true
+  xy: 888, 31
+  size: 144, 391
+  orig: 144, 391
+  offset: 0, 0
+  index: -1
+aj1_zt
+  rotate: true
+  xy: 1551, 36
+  size: 150, 270
+  orig: 150, 270
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 2, 59
+  size: 53, 16
+  orig: 55, 18
+  offset: 1, 1
+  index: -1

@@ -1,0 +1,20 @@
+
+daily.png
+size: 135,95
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bi
+  rotate: false
+  xy: 93, 49
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: -1
+rili
+  rotate: false
+  xy: 2, 2
+  size: 89, 91
+  orig: 89, 91
+  offset: 0, 0
+  index: -1

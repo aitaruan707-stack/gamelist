@@ -1,0 +1,27 @@
+
+weiqi.png
+size: 218,78
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+yan1
+  rotate: false
+  xy: 85, 3
+  size: 75, 73
+  orig: 75, 73
+  offset: 0, 0
+  index: -1
+yan2
+  rotate: false
+  xy: 162, 14
+  size: 54, 62
+  orig: 54, 62
+  offset: 0, 0
+  index: -1
+yan3
+  rotate: false
+  xy: 2, 2
+  size: 81, 74
+  orig: 81, 74
+  offset: 0, 0
+  index: -1

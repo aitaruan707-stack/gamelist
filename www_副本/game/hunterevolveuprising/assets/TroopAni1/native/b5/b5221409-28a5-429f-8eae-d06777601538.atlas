@@ -1,0 +1,48 @@
+
+hero_10.png
+size: 118,153
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+f10_st
+  rotate: false
+  xy: 71, 57
+  size: 45, 59
+  orig: 45, 59
+  offset: 0, 0
+  index: -1
+f10_tou
+  rotate: false
+  xy: 84, 20
+  size: 31, 35
+  orig: 31, 35
+  offset: 0, 0
+  index: -1
+f10_tui
+  rotate: false
+  xy: 2, 29
+  size: 30, 87
+  orig: 30, 87
+  offset: 0, 0
+  index: -1
+f10_ys
+  rotate: true
+  xy: 2, 2
+  size: 25, 80
+  orig: 25, 80
+  offset: 0, 0
+  index: -1
+f10_zs
+  rotate: false
+  xy: 34, 40
+  size: 35, 76
+  orig: 36, 76
+  offset: 1, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 2, 118
+  size: 106, 33
+  orig: 110, 35
+  offset: 2, 1
+  index: -1

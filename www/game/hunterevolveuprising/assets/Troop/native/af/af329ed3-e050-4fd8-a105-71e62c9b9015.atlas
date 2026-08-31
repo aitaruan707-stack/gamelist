@@ -1,0 +1,55 @@
+
+hero_14_hit.png
+size: 459,80
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guang
+  rotate: false
+  xy: 2, 6
+  size: 72, 72
+  orig: 81, 81
+  offset: 4, 5
+  index: -1
+h14_hit_1
+  rotate: true
+  xy: 401, 20
+  size: 58, 56
+  orig: 78, 67
+  offset: 10, 6
+  index: -1
+h14_hit_2
+  rotate: true
+  xy: 340, 10
+  size: 68, 59
+  orig: 78, 67
+  offset: 5, 4
+  index: -1
+h14_hit_3
+  rotate: true
+  xy: 145, 2
+  size: 76, 65
+  orig: 78, 67
+  offset: 1, 1
+  index: -1
+h14_hit_4
+  rotate: true
+  xy: 76, 2
+  size: 76, 67
+  orig: 78, 67
+  offset: 1, 0
+  index: -1
+h14_hit_5
+  rotate: true
+  xy: 212, 6
+  size: 72, 65
+  orig: 78, 67
+  offset: 3, 1
+  index: -1
+h14_hit_6
+  rotate: true
+  xy: 279, 8
+  size: 70, 59
+  orig: 78, 67
+  offset: 4, 4
+  index: -1

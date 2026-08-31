@@ -1,0 +1,27 @@
+
+xiong.png
+size: 429,203
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+xiong
+  rotate: true
+  xy: 301, 2
+  size: 76, 126
+  orig: 78, 128
+  offset: 1, 1
+  index: -1
+xiong2
+  rotate: true
+  xy: 2, 2
+  size: 199, 297
+  orig: 199, 297
+  offset: 0, 0
+  index: -1
+xiong3
+  rotate: false
+  xy: 301, 80
+  size: 96, 121
+  orig: 98, 123
+  offset: 1, 1
+  index: -1

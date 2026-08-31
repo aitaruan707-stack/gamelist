@@ -1,0 +1,27 @@
+
+fankui.png
+size: 144,90
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+icon_b
+  rotate: false
+  xy: 91, 29
+  size: 51, 59
+  orig: 51, 59
+  offset: 0, 0
+  index: -1
+icon_rw
+  rotate: true
+  xy: 2, 2
+  size: 86, 87
+  orig: 86, 87
+  offset: 0, 0
+  index: -1
+icon_rw1
+  rotate: false
+  xy: 91, 15
+  size: 18, 12
+  orig: 18, 12
+  offset: 0, 0
+  index: -1

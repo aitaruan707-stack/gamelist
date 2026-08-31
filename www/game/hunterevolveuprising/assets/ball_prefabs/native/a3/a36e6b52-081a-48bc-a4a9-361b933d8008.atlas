@@ -1,0 +1,62 @@
+
+enemy_hit.png
+size: 400,237
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+kuai
+  rotate: false
+  xy: 346, 33
+  size: 52, 52
+  orig: 58, 56
+  offset: 2, 2
+  index: -1
+kuai2
+  rotate: false
+  xy: 346, 33
+  size: 52, 52
+  orig: 58, 56
+  offset: 2, 2
+  index: -1
+kuai24
+  rotate: false
+  xy: 346, 33
+  size: 52, 52
+  orig: 58, 56
+  offset: 2, 2
+  index: -1
+kuai3
+  rotate: false
+  xy: 346, 33
+  size: 52, 52
+  orig: 58, 56
+  offset: 2, 2
+  index: -1
+light1
+  rotate: false
+  xy: 215, 87
+  size: 181, 148
+  orig: 186, 154
+  offset: 2, 3
+  index: -1
+lights
+  rotate: false
+  xy: 2, 32
+  size: 211, 203
+  orig: 222, 213
+  offset: 6, 5
+  index: -1
+line
+  rotate: true
+  xy: 2, 7
+  size: 23, 256
+  orig: 64, 256
+  offset: 20, 0
+  index: -1
+wq_hit_guang2
+  rotate: true
+  xy: 260, 2
+  size: 83, 84
+  orig: 86, 86
+  offset: 2, 1
+  index: -1

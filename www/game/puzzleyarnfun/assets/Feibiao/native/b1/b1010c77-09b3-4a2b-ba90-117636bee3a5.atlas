@@ -1,0 +1,91 @@
+
+bs.png
+size: 1114,754
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+4gaung
+  rotate: true
+  xy: 2, 10
+  size: 742, 762
+  orig: 750, 964
+  offset: 0, 101
+  index: -1
+4jiantou
+  rotate: false
+  xy: 1079, 420
+  size: 30, 38
+  orig: 30, 38
+  offset: 0, 0
+  index: -1
+4jiantou2
+  rotate: true
+  xy: 1055, 80
+  size: 43, 57
+  orig: 43, 57
+  offset: 0, 0
+  index: -1
+4jiantou3
+  rotate: true
+  xy: 1055, 80
+  size: 43, 57
+  orig: 43, 57
+  offset: 0, 0
+  index: -1
+4jiantou4
+  rotate: true
+  xy: 1055, 80
+  size: 43, 57
+  orig: 43, 57
+  offset: 0, 0
+  index: -1
+4kuang
+  rotate: true
+  xy: 766, 2
+  size: 750, 205
+  orig: 750, 209
+  offset: 0, 2
+  index: -1
+you1
+  rotate: false
+  xy: 973, 607
+  size: 130, 145
+  orig: 137, 150
+  offset: 4, 3
+  index: -1
+you2
+  rotate: false
+  xy: 973, 607
+  size: 130, 145
+  orig: 137, 150
+  offset: 4, 3
+  index: -1
+you3
+  rotate: false
+  xy: 973, 607
+  size: 130, 145
+  orig: 137, 150
+  offset: 4, 3
+  index: -1
+zuo1
+  rotate: false
+  xy: 973, 460
+  size: 130, 145
+  orig: 137, 150
+  offset: 4, 3
+  index: -1
+zuo2
+  rotate: false
+  xy: 973, 460
+  size: 130, 145
+  orig: 137, 150
+  offset: 4, 3
+  index: -1
+zuo3
+  rotate: false
+  xy: 973, 460
+  size: 130, 145
+  orig: 137, 150
+  offset: 4, 3
+  index: -1
+

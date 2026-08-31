@@ -1,0 +1,20 @@
+
+youxi.png
+size: 222,74
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+youxishoubi
+  rotate: false
+  xy: 123, 2
+  size: 97, 70
+  orig: 99, 72
+  offset: 1, 1
+  index: -1
+youxishoubi_1
+  rotate: false
+  xy: 2, 2
+  size: 119, 70
+  orig: 119, 70
+  offset: 0, 0
+  index: -1

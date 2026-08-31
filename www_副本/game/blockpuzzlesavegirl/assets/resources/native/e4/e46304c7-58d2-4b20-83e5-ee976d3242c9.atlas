@@ -1,0 +1,167 @@
+
+longtou_ys.png
+size: 717,530
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+f06
+  rotate: true
+  xy: 530, 14
+  size: 80, 66
+  orig: 80, 66
+  offset: 0, 0
+  index: -1
+f08
+  rotate: true
+  xy: 598, 8
+  size: 80, 66
+  orig: 80, 66
+  offset: 0, 0
+  index: -1
+f09
+  rotate: true
+  xy: 497, 320
+  size: 80, 66
+  orig: 80, 66
+  offset: 0, 0
+  index: -1
+linghun
+  rotate: true
+  xy: 211, 2
+  size: 42, 72
+  orig: 42, 72
+  offset: 0, 0
+  index: -1
+long_ce_longlin
+  rotate: false
+  xy: 412, 2
+  size: 116, 92
+  orig: 116, 92
+  offset: 0, 0
+  index: -1
+long_ce_tou
+  rotate: false
+  xy: 576, 139
+  size: 128, 105
+  orig: 128, 105
+  offset: 0, 0
+  index: -1
+long_ce_xiae
+  rotate: false
+  xy: 610, 90
+  size: 103, 47
+  orig: 103, 47
+  offset: 0, 0
+  index: -1
+long_ce_yachi
+  rotate: true
+  xy: 666, 29
+  size: 59, 44
+  orig: 59, 44
+  offset: 0, 0
+  index: -1
+long_ce_youyan
+  rotate: false
+  xy: 576, 104
+  size: 32, 33
+  orig: 32, 33
+  offset: 0, 0
+  index: -1
+long_ce_zui
+  rotate: false
+  xy: 322, 9
+  size: 88, 35
+  orig: 88, 35
+  offset: 0, 0
+  index: -1
+long_ce_zuoyan
+  rotate: false
+  xy: 285, 8
+  size: 35, 36
+  orig: 35, 36
+  offset: 0, 0
+  index: -1
+long_zheng_tou
+  rotate: false
+  xy: 576, 423
+  size: 139, 105
+  orig: 139, 105
+  offset: 0, 0
+  index: -1
+long_zheng_xiaba
+  rotate: true
+  xy: 421, 307
+  size: 93, 74
+  orig: 93, 74
+  offset: 0, 0
+  index: -1
+long_zheng_yachi
+  rotate: false
+  xy: 76, 6
+  size: 77, 26
+  orig: 77, 26
+  offset: 0, 0
+  index: -1
+long_zheng_youyan
+  rotate: true
+  xy: 2, 4
+  size: 28, 35
+  orig: 28, 35
+  offset: 0, 0
+  index: -1
+long_zheng_zuoyan
+  rotate: true
+  xy: 39, 5
+  size: 27, 35
+  orig: 27, 35
+  offset: 0, 0
+  index: -1
+longtou_si
+  rotate: false
+  xy: 421, 402
+  size: 144, 126
+  orig: 144, 126
+  offset: 0, 0
+  index: -1
+ph1
+  rotate: false
+  xy: 576, 246
+  size: 138, 175
+  orig: 138, 175
+  offset: 0, 0
+  index: -1
+ph2
+  rotate: false
+  xy: 407, 96
+  size: 167, 207
+  orig: 167, 207
+  offset: 0, 0
+  index: -1
+ph3
+  rotate: false
+  xy: 211, 46
+  size: 194, 232
+  orig: 194, 232
+  offset: 0, 0
+  index: -1
+ph4
+  rotate: false
+  xy: 2, 34
+  size: 207, 244
+  orig: 207, 244
+  offset: 0, 0
+  index: -1
+ph5
+  rotate: false
+  xy: 2, 280
+  size: 215, 248
+  orig: 215, 248
+  offset: 0, 0
+  index: -1
+ph7
+  rotate: true
+  xy: 219, 305
+  size: 223, 200
+  orig: 223, 200
+  offset: 0, 0
+  index: -1

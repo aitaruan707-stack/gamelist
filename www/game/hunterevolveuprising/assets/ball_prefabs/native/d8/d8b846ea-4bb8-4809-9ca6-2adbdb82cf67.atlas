@@ -1,0 +1,48 @@
+
+qlz_hq.png
+size: 423,423
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+b5_skill_1
+  rotate: false
+  xy: 163, 2
+  size: 169, 87
+  orig: 170, 93
+  offset: 0, 2
+  index: -1
+b5_skill_2
+  rotate: true
+  xy: 309, 91
+  size: 164, 88
+  orig: 170, 93
+  offset: 5, 2
+  index: -1
+b5_skill_3
+  rotate: true
+  xy: 309, 257
+  size: 164, 90
+  orig: 170, 93
+  offset: 5, 1
+  index: -1
+b5_skill_4
+  rotate: false
+  xy: 2, 28
+  size: 159, 88
+  orig: 170, 93
+  offset: 10, 2
+  index: -1
+light
+  rotate: false
+  xy: 334, 24
+  size: 65, 65
+  orig: 65, 65
+  offset: 0, 0
+  index: -1
+yunshi
+  rotate: false
+  xy: 2, 118
+  size: 305, 303
+  orig: 309, 307
+  offset: 2, 2
+  index: -1

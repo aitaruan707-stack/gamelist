@@ -1,0 +1,34 @@
+
+fire.png
+size: 346,346
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+b5_skill_1
+  rotate: false
+  xy: 2, 251
+  size: 170, 93
+  orig: 170, 93
+  offset: 0, 0
+  index: -1
+b5_skill_2
+  rotate: false
+  xy: 174, 251
+  size: 170, 93
+  orig: 170, 93
+  offset: 0, 0
+  index: -1
+b5_skill_3
+  rotate: false
+  xy: 2, 156
+  size: 170, 93
+  orig: 170, 93
+  offset: 0, 0
+  index: -1
+b5_skill_4
+  rotate: false
+  xy: 174, 156
+  size: 170, 93
+  orig: 170, 93
+  offset: 0, 0
+  index: -1

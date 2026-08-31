@@ -1,0 +1,76 @@
+
+csm.png
+size: 315,179
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dian1
+  rotate: false
+  xy: 231, 39
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1
+dian2
+  rotate: false
+  xy: 186, 21
+  size: 14, 13
+  orig: 14, 13
+  offset: 0, 0
+  index: -1
+dian3
+  rotate: false
+  xy: 186, 7
+  size: 11, 12
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+dian4
+  rotate: false
+  xy: 186, 36
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+dian5
+  rotate: false
+  xy: 202, 23
+  size: 11, 12
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+dian6
+  rotate: false
+  xy: 202, 37
+  size: 14, 13
+  orig: 14, 13
+  offset: 0, 0
+  index: -1
+dian7
+  rotate: false
+  xy: 244, 39
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1
+dian8
+  rotate: false
+  xy: 218, 38
+  size: 11, 12
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+heiwen
+  rotate: false
+  xy: 186, 52
+  size: 127, 125
+  orig: 127, 125
+  offset: 0, 0
+  index: -1
+huangwen
+  rotate: false
+  xy: 2, 2
+  size: 182, 175
+  orig: 182, 175
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+<!-- Hidden-context fallback: HTML5 game engines (Cocos 2.x/3.x, Laya) never finish
+     init when the page is hidden (embedded preview webviews, background tabs) —
+     requestAnimationFrame never fires and the engine self-pauses on visibilitychange.
+     We wrap rAF with a setTimeout fallback that engages whenever the page is truly
+     hidden (checked at call time, so late hiding is covered), and spoof visibility
+     so the engine never self-pauses. -->
+<script>
+(function () {
+  var proto = Object.getOwnPropertyDescriptor(Document.prototype, 'hidden') ? Document.prototype : HTMLDocument.prototype;
+  var hiddenGet = (Object.getOwnPropertyDescriptor(proto, 'hidden') || {}).get;
+  if (!hiddenGet) return;
+  var trueHidden = function () { return hiddenGet.call(document); };
+
+  /* 1) setTimeout-driven rAF whenever truly hidden (native rAF starves there) */
+  var nRAF = window.requestAnimationFrame.bind(window);
+  var nCAF = window.cancelAnimationFrame.bind(window);
+  var slow = {};
+  window.requestAnimationFrame = function (cb) {
+    if (trueHidden()) {
+      var t = setTimeout(function () { delete slow[t]; cb(performance.now()); }, 16);
+      slow[t] = 1;
+      return t;
+    }
+    return nRAF(cb);
+  };
+  window.cancelAnimationFrame = function (id) {
+    if (slow[id]) { clearTimeout(id); delete slow[id]; }
+    else nCAF(id);
+  };
+
+  /* 2) spoof visibility so the engine never self-pauses */
+  Object.defineProperty(document, 'hidden', { configurable: true, get: function () { return false; } });
+  Object.defineProperty(document, 'visibilityState', { configurable: true, get: function () { return 'visible'; } });
+  var origAdd = document.addEventListener.bind(document);
+  document.addEventListener = function (type, fn, opts) {
+    if (type === 'visibilitychange') return;
+    return origAdd(type, fn, opts);
+  };
+})();
+</script>
+
+    <meta charset="utf-8" />
+    <title>Sky Thunder: Ace Strike</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="full-screen" content="yes" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="360-fullscreen" content="true" />
+    <meta name="screen-orientation" content="" />
+    <meta name="x5-orientation" content="" />
+    <meta name="x5-page-mode" content="app" />
+    <link rel="stylesheet" type="text/css" href="style-mobile.css" />
+    <link rel="icon" href="favicon.ico" />
+  </head>
+  <body>
+    <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
+    <div id="splash">
+      <div class="progress-bar stripes"><span style="width: 0%"></span></div>
+    </div>
+    <script src="src/settings.js" charset="utf-8"></script>
+    <script src="main.js" charset="utf-8"></script>
+    <script>
+      (function () {
+        var splash = document.getElementById("splash");
+        splash.style.display = "none";
+        function loadScript(moduleName, callback) {
+          function scriptLoaded() {
+            document.body.removeChild(script);
+            script.removeEventListener("load", scriptLoaded, false);
+            if (callback) callback();
+          }
+          var script = document.createElement("script");
+          script.async = true;
+          script.src = moduleName;
+          script.addEventListener("load", scriptLoaded, false);
+          document.body.appendChild(script);
+        }
+        loadScript("cocos2d-js-min.js", function () {
+          if (CC_PHYSICS_BUILTIN || CC_PHYSICS_CANNON) {
+            loadScript("physics-min.js", window.boot);
+          } else {
+            window.boot();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

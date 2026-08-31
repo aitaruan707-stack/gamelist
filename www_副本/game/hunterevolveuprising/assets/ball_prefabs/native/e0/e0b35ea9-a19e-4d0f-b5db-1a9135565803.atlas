@@ -1,0 +1,90 @@
+
+qlz_hd.png
+size: 1043,1043
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+huzao_1
+  rotate: false
+  xy: 773, 431
+  size: 113, 73
+  orig: 113, 73
+  offset: 0, 0
+  index: -1
+huzao_10
+  rotate: false
+  xy: 2, 185
+  size: 701, 381
+  orig: 701, 381
+  offset: 0, 0
+  index: -1
+huzao_11
+  rotate: true
+  xy: 705, 108
+  size: 321, 322
+  orig: 321, 322
+  offset: 0, 0
+  index: -1
+huzao_12
+  rotate: false
+  xy: 2, 568
+  size: 782, 473
+  orig: 782, 473
+  offset: 0, 0
+  index: -1
+huzao_2
+  rotate: false
+  xy: 786, 891
+  size: 225, 150
+  orig: 225, 150
+  offset: 0, 0
+  index: -1
+huzao_3
+  rotate: true
+  xy: 930, 739
+  size: 150, 111
+  orig: 150, 111
+  offset: 0, 0
+  index: -1
+huzao_4
+  rotate: true
+  xy: 786, 749
+  size: 140, 142
+  orig: 140, 142
+  offset: 0, 0
+  index: -1
+huzao_5
+  rotate: true
+  xy: 786, 506
+  size: 115, 127
+  orig: 115, 127
+  offset: 0, 0
+  index: -1
+huzao_6
+  rotate: true
+  xy: 915, 450
+  size: 143, 71
+  orig: 143, 71
+  offset: 0, 0
+  index: -1
+huzao_7
+  rotate: true
+  xy: 705, 431
+  size: 135, 66
+  orig: 135, 66
+  offset: 0, 0
+  index: -1
+huzao_8
+  rotate: true
+  xy: 920, 595
+  size: 142, 103
+  orig: 142, 103
+  offset: 0, 0
+  index: -1
+huzao_9
+  rotate: true
+  xy: 786, 623
+  size: 124, 132
+  orig: 124, 132
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,27 @@
+
+feidan.png
+size: 449,141
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+feidan
+  rotate: false
+  xy: 382, 2
+  size: 65, 137
+  orig: 65, 137
+  offset: 0, 0
+  index: -1
+feidan2
+  rotate: false
+  xy: 300, 2
+  size: 80, 137
+  orig: 80, 137
+  offset: 0, 0
+  index: -1
+feidan3
+  rotate: true
+  xy: 2, 25
+  size: 114, 296
+  orig: 114, 296
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,48 @@
+
+pt_texiao1.png
+size: 118,79
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jt1
+  rotate: true
+  xy: 76, 47
+  size: 30, 40
+  orig: 30, 40
+  offset: 0, 0
+  index: -1
+jt2
+  rotate: true
+  xy: 54, 2
+  size: 43, 60
+  orig: 43, 60
+  offset: 0, 0
+  index: -1
+jt3
+  rotate: true
+  xy: 2, 14
+  size: 36, 50
+  orig: 36, 50
+  offset: 0, 0
+  index: -1
+x4
+  rotate: false
+  xy: 2, 59
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+x5
+  rotate: false
+  xy: 22, 52
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+x6
+  rotate: false
+  xy: 49, 52
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
