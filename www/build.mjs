@@ -346,7 +346,9 @@ function buildHome() {
 
   const tags = allTags().slice(0, 18);
   const tagCloud = `<div class="tagcloud">${tags.map(t => `<a class="t" href="/t/${t.slug}.html">${esc(t.name)} <em>${t.count}</em></a>`).join('')}</div>`;
-  const heroArt = featured.slice(0, 3).map(g => `<img src="${coverUrl(g)}" alt="${esc(g.title)} cover" loading="lazy">`).join('');
+  const heroArt = featured.slice(0, 3).map((g, i) => i === 0
+    ? `<img src="${coverUrl(g)}" alt="${esc(g.title)} cover" fetchpriority="high">`
+    : `<img src="${coverUrl(g)}" alt="${esc(g.title)} cover" loading="lazy">`).join('');
   const faqHtml = `<div class="faq">${HOME_FAQ.map(f => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</div>`;
   const faqLd = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: HOME_FAQ.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
 
@@ -468,7 +470,14 @@ function buildDetail(g) {
   const dlShort = dlBase >= 1000 ? Math.floor(dlBase / 1000) + 'K+' : String(dlBase);
   const catHref = cat ? '/c/' + cat.slug + '.html' : '/#all';
   const url = `https://${SITE.domain}/g/${g.slug}.html`;
-  const desc = (g.description || '').slice(0, 155);
+  const premise = (g.description || '').replace(/\s+$/g, '');
+  const desc = `Play ${g.title} free online — no download, no sign-up. Instant browser game on mobile & desktop. ${premise}`.slice(0, 157);
+  const seoFaq = [
+    { q: `How do I play ${g.title} online?`, a: `Just press Play Now — ${g.title} loads instantly in your web browser on ${SITE.name}. No download, install or account is required.` },
+    { q: `Can I play ${g.title} free online without downloading?`, a: `Yes. ${g.title} runs directly in the browser on ${SITE.name}, so it is unblocked, free and there is nothing to download or install on your device.` }
+  ];
+  const faqList = [...(g.faq || [])];
+  for (const f of seoFaq) if (!faqList.some(x => x.q === f.q)) faqList.push(f);
   const jsonld = {
     '@context': 'https://schema.org',
     '@type': 'VideoGame',
@@ -483,6 +492,8 @@ function buildDetail(g) {
     author: { '@type': 'Organization', name: g.developer || SITE.name },
     publisher: { '@type': 'Organization', name: g.developer || SITE.name },
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
+    playMode: 'FreeToPlay',
+    potentialAction: { '@type': 'PlayAction', target: url, name: `Play ${g.title} online` },
     aggregateRating: { '@type': 'AggregateRating', ratingValue: rev.avg.toFixed(1), reviewCount: rev.count, bestRating: '5', worstRating: '1' }
   };
   const bcrumb = {
@@ -500,7 +511,7 @@ function buildDetail(g) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>${esc(g.title)} — Play Free on ${esc(SITE.name)}</title>
+<title>${esc(g.title)} — Play Free Online, No Download | ${esc(SITE.name)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${url}">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -509,18 +520,18 @@ ${HEAD_ICONS}
 <meta name="theme-color" content="#0B1020">
 <meta property="og:type" content="game">
 <meta property="og:site_name" content="${esc(SITE.name)}">
-<meta property="og:title" content="${esc(g.title)} — Play Free">
+<meta property="og:title" content="${esc(g.title)} — Play Free Online">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="https://${esc(SITE.domain)}${g.banner ? '/assets/covers/' + g.banner : coverUrl(g)}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${esc(g.title)} — Play Free">
+<meta name="twitter:title" content="${esc(g.title)} — Play Free Online">
 <meta name="twitter:description" content="${esc(desc)}">
 <meta name="twitter:image" content="https://${esc(SITE.domain)}${g.banner ? '/assets/covers/' + g.banner : coverUrl(g)}">
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <script type="application/ld+json">${JSON.stringify(bcrumb)}</script>
 ${g.controls && g.controls.length ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to play ' + g.title, step: g.controls.map((c, i) => ({ '@type': 'HowToStep', position: i + 1, text: c })) })}</script>` : ''}
-${g.faq && g.faq.length ? `<script type="application/ld+json">${JSON.stringify({ '@context':'https://schema.org','@type':'FAQPage', mainEntity: g.faq.map(f => ({ '@type':'Question', name: f.q, acceptedAnswer: { '@type':'Answer', text: f.a } })) })}</script>` : ''}
+${faqList && faqList.length ? `<script type="application/ld+json">${JSON.stringify({ '@context':'https://schema.org','@type':'FAQPage', mainEntity: faqList.map(f => ({ '@type':'Question', name: f.q, acceptedAnswer: { '@type':'Answer', text: f.a } })) })}</script>` : ''}
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -559,14 +570,14 @@ ${topbar('')}
     <div class="detail-main">
       <h2>About ${esc(g.title)}</h2>
       <p class="desc">${esc(g.description)}</p>
-      <p>If you enjoy ${esc(g.category.toLowerCase())} games, you're in the right place — ${esc(g.title)} is optimized for touch and keyboard alike, loads in seconds and stays free to play forever.</p>
+      <p>${esc(g.title)} is optimized for touch and keyboard alike, loads in seconds and stays free to play forever — no download and no sign-up. If you enjoy ${(g.tags || []).slice(0, 3).map(t => esc(t)).join(', ') || esc(g.category.toLowerCase())} games, you can play ${esc(g.title)} online right now in your browser on phone, tablet or desktop.</p>
       ${g.banner ? `<h2>Screenshot</h2><div class="shot"><img src="/assets/covers/${g.banner}" alt="${esc(g.title)} gameplay screenshot" loading="lazy"></div>` : ''}
       <h2>How to Play</h2>
       <ol class="controls">${(g.controls || []).map(c => `<li>${esc(c)}</li>`).join('')}</ol>
       <h2>Features</h2>
       <ul class="feat-list">${featuresFor(g).map(f => `<li>${esc(f)}</li>`).join('')}</ul>
       <h2>Frequently Asked Questions</h2>
-      <div class="faq">${(g.faq || []).map(f => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</div>
+      <div class="faq">${faqList.map(f => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</div>
       ${related.length ? `<h2>More ${esc(g.category)} Games <a class="more" href="${catHref}" style="float:right">View all</a></h2><div class="grid">${related.map(cardHtml).join('')}</div>` : ''}
     </div>
     <aside class="detail-side">
