@@ -183,6 +183,28 @@ const CAT_FAQ = {
 const HEAD_ICONS = `<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">`;
 
+/* ---------- monetization + analytics (AdSense auto ads + Google CMP + GA4) ---------- */
+function headMonetization(opts = {}) {
+  let out = '';
+  const client = SITE.adsense;
+  if (opts.ads !== false && client) {
+    const pub = String(client).replace(/^ca-/, '');
+    out += `\n<!-- Google AdSense: auto ads -->
+<meta name="google-adsense-account" content="${esc(client)}">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${esc(client)}" crossorigin="anonymous"></script>
+<!-- Google certified CMP — ad privacy consent message (GDPR / CCPA) -->
+<script async src="https://fundingchoicesmessages.google.com/i/${esc(pub)}?ers=1"></script>
+<script>(function s(){if(!window.frames.googlefcPresent){if(document.body){var f=document.createElement('iframe');f.style.cssText='display:none';f.name='googlefcPresent';document.body.appendChild(f);}else{setTimeout(s,0);}}})();</script>`;
+  }
+  const ga = SITE.ga;
+  if (ga) {
+    out += `\n<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(ga)}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(ga)}');</script>`;
+  }
+  return out;
+}
+
 function logoInline() {
   return `<a class="logo" href="/" aria-label="Tapzens home"><img src="/assets/logo.svg" alt="Tapzens" width="30" height="30"><span class="word">Tapzens</span></a>`;
 }
@@ -377,6 +399,7 @@ function buildHome() {
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"${esc(SITE.name)}","url":"https://${esc(SITE.domain)}/","logo":"https://${esc(SITE.domain)}/assets/logo.png"}</script>
 <script type="application/ld+json">${JSON.stringify({ '@context':'https://schema.org','@type':'ItemList', name: SITE.name + ' Free Online Games', itemListElement: games.map((g,i)=>({ '@type':'ListItem', position:i+1, url:`https://${SITE.domain}/g/${g.slug}.html`, name:g.title })) })}</script>
 <script type="application/ld+json">${faqLd}</script>
+${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -547,6 +570,7 @@ ${HEAD_ICONS}
 <script type="application/ld+json">${JSON.stringify(bcrumb)}</script>
 ${g.controls && g.controls.length ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to play ' + g.title, step: g.controls.map((c, i) => ({ '@type': 'HowToStep', position: i + 1, text: c })) })}</script>` : ''}
 ${faqList && faqList.length ? `<script type="application/ld+json">${JSON.stringify({ '@context':'https://schema.org','@type':'FAQPage', mainEntity: faqList.map(f => ({ '@type':'Question', name: f.q, acceptedAnswer: { '@type':'Answer', text: f.a } })) })}</script>` : ''}
+${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -646,7 +670,7 @@ function buildDetails() {
 }
 
 /* ---------- static pages ---------- */
-function buildStaticPage({ slug, title, desc, h1, body, navActive = '', faq = [] }) {
+function buildStaticPage({ slug, title, desc, h1, body, navActive = '', faq = [], ads = true }) {
   const url = 'https://' + SITE.domain + '/' + slug + '.html';
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -669,6 +693,7 @@ ${HEAD_ICONS}
 <meta name="twitter:card" content="summary">
 <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: title, url, description: desc, isPartOf: { '@type': 'WebSite', name: SITE.name, url: 'https://' + SITE.domain + '/' } })}</script>
 ${faq.length ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })}</script>` : ''}
+${headMonetization({ ads })}
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -985,8 +1010,8 @@ function buildStaticPages() {
   buildStaticPage({ slug: 'partnerships', title: 'Partnerships — Tapzens', desc: 'Partner with Tapzens — for game developers, publishers, and brands looking to reach casual gamers worldwide.', h1: 'Partnerships', body: partnershipsBody });
   buildStaticPage({ slug: 'news', title: 'News & Updates — Tapzens', desc: 'What\'s new on Tapzens — new game releases, features and announcements from the free online games portal.', h1: 'News', body: newsBody });
   buildStaticPage({ slug: 'tags', title: 'All Tags — Tapzens', desc: 'Explore every game tag on Tapzens, A to Z — match-3, sort, relaxing, arcade and more. Jump straight to the games you love.', h1: 'All Tags', body: tagsBody });
-  buildStaticPage({ slug: 'privacy-policy', title: 'Privacy Policy — Tapzens', desc: 'How Tapzens handles privacy: no accounts, no tracking cookies, local-only game data. Read our full privacy policy.', h1: 'Privacy Policy', body: privacyBody });
-  buildStaticPage({ slug: 'terms-of-service', title: 'Terms of Service — Tapzens', desc: 'The terms that govern your use of Tapzens, the free online games portal. Fair, simple and player-friendly.', h1: 'Terms of Service', body: termsBody });
+  buildStaticPage({ slug: 'privacy-policy', title: 'Privacy Policy — Tapzens', desc: 'How Tapzens handles privacy: no accounts, no tracking cookies, local-only game data. Read our full privacy policy.', h1: 'Privacy Policy', body: privacyBody, ads: false });
+  buildStaticPage({ slug: 'terms-of-service', title: 'Terms of Service — Tapzens', desc: 'The terms that govern your use of Tapzens, the free online games portal. Fair, simple and player-friendly.', h1: 'Terms of Service', body: termsBody, ads: false });
   console.log('7 static pages generated');
 }
 
@@ -1036,6 +1061,7 @@ ${HEAD_ICONS}
 <meta name="twitter:card" content="summary">
 <script type="application/ld+json">${JSON.stringify(bcrumb)}</script>
 <script type="application/ld+json">${JSON.stringify(itemList)}</script>
+${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -1114,6 +1140,7 @@ ${HEAD_ICONS}
 <meta name="twitter:card" content="summary">
 <script type="application/ld+json">${JSON.stringify(bcrumb)}</script>
 <script type="application/ld+json">${JSON.stringify(itemList)}</script>
+${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
