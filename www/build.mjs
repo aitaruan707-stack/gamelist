@@ -471,7 +471,22 @@ function buildDetail(g) {
   const catHref = cat ? '/c/' + cat.slug + '.html' : '/#all';
   const url = `https://${SITE.domain}/g/${g.slug}.html`;
   const premise = (g.description || '').replace(/\s+$/g, '');
-  const desc = `Play ${g.title} free online — no download, no sign-up. Instant browser game on mobile & desktop. ${premise}`.slice(0, 157);
+  const kw = `Play ${g.title} free online — no download, works on mobile & desktop.`;
+  let desc = premise ? `${premise} ${kw}` : kw;
+  if (desc.length > 155) {
+    const room = 155 - kw.length - 1;
+    if (room > 60) {
+      let head = premise.slice(0, room + 1);
+      const lastPeriod = head.lastIndexOf('.');
+      const lastSpace = head.lastIndexOf(' ');
+      if (lastPeriod >= 40) head = head.slice(0, lastPeriod + 1);
+      else if (lastSpace > 40) head = head.slice(0, lastSpace);
+      head = head.replace(/[.,;:\s]+$/g, '') + '.';
+      desc = `${head} ${kw}`;
+    } else {
+      desc = kw.slice(0, 155);
+    }
+  }
   const seoFaq = [
     { q: `How do I play ${g.title} online?`, a: `Just press Play Now — ${g.title} loads instantly in your web browser on ${SITE.name}. No download, install or account is required.` },
     { q: `Can I play ${g.title} free online without downloading?`, a: `Yes. ${g.title} runs directly in the browser on ${SITE.name}, so it is unblocked, free and there is nothing to download or install on your device.` }
