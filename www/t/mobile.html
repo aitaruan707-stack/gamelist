@@ -21,12 +21,23 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tapzens.com/"},{"@type":"ListItem","position":2,"name":"mobile Games","item":"https://tapzens.com/t/mobile.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"mobile Games","itemListElement":[{"@type":"ListItem","position":1,"url":"https://tapzens.com/g/puzzleyarnfun.html","name":"Puzzle Yarn Fun"},{"@type":"ListItem","position":2,"url":"https://tapzens.com/g/puzzlewatersort.html","name":"Puzzle: Water Sort"},{"@type":"ListItem","position":3,"url":"https://tapzens.com/g/chromajam.html","name":"Chroma Jam"},{"@type":"ListItem","position":4,"url":"https://tapzens.com/g/hunterevolveuprising.html","name":"Hunter: Evolve Uprising"},{"@type":"ListItem","position":5,"url":"https://tapzens.com/g/acestrike.html","name":"Ace Strike"},{"@type":"ListItem","position":6,"url":"https://tapzens.com/g/smashblocks.html","name":"Smash Blocks"},{"@type":"ListItem","position":7,"url":"https://tapzens.com/g/bubblesafari.html","name":"Bubble Safari"},{"@type":"ListItem","position":8,"url":"https://tapzens.com/g/spinscrewjam.html","name":"Spin Screw Jam"},{"@type":"ListItem","position":9,"url":"https://tapzens.com/g/puzzlehex.html","name":"Puzzle Hex"},{"@type":"ListItem","position":10,"url":"https://tapzens.com/g/blockpuzzlesavegirl.html","name":"Block Puzzle: Save Girl"},{"@type":"ListItem","position":11,"url":"https://tapzens.com/g/royalmatcher.html","name":"Royal Matcher"},{"@type":"ListItem","position":12,"url":"https://tapzens.com/g/arrowmazesolve.html","name":"Arrow Maze Solve"},{"@type":"ListItem","position":13,"url":"https://tapzens.com/g/wizardsort.html","name":"Wizard Sort"},{"@type":"ListItem","position":14,"url":"https://tapzens.com/g/groceryadventuremaster.html","name":"Grocery Adventure: Master"},{"@type":"ListItem","position":15,"url":"https://tapzens.com/g/zombiedown.html","name":"Zombie Down"},{"@type":"ListItem","position":16,"url":"https://tapzens.com/g/tankera.html","name":"Tank Era"},{"@type":"ListItem","position":17,"url":"https://tapzens.com/g/shiftdashreac.html","name":"Shift Dash Reac"},{"@type":"ListItem","position":18,"url":"https://tapzens.com/g/satisfyingstack.html","name":"Satisfying Stack"}]}</script>
 
+<!-- consent bridge bootstrap: synchronous on purpose — must run before the CMP and any Google tag -->
+<script>
+window.googlefc=window.googlefc||{};window.googlefc.callbackQueue=window.googlefc.callbackQueue||[];
+window.__tzConsentKey='tapzens:consent:v1';
+(function(){var K=window.__tzConsentKey;window.dataLayer=window.dataLayer||[];
+function g(){dataLayer.push(arguments)}window.gtag=window.gtag||g;
+try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.consent==='object'){g('consent','default',c.consent);}}catch(e){}
+})();
+</script>
 <!-- Google AdSense: auto ads -->
 <meta name="google-adsense-account" content="ca-pub-3338178325446150">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3338178325446150" crossorigin="anonymous"></script>
 <!-- Google certified CMP — ad privacy consent message (GDPR / CCPA) -->
 <script async src="https://fundingchoicesmessages.google.com/i/pub-3338178325446150?ers=1"></script>
 <script>(function s(){if(!window.frames.googlefcPresent){if(document.body){var f=document.createElement('iframe');f.style.cssText='display:none';f.name='googlefcPresent';document.body.appendChild(f);}else{setTimeout(s,0);}}})();</script>
+<!-- consent bridge: persists the CMP decision and exposes the revocation entrypoint -->
+<script defer src="/assets/js/consent.js"></script>
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -257,11 +268,11 @@
       </div>
       <div class="foot-cols">
         <div class="foot-col"><h4>Explore</h4><a href="/">Home</a><a href="/#categories">Categories</a><a href="/#favorites">Favorites</a><a href="/#recent">Recent</a><a href="/news.html">News</a><a href="/tags.html">Tags</a></div>
-        <div class="foot-col"><h4>Company</h4><a href="/about.html">About Us</a><a href="/job.html">Careers</a><a href="/partnerships.html">Partnerships</a></div>
-        <div class="foot-col"><h4>Legal</h4><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a></div>
+        <div class="foot-col"><h4>Company</h4><a href="/about.html">About Us</a><a href="/job.html">Careers</a><a href="/partnerships.html">Partnerships</a><a href="/contact.html">Contact</a></div>
+        <div class="foot-col"><h4>Legal</h4><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a><a href="/privacy-policy.html#consent" data-consent-manage>Manage consent</a></div>
       </div>
     </div>
-    <div class="foot-bottom">&copy; 2026 Tapzens. All rights reserved.</div>
+    <div class="foot-bottom">&copy; 2026 Tapzens. All rights reserved. &nbsp;&middot;&nbsp; General audience (13+) &nbsp;&middot;&nbsp; <a href="/privacy-policy.html#consent" data-consent-manage>Ad privacy settings</a></div>
   </div></footer>
 <nav class="bottomnav">
     <a href="/" class=""><svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>

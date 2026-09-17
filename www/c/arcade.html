@@ -21,12 +21,23 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tapzens.com/"},{"@type":"ListItem","position":2,"name":"Arcade Games","item":"https://tapzens.com/c/arcade.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Arcade Games","description":"Quick-play retro-style arcade hits you can jump into instantly.","itemListElement":[{"@type":"ListItem","position":1,"url":"https://tapzens.com/g/smashblocks.html","name":"Smash Blocks"},{"@type":"ListItem","position":2,"url":"https://tapzens.com/g/shiftdashreac.html","name":"Shift Dash Reac"}]}</script>
 
+<!-- consent bridge bootstrap: synchronous on purpose — must run before the CMP and any Google tag -->
+<script>
+window.googlefc=window.googlefc||{};window.googlefc.callbackQueue=window.googlefc.callbackQueue||[];
+window.__tzConsentKey='tapzens:consent:v1';
+(function(){var K=window.__tzConsentKey;window.dataLayer=window.dataLayer||[];
+function g(){dataLayer.push(arguments)}window.gtag=window.gtag||g;
+try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.consent==='object'){g('consent','default',c.consent);}}catch(e){}
+})();
+</script>
 <!-- Google AdSense: auto ads -->
 <meta name="google-adsense-account" content="ca-pub-3338178325446150">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3338178325446150" crossorigin="anonymous"></script>
 <!-- Google certified CMP — ad privacy consent message (GDPR / CCPA) -->
 <script async src="https://fundingchoicesmessages.google.com/i/pub-3338178325446150?ers=1"></script>
 <script>(function s(){if(!window.frames.googlefcPresent){if(document.body){var f=document.createElement('iframe');f.style.cssText='display:none';f.name='googlefcPresent';document.body.appendChild(f);}else{setTimeout(s,0);}}})();</script>
+<!-- consent bridge: persists the CMP decision and exposes the revocation entrypoint -->
+<script defer src="/assets/js/consent.js"></script>
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -86,8 +97,8 @@
   </section>
   <section class="block">
     <div class="section-head"><h2>Arcade Games — FAQ</h2></div>
-    <div class="faq"><details><summary>What makes a game an &quot;arcade&quot; game?</summary><p>Arcade games focus on quick, satisfying loops you can pick up in seconds — high-score chasing, snappy controls and instant replayability.</p></details><details><summary>Are arcade games kid-friendly?</summary><p>Most arcade titles on Tapzens are family-friendly. Each game page lists its tags, so you can check the style before playing.</p></details><details><summary>Can I play arcade games offline?</summary><p>Tapzens runs in your browser, so you need an internet connection — but every game loads in seconds and needs no install.</p></details><details><summary>What&#39;s the most popular arcade game?</summary><p>Check the Featured rail on the home page — we spotlight the most-loved arcade and casual hits every month.</p></details></div>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What makes a game an \"arcade\" game?","acceptedAnswer":{"@type":"Answer","text":"Arcade games focus on quick, satisfying loops you can pick up in seconds — high-score chasing, snappy controls and instant replayability."}},{"@type":"Question","name":"Are arcade games kid-friendly?","acceptedAnswer":{"@type":"Answer","text":"Most arcade titles on Tapzens are family-friendly. Each game page lists its tags, so you can check the style before playing."}},{"@type":"Question","name":"Can I play arcade games offline?","acceptedAnswer":{"@type":"Answer","text":"Tapzens runs in your browser, so you need an internet connection — but every game loads in seconds and needs no install."}},{"@type":"Question","name":"What's the most popular arcade game?","acceptedAnswer":{"@type":"Answer","text":"Check the Featured rail on the home page — we spotlight the most-loved arcade and casual hits every month."}}]}</script>
+    <div class="faq"><details><summary>What makes a game an &quot;arcade&quot; game?</summary><p>Arcade games focus on quick, satisfying loops you can pick up in seconds — high-score chasing, snappy controls and instant replayability.</p></details><details><summary>Who are arcade games on Tapzens aimed at?</summary><p>The catalog is built for a general audience aged 13 and over. Each game page lists its tags, so you can check the style and difficulty before playing.</p></details><details><summary>Can I play arcade games offline?</summary><p>Tapzens runs in your browser, so you need an internet connection — but every game loads in seconds and needs no install.</p></details><details><summary>What&#39;s the most popular arcade game?</summary><p>Check the Featured rail on the home page — we spotlight the most-loved arcade and casual hits every month.</p></details></div>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What makes a game an \"arcade\" game?","acceptedAnswer":{"@type":"Answer","text":"Arcade games focus on quick, satisfying loops you can pick up in seconds — high-score chasing, snappy controls and instant replayability."}},{"@type":"Question","name":"Who are arcade games on Tapzens aimed at?","acceptedAnswer":{"@type":"Answer","text":"The catalog is built for a general audience aged 13 and over. Each game page lists its tags, so you can check the style and difficulty before playing."}},{"@type":"Question","name":"Can I play arcade games offline?","acceptedAnswer":{"@type":"Answer","text":"Tapzens runs in your browser, so you need an internet connection — but every game loads in seconds and needs no install."}},{"@type":"Question","name":"What's the most popular arcade game?","acceptedAnswer":{"@type":"Answer","text":"Check the Featured rail on the home page — we spotlight the most-loved arcade and casual hits every month."}}]}</script>
   </section>
   <section class="block seo-intro">
     <div class="section-head"><h2>About Arcade games</h2></div>
@@ -103,11 +114,11 @@
       </div>
       <div class="foot-cols">
         <div class="foot-col"><h4>Explore</h4><a href="/">Home</a><a href="/#categories">Categories</a><a href="/#favorites">Favorites</a><a href="/#recent">Recent</a><a href="/news.html">News</a><a href="/tags.html">Tags</a></div>
-        <div class="foot-col"><h4>Company</h4><a href="/about.html">About Us</a><a href="/job.html">Careers</a><a href="/partnerships.html">Partnerships</a></div>
-        <div class="foot-col"><h4>Legal</h4><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a></div>
+        <div class="foot-col"><h4>Company</h4><a href="/about.html">About Us</a><a href="/job.html">Careers</a><a href="/partnerships.html">Partnerships</a><a href="/contact.html">Contact</a></div>
+        <div class="foot-col"><h4>Legal</h4><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a><a href="/privacy-policy.html#consent" data-consent-manage>Manage consent</a></div>
       </div>
     </div>
-    <div class="foot-bottom">&copy; 2026 Tapzens. All rights reserved.</div>
+    <div class="foot-bottom">&copy; 2026 Tapzens. All rights reserved. &nbsp;&middot;&nbsp; General audience (13+) &nbsp;&middot;&nbsp; <a href="/privacy-policy.html#consent" data-consent-manage>Ad privacy settings</a></div>
   </div></footer>
 <nav class="bottomnav">
     <a href="/" class=""><svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>

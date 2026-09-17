@@ -4,7 +4,7 @@
    copies game cover icons and splash images, and generates SVG placeholder
    covers for games without an icon. Run: node build.mjs */
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readdirSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, resolve, relative, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -155,7 +155,7 @@ const HOME_FAQ = [
   { q: 'Can I play Tapzens games on my phone?', a: 'Absolutely. Every game is touch-optimized and mobile-friendly, from portrait puzzle games to landscape arcade action.' },
   { q: 'How often are new games added?', a: 'We add new curated games regularly — check the news page or come back often for the latest releases.' },
   { q: 'Do I need an account or sign-up?', a: 'No accounts, ever. Favorites and recently played games are saved privately in your own browser.' },
-  { q: 'Are the games safe for kids?', a: 'Our catalog is family-friendly with no chat, no payment prompts and no external downloads. Parents are welcome to join in too.' },
+  { q: 'Who are Tapzens games designed for?', a: 'Tapzens is a general-audience games site intended for players aged 13 and over, and it is not directed at children under 13. There is no chat, no payment prompts and no external downloads, and ad personalization can be switched off at any time from Manage consent.' },
   { q: 'How do my favorites and progress work?', a: 'They live only in your browser\'s local storage — private to your device, and removable anytime by clearing site data.' },
   { q: 'Can I play offline?', a: 'Tapzens lives in your browser, so you\'ll need a connection — but every game loads in seconds and never needs an install.' }
 ];
@@ -174,7 +174,7 @@ const CAT_FAQ = {
   ],
   arcade: [
     { q: 'What makes a game an "arcade" game?', a: 'Arcade games focus on quick, satisfying loops you can pick up in seconds — high-score chasing, snappy controls and instant replayability.' },
-    { q: 'Are arcade games kid-friendly?', a: 'Most arcade titles on Tapzens are family-friendly. Each game page lists its tags, so you can check the style before playing.' },
+    { q: 'Who are arcade games on Tapzens aimed at?', a: 'The catalog is built for a general audience aged 13 and over. Each game page lists its tags, so you can check the style and difficulty before playing.' },
     { q: 'Can I play arcade games offline?', a: 'Tapzens runs in your browser, so you need an internet connection — but every game loads in seconds and needs no install.' },
     { q: 'What\'s the most popular arcade game?', a: 'Check the Featured rail on the home page — we spotlight the most-loved arcade and casual hits every month.' }
   ]
@@ -183,22 +183,64 @@ const CAT_FAQ = {
 const HEAD_ICONS = `<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">`;
 
-/* ---------- monetization + analytics (AdSense auto ads + Google CMP + GA4) ---------- */
+/* ---------- consent + monetization (AdSense auto ads + Google certified CMP + GA4) ---------- */
+const CONSENT = Object.assign(
+  { enabled: true, cmp: 'google', audience: 'general-13plus', persistKey: 'tapzens:consent:v1' },
+  SITE.consent || {}
+);
+const AUDIENCE_LABEL = CONSENT.audience === 'made-for-kids'
+  ? 'Made for kids'
+  : CONSENT.audience === 'mixed'
+    ? 'Mixed audience'
+    : 'General audience (13+)';
+const CONSENT_KEY = /^[A-Za-z0-9:_.-]{1,64}$/.test(String(CONSENT.persistKey))
+  ? String(CONSENT.persistKey)
+  : 'tapzens:consent:v1';
+
+/* Runs synchronously BEFORE the CMP and before any Google ad/analytics tag, so the
+   consent decision captured on a previous visit is already in place when those tags
+   initialize. Deliberately does NOT hard-code `denied`: this is a static site with no
+   geo detection, so a global denied default would silently downgrade ads worldwide.
+   Region targeting is the certified CMP's own job; we only restore our own cache. */
+function consentBootstrap() {
+  if (CONSENT.enabled === false) return '';
+  return `<!-- consent bridge bootstrap: synchronous on purpose — must run before the CMP and any Google tag -->
+<script>
+window.googlefc=window.googlefc||{};window.googlefc.callbackQueue=window.googlefc.callbackQueue||[];
+window.__tzConsentKey='${CONSENT_KEY}';
+(function(){var K=window.__tzConsentKey;window.dataLayer=window.dataLayer||[];
+function g(){dataLayer.push(arguments)}window.gtag=window.gtag||g;
+try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.consent==='object'){g('consent','default',c.consent);}}catch(e){}
+})();
+</script>`;
+}
+
+/* opts.ads: true (default) ads + CMP | false nothing | 'cmp' CMP only (legal pages,
+   so the "Manage consent" entrypoint keeps working where no ads are served). */
 function headMonetization(opts = {}) {
   let out = '';
   const client = SITE.adsense;
-  if (opts.ads !== false && client) {
+  const mode = CONSENT.enabled === false ? false : opts.ads === undefined ? true : opts.ads;
+  const wantAds = mode === true;
+  const wantCmp = mode === true || mode === 'cmp';
+  const ga = CONSENT.enabled === false ? '' : SITE.ga;
+  if (wantCmp || ga) out += '\n' + consentBootstrap();
+  if (wantCmp && client) {
     const pub = String(client).replace(/^ca-/, '');
-    out += `\n<!-- Google AdSense: auto ads -->
+    if (wantAds) out += `
+<!-- Google AdSense: auto ads -->
 <meta name="google-adsense-account" content="${esc(client)}">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${esc(client)}" crossorigin="anonymous"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${esc(client)}" crossorigin="anonymous"></script>`;
+    out += `
 <!-- Google certified CMP — ad privacy consent message (GDPR / CCPA) -->
 <script async src="https://fundingchoicesmessages.google.com/i/${esc(pub)}?ers=1"></script>
-<script>(function s(){if(!window.frames.googlefcPresent){if(document.body){var f=document.createElement('iframe');f.style.cssText='display:none';f.name='googlefcPresent';document.body.appendChild(f);}else{setTimeout(s,0);}}})();</script>`;
+<script>(function s(){if(!window.frames.googlefcPresent){if(document.body){var f=document.createElement('iframe');f.style.cssText='display:none';f.name='googlefcPresent';document.body.appendChild(f);}else{setTimeout(s,0);}}})();</script>
+<!-- consent bridge: persists the CMP decision and exposes the revocation entrypoint -->
+<script defer src="/assets/js/consent.js"></script>`;
   }
-  const ga = SITE.ga;
   if (ga) {
-    out += `\n<!-- Google Analytics 4 -->
+    out += `
+<!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=${esc(ga)}"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${esc(ga)}');</script>`;
   }
@@ -249,11 +291,11 @@ function footer() {
       </div>
       <div class="foot-cols">
         <div class="foot-col"><h4>Explore</h4><a href="/">Home</a><a href="/#categories">Categories</a><a href="/#favorites">Favorites</a><a href="/#recent">Recent</a><a href="/news.html">News</a><a href="/tags.html">Tags</a></div>
-        <div class="foot-col"><h4>Company</h4><a href="/about.html">About Us</a><a href="/job.html">Careers</a><a href="/partnerships.html">Partnerships</a></div>
-        <div class="foot-col"><h4>Legal</h4><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a></div>
+        <div class="foot-col"><h4>Company</h4><a href="/about.html">About Us</a><a href="/job.html">Careers</a><a href="/partnerships.html">Partnerships</a><a href="/contact.html">Contact</a></div>
+        <div class="foot-col"><h4>Legal</h4><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a><a href="/privacy-policy.html#consent" data-consent-manage>Manage consent</a></div>
       </div>
     </div>
-    <div class="foot-bottom">&copy; ${year} ${esc(SITE.name)}. All rights reserved.</div>
+    <div class="foot-bottom">&copy; ${year} ${esc(SITE.name)}. All rights reserved. &nbsp;&middot;&nbsp; ${AUDIENCE_LABEL} &nbsp;&middot;&nbsp; <a href="/privacy-policy.html#consent" data-consent-manage>Ad privacy settings</a></div>
   </div></footer>`;
 }
 
@@ -811,6 +853,26 @@ const partnershipsBody = `
 <p>Tell us about your game or campaign and we'll get back to you.</p>
 <p class="cta-mail">Email: <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></p>
 `;
+const contactBody = `
+<h1 class="static-h1">Contact Tapzens</h1>
+<p class="static-lead">Have a question, some feedback, a game to share, or a business enquiry? We read every message and reply by email — usually within one business day.</p>
+<div class="contact-card">
+  <b>Email</b>
+  <p>The fastest way to reach us. Send your note to the address below and we'll get back to you.</p>
+  <a class="mail-btn" href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>
+</div>
+<h2>What can we help with?</h2>
+<ul>
+  <li><b>Player support</b> — a game that won't load, a display issue on your device, or anything else that got in the way of your fun.</li>
+  <li><b>Feedback &amp; suggestions</b> — what you'd like to see on Tapzens, or which games you love.</li>
+  <li><b>Game submissions</b> — built a polished HTML5 game? <a href="/partnerships.html">Partner with us</a>.</li>
+  <li><b>Business &amp; advertising</b> — partnerships and campaigns are handled on our <a href="/partnerships.html">Partnerships</a> page.</li>
+  <li><b>Privacy &amp; reporting</b> — to exercise a data right or report a concern (including copyright / DMCA), see our <a href="/privacy-policy.html">Privacy Policy</a>.</li>
+</ul>
+<h2>Before you write</h2>
+<p>Tapzens is a free, no-account games portal, so we never ask for personal details. The best way to contact us is email at the address above — there is no phone line or physical support desk. For billing or ad-privacy questions relating to Google, please use <a href="https://myadcenter.google.com/" rel="noopener noreferrer">Google's Ad Center</a>.</p>
+<p class="cta-mail">Email: <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></p>
+`;
 const newsBody = (() => {
   const edits = [
     { date: '2026-08-28', tag: 'Site Update', title: 'Tapzens gets a fresh new look', text: 'A brand-new light theme, a redesigned home page, richer category and tag pages and a faster play screen. Every corner of the portal was rebuilt to be quicker, cleaner and easier on the eyes.', href: '/about.html' },
@@ -859,14 +921,15 @@ ${blocks}
 })();
 const privacyBody = `
 <h1 class="static-h1">Privacy Policy</h1>
-<p class="static-lead">Last updated: August 30, 2026. Tapzens is built to need as little of your data as possible — this page explains exactly what we collect, where it lives, and the choices you have.</p>
+<p class="static-lead">Last updated: September 10, 2026. Tapzens is built to need as little of your data as possible — this page explains exactly what we collect, which third parties are involved, and the choices you have.</p>
 <div class="tldr">
   <b class="h">Quick summary</b>
   <ul>
     <li>No accounts, no sign-ups — we never ask for your name, email or payment details.</li>
-    <li>No advertising or cross-site tracking cookies. Ever.</li>
+    <li>We run Google AdSense ads, so Google does set ad cookies — always behind a consent prompt in the EEA and UK.</li>
+    <li>You can review or withdraw that choice at any time via <a href="#consent" data-consent-manage>Manage consent</a>.</li>
     <li>Favorites and recent games live only in your browser, on your device.</li>
-    <li>Any analytics we run are anonymous and aggregated.</li>
+    <li>Our own Google Analytics is switched off; a few hosted game packages still carry the original developer's analytics tag — disclosed in section 6.</li>
   </ul>
 </div>
 <div class="toc">
@@ -875,16 +938,18 @@ const privacyBody = `
     <li><a href="#p-1">1. Introduction</a></li>
     <li><a href="#p-2">2. What we never collect</a></li>
     <li><a href="#p-3">3. What stays on your device</a></li>
-    <li><a href="#p-4">4. Cookies &amp; local storage</a></li>
-    <li><a href="#p-5">5. Analytics</a></li>
-    <li><a href="#p-6">6. How we use information</a></li>
-    <li><a href="#p-7">7. Third-party links &amp; content</a></li>
-    <li><a href="#p-8">8. Children's privacy</a></li>
-    <li><a href="#p-9">9. Data security</a></li>
-    <li><a href="#p-10">10. Retention &amp; your control</a></li>
-    <li><a href="#p-11">11. Your privacy rights</a></li>
-    <li><a href="#p-12">12. Changes to this policy</a></li>
-    <li><a href="#p-13">13. Contact</a></li>
+    <li><a href="#p-4">4. Local storage &amp; cookies</a></li>
+    <li><a href="#consent">5. Advertising &amp; your consent</a></li>
+    <li><a href="#p-6">6. Third parties &amp; data disclosure</a></li>
+    <li><a href="#p-7">7. Analytics</a></li>
+    <li><a href="#p-8">8. How we use information</a></li>
+    <li><a href="#p-9">9. Third-party links &amp; content</a></li>
+    <li><a href="#p-10">10. Audience &amp; children's privacy</a></li>
+    <li><a href="#p-11">11. Data security</a></li>
+    <li><a href="#p-12">12. Retention &amp; your control</a></li>
+    <li><a href="#p-13">13. Your privacy rights</a></li>
+    <li><a href="#p-14">14. Changes to this policy</a></li>
+    <li><a href="#p-15">15. Contact</a></li>
   </ol>
 </div>
 <h2 id="p-1">1. Introduction</h2>
@@ -892,33 +957,88 @@ const privacyBody = `
 <h2 id="p-2">2. What we never collect</h2>
 <ul>
   <li>We do not require registration, so we never collect names, emails, passwords or payment details.</li>
-  <li>We do not buy or sell personal information, and we do not share data with advertising networks.</li>
-  <li>We do not use cross-site tracking cookies or fingerprinting.</li>
+  <li>We do not buy or sell personal information, and we do not share your game progress with anyone.</li>
+  <li>We do not run our own cross-site tracking or browser fingerprinting.</li>
 </ul>
 <h2 id="p-3">3. What stays on your device</h2>
-<p>Features like <b>Favorites</b>, <b>Continue Playing</b> and interface preferences are stored in your browser's local storage. That data never leaves your device: we cannot read it, and it is not transmitted to our servers.</p>
-<h2 id="p-4">4. Cookies &amp; local storage</h2>
-<p>We set no advertising cookies. The only browser storage we use is functional local storage (see above), which you can inspect and delete at any time from your browser settings.</p>
-<h2 id="p-5">5. Analytics</h2>
-<p>If privacy-respecting analytics are enabled, they produce anonymous, aggregated numbers only — such as total page views, approximate region and device type — so we can tell which games are popular and which pages need work. These statistics cannot be traced back to you.</p>
-<h2 id="p-6">6. How we use information</h2>
+<p>Features like <b>Favorites</b>, <b>Continue Playing</b> and interface preferences are stored in your browser's local storage. That data never leaves your device: we cannot read it, and it is not transmitted to our servers. Your ad-consent choice is stored the same way.</p>
+<h2 id="p-4">4. Local storage &amp; cookies</h2>
+<p>We use two kinds of storage, and we are explicit about which is which:</p>
+<ul>
+  <li><b>Functional (ours).</b> Local storage for favorites, recently played games and your consent choice. No personal information, nothing transmitted.</li>
+  <li><b>Advertising (Google's).</b> Because this site is supported by Google AdSense, Google sets its own cookies to serve, measure and personalise ads. We do not read or control those cookies; they exist only where permitted by your consent.</li>
+</ul>
+<p>Every cookie is inspectable and removable from your browser settings, and clearing site data removes ours completely.</p>
+<h2 id="consent">5. Advertising &amp; your consent</h2>
+<p>Tapzens is free because of advertising. We use the <b>Google certified consent management platform</b> (Google's own CMP) to collect and honour ad-privacy consent.</p>
+<ul>
+  <li><b>EEA and UK visitors:</b> no personalised advertising cookies are used before you make a choice. The consent message appears first, and your decision decides whether ads are personalised, non-personalised, or unmeasured.</li>
+  <li><b>Everyone, everywhere:</b> you can change your mind later. Use <a href="#consent" data-consent-manage>Manage consent</a> in the footer, or open any page with <code>?showconsent=1</code> appended to the address.</li>
+  <li>Declining consent does not remove the games or the account-free experience; at most the ads you see become less relevant.</li>
+  <li>This commitment covers every tag we operate. The single third-party exception that is not yet consent-gated is disclosed in row 4 of section 6.</li>
+</ul>
+<p>We keep a copy of your decision in local storage so that we do not have to ask you again on every visit, and so that our own tags start up in the correct state. Clearing site data resets the question.</p>
+<h2 id="p-6">6. Third parties &amp; data disclosure</h2>
+<p>These are the only third-party services allowed to run on our ad-bearing pages. This table is the complete list — if a service is not in it, it does not load.</p>
+<table class="disc-table">
+  <caption>Ad-tech and measurement services in use</caption>
+  <thead>
+    <tr><th scope="col">Service</th><th scope="col">Purpose</th><th scope="col">Data involved</th><th scope="col">Consent required</th><th scope="col">Provider policy</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Google AdSense</b> (auto ads)</td>
+      <td>Serve, measure and personalise advertising</td>
+      <td>Cookies, IP address, ad interactions, device and browser signals</td>
+      <td>Yes — EEA/UK</td>
+      <td><a href="https://privacy.google.com/businesses/adsservices/" rel="noopener noreferrer">Google ads privacy</a></td>
+    </tr>
+    <tr>
+      <td><b>Google certified CMP</b> (Privacy &amp; messaging)</td>
+      <td>Collect and store your ad-privacy consent, incl. IAB TCF v2 signal</td>
+      <td>Consent record, approximate region for regulatory routing</td>
+      <td>It asks the question</td>
+      <td><a href="https://myadcenter.google.com/" rel="noopener noreferrer">Ad Center</a></td>
+    </tr>
+    <tr>
+      <td><b>Google Analytics 4</b> (ours)</td>
+      <td>Anonymous, aggregated usage statistics</td>
+      <td>Page views, device type, approximate region</td>
+      <td>Yes — when enabled</td>
+      <td><a href="https://business.safety.google/privacy/" rel="noopener noreferrer">Google privacy</a></td>
+    </tr>
+    <tr>
+      <td><b>Vendor analytics inside game packages</b></td>
+      <td>Usage statistics collected by the original game developer, not by us</td>
+      <td>Page view and device signals sent to that developer's analytics property</td>
+      <td>Not gated — on our removal list</td>
+      <td><a href="mailto:${CONTACT_EMAIL}">Report a concern</a></td>
+    </tr>
+  </tbody>
+</table>
+<p class="disc-note"><b>Current state, stated plainly:</b> our own Google Analytics is switched off, so row 3 is inactive. Row 4 is a real gap we have not finished cleaning — some games we host were shipped by their authors with their own analytics tag, and we are removing them package by package. Our build process scans every game package on each release and prints this list, so it cannot silently grow. The disclosure above follows the format used by app-store data-safety forms, so it stays useful if we ever wrap this site in a mobile app.</p>
+<h2 id="p-7">7. Analytics</h2>
+<p>No analytics is enabled at site level by us. If we enable it later, it will run only within your consent choice, will produce anonymous and aggregated numbers (page views, approximate region, device type) rather than anything identifying you, and this page will be updated first. The one exception today is the vendor analytics described in row 4 of section 6, which we do not operate and are in the process of removing.</p>
+<h2 id="p-8">8. How we use information</h2>
 <ul>
   <li>Aggregated analytics help us decide which games to add and which features to improve.</li>
   <li>Technical logs (such as error reports) are used only to keep the site running and secure.</li>
+  <li>Advertising data is used by Google to keep the site free; we do not receive or resell it.</li>
 </ul>
-<h2 id="p-7">7. Third-party links &amp; content</h2>
+<h2 id="p-9">9. Third-party links &amp; content</h2>
 <p>Some pages link to external sites (for example, app store listings). Once you leave tapzens.com, the privacy practices of those sites apply. We encourage you to read their policies.</p>
-<h2 id="p-8">8. Children's privacy</h2>
-<p>Our games are family-friendly and require no personal information to play. We do not knowingly collect personal information from anyone, including children under 13 — because we do not collect personal information at all.</p>
-<h2 id="p-9">9. Data security</h2>
+<h2 id="p-10">10. Audience &amp; children's privacy</h2>
+<p>Tapzens is a <b>general-audience</b> site designed for players aged 13 and over. It is <b>not directed at children under 13</b>, we do not target advertising at children, and we do not knowingly collect personal information from anyone, including children.</p>
+<p>Because we rely on advertising, some content on the site may be personalised based on browsing signals; that is why we describe our audience honestly rather than claiming to be a children's site. Parents who believe their child's information has reached us through an ad provider can ask us to help, and can use <a href="#consent" data-consent-manage>Manage consent</a> on this device to turn personalisation off.</p>
+<h2 id="p-11">11. Data security</h2>
 <p>The site is served over HTTPS, and because we hold essentially no personal data, there is essentially no personal data to breach. Game progress and favorites exist only in your own browser.</p>
-<h2 id="p-10">10. Retention &amp; your control</h2>
-<p>Local data stays until you clear it — clearing your browser's site data removes it completely. Aggregated analytics contain no personal identifiers and are retained only as long as they are useful.</p>
-<h2 id="p-11">11. Your privacy rights (GDPR / CCPA)</h2>
-<p>Because we do not hold personal information about you, there is normally nothing for us to access, correct or delete. If you believe we hold any information relating to you, or if you wish to exercise any right under the GDPR or CCPA, contact us and we will respond within 30 days.</p>
-<h2 id="p-12">12. Changes to this policy</h2>
-<p>If we update this policy we will post the new version on this page with a fresh "last updated" date. Material changes will be highlighted on the site.</p>
-<h2 id="p-13">13. Contact</h2>
+<h2 id="p-12">12. Retention &amp; your control</h2>
+<p>Local data stays until you clear it — clearing your browser's site data removes it completely, including your saved consent choice. Aggregated analytics contain no personal identifiers and are retained only as long as they are useful.</p>
+<h2 id="p-13">13. Your privacy rights (GDPR / CCPA)</h2>
+<p>We do not hold personal information about you, so there is normally nothing for us to access, correct or delete. Advertising data is held by Google under its own process: you can review and withdraw consent with <a href="#consent" data-consent-manage>Manage consent</a>, and you can exercise rights over Google-processed data via Google's <a href="https://myadcenter.google.com/" rel="noopener noreferrer">Ad Center</a>. If you believe we hold any information relating to you, or if you wish to exercise any right under the GDPR or CCPA, contact us and we will respond within 30 days.</p>
+<h2 id="p-14">14. Changes to this policy</h2>
+<p>If we update this policy we will post the new version on this page with a fresh "last updated" date. Material changes — in particular any new third-party service — will be highlighted on the site and reflected in the table in section 6.</p>
+<h2 id="p-15">15. Contact</h2>
 <div class="contact-card">
   <b>Questions?</b>
   <p>We read every message and usually reply within one business day.</p>
@@ -1008,11 +1128,14 @@ function buildStaticPages() {
     { q: 'How long does the process take?', a: 'From application to offer is typically two weeks. We keep it lean — no take-home marathons, no endless interview rounds.' }
   ] });
   buildStaticPage({ slug: 'partnerships', title: 'Partnerships — Tapzens', desc: 'Partner with Tapzens — for game developers, publishers, and brands looking to reach casual gamers worldwide.', h1: 'Partnerships', body: partnershipsBody });
+  buildStaticPage({ slug: 'contact', title: 'Contact Us — Tapzens', desc: 'Get in touch with Tapzens — email us for player support, feedback, game submissions, partnerships and privacy enquiries. We reply within one business day.', h1: 'Contact Us', body: contactBody });
   buildStaticPage({ slug: 'news', title: 'News & Updates — Tapzens', desc: 'What\'s new on Tapzens — new game releases, features and announcements from the free online games portal.', h1: 'News', body: newsBody });
   buildStaticPage({ slug: 'tags', title: 'All Tags — Tapzens', desc: 'Explore every game tag on Tapzens, A to Z — match-3, sort, relaxing, arcade and more. Jump straight to the games you love.', h1: 'All Tags', body: tagsBody });
-  buildStaticPage({ slug: 'privacy-policy', title: 'Privacy Policy — Tapzens', desc: 'How Tapzens handles privacy: no accounts, no tracking cookies, local-only game data. Read our full privacy policy.', h1: 'Privacy Policy', body: privacyBody, ads: false });
-  buildStaticPage({ slug: 'terms-of-service', title: 'Terms of Service — Tapzens', desc: 'The terms that govern your use of Tapzens, the free online games portal. Fair, simple and player-friendly.', h1: 'Terms of Service', body: termsBody, ads: false });
-  console.log('7 static pages generated');
+  /* legal pages serve no ads, but they still carry the CMP so the "Manage consent"
+     entrypoint in the footer can actually reopen the dialog from here */
+  buildStaticPage({ slug: 'privacy-policy', title: 'Privacy Policy — Tapzens', desc: 'How Tapzens handles privacy: no accounts, Google AdSense advertising behind a consent prompt, local-only game data, and how to change your ad-consent choice.', h1: 'Privacy Policy', body: privacyBody, ads: 'cmp' });
+  buildStaticPage({ slug: 'terms-of-service', title: 'Terms of Service — Tapzens', desc: 'The terms that govern your use of Tapzens, the free online games portal. Fair, simple and player-friendly.', h1: 'Terms of Service', body: termsBody, ads: 'cmp' });
+  console.log('8 static pages generated');
 }
 
 /* ---------- category page ---------- */
@@ -1182,7 +1305,7 @@ ${bottomNav('')}
 function buildSitemap() {
   const today = new Date().toISOString().slice(0, 10);
   const cats = data.categories || [];
-  const sp = ['about', 'job', 'partnerships', 'news', 'tags', 'privacy-policy', 'terms-of-service'];
+  const sp = ['about', 'job', 'partnerships', 'contact', 'news', 'tags', 'privacy-policy', 'terms-of-service'];
   const urls = [
     `\n  <url><loc>https://${SITE.domain}/</loc><lastmod>${today}</lastmod><priority>1.0</priority></url>`,
     ...cats.map(c => `\n  <url><loc>https://${SITE.domain}/c/${c.slug}.html</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>`),
@@ -1194,6 +1317,80 @@ function buildSitemap() {
   console.log('sitemap.xml generated');
 }
 
+/* ---------- compliance audit (read-only: flags trackers, never edits any file) ----------
+   Third-party endpoints can hide inside delivered game builds, where the page-level CMP
+   does not reach them (they run in the /play.html iframe). We cannot change game code, so
+   the build surfaces them on every run instead. */
+const TRACKER_URL_RE = /https?:\/\/[A-Za-z0-9._-]*(?:googletagmanager|doubleclick|googlesyndication|admob|topon|anythink|umeng|integralads|chartboost|appads|unity\.com|gameads)[A-Za-z0-9._\/-]*/gi;
+const GA_ID_RE = /\bG-[A-Z0-9]{6,}\b/g;
+const PUB_ID_RE = /\b(?:ca-)?pub-\d{10,16}\b/g;
+const ADMOB_UNIT_RE = /\bca-app-pub-\d{10,16}(?:\/\d+)?\b/g;
+const AUDIT_MAX_LINES = 25;
+
+function walkCodeFiles(dir, depth, out) {
+  if (depth > 7) return out;
+  let entries;
+  try { entries = readdirSync(dir, { withFileTypes: true }); } catch (e) { return out; }
+  for (const e of entries) {
+    const p = join(dir, e.name);
+    if (e.isDirectory()) walkCodeFiles(p, depth + 1, out);
+    else if (/\.(?:html?|js)$/i.test(e.name)) out.push(p);
+  }
+  return out;
+}
+
+function ownIds() {
+  const ids = new Set();
+  if (SITE.adsense) ids.add(String(SITE.adsense).replace(/^ca-/, '').replace(/^pub-/, ''));
+  if (SITE.ga) ids.add(String(SITE.ga));
+  return ids;
+}
+
+function auditTrackers() {
+  const roots = [dist('game'), resolve(ROOT, '..', 'puzzle-yarnfun')];
+  const mine = ownIds();
+  const findings = [];
+  let scanned = 0;
+  for (const root of roots) {
+    if (!existsSync(root)) continue;
+    const inGames = basename(root) === 'game';
+    for (const file of walkCodeFiles(root, 0, [])) {
+      let src;
+      try { src = readFileSync(file, 'utf8'); } catch (e) { continue; }
+      scanned++;
+      if (!/googletagmanager|doubleclick|googlesyndication|pub-|G-[A-Z0-9]{6,}/i.test(src)) continue;
+      const urls = [...new Set((src.match(TRACKER_URL_RE) || []).map((u) => u.replace(/["');,]+$/, '')))];
+      /* AdMob unit ids only fire through a host-app bridge (AitaBridge/aitaBridge),
+         which never exists in a browser — inert here, live the moment this is wrapped. */
+      const admob = src.match(ADMOB_UNIT_RE) || [];
+      const rest = src.replace(ADMOB_UNIT_RE, '');
+      const ids = new Set();
+      for (const m of rest.match(GA_ID_RE) || []) ids.add(m);
+      for (const m of rest.match(PUB_ID_RE) || []) ids.add(m);
+      const isOurs = (id) => mine.has(String(id).replace(/^(?:ca-|pub-)/, ''));
+      const foreign = [...ids].filter((id) => !isOurs(id));
+      if (!urls.length && !foreign.length && !admob.length) continue;
+      const loadsOnWeb = urls.some((u) => /googletagmanager|googlesyndication|doubleclick/i.test(u));
+      findings.push({
+        file: relative(ROOT, file),
+        scope: inGames ? 'game bundle' : 'standalone page',
+        level: loadsOnWeb ? 'RISK [web-tracker]  ' : 'INFO [native-bridge]',
+        tail: (inGames && loadsOnWeb ? 'loads on web, outside CMP reach' : admob.length && !loadsOnWeb ? `${admob.length} AdMob unit id(s), inert until wrapped in an app` : 'declared page tag'),
+        ids: [...new Set([...foreign, ...admob])].slice(0, 2).join(', ')
+      });
+    }
+  }
+  const risks = findings.filter((f) => f.level.startsWith('RISK')).length;
+  console.log(`compliance audit: ${scanned} code files scanned, ${findings.length} reference ad/tracking ids (${risks} load on the web)`);
+  if (!findings.length) return;
+  findings.sort((a, b) => (a.level < b.level ? 1 : a.level > b.level ? -1 : a.file < b.file ? -1 : 1));
+  findings.slice(0, AUDIT_MAX_LINES).forEach((f) => {
+    console.log(`  ${f.level} ${f.file}  (${f.scope}: ${f.tail})${f.ids ? '  ->  ' + f.ids.slice(0, 120) : ''}`);
+  });
+  if (findings.length > AUDIT_MAX_LINES) console.log(`  ... and ${findings.length - AUDIT_MAX_LINES} more`);
+  console.log('  note: RISK lines must appear in the privacy policy disclosure table; INFO lines only matter if this site is ever wrapped in a native app (then UMP consent is required).');
+}
+
 /* ---------- run ---------- */
 copyCovers();
 copyAvatars();
@@ -1203,4 +1400,5 @@ buildCategories();
 buildTags();
 buildStaticPages();
 buildSitemap();
+auditTrackers();
 console.log('Build complete.');

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Privacy Policy — Tapzens</title>
-<meta name="description" content="How Tapzens handles privacy: no accounts, no tracking cookies, local-only game data. Read our full privacy policy.">
+<meta name="description" content="How Tapzens handles privacy: no accounts, Google AdSense advertising behind a consent prompt, local-only game data, and how to change your ad-consent choice.">
 <link rel="canonical" href="https://tapzens.com/privacy-policy.html">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="googlebot" content="index, follow">
@@ -14,13 +14,27 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Tapzens">
 <meta property="og:title" content="Privacy Policy — Tapzens">
-<meta property="og:description" content="How Tapzens handles privacy: no accounts, no tracking cookies, local-only game data. Read our full privacy policy.">
+<meta property="og:description" content="How Tapzens handles privacy: no accounts, Google AdSense advertising behind a consent prompt, local-only game data, and how to change your ad-consent choice.">
 <meta property="og:url" content="https://tapzens.com/privacy-policy.html">
 <meta property="og:image" content="https://tapzens.com/assets/og.png">
 <meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Privacy Policy — Tapzens","url":"https://tapzens.com/privacy-policy.html","description":"How Tapzens handles privacy: no accounts, no tracking cookies, local-only game data. Read our full privacy policy.","isPartOf":{"@type":"WebSite","name":"Tapzens","url":"https://tapzens.com/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Privacy Policy — Tapzens","url":"https://tapzens.com/privacy-policy.html","description":"How Tapzens handles privacy: no accounts, Google AdSense advertising behind a consent prompt, local-only game data, and how to change your ad-consent choice.","isPartOf":{"@type":"WebSite","name":"Tapzens","url":"https://tapzens.com/"}}</script>
 
 
+<!-- consent bridge bootstrap: synchronous on purpose — must run before the CMP and any Google tag -->
+<script>
+window.googlefc=window.googlefc||{};window.googlefc.callbackQueue=window.googlefc.callbackQueue||[];
+window.__tzConsentKey='tapzens:consent:v1';
+(function(){var K=window.__tzConsentKey;window.dataLayer=window.dataLayer||[];
+function g(){dataLayer.push(arguments)}window.gtag=window.gtag||g;
+try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.consent==='object'){g('consent','default',c.consent);}}catch(e){}
+})();
+</script>
+<!-- Google certified CMP — ad privacy consent message (GDPR / CCPA) -->
+<script async src="https://fundingchoicesmessages.google.com/i/pub-3338178325446150?ers=1"></script>
+<script>(function s(){if(!window.frames.googlefcPresent){if(document.body){var f=document.createElement('iframe');f.style.cssText='display:none';f.name='googlefcPresent';document.body.appendChild(f);}else{setTimeout(s,0);}}})();</script>
+<!-- consent bridge: persists the CMP decision and exposes the revocation entrypoint -->
+<script defer src="/assets/js/consent.js"></script>
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
@@ -47,14 +61,15 @@
     <div class="prose">
 
 <h1 class="static-h1">Privacy Policy</h1>
-<p class="static-lead">Last updated: August 30, 2026. Tapzens is built to need as little of your data as possible — this page explains exactly what we collect, where it lives, and the choices you have.</p>
+<p class="static-lead">Last updated: September 10, 2026. Tapzens is built to need as little of your data as possible — this page explains exactly what we collect, which third parties are involved, and the choices you have.</p>
 <div class="tldr">
   <b class="h">Quick summary</b>
   <ul>
     <li>No accounts, no sign-ups — we never ask for your name, email or payment details.</li>
-    <li>No advertising or cross-site tracking cookies. Ever.</li>
+    <li>We run Google AdSense ads, so Google does set ad cookies — always behind a consent prompt in the EEA and UK.</li>
+    <li>You can review or withdraw that choice at any time via <a href="#consent" data-consent-manage>Manage consent</a>.</li>
     <li>Favorites and recent games live only in your browser, on your device.</li>
-    <li>Any analytics we run are anonymous and aggregated.</li>
+    <li>Our own Google Analytics is switched off; a few hosted game packages still carry the original developer's analytics tag — disclosed in section 6.</li>
   </ul>
 </div>
 <div class="toc">
@@ -63,16 +78,18 @@
     <li><a href="#p-1">1. Introduction</a></li>
     <li><a href="#p-2">2. What we never collect</a></li>
     <li><a href="#p-3">3. What stays on your device</a></li>
-    <li><a href="#p-4">4. Cookies &amp; local storage</a></li>
-    <li><a href="#p-5">5. Analytics</a></li>
-    <li><a href="#p-6">6. How we use information</a></li>
-    <li><a href="#p-7">7. Third-party links &amp; content</a></li>
-    <li><a href="#p-8">8. Children's privacy</a></li>
-    <li><a href="#p-9">9. Data security</a></li>
-    <li><a href="#p-10">10. Retention &amp; your control</a></li>
-    <li><a href="#p-11">11. Your privacy rights</a></li>
-    <li><a href="#p-12">12. Changes to this policy</a></li>
-    <li><a href="#p-13">13. Contact</a></li>
+    <li><a href="#p-4">4. Local storage &amp; cookies</a></li>
+    <li><a href="#consent">5. Advertising &amp; your consent</a></li>
+    <li><a href="#p-6">6. Third parties &amp; data disclosure</a></li>
+    <li><a href="#p-7">7. Analytics</a></li>
+    <li><a href="#p-8">8. How we use information</a></li>
+    <li><a href="#p-9">9. Third-party links &amp; content</a></li>
+    <li><a href="#p-10">10. Audience &amp; children's privacy</a></li>
+    <li><a href="#p-11">11. Data security</a></li>
+    <li><a href="#p-12">12. Retention &amp; your control</a></li>
+    <li><a href="#p-13">13. Your privacy rights</a></li>
+    <li><a href="#p-14">14. Changes to this policy</a></li>
+    <li><a href="#p-15">15. Contact</a></li>
   </ol>
 </div>
 <h2 id="p-1">1. Introduction</h2>
@@ -80,33 +97,88 @@
 <h2 id="p-2">2. What we never collect</h2>
 <ul>
   <li>We do not require registration, so we never collect names, emails, passwords or payment details.</li>
-  <li>We do not buy or sell personal information, and we do not share data with advertising networks.</li>
-  <li>We do not use cross-site tracking cookies or fingerprinting.</li>
+  <li>We do not buy or sell personal information, and we do not share your game progress with anyone.</li>
+  <li>We do not run our own cross-site tracking or browser fingerprinting.</li>
 </ul>
 <h2 id="p-3">3. What stays on your device</h2>
-<p>Features like <b>Favorites</b>, <b>Continue Playing</b> and interface preferences are stored in your browser's local storage. That data never leaves your device: we cannot read it, and it is not transmitted to our servers.</p>
-<h2 id="p-4">4. Cookies &amp; local storage</h2>
-<p>We set no advertising cookies. The only browser storage we use is functional local storage (see above), which you can inspect and delete at any time from your browser settings.</p>
-<h2 id="p-5">5. Analytics</h2>
-<p>If privacy-respecting analytics are enabled, they produce anonymous, aggregated numbers only — such as total page views, approximate region and device type — so we can tell which games are popular and which pages need work. These statistics cannot be traced back to you.</p>
-<h2 id="p-6">6. How we use information</h2>
+<p>Features like <b>Favorites</b>, <b>Continue Playing</b> and interface preferences are stored in your browser's local storage. That data never leaves your device: we cannot read it, and it is not transmitted to our servers. Your ad-consent choice is stored the same way.</p>
+<h2 id="p-4">4. Local storage &amp; cookies</h2>
+<p>We use two kinds of storage, and we are explicit about which is which:</p>
+<ul>
+  <li><b>Functional (ours).</b> Local storage for favorites, recently played games and your consent choice. No personal information, nothing transmitted.</li>
+  <li><b>Advertising (Google's).</b> Because this site is supported by Google AdSense, Google sets its own cookies to serve, measure and personalise ads. We do not read or control those cookies; they exist only where permitted by your consent.</li>
+</ul>
+<p>Every cookie is inspectable and removable from your browser settings, and clearing site data removes ours completely.</p>
+<h2 id="consent">5. Advertising &amp; your consent</h2>
+<p>Tapzens is free because of advertising. We use the <b>Google certified consent management platform</b> (Google's own CMP) to collect and honour ad-privacy consent.</p>
+<ul>
+  <li><b>EEA and UK visitors:</b> no personalised advertising cookies are used before you make a choice. The consent message appears first, and your decision decides whether ads are personalised, non-personalised, or unmeasured.</li>
+  <li><b>Everyone, everywhere:</b> you can change your mind later. Use <a href="#consent" data-consent-manage>Manage consent</a> in the footer, or open any page with <code>?showconsent=1</code> appended to the address.</li>
+  <li>Declining consent does not remove the games or the account-free experience; at most the ads you see become less relevant.</li>
+  <li>This commitment covers every tag we operate. The single third-party exception that is not yet consent-gated is disclosed in row 4 of section 6.</li>
+</ul>
+<p>We keep a copy of your decision in local storage so that we do not have to ask you again on every visit, and so that our own tags start up in the correct state. Clearing site data resets the question.</p>
+<h2 id="p-6">6. Third parties &amp; data disclosure</h2>
+<p>These are the only third-party services allowed to run on our ad-bearing pages. This table is the complete list — if a service is not in it, it does not load.</p>
+<table class="disc-table">
+  <caption>Ad-tech and measurement services in use</caption>
+  <thead>
+    <tr><th scope="col">Service</th><th scope="col">Purpose</th><th scope="col">Data involved</th><th scope="col">Consent required</th><th scope="col">Provider policy</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Google AdSense</b> (auto ads)</td>
+      <td>Serve, measure and personalise advertising</td>
+      <td>Cookies, IP address, ad interactions, device and browser signals</td>
+      <td>Yes — EEA/UK</td>
+      <td><a href="https://privacy.google.com/businesses/adsservices/" rel="noopener noreferrer">Google ads privacy</a></td>
+    </tr>
+    <tr>
+      <td><b>Google certified CMP</b> (Privacy &amp; messaging)</td>
+      <td>Collect and store your ad-privacy consent, incl. IAB TCF v2 signal</td>
+      <td>Consent record, approximate region for regulatory routing</td>
+      <td>It asks the question</td>
+      <td><a href="https://myadcenter.google.com/" rel="noopener noreferrer">Ad Center</a></td>
+    </tr>
+    <tr>
+      <td><b>Google Analytics 4</b> (ours)</td>
+      <td>Anonymous, aggregated usage statistics</td>
+      <td>Page views, device type, approximate region</td>
+      <td>Yes — when enabled</td>
+      <td><a href="https://business.safety.google/privacy/" rel="noopener noreferrer">Google privacy</a></td>
+    </tr>
+    <tr>
+      <td><b>Vendor analytics inside game packages</b></td>
+      <td>Usage statistics collected by the original game developer, not by us</td>
+      <td>Page view and device signals sent to that developer's analytics property</td>
+      <td>Not gated — on our removal list</td>
+      <td><a href="mailto:aitaruan707@gmail.com">Report a concern</a></td>
+    </tr>
+  </tbody>
+</table>
+<p class="disc-note"><b>Current state, stated plainly:</b> our own Google Analytics is switched off, so row 3 is inactive. Row 4 is a real gap we have not finished cleaning — some games we host were shipped by their authors with their own analytics tag, and we are removing them package by package. Our build process scans every game package on each release and prints this list, so it cannot silently grow. The disclosure above follows the format used by app-store data-safety forms, so it stays useful if we ever wrap this site in a mobile app.</p>
+<h2 id="p-7">7. Analytics</h2>
+<p>No analytics is enabled at site level by us. If we enable it later, it will run only within your consent choice, will produce anonymous and aggregated numbers (page views, approximate region, device type) rather than anything identifying you, and this page will be updated first. The one exception today is the vendor analytics described in row 4 of section 6, which we do not operate and are in the process of removing.</p>
+<h2 id="p-8">8. How we use information</h2>
 <ul>
   <li>Aggregated analytics help us decide which games to add and which features to improve.</li>
   <li>Technical logs (such as error reports) are used only to keep the site running and secure.</li>
+  <li>Advertising data is used by Google to keep the site free; we do not receive or resell it.</li>
 </ul>
-<h2 id="p-7">7. Third-party links &amp; content</h2>
+<h2 id="p-9">9. Third-party links &amp; content</h2>
 <p>Some pages link to external sites (for example, app store listings). Once you leave tapzens.com, the privacy practices of those sites apply. We encourage you to read their policies.</p>
-<h2 id="p-8">8. Children's privacy</h2>
-<p>Our games are family-friendly and require no personal information to play. We do not knowingly collect personal information from anyone, including children under 13 — because we do not collect personal information at all.</p>
-<h2 id="p-9">9. Data security</h2>
+<h2 id="p-10">10. Audience &amp; children's privacy</h2>
+<p>Tapzens is a <b>general-audience</b> site designed for players aged 13 and over. It is <b>not directed at children under 13</b>, we do not target advertising at children, and we do not knowingly collect personal information from anyone, including children.</p>
+<p>Because we rely on advertising, some content on the site may be personalised based on browsing signals; that is why we describe our audience honestly rather than claiming to be a children's site. Parents who believe their child's information has reached us through an ad provider can ask us to help, and can use <a href="#consent" data-consent-manage>Manage consent</a> on this device to turn personalisation off.</p>
+<h2 id="p-11">11. Data security</h2>
 <p>The site is served over HTTPS, and because we hold essentially no personal data, there is essentially no personal data to breach. Game progress and favorites exist only in your own browser.</p>
-<h2 id="p-10">10. Retention &amp; your control</h2>
-<p>Local data stays until you clear it — clearing your browser's site data removes it completely. Aggregated analytics contain no personal identifiers and are retained only as long as they are useful.</p>
-<h2 id="p-11">11. Your privacy rights (GDPR / CCPA)</h2>
-<p>Because we do not hold personal information about you, there is normally nothing for us to access, correct or delete. If you believe we hold any information relating to you, or if you wish to exercise any right under the GDPR or CCPA, contact us and we will respond within 30 days.</p>
-<h2 id="p-12">12. Changes to this policy</h2>
-<p>If we update this policy we will post the new version on this page with a fresh "last updated" date. Material changes will be highlighted on the site.</p>
-<h2 id="p-13">13. Contact</h2>
+<h2 id="p-12">12. Retention &amp; your control</h2>
+<p>Local data stays until you clear it — clearing your browser's site data removes it completely, including your saved consent choice. Aggregated analytics contain no personal identifiers and are retained only as long as they are useful.</p>
+<h2 id="p-13">13. Your privacy rights (GDPR / CCPA)</h2>
+<p>We do not hold personal information about you, so there is normally nothing for us to access, correct or delete. Advertising data is held by Google under its own process: you can review and withdraw consent with <a href="#consent" data-consent-manage>Manage consent</a>, and you can exercise rights over Google-processed data via Google's <a href="https://myadcenter.google.com/" rel="noopener noreferrer">Ad Center</a>. If you believe we hold any information relating to you, or if you wish to exercise any right under the GDPR or CCPA, contact us and we will respond within 30 days.</p>
+<h2 id="p-14">14. Changes to this policy</h2>
+<p>If we update this policy we will post the new version on this page with a fresh "last updated" date. Material changes — in particular any new third-party service — will be highlighted on the site and reflected in the table in section 6.</p>
+<h2 id="p-15">15. Contact</h2>
 <div class="contact-card">
   <b>Questions?</b>
   <p>We read every message and usually reply within one business day.</p>
@@ -124,11 +196,11 @@
       </div>
       <div class="foot-cols">
         <div class="foot-col"><h4>Explore</h4><a href="/">Home</a><a href="/#categories">Categories</a><a href="/#favorites">Favorites</a><a href="/#recent">Recent</a><a href="/news.html">News</a><a href="/tags.html">Tags</a></div>
-        <div class="foot-col"><h4>Company</h4><a href="/about.html">About Us</a><a href="/job.html">Careers</a><a href="/partnerships.html">Partnerships</a></div>
-        <div class="foot-col"><h4>Legal</h4><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a></div>
+        <div class="foot-col"><h4>Company</h4><a href="/about.html">About Us</a><a href="/job.html">Careers</a><a href="/partnerships.html">Partnerships</a><a href="/contact.html">Contact</a></div>
+        <div class="foot-col"><h4>Legal</h4><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a><a href="/privacy-policy.html#consent" data-consent-manage>Manage consent</a></div>
       </div>
     </div>
-    <div class="foot-bottom">&copy; 2026 Tapzens. All rights reserved.</div>
+    <div class="foot-bottom">&copy; 2026 Tapzens. All rights reserved. &nbsp;&middot;&nbsp; General audience (13+) &nbsp;&middot;&nbsp; <a href="/privacy-policy.html#consent" data-consent-manage>Ad privacy settings</a></div>
   </div></footer>
 <nav class="bottomnav">
     <a href="/" class=""><svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
