@@ -115,14 +115,6 @@ const CAT_META = {
   arcade: { emoji: '🕹️', grad: 'g-arcade' }
 };
 function catMeta(slug) { return CAT_META[slug] || { emoji: '🎮', grad: 'g-puzzle' }; }
-function ratingFor(g) {
-  const h = hashStr(g.slug);
-  return Math.min(4.9, Math.round((4.2 + (h % 80) / 100) * 10) / 10);
-}
-function playsFor(g) {
-  const base = (g.popularWeight || 500) * 2317;
-  return base >= 1e6 ? (base / 1e6).toFixed(1) + 'M' : Math.round(base / 1e3) + 'K';
-}
 const tagSlug = (t) => String(t).toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 function tagLinks(g) {
   return (g.tags || []).map(t => `<a class="t" href="/t/${tagSlug(t)}.html">${esc(t)}</a>`).join('');
@@ -306,11 +298,10 @@ function cardHtml(g, opts = {}) {
     <div class="thumb">
       <img src="${coverUrl(g)}" alt="${esc(g.title)} cover" ${lazy} ${fp} width="240" height="240">
       <div class="play-ov"><div class="pcircle">${ICON_PLAY}</div></div>
-      <span class="rate">★ ${ratingFor(g).toFixed(1)}</span>
     </div>
     <div class="info">
       <div class="title">${esc(g.title)}</div>
-      <div class="meta"><span class="cat">${esc(g.category)}</span><span class="plays">${playsFor(g)} plays</span></div>
+      <div class="meta"><span class="cat">${esc(g.category)}</span><span class="plays">Free · No install</span></div>
     </div>
   </a>`;
 }
@@ -319,76 +310,19 @@ function featCardHtml(g) {
   return `<a class="fcard" href="${detailUrl(g)}" aria-label="${esc(g.title)}">
     <div class="fcard-art">
       <img src="${artUrl(g)}" alt="${esc(g.title)} screenshot" loading="lazy" width="1024" height="576">
-      <span class="rate">★ ${ratingFor(g).toFixed(1)}</span>
     </div>
     <div class="fcard-body">
       <img class="fcard-ico" src="/assets/covers/${g.icon}" alt="${esc(g.title)} icon" loading="lazy" width="52" height="52">
       <div class="fcard-t">
         <div class="fcard-title">${esc(g.title)}</div>
-        <div class="fcard-sub">${esc(g.category)} · ${playsFor(g)} plays</div>
+        <div class="fcard-sub">${esc(g.category)} · Free to play</div>
       </div>
     </div>
     <span class="fcard-play"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Play Now</span>
   </a>`;
 }
 
-/* ---------- reviews (deterministic per game) ---------- */
-function hashStr(s) { let h = 1779033703 ^ s.length; for (let i = 0; i < s.length; i++) { h = Math.imul(h ^ s.charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; } return h >>> 0; }
-function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-const FIRSTN = ['Alice','Bob','Charlie','Diana','Eva','Frank','Grace','Henry','Ivy','Jack','Kate','Leo','Mia','Noah','Olivia','Paul','Quinn','Rose','Sam','Tina','Uma','Vince','Wendy','Xavier','Yara','Zack','Liam','Ava','Ethan','Zoe'];
-const LASTN = ['Smith','Johnson','Williams','Brown','Jones','Garcia','Miller','Davis','Rodriguez','Martinez','Lopez','Wilson','Anderson','Taylor','Moore','Lee','Clark','Lewis','Walker','Hall'];
-const REVIEWS_TPL = [
-  "I'm hooked! Easy to pick up but genuinely hard to put down.",
-  "{g} is my go-to game during breaks. Smooth and satisfying.",
-  "The levels are so rewarding to clear. Highly recommended.",
-  "Runs flawlessly on my phone. Perfect for a quick session.",
-  "What a relaxing way to unwind before bed. Love it.",
-  "Challenging but always fair — the level design is top-notch.",
-  "Colorful, polished, and genuinely fun. A must-try.",
-  "Can't stop playing! Each level feels fresh.",
-  "Exactly what a casual game should be. Smooth and enjoyable.",
-  "The controls are so intuitive, I picked it up instantly.",
-  "Hits the perfect difficulty curve. Keeps me coming back.",
-  "Honestly one of the best browser games I've played this year.",
-  "Short sessions, endless fun. It really hits the sweet spot.",
-  "The art style is adorable. Really well made.",
-  "Loads instantly and never lags. Great optimization.",
-  "Been playing for hours and still finding new challenges.",
-  "Simple to learn, tricky to master. Brilliant design.",
-  "The audio and visuals are so satisfying together.",
-  "The perfect 5-minute game. Quick, fair, and rewarding.",
-  "I love that it respects my time — no forced waits.",
-  "Polished, fair, and genuinely fun. Five stars from me.",
-  "Started skeptical, now I play it every day. Addictive!",
-  "Great balance of relaxing and challenging. Exactly my vibe.",
-  "Clean UI, smooth animations, no bugs. Impressive for a free game."
-];
-function genReviews(g) {
-  const rnd = mulberry32(hashStr(g.slug));
-  const n = 8 + Math.floor(rnd() * 3);
-  const fi = FIRSTN.map(v => [v, rnd()]).sort((a, b) => a[1] - b[1]).map(x => x[0]);
-  const li = LASTN.map(v => [v, rnd()]).sort((a, b) => a[1] - b[1]).map(x => x[0]);
-  const avs = Array.from({ length: 32 }, (_, i) => i + 1).map(v => [v, rnd()]).sort((a, b) => a[1] - b[1]).map(x => x[0]);
-  let twoU = false, threeU = false; const arr = [];
-  for (let i = 0; i < n; i++) {
-    const r = rnd(); let rt;
-    if (!twoU && r < 0.04) { rt = 2; twoU = true; }
-    else if (!threeU && r < 0.10) { rt = 3; threeU = true; }
-    else rt = rnd() < 0.55 ? 5 : 4;
-    arr.push({ name: fi[i % fi.length] + ' ' + li[i % li.length], av: avs[i % avs.length], rt, body: REVIEWS_TPL[Math.floor(rnd() * REVIEWS_TPL.length)].replace(/\{g\}/g, g.title), days: 1 + Math.floor(rnd() * 29) });
-  }
-  const avg = arr.reduce((s, x) => s + x.rt, 0) / arr.length;
-  const stars = v => '★'.repeat(v) + '☆'.repeat(5 - v);
-  const html = arr.map(r => `<div class="review" itemscope itemtype="https://schema.org/Review">
-  <div class="rh">
-    <div class="ava"><img src="/assets/avatars/avatar_${pad2(r.av)}.webp" alt="${esc(r.name)} avatar" loading="lazy"></div>
-    <div class="ud" itemprop="author" itemscope itemtype="https://schema.org/Person"><h4 itemprop="name">${esc(r.name)}</h4><p>${r.days === 1 ? '1 day ago' : r.days + ' days ago'}</p></div>
-    <div class="stars" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating"><meta itemprop="worstRating" content="1"><meta itemprop="bestRating" content="5"><meta itemprop="ratingValue" content="${r.rt}">${stars(r.rt)}</div>
-  </div>
-  <div class="body" itemprop="reviewBody">${esc(r.body)}</div>
-</div>`).join('');
-  return { html, avg, count: n };
-}
+/* fabricated reviews, reviewer identities and rating helpers removed — the site collects no real user feedback */
 
 /* ---------- home page ---------- */
 function buildHome() {
@@ -517,7 +451,7 @@ ${topbar('home')}
 </main>
 ${footer()}
 ${bottomNav('home')}
-<script type="application/json" id="games-data">${JSON.stringify(games.map(g => ({ slug: g.slug, title: g.title, category: g.category, tags: g.tags, description: g.description, cover: g.cover, entry: g.entry, popularWeight: g.popularWeight })))}</script>
+<script type="application/json" id="games-data">${JSON.stringify(games.map(g => ({ slug: g.slug, title: g.title, category: g.category, tags: g.tags, description: g.description, cover: g.cover, entry: g.entry })))}</script>
 <script src="/assets/js/app.js"></script>
 </body>
 </html>`;
@@ -530,9 +464,6 @@ function buildDetail(g) {
   const cat = (data.categories || []).find(c => c.slug === g.category.toLowerCase());
   const related = games.filter(x => x.slug !== g.slug && x.category === g.category).slice(0, 6);
   const splash = g.splash ? `/assets/covers/${g.slug}-splash.png` : null;
-  const rev = genReviews(g);
-  const dlBase = 80000 + (g.popularWeight || 500) * 130;
-  const dlShort = dlBase >= 1000 ? Math.floor(dlBase / 1000) + 'K+' : String(dlBase);
   const catHref = cat ? '/c/' + cat.slug + '.html' : '/#all';
   const url = `https://${SITE.domain}/g/${g.slug}.html`;
   const premise = (g.description || '').replace(/\s+$/g, '');
@@ -573,8 +504,7 @@ function buildDetail(g) {
     publisher: { '@type': 'Organization', name: g.developer || SITE.name },
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
     playMode: 'FreeToPlay',
-    potentialAction: { '@type': 'PlayAction', target: url, name: `Play ${g.title} online` },
-    aggregateRating: { '@type': 'AggregateRating', ratingValue: rev.avg.toFixed(1), reviewCount: rev.count, bestRating: '5', worstRating: '1' }
+    potentialAction: { '@type': 'PlayAction', target: url, name: `Play ${g.title} online` }
   };
   const bcrumb = {
     '@context': 'https://schema.org',
@@ -643,8 +573,6 @@ ${topbar('')}
   <div class="live-band">
     <div class="bg grad"></div>
     <img class="band-cover" src="${coverUrl(g)}" alt="" aria-hidden="true" loading="lazy">
-    <div class="live-badge"><span class="dot"></span> Live</div>
-    <div class="danmaku" id="danmaku"></div>
   </div>
 
   <div class="detail-body">
@@ -669,8 +597,6 @@ ${topbar('')}
           <span>Orientation: <strong>${esc(g.orientation)}</strong></span>
           <span>Platform: <strong>Web / Mobile</strong></span>
           <span>Price: <strong>Free</strong></span>
-          <span>Downloads: <strong>${dlShort}</strong></span>
-          <span>Rating: <strong>${rev.avg.toFixed(1)} ★</strong></span>
         </div>
       </div>
       <div>
@@ -683,20 +609,6 @@ ${topbar('')}
       </div>
     </aside>
   </div>
-
-  <section class="block">
-    <div class="section-head"><h2>Recent Downloads</h2><span class="dl-counter"><span class="num" id="dl-count" data-base="${dlBase}">${dlBase.toLocaleString('en-US')}</span><span class="lbl">downloads</span></span></div>
-    <div class="dl-grid" id="dl-feed"></div>
-  </section>
-
-  <section class="block">
-    <div class="reviews-head">
-      <div class="avg">${rev.avg.toFixed(1)}<span class="sm">/5</span></div>
-      <div class="stars">${'★'.repeat(Math.round(rev.avg))}${'☆'.repeat(5 - Math.round(rev.avg))}</div>
-      <div class="rc">${rev.count} player reviews</div>
-    </div>
-    <div class="reviews">${rev.html}</div>
-  </section>
 </main>
 ${footer()}
 ${bottomNav('')}
@@ -1242,6 +1154,8 @@ function buildTags() {
       { '@type': 'ListItem', position: 2, name: t.name + ' Games', item: url } ] };
     const itemList = { '@context': 'https://schema.org', '@type': 'ItemList', name: t.name + ' Games', itemListElement: list.map((g, i) => ({ '@type': 'ListItem', position: i + 1, url: 'https://' + SITE.domain + '/g/' + g.slug + '.html', name: g.title })) };
     const related = tags.filter(x => x.slug !== t.slug).slice(0, 14);
+    /* single-game tag pages are near-duplicate thin content: keep them crawlable but out of the index */
+    const robotsMeta = list.length < 2 ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1250,8 +1164,8 @@ function buildTags() {
 <title>${title}</title>
 <meta name="description" content="${desc}">
 <link rel="canonical" href="${url}">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-<meta name="googlebot" content="index, follow">
+<meta name="robots" content="${robotsMeta}">
+<meta name="googlebot" content="${robotsMeta}">
 ${HEAD_ICONS}
 <meta name="theme-color" content="#F6F5FB">
 <meta property="og:type" content="website">
@@ -1311,7 +1225,7 @@ function buildSitemap() {
     ...cats.map(c => `\n  <url><loc>https://${SITE.domain}/c/${c.slug}.html</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>`),
     ...sp.map(s => `\n  <url><loc>https://${SITE.domain}/${s}.html</loc><lastmod>${today}</lastmod><priority>0.7</priority></url>`),
     ...games.map(g => `\n  <url><loc>https://${SITE.domain}/g/${g.slug}.html</loc><lastmod>${(g.publishedAt || today).slice(0, 10)}</lastmod><priority>0.8</priority></url>`),
-    ...allTags().map(t => `\n  <url><loc>https://${SITE.domain}/t/${t.slug}.html</loc><lastmod>${today}</lastmod><priority>0.6</priority></url>`)
+    ...allTags().filter(t => t.count >= 2).map(t => `\n  <url><loc>https://${SITE.domain}/t/${t.slug}.html</loc><lastmod>${today}</lastmod><priority>0.6</priority></url>`)
   ].join('');
   write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}\n</urlset>\n`);
   console.log('sitemap.xml generated');
