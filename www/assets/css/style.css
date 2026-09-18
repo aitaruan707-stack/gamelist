@@ -479,6 +479,28 @@ body.play { background: #05080F; }
 .feat-list { list-style: none; padding: 0; margin: 0 0 12px; }
 .feat-list li { position: relative; padding-left: 26px; color: var(--text-dim); margin: 7px 0; line-height: 1.6; }
 .feat-list li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 800; }
+
+/* editorial depth on game detail pages */
+.detail-main h3 { font-size: 15.5px; font-weight: 700; color: var(--text); margin: 20px 0 6px; }
+.verdict { font-size: 15.5px; line-height: 1.65; color: var(--text) !important; border-left: 3px solid var(--primary); padding: 2px 0 2px 14px; margin: 0 0 16px !important; font-style: italic; }
+.warn-list { list-style: none; padding: 0; margin: 0 0 12px; }
+.warn-list li { position: relative; padding-left: 26px; color: var(--text-dim); margin: 7px 0; line-height: 1.6; }
+.warn-list li::before { content: "!"; position: absolute; left: 4px; top: 0; color: #E8735A; font-weight: 800; }
+.guides-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 16px 0 22px; }
+.kicker { font-size: 12px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--primary); margin: 0 0 10px; }
+.guides-grid a { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; text-decoration: none !important; transition: var(--ease); }
+.guides-grid a:hover { border-color: rgba(108, 92, 231, 0.45); transform: translateY(-2px); }
+.guides-grid b { display: block; color: var(--text); font-size: 15px; margin-bottom: 5px; }
+.guides-grid span { font-size: 13px; color: var(--text-dim); line-height: 1.55; display: block; }
+.guides-grid em { display: block; font-style: normal; font-size: 11.5px; color: var(--primary); margin-top: 8px; letter-spacing: .3px; text-transform: uppercase; }
+
+/* category / tag "which to play first" lists */
+.cat-note { font-size: 13.5px; color: var(--text-dim); margin: -4px 0 14px; line-height: 1.6; }
+.pick-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.pick-list li { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--primary); border-radius: 10px; padding: 11px 14px; font-size: 14px; line-height: 1.6; color: var(--text-dim); }
+.pick-list li b { color: var(--text); font-weight: 700; }
+.pick-list li a { text-decoration: none !important; }
+.pick-list li a:hover b { color: var(--primary); }
 .h-emoji { margin-right: 8px; }
 .taglist .t { display: inline-block; text-decoration: none; transition: var(--ease); }
 .taglist a.t:hover { border-color: var(--primary); color: var(--primary); }

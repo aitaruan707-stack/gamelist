@@ -6,6 +6,8 @@
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readdirSync } from 'node:fs';
 import { dirname, join, resolve, relative, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { GUIDES, CAT_COPY } from './content.guides.mjs';
+import { ARTICLES } from './content.articles.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
@@ -151,26 +153,9 @@ const HOME_FAQ = [
   { q: 'How do my favorites and progress work?', a: 'They live only in your browser\'s local storage — private to your device, and removable anytime by clearing site data.' },
   { q: 'Can I play offline?', a: 'Tapzens lives in your browser, so you\'ll need a connection — but every game loads in seconds and never needs an install.' }
 ];
-const CAT_FAQ = {
-  puzzle: [
-    { q: 'Are puzzle games good for your brain?', a: 'Puzzle games exercise logic, pattern recognition and problem-solving — a fun way to keep your mind sharp in short daily sessions.' },
-    { q: 'Do I need an account to play puzzle games?', a: 'No. Every puzzle game on Tapzens loads instantly in your browser — no account, no download, no paywall.' },
-    { q: 'Can I play puzzle games on my phone?', a: 'Yes, all puzzle games are touch-optimized for portrait and landscape play on phones and tablets.' },
-    { q: 'Which puzzle game should a beginner start with?', a: 'Water Sort and Block Puzzle are great entry points — simple rules, gentle difficulty curves and polished mobile controls.' }
-  ],
-  action: [
-    { q: 'Are action games free on Tapzens?', a: 'Yes — all action games are completely free to play in your browser with no downloads or sign-ups.' },
-    { q: 'Do action games work on mobile?', a: 'Absolutely. Every action title supports responsive touch controls, so dashes, dodges and battles feel great on your phone.' },
-    { q: 'Which action game is best for quick sessions?', a: 'Arrow Maze Solve and Tank Era are perfect for fast sessions — jump in, clear a few levels, and stop anytime.' },
-    { q: 'Do you add new action games?', a: 'We regularly curate and add new action titles — check the news page or come back often to see what\'s new.' }
-  ],
-  arcade: [
-    { q: 'What makes a game an "arcade" game?', a: 'Arcade games focus on quick, satisfying loops you can pick up in seconds — high-score chasing, snappy controls and instant replayability.' },
-    { q: 'Who are arcade games on Tapzens aimed at?', a: 'The catalog is built for a general audience aged 13 and over. Each game page lists its tags, so you can check the style and difficulty before playing.' },
-    { q: 'Can I play arcade games offline?', a: 'Tapzens runs in your browser, so you need an internet connection — but every game loads in seconds and needs no install.' },
-    { q: 'What\'s the most popular arcade game?', a: 'Check the Featured rail on the home page — we spotlight the most-loved arcade and casual hits every month.' }
-  ]
-};
+/* category FAQs now live in CAT_COPY (content.guides.mjs): they are written from the games
+   actually filed in each category, and the old shared copy named titles that belong to a
+   different category and promised a monthly spotlight we have no data to back up */
 
 const HEAD_ICONS = `<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">`;
@@ -282,7 +267,7 @@ function footer() {
         <p>${esc(SITE.tagline || '')} Free online games — no download, mobile-friendly.</p>
       </div>
       <div class="foot-cols">
-        <div class="foot-col"><h4>Explore</h4><a href="/">Home</a><a href="/#categories">Categories</a><a href="/#favorites">Favorites</a><a href="/#recent">Recent</a><a href="/news.html">News</a><a href="/tags.html">Tags</a></div>
+        <div class="foot-col"><h4>Explore</h4><a href="/">Home</a><a href="/#categories">Categories</a><a href="/#favorites">Favorites</a><a href="/#recent">Recent</a><a href="/news.html">News</a><a href="/guides.html">Guides</a><a href="/tags.html">Tags</a></div>
         <div class="foot-col"><h4>Company</h4><a href="/about.html">About Us</a><a href="/job.html">Careers</a><a href="/partnerships.html">Partnerships</a><a href="/contact.html">Contact</a></div>
         <div class="foot-col"><h4>Legal</h4><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms-of-service.html">Terms of Service</a><a href="/privacy-policy.html#consent" data-consent-manage>Manage consent</a></div>
       </div>
@@ -434,14 +419,21 @@ ${topbar('home')}
       <div class="why"><span class="wi">🌈</span><div><b>Hand-picked quality</b><p>Every game is curated and play-tested — no shovelware, no clones, just games worth your time.</p></div></div>
       <div class="why"><span class="wi">⚡</span><div><b>Instant play</b><p>No downloads, no sign-ups, no waiting. Click a card and you're playing within seconds.</p></div></div>
       <div class="why"><span class="wi">📱</span><div><b>Play anywhere</b><p>Touch-optimized for phones and tablets, and just as smooth with a keyboard and mouse.</p></div></div>
-      <div class="why"><span class="wi">💎</span><div><b>Free forever</b><p>No paywalls, no forced ads, no accounts. Favorites and progress stay privately on your device.</p></div></div>
+      <div class="why"><span class="wi">💎</span><div><b>Free to play</b><p>No paywalls and no accounts. Advertising on the pages around the games runs through a Google-certified consent prompt, and your favorites and progress stay privately on your device.</p></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="guides">
+    <div class="section-head"><h2>Guides &amp; tips</h2><a class="more" href="/guides.html">All guides</a></div>
+    <div class="guides-grid">
+      ${ARTICLES.slice(0, 4).map(a => `<a href="/guides/${a.slug}.html"><em>${esc(a.kicker)} · ${a.minutes} min read</em><b>${esc(a.title)}</b><span>${esc(a.desc)}</span></a>`).join('\n      ')}
     </div>
   </section>
 
   <section class="block seo-intro">
     <div class="section-head"><h2>Free online games for every mood</h2></div>
-    <p>${esc(SITE.name)} is a free online games portal for puzzle, action and arcade fans. Every title is hand-picked, loads instantly in your browser and runs smoothly on phones, tablets and desktops — no downloads, no installs, no sign-ups.</p>
-    <p>Whether you love match-3 and sorting puzzles, fast reaction challenges or casual arcade hits, you'll find a growing library of ${games.length} free games built for quick sessions and long plays alike. Bookmark your favorites, jump back into recent games, and discover something new every week.</p>
+    <p>${esc(SITE.name)} is a free online games portal for puzzle, action and arcade fans. Every title loads in your browser and runs on phones, tablets and desktops — no downloads, no installs, no sign-ups.</p>
+    <p>Whether you like sorting and stacking puzzles, tile matching, or fast reaction games, the catalogue holds ${games.length} titles, each with a written guide on its own page explaining how its mechanics work and how to get better at them. Bookmark your favorites and jump back into recent games.</p>
   </section>
 
   <section class="block" id="faq">
@@ -483,12 +475,25 @@ function buildDetail(g) {
       desc = kw.slice(0, 155);
     }
   }
+  const guide = GUIDES[g.slug] || null;
   const seoFaq = [
     { q: `How do I play ${g.title} online?`, a: `Just press Play Now — ${g.title} loads instantly in your web browser on ${SITE.name}. No download, install or account is required.` },
     { q: `Can I play ${g.title} free online without downloading?`, a: `Yes. ${g.title} runs directly in the browser on ${SITE.name}, so it is unblocked, free and there is nothing to download or install on your device.` }
   ];
-  const faqList = [...(g.faq || [])];
-  for (const f of seoFaq) if (!faqList.some(x => x.q === f.q)) faqList.push(f);
+  /* the per-game editorial FAQ replaces the questions that were identical on every page;
+     the generic pair is only a fallback for a game that has no guide entry */
+  const faqList = guide && guide.faq && guide.faq.length
+    ? [...guide.faq]
+    : [...(g.faq || []), ...seoFaq.filter(f => !(g.faq || []).some(x => x.q === f.q))];
+  const howToSteps = guide && guide.howTo && guide.howTo.length ? guide.howTo : (g.controls || []);
+  const guideMain = !guide ? '' : `
+      ${guide.systems.map(s => `<h3>${esc(s.h)}</h3>\n      <p>${esc(s.p)}</p>`).join('')}
+      <h2>Tips &amp; strategies</h2>
+      <ul class="feat-list">${guide.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+      <h2>Where players go wrong</h2>
+      <ul class="warn-list">${guide.mistakes.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+      <h2>Playing on phone, tablet and desktop</h2>
+      <p>${esc(guide.device)}</p>`;
   const jsonld = {
     '@context': 'https://schema.org',
     '@type': 'VideoGame',
@@ -540,7 +545,7 @@ ${HEAD_ICONS}
 <meta name="twitter:image" content="https://${esc(SITE.domain)}${g.banner ? '/assets/covers/' + g.banner : coverUrl(g)}">
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <script type="application/ld+json">${JSON.stringify(bcrumb)}</script>
-${g.controls && g.controls.length ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to play ' + g.title, step: g.controls.map((c, i) => ({ '@type': 'HowToStep', position: i + 1, text: c })) })}</script>` : ''}
+${g.controls && g.controls.length ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to play ' + g.title, step: howToSteps.map((c, i) => ({ '@type': 'HowToStep', position: i + 1, text: c })) })}</script>` : ''}
 ${faqList && faqList.length ? `<script type="application/ld+json">${JSON.stringify({ '@context':'https://schema.org','@type':'FAQPage', mainEntity: faqList.map(f => ({ '@type':'Question', name: f.q, acceptedAnswer: { '@type':'Answer', text: f.a } })) })}</script>` : ''}
 ${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
@@ -579,12 +584,14 @@ ${topbar('')}
     <div class="detail-main">
       <h2>About ${esc(g.title)}</h2>
       <p class="desc">${esc(g.description)}</p>
-      <p>${esc(g.title)} is optimized for touch and keyboard alike, loads in seconds and stays free to play forever — no download and no sign-up. If you enjoy ${(g.tags || []).slice(0, 3).map(t => esc(t)).join(', ') || esc(g.category.toLowerCase())} games, you can play ${esc(g.title)} online right now in your browser on phone, tablet or desktop.</p>
+      ${guide
+        ? `<p class="verdict">${esc(guide.verdict)}</p>\n      ${guide.about.map(p => `<p>${esc(p)}</p>`).join('\n      ')}`
+        : `<p>${esc(g.title)} is optimized for touch and keyboard alike, loads in seconds and stays free to play forever — no download and no sign-up. If you enjoy ${(g.tags || []).slice(0, 3).map(t => esc(t)).join(', ') || esc(g.category.toLowerCase())} games, you can play ${esc(g.title)} online right now in your browser on phone, tablet or desktop.</p>`}
       ${g.banner ? `<h2>Screenshot</h2><div class="shot"><img src="/assets/covers/${g.banner}" alt="${esc(g.title)} gameplay screenshot" loading="lazy"></div>` : ''}
       <h2>How to Play</h2>
-      <ol class="controls">${(g.controls || []).map(c => `<li>${esc(c)}</li>`).join('')}</ol>
-      <h2>Features</h2>
-      <ul class="feat-list">${featuresFor(g).map(f => `<li>${esc(f)}</li>`).join('')}</ul>
+      <ol class="controls">${howToSteps.map(c => `<li>${esc(c)}</li>`).join('')}</ol>
+      ${guide ? guideMain : `<h2>Features</h2>
+      <ul class="feat-list">${featuresFor(g).map(f => `<li>${esc(f)}</li>`).join('')}</ul>`}
       <h2>Frequently Asked Questions</h2>
       <div class="faq">${faqList.map(f => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</div>
       ${related.length ? `<h2>More ${esc(g.category)} Games <a class="more" href="${catHref}" style="float:right">View all</a></h2><div class="grid">${related.map(cardHtml).join('')}</div>` : ''}
@@ -675,19 +682,27 @@ const aboutBody = `
 <p>We believe great casual games should be one tap away. Our mission is to build the fastest, friendliest place to play HTML5 games on any device — phones, tablets, or desktops — without installs, pop-ups, or paywalls.</p>
 <h2>What We Do</h2>
 <ul>
-  <li>Hand-pick and curate high-quality casual games across puzzle, sorting, match-3, action and arcade.</li>
-  <li>Optimize every page for instant load and smooth mobile performance.</li>
-  <li>Keep the experience free, lightweight, and respectful of your time and data.</li>
+  <li>Publish a small, deliberately curated catalogue — ${games.length} games at the moment, each one we have opened and played.</li>
+  <li>Write a real guide for every game: how its mechanics work, the techniques that carry across its genre, and where players usually go wrong.</li>
+  <li>Scan every delivered code file for analytics and advertising identifiers at build time, so no tracker loads outside the consent prompt.</li>
+  <li>Keep the pages light and the game stage uncluttered, so a phone browser tab behaves like a game and not like a billboard.</li>
 </ul>
+<h2>What we are honest about</h2>
+<p>This site is funded by advertising, and it runs behind a Google-certified consent prompt that you can change at any time from the footer. There is no account system, no newsletter and no data sold to anyone — a game portal with no login has nothing to sell.</p>
+<p>We also do not publish numbers we cannot stand behind. You will not find star ratings, review scores, play counts or download totals on Tapzens, because there is no user-feedback system to source them from and we would rather show you nothing than show you something invented. What you get instead is a written guide on every game page, and the game itself, playable immediately.</p>
+<h2>Where the games come from</h2>
+<p>The catalogue is HTML5 titles in the casual genres we care about: sorting and stacking puzzles, tile matching, routing and logic boards, plus a small action and arcade selection. Each entry declares its own orientation and control model, and we publish it in the shape the developers built — no cropping a landscape battlefield into a portrait frame to make the grid of cards look tidy.</p>
 <h2>Why Tapzens</h2>
 <div class="info-cards">
-  <div class="c"><b>${games.length}+ games</b><span>A growing catalog of curated titles.</span></div>
-  <div class="c"><b>Mobile-first</b><span>Touch-optimized and fast on any phone.</span></div>
+  <div class="c"><b>${games.length} games</b><span>Each with a written guide on its own page.</span></div>
+  <div class="c"><b>Mobile-first</b><span>Touch-optimised, portrait and landscape.</span></div>
   <div class="c"><b>No install</b><span>Play instantly in the browser.</span></div>
-  <div class="c"><b>Free forever</b><span>No paywalls or forced sign-ups.</span></div>
+  <div class="c"><b>No account</b><span>Nothing to register, nothing to sell.</span></div>
 </div>
 <h2>More from Tapzens</h2>
 <ul>
+  <li>Learn how a game gets published here in <a href="/guides/how-we-curate-games.html">How we curate games</a>.</li>
+  <li>Bringing children? Read <a href="/guides/a-parents-guide.html">a parent’s guide to playing here</a> first.</li>
   <li>Looking to join us? See <a href="/job.html">Careers</a> for open roles.</li>
   <li>Want to work together? Visit <a href="/partnerships.html">Partnerships</a>.</li>
 </ul>
@@ -697,12 +712,12 @@ const aboutBody = `
 `;
 const jobBody = `
 <h1 class="static-h1">Careers at Tapzens</h1>
-<p class="static-lead">We're a small, remote-first team on a mission to make casual games effortless to play. Join us and help millions of players tap into fun — everywhere, on any device.</p>
+<p class="static-lead">We're a small, remote-first team on a mission to make casual games effortless to play. Join us and help build a catalogue worth opening.</p>
 <h2>Why Join Tapzens</h2>
 <div class="info-cards">
-  <div class="c"><b>Global reach</b><span>Your work ships to players in US, JP and beyond the moment it lands.</span></div>
+  <div class="c"><b>Ships same day</b><span>The site is generated from one repository and deploys automatically — a change is live within a minute of being merged.</span></div>
   <div class="c"><b>Ship fast</b><span>No red tape. Ideas go from proposal to production in days, not quarters.</span></div>
-  <div class="c"><b>Own it end-to-end</b><span>Every role owns real outcomes, from first commit to player feedback.</span></div>
+  <div class="c"><b>Own it end-to-end</b><span>Every role owns real outcomes, from first commit to the page being public.</span></div>
   <div class="c"><b>Remote by design</b><span>Built async from day one — work from wherever you do your best work.</span></div>
 </div>
 <h2>How We Work</h2>
@@ -750,20 +765,20 @@ const jobBody = `
 `;
 const partnershipsBody = `
 <h1 class="static-h1">Business Partnerships</h1>
-<p class="static-lead">We partner with game developers, publishers, and brands to bring great games to players worldwide.</p>
+<p class="static-lead">We work with HTML5 game developers and publishers who want their game on a small, curated portal rather than a giant one.</p>
 <h2>For Game Developers &amp; Publishers</h2>
-<p>Have a polished HTML5 game? We help you reach players through a fast, mobile-first portal with fair, transparent terms. We handle hosting, performance, and discovery — you focus on building great games.</p>
-<h2>For Advertisers &amp; Brands</h2>
-<p>Connect with an engaged casual-gaming audience through non-intrusive, high-quality ad placements. We prioritize experiences that respect players.</p>
-<h2>What We Offer</h2>
+<p>We take a finished HTML5 build, test that it loads and plays on a phone over a mobile connection, check what it reports and requests, and only then publish it with a written guide and its own page. If a game does not survive that, we do not list it. ${esc(SITE.name)} is not a submission archive — the catalogue is ${games.length} games deep, deliberately.</p>
+<h2>What listing involves</h2>
 <ul>
-  <li>A fast, mobile-optimized portal with global reach.</li>
-  <li>Lightweight, non-intrusive monetization that keeps players happy.</li>
-  <li>Transparent reporting and fair revenue share for partners.</li>
+  <li>We host the build and serve it from our own domain.</li>
+  <li>We write a guide for the game's page: how the mechanics work, how to get better, and how it behaves on phone and desktop.</li>
+  <li>We run a build-time scan of every delivered code file for analytics and advertising identifiers, and tell you what it finds before publishing.</li>
+  <li>You keep your own naming and credit on the game page.</li>
 </ul>
+<h2>What we do not offer</h2>
+<p>We are not currently running a paid-placement, revenue-share or advertising-buy programme, and we would rather say so here than in an email. If you want to reach our players, the way to do it is to make a game that gets through the check above. Monetisation on the site today runs through Google AdSense with a certified consent manager, and we disclose that in full in the <a href="/privacy-policy.html">Privacy Policy</a>.</p>
 <h2>Let's Talk</h2>
-<p>Tell us about your game or campaign and we'll get back to you.</p>
-<p class="cta-mail">Email: <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></p>
+<p>Tell us about your game and we'll try it. Email: <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></p>
 `;
 const contactBody = `
 <h1 class="static-h1">Contact Tapzens</h1>
@@ -793,13 +808,20 @@ const newsBody = (() => {
     { date: '2026-08-05', tag: 'Site Update', title: 'A play screen built for focus', text: 'The in-game bar got a frosted-glass makeover, and every game now loads in a perfectly centred stage — portrait or landscape — on desktop and mobile alike.', href: '/about.html' },
     { date: '2026-07-20', tag: 'Community', title: 'Favorites & Continue Playing arrive', text: 'Your browser now remembers what you love: tap the heart on any game card, and pick up right where you left off next visit. Everything stays privately on your device.', href: '/#favorites' }
   ];
+  /* release feed: each entry is written from that game's own guide, so no two blurbs share a sentence
+     (a repeated "Play it free in your browser" tail on every item read as generated filler) */
+  const firstSentence = (s) => { const m = String(s || '').match(/^[\s\S]*?[.!?](?:\s|$)/); return (m ? m[0] : String(s || '')).trim(); };
   const drops = [...games].sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || '')).slice(0, 6)
-    .map(g => ({ date: (g.publishedAt || '').slice(0, 10), tag: 'New Game', title: g.title + ' joins the arcade', text: (g.description || '') + ' Play it free in your browser — no download, no sign-up.', href: detailUrl(g), cover: coverUrl(g) }));
+    .map(g => {
+      const gd = GUIDES[g.slug];
+      const text = gd ? `${gd.verdict} ${firstSentence(gd.about[0])}` : `${(g.description || '')} Full guide on its page.`;
+      return { date: (g.publishedAt || '').slice(0, 10), tag: 'New Game', title: `${g.title} is now playable`, text, href: detailUrl(g), cover: coverUrl(g) };
+    });
   const items = [...edits, ...drops].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
   const [hero, ...rest] = items;
   return `
 <h1 class="static-h1">News &amp; Updates</h1>
-<p class="static-lead">Fresh games, features and announcements from the Tapzens arcade — updated as things ship.</p>
+<p class="static-lead">New games and site changes, in date order. Each entry links to the full guide on that game's page.</p>
 <a class="news-hero" href="${hero.href}">
   <time datetime="${hero.date}">${hero.date}</time><span class="news-tag light">${hero.tag}</span>
   <h2>${esc(hero.title)}</h2>
@@ -1069,7 +1091,8 @@ function buildCategory(cat) {
     itemListElement: list.map((g, i) => ({ '@type': 'ListItem', position: i + 1, url: 'https://' + SITE.domain + '/g/' + g.slug + '.html', name: g.title }))
   };
   const m = catMeta(cat.slug);
-  const catQ = CAT_FAQ[cat.slug] || [];
+  const copy = CAT_COPY[cat.slug] || null;
+  const catQ = copy ? copy.faq : [];
   const catFaq = catQ.map(f => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('');
   const catFaqLd = catQ.length ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: catQ.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })}</script>` : '';
   const tagSet = new Map();
@@ -1106,13 +1129,20 @@ ${topbar('categories')}
   <section class="hero" style="margin-top:18px">
     <div>
       <h1><span class="h-emoji">${m.emoji}</span> ${esc(cat.name)} Games</h1>
-      <p>${esc(cat.description)} Play instantly in your browser — no download, no sign-up, free forever.</p>
+      <p>${copy ? esc(copy.lead) : esc(cat.description) + ' Play instantly in your browser — no download, no sign-up, free forever.'}</p>
       <div class="badges"><span class="b">${list.length} games</span><span class="b">Mobile-friendly</span><span class="b">Free</span></div>
     </div>
   </section>
   <section class="block">
     <div class="section-head"><h2>All ${esc(cat.name)} Games</h2></div>
     <div class="grid">${list.map((g, i) => cardHtml(g, { first: i < 4 })).join('')}</div>
+  </section>
+  <section class="block">
+    <div class="section-head"><h2>Which ${esc(cat.name.toLowerCase())} game to play first</h2></div>
+    <p class="cat-note">One line per game, written from the full guide on its page — the shortest way to tell these apart before opening anything.</p>
+    <ul class="pick-list">
+      ${list.map(g => `<li><a href="/g/${g.slug}.html"><b>${esc(g.title)}</b></a>${GUIDES[g.slug] ? ' — ' + esc(GUIDES[g.slug].verdict) : ' — ' + esc(g.description)}</li>`).join('\n      ')}
+    </ul>
   </section>
   <section class="block">
     <div class="section-head"><h2>Browse ${esc(cat.name)} Tags</h2></div>
@@ -1124,9 +1154,8 @@ ${topbar('categories')}
     ${catFaqLd}
   </section>
   <section class="block seo-intro">
-    <div class="section-head"><h2>About ${esc(cat.name)} games</h2></div>
-    <p>Looking for the best free ${esc(cat.name.toLowerCase())} games? ${esc(SITE.name)} curates the top ${esc(cat.name.toLowerCase())} titles so you can jump straight into playing — every game loads instantly in your browser, works great on mobile, and is free forever.</p>
-    <p>Every ${esc(cat.name.toLowerCase())} game here is hand-picked and play-tested, with touch controls designed for phones and tablets first. Start with a top-rated title in the grid above, or use the tags below to zero in on exactly the kind of game you're in the mood for.</p>
+    <div class="section-head"><h2>About ${esc(cat.name.toLowerCase())} games on ${esc(SITE.name)}</h2></div>
+    ${copy ? copy.body.map(p => `<p>${esc(p)}</p>`).join('\n    ') : `<p>${esc(cat.description)}</p>`}
   </section>
 </main>
 ${footer()}
@@ -1154,8 +1183,14 @@ function buildTags() {
       { '@type': 'ListItem', position: 2, name: t.name + ' Games', item: url } ] };
     const itemList = { '@context': 'https://schema.org', '@type': 'ItemList', name: t.name + ' Games', itemListElement: list.map((g, i) => ({ '@type': 'ListItem', position: i + 1, url: 'https://' + SITE.domain + '/g/' + g.slug + '.html', name: g.title })) };
     const related = tags.filter(x => x.slug !== t.slug).slice(0, 14);
-    /* single-game tag pages are near-duplicate thin content: keep them crawlable but out of the index */
-    const robotsMeta = list.length < 2 ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+    const cats = [...new Set(list.map(g => g.category))];
+    const catLine = 'These titles are filed under ' + cats.map(c => {
+      const dc = (data.categories || []).find(x => x.name.toLowerCase() === c.toLowerCase());
+      return dc ? `<a href="/c/${dc.slug}.html">${esc(c)}</a>` : esc(c);
+    }).join(' and ') + '.';
+    /* tag listings are near-duplicate surfaces of the catalogue: crawlable for internal links,
+       but out of the index — a 171-word page is thin content, not a landing page */
+    const robotsMeta = 'noindex, follow';
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1196,12 +1231,15 @@ ${topbar('categories')}
     <div class="grid">${list.map((g, i) => cardHtml(g, { first: i < 4 })).join('')}</div>
   </section>
   <section class="block">
+    <div class="section-head"><h2>${esc(t.name)} games, one line each</h2></div>
+    <p class="cat-note">Written from the full guide on each game's page. ${catLine}</p>
+    <ul class="pick-list">
+      ${list.map(g => `<li><a href="/g/${g.slug}.html"><b>${esc(g.title)}</b></a>${GUIDES[g.slug] ? ' — ' + esc(GUIDES[g.slug].verdict) : ' — ' + esc(g.description)}</li>`).join('\n      ')}
+    </ul>
+  </section>
+  <section class="block">
     <div class="section-head"><h2>More Tags</h2></div>
     <div class="tagcloud">${related.map(x => `<a class="t" href="/t/${x.slug}.html">${esc(x.name)} <em>${x.count}</em></a>`).join('')}</div>
-  </section>
-  <section class="block seo-intro">
-    <div class="section-head"><h2>About ${esc(t.name)} games</h2></div>
-    <p>From quick five-minute breaks to long sessions, ${esc(t.name)} games are some of the most-loved picks in the Tapzens catalog — free forever, no downloads, and just as smooth on your phone as on desktop. Looking for a change of pace? Explore the related tags above, or head back to the home page for this week's trending releases.</p>
   </section>
 </main>
 ${footer()}
@@ -1215,17 +1253,106 @@ ${bottomNav('')}
   console.log(`${n} tag pages generated`);
 }
 
+/* ---------- guides: standalone editorial articles ---------- */
+function articleBodyHtml(a) {
+  return `
+<h1 class="static-h1">${esc(a.title)}</h1>
+<p class="kicker">${esc(a.kicker)} &nbsp;·&nbsp; ${a.minutes} min read</p>
+<p class="static-lead">${esc(a.desc)}</p>
+${a.intro.map(p => `<p>${esc(p)}</p>`).join('\n')}
+${a.sections.map(s => `\n<h2>${esc(s.h)}</h2>\n${(s.p || []).map(p => `<p>${esc(p)}</p>`).join('\n')}${s.list ? `\n<ul>${s.list.map(li => `<li>${esc(li)}</li>`).join('')}</ul>\n` : ''}`).join('')}
+<p>${esc(a.closing)}</p>
+<h2>Related on ${esc(SITE.name)}</h2>
+<ul>${a.links.map(l => `<li><a href="${l.href}">${esc(l.label)}</a></li>`).join('')}</ul>`;
+}
+
+function buildGuides() {
+  ensureDir('guides');
+  for (const a of ARTICLES) {
+    const url = 'https://' + SITE.domain + '/guides/' + a.slug + '.html';
+    const title = a.title + ' | ' + SITE.name + ' Guides';
+    const jsonld = {
+      '@context': 'https://schema.org', '@type': 'Article', headline: a.title, description: a.desc,
+      url, datePublished: '2026-09-18', inLanguage: 'en',
+      author: { '@type': 'Organization', name: SITE.name, url: 'https://' + SITE.domain + '/about.html' },
+      publisher: { '@type': 'Organization', name: SITE.name, url: 'https://' + SITE.domain + '/' }
+    };
+    const bcrumb = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://' + SITE.domain + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Guides', item: 'https://' + SITE.domain + '/guides.html' },
+      { '@type': 'ListItem', position: 3, name: a.title, item: url } ] };
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(a.desc)}">
+<link rel="canonical" href="${url}">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="googlebot" content="index, follow">
+${HEAD_ICONS}
+<meta name="theme-color" content="#0B1020">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="${esc(SITE.name)}">
+<meta property="og:title" content="${esc(a.title)}">
+<meta property="og:description" content="${esc(a.desc)}">
+<meta property="og:url" content="${url}">
+<meta property="og:image" content="https://${esc(SITE.domain)}/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">${JSON.stringify(jsonld)}</script>
+<script type="application/ld+json">${JSON.stringify(bcrumb)}</script>
+${headMonetization()}
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+${topbar('')}
+<main class="container">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">›</span><a href="/guides.html">Guides</a><span class="sep">›</span><span class="cur">${esc(a.kicker)}</span></nav>
+  <section class="static">
+    <div class="prose">
+${articleBodyHtml(a)}
+    </div>
+  </section>
+</main>
+${footer()}
+${bottomNav('')}
+<script src="/assets/js/app.js"></script>
+</body>
+</html>`;
+    write('guides/' + a.slug + '.html', html);
+  }
+  const hubBody = `
+<h1 class="static-h1">Game Guides &amp; Playing Tips</h1>
+<p class="kicker">Written by ${esc(SITE.name)}</p>
+<p class="static-lead">Long-form notes on the games in this catalogue: how their mechanics actually work, the techniques that carry across the genre, and what happens on your device when you play a browser game. Every guide here was written after reading what the shipped game contains — no filler and no invented numbers.</p>
+<div class="guides-grid">
+${ARTICLES.map(a => `  <a href="/guides/${a.slug}.html"><em>${esc(a.kicker)} · ${a.minutes} min</em><b>${esc(a.title)}</b><span>${esc(a.desc)}</span></a>`).join('\n')}
+</div>
+<h2>Where to start</h2>
+<p>If you play the sorting games — water glasses, screws, shelves and stacks — the genre guide is the one that pays off fastest, because all four run on the same constraint. If you keep losing match-3 levels with two pieces left, the move-budget article is about how the stages are priced rather than how sharp your eye is.</p>
+<p>Parents and anyone cautious about free game sites should read the safety and family guides first: they describe the advertising, the consent prompt and the in-game shop buttons exactly as they are.</p>
+<h2>Browse the catalogue</h2>
+<ul>
+  <li><a href="/c/puzzle.html">Puzzle games</a> — sorting, stacking, matching and routing.</li>
+  <li><a href="/c/action.html">Action games</a> — shooters, tanks and squad battles.</li>
+  <li><a href="/c/arcade.html">Arcade games</a> — short, fast, score-chasing rounds.</li>
+</ul>`;
+  buildStaticPage({ slug: 'guides', title: 'Game Guides & Playing Tips — Tapzens', desc: 'In-depth guides to free browser games: sorting-puzzle strategy, match-3 move budgets, touch controls, and what actually happens on your device.', h1: 'Guides', body: hubBody });
+  console.log(`${ARTICLES.length} guide articles + guides.html generated`);
+}
+
 /* ---------- sitemap ---------- */
 function buildSitemap() {
   const today = new Date().toISOString().slice(0, 10);
   const cats = data.categories || [];
-  const sp = ['about', 'job', 'partnerships', 'contact', 'news', 'tags', 'privacy-policy', 'terms-of-service'];
+  const sp = ['about', 'job', 'partnerships', 'contact', 'news', 'guides', 'tags', 'privacy-policy', 'terms-of-service'];
   const urls = [
     `\n  <url><loc>https://${SITE.domain}/</loc><lastmod>${today}</lastmod><priority>1.0</priority></url>`,
+    ...ARTICLES.map(a => `\n  <url><loc>https://${SITE.domain}/guides/${a.slug}.html</loc><lastmod>${today}</lastmod><priority>0.8</priority></url>`),
     ...cats.map(c => `\n  <url><loc>https://${SITE.domain}/c/${c.slug}.html</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>`),
     ...sp.map(s => `\n  <url><loc>https://${SITE.domain}/${s}.html</loc><lastmod>${today}</lastmod><priority>0.7</priority></url>`),
     ...games.map(g => `\n  <url><loc>https://${SITE.domain}/g/${g.slug}.html</loc><lastmod>${(g.publishedAt || today).slice(0, 10)}</lastmod><priority>0.8</priority></url>`),
-    ...allTags().filter(t => t.count >= 2).map(t => `\n  <url><loc>https://${SITE.domain}/t/${t.slug}.html</loc><lastmod>${today}</lastmod><priority>0.6</priority></url>`)
   ].join('');
   write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}\n</urlset>\n`);
   console.log('sitemap.xml generated');
@@ -1313,6 +1440,7 @@ buildDetails();
 buildCategories();
 buildTags();
 buildStaticPages();
+buildGuides();
 buildSitemap();
 auditTrackers();
 console.log('Build complete.');
