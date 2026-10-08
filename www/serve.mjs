@@ -31,8 +31,9 @@ const MIME = {
 };
 
 createServer(async (req, res) => {
+  let p = '';
   try {
-    let p = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+    p = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     if (p.endsWith('/')) p += 'index.html';
     const file = normalize(join(root, p));
     if (!file.startsWith(root)) { res.writeHead(403, { 'Cache-Control': 'no-store' }); res.end('Forbidden'); return; }
@@ -44,6 +45,17 @@ createServer(async (req, res) => {
     });
     res.end(body);
   } catch (e) {
+    /* A missing document gets the real 404 page (still with a 404 status), so a broken link
+       looks like a maintained site. Missing assets keep the plain status-only response. */
+    const ext = extname(p).toLowerCase();
+    if (p.endsWith('.html') || !ext) {
+      try {
+        const page = await readFile(join(root, '404.html'));
+        res.writeHead(404, { 'Content-Type': MIME['.html'], 'Cache-Control': 'no-store' });
+        res.end(page);
+        return;
+      } catch { /* 404.html not built yet — fall through */ }
+    }
     res.writeHead(404, { 'Cache-Control': 'no-store' });
     res.end('Not found');
   }

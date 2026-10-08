@@ -1,3 +1,19 @@
+# macOS
+.DS_Store
 puzzle-yarnfun/images/.DS_Store
 puzzle-yarnfun/.DS_Store
-.DS_Store
+
+# screenshot / crop scratch + one-off dev scripts (not part of the deployed site)
+www/.crop*.png
+www/.crop.html
+www/.sheets/
+www/.shoot-tmp/
+www/_audit.mjs
+www/_crop.mjs
+www/_pages.mjs
+www/_sheet.mjs
+www/_shots.mjs
+www/shoot.mjs
+
+# business doc, not site content
+/副本OPPO对接(1).docx

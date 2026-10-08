@@ -289,6 +289,12 @@ section[id] { scroll-margin-top: 76px; }
 .detail-main ol.controls li { margin: 5px 0; }
 .detail-main .shot { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--card); margin: 4px 0 16px; }
 .detail-main .shot img { width: 100%; }
+/* captured frames: a strip of real screens, numbered so the guide can cite them */
+.detail-main .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(158px, 1fr)); gap: 10px; margin: 4px 0 18px; }
+.detail-main .shots figure { margin: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--card); }
+.detail-main .shots img { width: 100%; height: auto; display: block; background: #000; }
+.detail-main .shots figcaption { padding: 8px 10px; font-size: 12px; line-height: 1.45; color: var(--muted); }
+.detail-main .shots figcaption b { display: inline-block; min-width: 18px; color: var(--accent); }
 
 .faq details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; }
 .faq summary { font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }

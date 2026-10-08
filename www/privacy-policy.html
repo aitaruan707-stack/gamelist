@@ -61,7 +61,7 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
     <div class="prose">
 
 <h1 class="static-h1">Privacy Policy</h1>
-<p class="static-lead">Last updated: September 10, 2026. Tapzens is built to need as little of your data as possible — this page explains exactly what we collect, which third parties are involved, and the choices you have.</p>
+<p class="static-lead">Last updated: September 28, 2026. Tapzens is built to need as little of your data as possible — this page explains exactly what we collect, which third parties are involved, and the choices you have.</p>
 <div class="tldr">
   <b class="h">Quick summary</b>
   <ul>
@@ -69,7 +69,7 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
     <li>We run Google AdSense ads, so Google does set ad cookies — always behind a consent prompt in the EEA and UK.</li>
     <li>You can review or withdraw that choice at any time via <a href="#consent" data-consent-manage>Manage consent</a>.</li>
     <li>Favorites and recent games live only in your browser, on your device.</li>
-    <li>Our own Google Analytics is switched off; a few hosted game packages still carry the original developer's analytics tag — disclosed in section 6.</li>
+    <li>Our own Google Analytics is switched off, and no third-party analytics or advertising tag loads from a hosted game package — every build is scanned, and section 6 records what that scan found.</li>
   </ul>
 </div>
 <div class="toc">
@@ -115,7 +115,7 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
   <li><b>EEA and UK visitors:</b> no personalised advertising cookies are used before you make a choice. The consent message appears first, and your decision decides whether ads are personalised, non-personalised, or unmeasured.</li>
   <li><b>Everyone, everywhere:</b> you can change your mind later. Use <a href="#consent" data-consent-manage>Manage consent</a> in the footer, or open any page with <code>?showconsent=1</code> appended to the address.</li>
   <li>Declining consent does not remove the games or the account-free experience; at most the ads you see become less relevant.</li>
-  <li>This commitment covers every tag we operate. The single third-party exception that is not yet consent-gated is disclosed in row 4 of section 6.</li>
+  <li>This commitment covers every tag that loads on our pages: the build scan found no third-party analytics or advertising request that gets past it. What still sits dormant inside some game bundles is disclosed in row 4 of section 6.</li>
 </ul>
 <p>We keep a copy of your decision in local storage so that we do not have to ask you again on every visit, and so that our own tags start up in the correct state. Clearing site data resets the question.</p>
 <h2 id="p-6">6. Third parties &amp; data disclosure</h2>
@@ -148,17 +148,17 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
       <td><a href="https://business.safety.google/privacy/" rel="noopener noreferrer">Google privacy</a></td>
     </tr>
     <tr>
-      <td><b>Vendor analytics inside game packages</b></td>
-      <td>Usage statistics collected by the original game developer, not by us</td>
-      <td>Page view and device signals sent to that developer's analytics property</td>
-      <td>Not gated — on our removal list</td>
+      <td><b>Ad-SDK identifiers inside game packages</b></td>
+      <td>Nothing runs. These are ad-unit constants the original developers baked into their builds</td>
+      <td>None — no request is made from a browser</td>
+      <td>n/a — cannot execute on the web</td>
       <td><a href="mailto:aitaruan707@gmail.com">Report a concern</a></td>
     </tr>
   </tbody>
 </table>
-<p class="disc-note"><b>Current state, stated plainly:</b> our own Google Analytics is switched off, so row 3 is inactive. Row 4 is a real gap we have not finished cleaning — some games we host were shipped by their authors with their own analytics tag, and we are removing them package by package. Our build process scans every game package on each release and prints this list, so it cannot silently grow. The disclosure above follows the format used by app-store data-safety forms, so it stays useful if we ever wrap this site in a mobile app.</p>
+<p class="disc-note"><b>Current state, stated plainly:</b> our own Google Analytics is switched off, so row 3 is inactive. Row 4 is not a service that runs — it is dead code. Some games we host shipped with their author's ad-SDK constants still inside the bundle, and our build process scans every delivered code file on each release and reports that <b>no third-party analytics or advertising tag loads in your browser from a hosted game package</b>. Those identifiers only fire through a native app's ad bridge, which a browser tab never has. We still publish the row rather than quietly drop it, because those same identifiers would go live the day this catalogue is wrapped in a native app — and because the disclosure should describe what is in the files, not just what is in the network log. The format follows app-store data-safety declarations, so it stays useful if we ever do wrap the site.</p>
 <h2 id="p-7">7. Analytics</h2>
-<p>No analytics is enabled at site level by us. If we enable it later, it will run only within your consent choice, will produce anonymous and aggregated numbers (page views, approximate region, device type) rather than anything identifying you, and this page will be updated first. The one exception today is the vendor analytics described in row 4 of section 6, which we do not operate and are in the process of removing.</p>
+<p>No analytics is enabled at site level by us. If we enable it later, it will run only within your consent choice, will produce anonymous and aggregated numbers (page views, approximate region, device type) rather than anything identifying you, and this page will be updated first. As for the games themselves: row 4 of section 6 covers the ad-SDK identifiers left inside some of them, and the build scan on every release confirms they send nothing from a browser — so there is no analytics traffic on this site that you have not either consented to or been told about.</p>
 <h2 id="p-8">8. How we use information</h2>
 <ul>
   <li>Aggregated analytics help us decide which games to add and which features to improve.</li>

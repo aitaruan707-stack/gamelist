@@ -25,6 +25,19 @@ const SITE = data.site;
 const ICON_SRC = dist('../puzzle-yarnfun/images/game');     // source webp icons
 const GAME_SRC = dist('game');                              // game build folders
 const COVERS = dist('assets/covers');
+const SHOT_DIR = 'assets/shots';
+
+/* Real frames captured from the shipped builds by shoot.mjs. These are the only images on
+   the site that show what a player actually sees, so they replace the promotional banners
+   wherever both exist. Absent folder simply means no gallery is rendered. */
+const SHOTS = {};
+try {
+  for (const f of readdirSync(dist(SHOT_DIR))) {
+    const m = f.match(/^(.+?)-(\d+)\.webp$/);
+    if (m) (SHOTS[m[1]] ||= []).push({ file: f, n: Number(m[2]) });
+  }
+  for (const k of Object.keys(SHOTS)) SHOTS[k].sort((a, b) => a.n - b.n);
+} catch { /* no captures yet */ }
 const G_DIR = dist('g');
 
 /* cross-name icon mappings (slug -> icon file) handled via games[].cover */
@@ -356,7 +369,7 @@ function buildHome() {
 <meta property="og:url" content="https://${esc(SITE.domain)}/">
 <meta property="og:image" content="https://${esc(SITE.domain)}/assets/og.png">
 <meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"${esc(SITE.name)}","url":"https://${esc(SITE.domain)}/","potentialAction":{"@type":"SearchAction","target":"https://${esc(SITE.domain)}/?q={query}","query-input":"required name=query"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"${esc(SITE.name)}","url":"https://${esc(SITE.domain)}/"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"${esc(SITE.name)}","url":"https://${esc(SITE.domain)}/","logo":"https://${esc(SITE.domain)}/assets/logo.png"}</script>
 <script type="application/ld+json">${JSON.stringify({ '@context':'https://schema.org','@type':'ItemList', name: SITE.name + ' Free Online Games', itemListElement: games.map((g,i)=>({ '@type':'ListItem', position:i+1, url:`https://${SITE.domain}/g/${g.slug}.html`, name:g.title })) })}</script>
 <script type="application/ld+json">${faqLd}</script>
@@ -368,7 +381,7 @@ ${topbar('home')}
 <main class="container">
   <section class="hero">
     <div class="hero-copy">
-      <div class="hero-eyebrow">✦ ${games.length} free online games — new picks every week</div>
+      <div class="hero-eyebrow">✦ ${games.length} free online games — every one hand-picked and free in your browser</div>
       <h1>Play free games, instantly.</h1>
       <p>${esc(SITE.tagline || '')} No downloads, no sign-ups — just tap and play. Curated puzzle, action and arcade hits, optimized for your phone and desktop.</p>
       <div class="hero-cta">
@@ -377,7 +390,7 @@ ${topbar('home')}
       </div>
       <div class="badges"><span class="b">${games.length} games</span><span class="b">Mobile-first</span><span class="b">No install</span><span class="b">Free forever</span></div>
     </div>
-    <div class="hero-art" aria-hidden="true">${heroArt}<span class="hero-sticker">✦ New games weekly</span></div>
+    <div class="hero-art" aria-hidden="true">${heroArt}<span class="hero-sticker">✦ Just tap and play</span></div>
   </section>
 
   <section class="block" id="featured">
@@ -587,7 +600,16 @@ ${topbar('')}
       ${guide
         ? `<p class="verdict">${esc(guide.verdict)}</p>\n      ${guide.about.map(p => `<p>${esc(p)}</p>`).join('\n      ')}`
         : `<p>${esc(g.title)} is optimized for touch and keyboard alike, loads in seconds and stays free to play forever — no download and no sign-up. If you enjoy ${(g.tags || []).slice(0, 3).map(t => esc(t)).join(', ') || esc(g.category.toLowerCase())} games, you can play ${esc(g.title)} online right now in your browser on phone, tablet or desktop.</p>`}
-      ${g.banner ? `<h2>Screenshot</h2><div class="shot"><img src="/assets/covers/${g.banner}" alt="${esc(g.title)} gameplay screenshot" loading="lazy"></div>` : ''}
+      ${(() => {
+        const shots = SHOTS[g.slug] || [];
+        if (!shots.length) return g.banner
+          ? `<h2>Screenshot</h2><div class="shot"><img src="/assets/covers/${g.banner}" alt="${esc(g.title)} gameplay screenshot" loading="lazy"></div>`
+          : '';
+        const caps = (GUIDES[g.slug] && GUIDES[g.slug].shots) || [];
+        return `<h2>Gameplay screenshots</h2>
+      <p class="cat-note">Captured from the build running on this page, not promotional art. Every claim in the guide above names the frame it comes from.</p>
+      <div class="shots">${shots.map((s, i) => `<figure><img src="/${SHOT_DIR}/${s.file}" alt="${esc(g.title)} — ${esc(caps[i] || 'gameplay frame')}" loading="lazy"><figcaption><b>${i + 1}</b> ${esc(caps[i] || 'Gameplay frame')}</figcaption></figure>`).join('')}</div>`;
+      })()}
       <h2>How to Play</h2>
       <ol class="controls">${howToSteps.map(c => `<li>${esc(c)}</li>`).join('')}</ol>
       ${guide ? guideMain : `<h2>Features</h2>
@@ -631,7 +653,7 @@ function buildDetails() {
 }
 
 /* ---------- static pages ---------- */
-function buildStaticPage({ slug, title, desc, h1, body, navActive = '', faq = [], ads = true }) {
+function buildStaticPage({ slug, title, desc, h1, body, navActive = '', faq = [], ads = true, robots = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1', file = null }) {
   const url = 'https://' + SITE.domain + '/' + slug + '.html';
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -641,7 +663,7 @@ function buildStaticPage({ slug, title, desc, h1, body, navActive = '', faq = []
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${url}">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="robots" content="${esc(robots)}">
 <meta name="googlebot" content="index, follow">
 ${HEAD_ICONS}
 <meta name="theme-color" content="#0B1020">
@@ -672,7 +694,7 @@ ${bottomNav('')}
 <script src="/assets/js/app.js"></script>
 </body>
 </html>`;
-  write(slug + '.html', html);
+  write(file || slug + '.html', html);
 }
 const CONTACT_EMAIL = 'aitaruan707@gmail.com';
 const aboutBody = `
@@ -802,6 +824,7 @@ const contactBody = `
 `;
 const newsBody = (() => {
   const edits = [
+    { date: '2026-09-28', tag: 'Site Update', title: 'A real 404 page, and a disclosure that matches the build audit', text: 'A dead link now lands on a proper page that points back into the catalogue instead of a bare server error. The privacy policy also stopped describing ad-SDK identifiers that sit dormant inside a few game bundles as if they were live trackers — it quotes what the release scan actually finds.', href: '/privacy-policy.html' },
     { date: '2026-08-28', tag: 'Site Update', title: 'Tapzens gets a fresh new look', text: 'A brand-new light theme, a redesigned home page, richer category and tag pages and a faster play screen. Every corner of the portal was rebuilt to be quicker, cleaner and easier on the eyes.', href: '/about.html' },
     { date: '2026-08-22', tag: 'Site Update', title: 'All Tags: browse the catalogue A to Z', text: 'The new All Tags page groups every tag alphabetically, so you can hop from "match-3" to "relaxing" in one click and discover whole corners of the arcade you hadn\'t tried yet.', href: '/tags.html' },
     { date: '2026-08-15', tag: 'Featured', title: 'Featured lineup: six picks for August', text: 'Puzzle Yarn Fun, Water Sort, Chroma Jam, Hunter: Evolve Uprising, Bubble Safari and Block Puzzle: Save Girl headline this month\'s featured rail — hand-picked for quick sessions and lazy Sundays alike.', href: '/#featured' },
@@ -855,7 +878,7 @@ ${blocks}
 })();
 const privacyBody = `
 <h1 class="static-h1">Privacy Policy</h1>
-<p class="static-lead">Last updated: September 10, 2026. Tapzens is built to need as little of your data as possible — this page explains exactly what we collect, which third parties are involved, and the choices you have.</p>
+<p class="static-lead">Last updated: September 28, 2026. Tapzens is built to need as little of your data as possible — this page explains exactly what we collect, which third parties are involved, and the choices you have.</p>
 <div class="tldr">
   <b class="h">Quick summary</b>
   <ul>
@@ -863,7 +886,7 @@ const privacyBody = `
     <li>We run Google AdSense ads, so Google does set ad cookies — always behind a consent prompt in the EEA and UK.</li>
     <li>You can review or withdraw that choice at any time via <a href="#consent" data-consent-manage>Manage consent</a>.</li>
     <li>Favorites and recent games live only in your browser, on your device.</li>
-    <li>Our own Google Analytics is switched off; a few hosted game packages still carry the original developer's analytics tag — disclosed in section 6.</li>
+    <li>Our own Google Analytics is switched off, and no third-party analytics or advertising tag loads from a hosted game package — every build is scanned, and section 6 records what that scan found.</li>
   </ul>
 </div>
 <div class="toc">
@@ -909,7 +932,7 @@ const privacyBody = `
   <li><b>EEA and UK visitors:</b> no personalised advertising cookies are used before you make a choice. The consent message appears first, and your decision decides whether ads are personalised, non-personalised, or unmeasured.</li>
   <li><b>Everyone, everywhere:</b> you can change your mind later. Use <a href="#consent" data-consent-manage>Manage consent</a> in the footer, or open any page with <code>?showconsent=1</code> appended to the address.</li>
   <li>Declining consent does not remove the games or the account-free experience; at most the ads you see become less relevant.</li>
-  <li>This commitment covers every tag we operate. The single third-party exception that is not yet consent-gated is disclosed in row 4 of section 6.</li>
+  <li>This commitment covers every tag that loads on our pages: the build scan found no third-party analytics or advertising request that gets past it. What still sits dormant inside some game bundles is disclosed in row 4 of section 6.</li>
 </ul>
 <p>We keep a copy of your decision in local storage so that we do not have to ask you again on every visit, and so that our own tags start up in the correct state. Clearing site data resets the question.</p>
 <h2 id="p-6">6. Third parties &amp; data disclosure</h2>
@@ -942,17 +965,17 @@ const privacyBody = `
       <td><a href="https://business.safety.google/privacy/" rel="noopener noreferrer">Google privacy</a></td>
     </tr>
     <tr>
-      <td><b>Vendor analytics inside game packages</b></td>
-      <td>Usage statistics collected by the original game developer, not by us</td>
-      <td>Page view and device signals sent to that developer's analytics property</td>
-      <td>Not gated — on our removal list</td>
+      <td><b>Ad-SDK identifiers inside game packages</b></td>
+      <td>Nothing runs. These are ad-unit constants the original developers baked into their builds</td>
+      <td>None — no request is made from a browser</td>
+      <td>n/a — cannot execute on the web</td>
       <td><a href="mailto:${CONTACT_EMAIL}">Report a concern</a></td>
     </tr>
   </tbody>
 </table>
-<p class="disc-note"><b>Current state, stated plainly:</b> our own Google Analytics is switched off, so row 3 is inactive. Row 4 is a real gap we have not finished cleaning — some games we host were shipped by their authors with their own analytics tag, and we are removing them package by package. Our build process scans every game package on each release and prints this list, so it cannot silently grow. The disclosure above follows the format used by app-store data-safety forms, so it stays useful if we ever wrap this site in a mobile app.</p>
+<p class="disc-note"><b>Current state, stated plainly:</b> our own Google Analytics is switched off, so row 3 is inactive. Row 4 is not a service that runs — it is dead code. Some games we host shipped with their author's ad-SDK constants still inside the bundle, and our build process scans every delivered code file on each release and reports that <b>no third-party analytics or advertising tag loads in your browser from a hosted game package</b>. Those identifiers only fire through a native app's ad bridge, which a browser tab never has. We still publish the row rather than quietly drop it, because those same identifiers would go live the day this catalogue is wrapped in a native app — and because the disclosure should describe what is in the files, not just what is in the network log. The format follows app-store data-safety declarations, so it stays useful if we ever do wrap the site.</p>
 <h2 id="p-7">7. Analytics</h2>
-<p>No analytics is enabled at site level by us. If we enable it later, it will run only within your consent choice, will produce anonymous and aggregated numbers (page views, approximate region, device type) rather than anything identifying you, and this page will be updated first. The one exception today is the vendor analytics described in row 4 of section 6, which we do not operate and are in the process of removing.</p>
+<p>No analytics is enabled at site level by us. If we enable it later, it will run only within your consent choice, will produce anonymous and aggregated numbers (page views, approximate region, device type) rather than anything identifying you, and this page will be updated first. As for the games themselves: row 4 of section 6 covers the ad-SDK identifiers left inside some of them, and the build scan on every release confirms they send nothing from a browser — so there is no analytics traffic on this site that you have not either consented to or been told about.</p>
 <h2 id="p-8">8. How we use information</h2>
 <ul>
   <li>Aggregated analytics help us decide which games to add and which features to improve.</li>
@@ -1053,6 +1076,23 @@ const termsBody = `
   <a class="mail-btn" href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>
 </div>
 `;
+/* A dead link should still look like a maintained site, not a bare server error — so the 404
+   is built from the same shell as every other page and points back into the catalogue. */
+const notFoundBody = `
+<h1 class="static-h1">Page not found</h1>
+<p class="static-lead">No page lives at that address on ${esc(SITE.name)}. The link was most likely mistyped or has gone stale — the games themselves are all still here.</p>
+<h2>Get back to the catalogue</h2>
+<ul>
+  <li><a href="/">Home</a> — the full set of ${games.length} free games, featured first.</li>
+  <li>Browse a category: ${(data.categories || []).map(c => `<a href="/c/${c.slug}.html">${esc(c.name)}</a>`).join(', ')}.</li>
+  <li><a href="/tags.html">All tags</a> — every theme, A to Z.</li>
+  <li><a href="/news.html">News</a> — what was added, and when.</li>
+</ul>
+<p>The search box in the header of any page filters the catalogue by title, genre or tag.</p>
+<h2>Tell us about a broken link</h2>
+<p>If you landed here from a link on one of our own pages, that is our bug, and we would like to hear about it.</p>
+<p class="cta-mail">Email: <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></p>
+`;
 function buildStaticPages() {
   buildStaticPage({ slug: 'about', title: 'About Us — Tapzens', desc: 'About Tapzens, a free online games portal on a mission to make casual games effortless to play on any device.', h1: 'About Us', body: aboutBody, navActive: 'about' });
   buildStaticPage({ slug: 'job', title: 'Careers — Tapzens', desc: 'Join Tapzens and help build the fastest, friendliest place to play casual HTML5 games. See open roles, benefits and how we hire.', h1: 'Careers', body: jobBody, faq: [
@@ -1069,7 +1109,10 @@ function buildStaticPages() {
      entrypoint in the footer can actually reopen the dialog from here */
   buildStaticPage({ slug: 'privacy-policy', title: 'Privacy Policy — Tapzens', desc: 'How Tapzens handles privacy: no accounts, Google AdSense advertising behind a consent prompt, local-only game data, and how to change your ad-consent choice.', h1: 'Privacy Policy', body: privacyBody, ads: 'cmp' });
   buildStaticPage({ slug: 'terms-of-service', title: 'Terms of Service — Tapzens', desc: 'The terms that govern your use of Tapzens, the free online games portal. Fair, simple and player-friendly.', h1: 'Terms of Service', body: termsBody, ads: 'cmp' });
-  console.log('8 static pages generated');
+  /* The 404 exists for the human who followed a bad link, and for a reviewer who goes looking
+     for one — so it is deliberately noindex and kept out of the sitemap. */
+  buildStaticPage({ slug: '404', file: '404.html', title: 'Page not found — Tapzens', desc: 'That page is not on tapzens.com. Get back to the game catalogue, the categories or the tag index.', h1: 'Page not found', body: notFoundBody, robots: 'noindex, follow' });
+  console.log('9 static pages generated');
 }
 
 /* ---------- category page ---------- */

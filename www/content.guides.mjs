@@ -1,828 +1,855 @@
 /*
  * Build-time editorial layer for game detail pages.
- * Every statement here is grounded in what the shipped game bundle actually contains
- * (scene/bundle names, UI strings, control model) or in genre knowledge that is true
- * for any player. No invented metrics, ratings, player counts or testimonials.
+ *
+ * The rule for this file: every factual claim about how a game works has to trace to a
+ * frame we actually captured from the shipped build with shoot.mjs. That means on-screen
+ * tutorial lines, button labels, HUD counters and item names, quoted the way they render.
+ * Where a frame shows a control but not its consequence, the copy says so instead of
+ * guessing. Nothing here is derived from the marketing description in games.json — several
+ * of those turned out to be wrong, which is the whole reason this file was rewritten.
+ *
+ * `shots` is the caption list for the captured frames, in frame order. The guide cites
+ * frames by those numbers.
+ *
  * Rendered by build.mjs; never fetched at runtime.
  */
 export const GUIDES = {
 
   puzzleyarnfun: {
-    verdict: 'A cozy swap-and-match puzzle that leans on long combo chains rather than busywork.',
+    verdict: 'A colour-ordering puzzle played on a board of yarn-wound posts, with a knit-textured guide grid that starts at 0% — not the match-3 its catalogue blurb claims, and there is no cat anywhere on screen.',
     about: [
-      'Puzzle Yarn Fun takes the familiar swap-two match-3 loop and re-skins it as soft yarn blocks on a wooden board, which changes how the game reads more than how it plays. Because every piece is a solid ball of yarn instead of a flat gem, matched groups disappear with a squash-and-stretch pop, and the falling pieces visibly roll into the gap they leave. That single choice makes the board easier to scan: you are tracking round shapes against a warm background rather than tiny colour differences, so mis-reads are rarer than in most gem matchers.',
-      'The structure is a straight level ladder. Each board hands you a target — clear a set number of a certain yarn colour, or sweep specific obstacles off the layout — and a move allowance. Spending moves inefficiently is the only real failure state, which means the game rewards planning two swaps ahead instead of fast tapping. Levels are grouped into level packs that ramp gradually: early boards teach one mechanic at a time, later ones stack blocked cells, rope-wrapped yarn and narrow gaps in the same layout.',
-      'It is also the calmest game in our puzzle catalogue. There is no timer on the board, nothing expires while you think, and the whole thing runs in portrait orientation, so it suits one-handed play on a phone. If you want a match-3 that can be picked up for five minutes and put down without a penalty, this is that game.'
+      'The first thing the game tells you is not about matching. A speech bubble points up at the row of spools and reads "First check order colors" (frame 1), and that is the correct framing for the whole puzzle: you are handing yarn back in a required order, not hunting for lines of three. Under the bubble the board is a cluster of overlapping coloured plates — magenta, sand-yellow and purple — each carrying short posts wound with maroon, green, red or grey-blue yarn (frame 2).',
+      'Above the board sits a panel titled "Newbie Guide": a large grid of knit stitches, empty in both frames, with a thin orange gauge beside it reading "0%" (frames 1–2). That grid is where progress is recorded. Neither frame shows a score, a move counter or a clock, which is why the game plays slowly and patiently — the percentage is the only thing on screen that reports how you are doing.',
+      'Four spool lanes run under the guide panel. Two are loaded, one dark red and one green, and two are greyed out with a padlock, a video badge and the word "Unlock" (frames 1–2). Below them is an empty white rail split into five short sections — the only other container on the screen, and nothing is on it in either frame. Along the bottom edge are three tools, each carrying a green "Free" badge: "+ Grid" (a rack icon), "Clear" (a broom) and "Hammer" (frame 2). Settings and Favorites sit top-left, so the entire game is reachable with one thumb in portrait.'
     ],
     systems: [
-      { h: 'Combo chains are the real score', p: 'Clearing a match that drops other pieces into new matches continues the chain without costing a move. A single swap that triggers a three-step cascade is worth far more than three separate swaps, because it advances the goal and keeps your move count intact.' },
-      { h: 'Boosters you earn instead of buy', p: 'The board hands out special yarn pieces when you clear four or five in a row, and there is a dart-style booster that removes a chosen cluster. You unlock these by playing well, and saving them for a congested board is almost always better than spending them the moment they appear.' },
-      { h: 'Progress and the collection screen', p: 'Cleared levels are recorded on your device, and there is a collection view that tracks which layouts you have finished. Nothing is uploaded anywhere — Tapzens stores game state in your browser only, which is also why clearing site data can reset your position.' }
+      { h: 'The lanes set the order', p: 'The tutorial points at the spool lanes, not at the board, and says to check colour order first (frame 1). Read that as the rule of the puzzle: the lanes show which colour the game wants next. Two lanes are open at the start and two sit behind "Unlock", so the number of colours in play grows as you go rather than being there from the first tap.' },
+      { h: 'What the purple disc is', p: 'A large translucent purple circle, outlined in white, covers the middle of the board and four or five posts sit inside it (frame 2). No frame says what the circle means — it is either a highlighted region the tutorial wants you to look at or a working area, and we are not going to guess which. What is visible is that posts inside it are the same objects as posts outside it.' },
+      { h: 'Three tools, all badged Free, and no wallet', p: '"+ Grid", "Clear" and "Hammer" each carry a green "Free" badge (frame 2), and no coin balance appears anywhere on either frame. "+ Grid" and "Clear" name their targets plainly enough — the grid panel above, and the board — while what a Hammer press removes is not visible in any frame we took, so treat it as a single-post undo rather than a promise.' }
     ],
     howTo: [
-      'Swipe across two adjacent yarn blocks to swap them. The swap only sticks if it creates a line of three or more matching colours.',
-      'Before you swipe, look at the whole board and find the match that causes the most movement underneath it — cascades are where the value is.',
-      'Work from the bottom of the board upward whenever you can. Clearing low rows makes fresh pieces fall and naturally sets up your next match.',
-      'Watch the level goal indicator, not the pretty board. A match that feels satisfying but does not advance the goal still costs you a move.',
-      'If a colour is scarce on the board, do not chase it. Match the abundant colours to shuffle the layout until the scarce one becomes reachable.',
-      'When you are completely stuck, spend a turn making any legal match at random — a reshuffled board frequently opens a line that was not there before.'
+      'Read the two open spool lanes before touching anything. The game\'s own first lesson is "First check order colors" (frame 1).',
+      'Tap a yarn post on the board. Which container receives it is not labelled on screen, so treat the first few taps as the tutorial: one post, then watch what changes.',
+      'Work the lane colours in the order they appear, and ignore the lanes marked "Unlock" until they open.',
+      'Keep track of how many posts of each colour are still on the board — with only two lanes open, a colour you cannot hand over is the one that has to wait.',
+      'Watch the "0%" gauge beside the Newbie Guide rather than how tidy the board looks; the gauge is the only progress the screen reports.',
+      'Save Hammer for a single post that is blocking a colour the lanes are asking for, and Clear for a board that has genuinely run out of moves. Both are badged "Free", so neither costs anything you can see.'
     ],
     tips: [
-      'Match five in a line first, always. It produces the strongest booster in the game, and one well-placed booster clears more of a goal than five ordinary swaps.',
-      'Group boosters. Activating a booster next to another special piece converts a wider area of the board; two boosters used together beat two used on separate turns.',
-      'Keep an eye on the move counter early. If you reach half your moves with most of the board untouched, slow down and plan, because the back half is where players lose levels.',
-      'Rope-wrapped and blocked yarn cannot move. Clear the surrounding pieces instead of trying to route matches through them.',
-      'Corner matches are safer than centre ones for setting up cascades, because the drop pattern in a corner funnels pieces into a single column.',
-      'Leave a five-match pattern untriggered until the board is crowded, then set it off — late in a level it clears obstacles you would otherwise burn moves on.'
+      'The lane order is the whole game. Before tapping, name the colour the leftmost open lane wants and find the nearest post carrying it.',
+      'There is no timer and no move counter on either captured frame, so a stalled board costs nothing but the look. Take it.',
+      'Because the tools are badged "Free" and no wallet is visible, reaching for one early is cheap — but "+ Grid" affects the panel above, not the board, so it will not unstick a bad lane.',
+      'Two lanes are locked at the start. Boards that only ever ask for two colours are teaching the habit; the third and fourth are what make later layouts hard.',
+      'If the same colour keeps appearing on opposite sides of the plate cluster, clear the side that has more of it — posts on the same plate tend to open together.'
     ],
     mistakes: [
-      'Swiping the first available match you see. In Puzzle Yarn Fun every move is budgeted, so reflex swaps are the main reason a level fails with two or three pieces left.',
-      'Using a booster on a nearly empty goal. Boosters reset nothing, so spending one when you need one more piece of a colour wastes the strongest tool you have.',
-      'Ignoring the bottom rows. Experienced players clear low first; new players clear top and then find the board locks up with nothing left to move.'
+      'Expecting a match-3. There is no swap gesture and no line of three anywhere in the captured frames; the ordering instruction is the entire game, and the catalogue blurb about cats and combos does not describe this build.',
+      'Ignoring the two "Unlock" lanes and assuming the board is broken because a colour has nowhere to go — that colour is waiting for a lane you have not opened yet.',
+      'Skipping the tutorial bubble. It is one line and it is the rule.'
     ],
-    device: 'Portrait by design, so the board sits comfortably in one hand on a phone and the swap gesture has the whole screen width to work with. On desktop the same swipes become clicks: press a piece, drag toward the neighbour you want, release. Nothing about the layout is scaled down on a small screen — the pieces stay large enough for thumb play, which is unusual for the genre.',
+    device: 'Portrait, and built for one hand: Settings and Favorites top-left, the guide panel across the top third, the lanes and rail in the middle, the board below them and the three tools along the bottom edge. Nothing on either captured frame shows a keyboard control, so on desktop everything is a click where it is a tap on a phone.',
     faq: [
-      { q: 'Is Puzzle Yarn Fun the same game as the one on puzzle-yarnfun.tapzens.com?', a: 'It is the same puzzle, presented in two places. We also run a dedicated site for it, so the entries share the game; the Tapzens page is the version inside the wider catalogue.' },
-      { q: 'Does it need an account or a sign-up?', a: 'No. There is no registration anywhere on Tapzens — press play and the level loads. Progress is written to your browser on your device.' },
-      { q: 'What happens if I run out of moves?', a: 'The level ends and you can replay it. Your earned boosters and completed levels are not lost, so a failed attempt costs you nothing but the attempt.' },
-      { q: 'Is there a time limit on the board?', a: 'No timer. You can take as long as you like to find a line, which is why the game works well on a commute or in short breaks.' },
-      { q: 'Will my progress survive clearing my browser data?', a: 'Probably not. Save data lives in local browser storage; clearing site data, using private browsing, or switching devices starts the ladder fresh.' },
-      { q: 'Are there ads while I play?', a: 'Advertising is served at page level through our consent prompt, and levels occasionally offer an optional rewarded video if you want a bonus such as extra moves. You can decline it and keep playing.' }
-    ]
-  },
-
-  puzzlewatersort: {
-    verdict: 'The reference implementation of the water-pour genre — and the one on our site that ships the most extra modes.',
-    about: [
-      'Water Sort puzzles run on a single rule that takes about ten seconds to learn and roughly a week to master: you may only pour a colour onto the same colour, or into an empty bottle. Everything in Puzzle: Water Sort follows from that constraint. The challenge is not spotting a move — it is remembering that a move which looks safe now can fill the only bottle that could have received a colour three turns later.',
-      'The version in our catalogue is built as a full puzzle suite rather than a single mode. Alongside the standard bottle layout there is a conveyor-belt variant where bottles arrive on a moving line, a tall-cup variant with deeper columns, and an untie-the-knot puzzle that reuses the same planning muscle on rope instead of liquid. A daily challenge board, a hint system, and a collectibles screen sit around the core game.',
-      'It also handles pacing better than most free sort puzzles. A lives system using hearts limits how many boards you can fail in a row, gold and coins are earned by finishing levels rather than purchased, and the hint button costs in-game currency. The result is a game that pushes you toward solving rather than toward paying.'
+      { q: 'Is Puzzle Yarn Fun a match-3 game?', a: 'No. The captured frames show a colour-ordering board with a one-line tutorial about checking colour order, a knit-stitch guide grid sitting at 0% and four spool lanes. There is no swap mechanic and no three-in-a-row anywhere on screen, and no cat character appears either.' },
+      { q: 'What do + Grid, Clear and Hammer do?', a: 'They are the three tools along the bottom of frame 2, each badged "Free". The names point at the grid panel and at the board. What a Hammer press specifically removes is not shown in the frames we captured, so we are not going to invent it.' },
+      { q: 'Why do two spool lanes say Unlock?', a: 'Only two lanes are loaded in the first board. The other two are greyed with a padlock and a video badge in both frames, so the puzzle adds colours as you progress instead of starting with all four.' },
+      { q: 'Is there a time limit?', a: 'Nothing on the captured frames counts down. The only gauges are the "0%" bar beside the Newbie Guide and the board itself, so you can leave a board alone while you think.' },
+      { q: 'Does it need an account?', a: 'No. There is no sign-up anywhere on Tapzens. Progress is stored by the game in your own browser, which is also why clearing site data or switching devices starts over.' }
     ],
-    systems: [
-      { h: 'The pour rule and why it bites', p: 'You can only pour onto a matching top colour or into an empty bottle, and a partial pour is allowed — if the target has room for two units and you have four on top, two move and two stay. Forgetting the partial pour is the most common cause of a locked board.' },
-      { h: 'Three extra modes on the same engine', p: 'The conveyor-belt mode replaces free choice with a queue, so you plan around what arrives next. Tall cups raise column depth, which multiplies the number of colours in play at once. The knot puzzle asks you to unwind overlapping ropes — a different skin, but the same forward-planning skill the bottle mode tests.' },
-      { h: 'Hearts, coins and gold', p: 'Failed levels consume hearts, which recover on their own over time. Playing through awards coins and gold; gold is what the hint button and a few convenience options draw from. There is a store screen, but nothing in it is required to finish the ladder.' },
-      { h: 'Hints that show one move, not the solution', p: 'The hint system highlights a single legal pour rather than solving the board. It is a useful learning tool: after a few dozen uses you start recognising the pattern it picks, which is exactly the pattern you should have found yourself.' }
-    ],
-    howTo: [
-      'Tap the bottle whose top colour you want to move, then tap the destination bottle. Tap the source again to cancel if you change your mind.',
-      'Start every board by finding which colours are nearly complete — a colour with three of its four units already stacked is one pour away from being off the table.',
-      'Keep at least one bottle empty on purpose. An empty bottle is a parking space; filling all of them early removes your only way to reorder colours.',
-      'Never pour a mixed colour onto a bottle that will soon be finished, since you would then have to move that lid layer somewhere else first.',
-      'Work backwards from the top: if a colour is buried under two other colours, the bottles above it must be resolved first, so plan that unstacking before you make an attractive-looking move.',
-      'When the board locks, undo a few steps rather than restarting. The mistake is usually one pour earlier than the moment you noticed it.'
-    ],
-    tips: [
-      'Count the units of each colour before you move. Knowing a colour has two units left tells you it can never complete a bottle alone, so it belongs on top of something temporary.',
-      'Empty bottles are worth more than near-full bottles. Trading a near-complete colour for a free parking space is often the right call in the mid-game.',
-      'In conveyor-belt mode, plan one item ahead of the belt. Solving the visible board while ignoring what is arriving creates the lock-up.',
-      'Reserve gold. The hint button is the main drain, and using it on every hard board is the difference between coasting and actually learning the pattern library.',
-      'Tall-cup boards need the opposite instinct from short ones: dig deep early. Layers buried at the bottom of a long column take many turns to surface, so uncover them while you still have spare bottles.',
-      'The daily challenge board is usually harder than the level at the same point in the ladder, because it is designed to be solvable in one attempt by most players.'
-    ],
-    mistakes: [
-      'Pouring a colour into the gap it seems to fit without checking how many units of it remain somewhere else on the board.',
-      'Filling your last empty bottle because a single matching unit was sitting there. That parking space was probably the reason the board was still solvable.',
-      'Treating the knot mode like the bottle mode. Rope layers interact in both directions at once, and the pour instinct that works on bottles leads to dead ends there.'
-    ],
-    device: 'Portrait, which is the right call for a bottle puzzle: tall columns fit a phone screen without shrinking the liquid layers to unreadable slivers. On a desktop window the board simply centres — a mouse click replaces the tap, and there is no keyboard control to learn. Progress and hearts live in local browser storage, so the same profile picks up where you left it.',
-    faq: [
-      { q: 'What is the actual win condition on a board?', a: 'Every bottle holds one single colour. A bottle that is full but mixed does not count, and there is no bonus for finishing quickly — only the layout matters.' },
-      { q: 'Why did my hearts stop refilling?', a: 'Hearts recover on a timer while the game is open in a browser tab. Closing the tab stops the clock; the counter also caps out, so banking hearts beyond the maximum does nothing.' },
-      { q: 'Are the extra modes unlocked or available straight away?', a: 'The bottle ladder is where you start, and the conveyor, tall-cup and knot variants sit alongside it in the same game. Some are gated behind early progression, which is normal for the genre.' },
-      { q: 'Can I play it on a small phone without zooming?', a: 'Yes. The board is laid out for portrait phone screens and the bottles are large tap targets; you should not need pinch-zoom at any point.' },
-      { q: 'Is my save tied to an account?', a: 'No, and there is no account to tie it to. State is stored on the device and browser you played in, so a different phone means starting again.' },
-      { q: 'Does the game need a strong connection?', a: 'Only to load the initial files. Once the puzzle is on screen, pouring and undoing are all local — a flaky connection will not cause you to lose a board.' }
+    shots: [
+      'The first lesson, with the whole screen dimmed behind it: the Newbie Guide grid at 0%, one dark red and one green spool lane loaded, two showing "Unlock", and the bubble "First check order colors".',
+      'The same board in full colour: the plate cluster with its maroon, green, red and grey-blue posts, the purple disc outlined over the middle, the empty five-section rail under the lanes, and the tools "+ Grid", "Clear" and "Hammer" each badged "Free".'
     ]
   },
 
   chromajam: {
-    verdict: 'A colour-routing puzzle that plays like a traffic jam you have to untangle one lane at a time.',
+    verdict: 'A timed colour-clearing puzzle: tap blocks off a tray and send each colour to its own side rack, with five minutes on the clock.',
     about: [
-      'Chroma Jam replaces the match-3 swap with a routing problem: coloured blocks sit on a board and you move each one into a lane, with the rule that a lane only accepts a single colour. Boards are defined by borders, rotatable pieces and obstacle cells, and the level is solved when the jam is fully dispersed. It is closer to a sliding-block puzzle than to a matcher, despite the bright, casual presentation.',
-      'What makes it interesting is rotation. Many pieces can turn before they are placed, and the same block that refuses to fit in a lane will slot in cleanly once rotated. So each move has two decisions — which lane, and which orientation — and later levels add obstacles that occupy lane cells and shrink your options without changing the rule.',
-      'The difficulty curve is gentle and the boards are compact enough to read at a glance on a phone. There is a Give Up control rather than a fail screen, meaning an unsolvable-looking board is never punished: you return to the level select and try another. Levels are streamed from a dedicated level bundle, which is why the first screen loads quickly even though the catalogue behind it is large.'
+      'The game explains itself in a caption bar: "Tap to select colored blocks to remove" (frame 3). That is the whole verb. The tray in the middle is a grid of studs-topped bricks — a purple 2×2 stacked over an orange 2×2 in the first board — sitting in a dark frame, and the task is to get them off it (frames 1–3).',
+      'What makes it more than a tap-fest are the two racks on the sides of the tray: a purple strip down the left edge with a small left arrow, and an orange strip down the right with a right arrow (all frames). They match the two brick colours exactly, and the tutorial hand walks from a block to its same-coloured strip, so they read as destinations — though no frame shows a rack filling up or rejecting a colour.',
+      'The top bar is a green HUD with a pause button, a character silhouette over "0%", a "Countdown" pill reading 05:00, and "Level 1" at the right (all frames). Below the tray, three tools each show a count badge of 1: Hammer, Magic Ball and +Time (frames 1–2). It is the only game in our puzzle set with a hard clock on the first board.'
     ],
     systems: [
-      { h: 'Lanes are the constraint, not the goal', p: 'Every lane accepts exactly one colour, and once a lane has a colour in it, that colour is locked to it. Choosing which lane takes which colour at the start of a board is the real puzzle — a poor assignment can make a solvable level impossible.' },
-      { h: 'Rotation before placement', p: 'Most pieces carry a rotation state. Tap a block, orient it, then commit it to a lane; if it will not fit, it usually wants a quarter turn rather than a different lane. Some pieces lock to their lane and can no longer be turned once placed.' },
-      { h: 'Obstacle cells and borders', p: 'Level data places fixed obstacles inside the grid and borders along the edges, both of which reduce usable lane cells. Obstacles never move, so plan the colours with the largest piece count into the lanes that are least blocked.' }
+      { h: 'A five-minute countdown from the first tap', p: 'The "Countdown" pill shows 05:00 on every frame we captured, including the tutorial frame (frames 1–3). Levels here are bounded by time rather than by a move allowance, which changes the feel completely: reading the board is worth less than deciding quickly, and the "+Time" tool exists precisely because the clock is the thing that ends runs.' },
+      { h: 'Side racks match the block colours', p: 'The purple strip on the left and the orange strip on the right line up with the two brick colours on the tray (frames 1–2). The tutorial hand taps a purple block and then moves to the purple strip, which is the game demonstrating the pairing. Which colour you can act on is therefore tied to a side, not to whatever looks satisfying — how much room each side holds is not shown on any frame.' },
+      { h: 'Three tools, one charge each', p: 'Hammer, Magic Ball and +Time each carry a badge reading 1 at the start (frames 1–2). They are limited stock rather than a menu — and +Time is the only one that addresses the countdown directly.' }
     ],
     howTo: [
-      'Read the whole board first and count how many blocks there are of each colour, and how many free cells each lane has.',
-      'Assign the biggest colour group to the longest, cleanest lane before you place anything.',
-      'Tap a block to pick it up, rotate it if the shape does not sit flush, then tap the lane you want it to drop into.',
-      'Clear the blocks that block other routes first, even if the colour order feels wrong — opening space early prevents a locked board later.',
-      'Fill a lane completely when you can. A half-finished lane still reserves that colour, so leaving several lanes half-filled wastes capacity.',
-      'If nothing fits any lane, use the exit to the level select rather than shuffling pieces; the mistake was almost certainly the first lane assignment, not the last move.'
+      'Start by reading the two side racks and the colours on the tray, since the racks name the colours in play (frames 1–2).',
+      'Tap a block to select it, as the caption instructs: "Tap to select colored blocks to remove" (frame 3).',
+      'Work the purple block first on the opening board: it sits directly above the orange one, so it is the one the tutorial hand points at (frame 1).',
+      'Keep an eye on the 05:00 countdown while you plan; a perfect read that arrives after the clock is a loss.',
+      'Spend +Time before the last thirty seconds rather than after, since it is worth nothing once the countdown has already run out.',
+      'Use Hammer on a single block that is wedged under something you cannot yet clear, and keep Magic Ball for when the tray has more colours than the racks can take.'
     ],
     tips: [
-      'Do not place the first block that fits. The opening placement decides the lane-to-colour mapping for the whole board, and it cannot be undone.',
-      'Rarest colour first. Small groups are flexible early but become impossible to park once the free lanes are claimed.',
-      'Where you have a choice, put a colour into the lane nearest its current position. Long trips across the board tend to strand blocks behind obstacles.',
-      'Rotate before you commit mentally: if a piece looks like it does not fit, run through its four orientations first — roughly half of apparent dead ends in Chroma Jam are orientation problems.',
-      'Keep one lane completely empty as long as possible. It is your only shuffle room, and once every lane holds a colour there is nowhere to move a mistake.',
-      'On boards with many obstacles, solve the geometry before the colours: find the arrangement that leaves the blocked cells survivable, then assign colours to fit it.'
+      'The "0%" beside the character silhouette is the only progress readout on screen. It is a percentage of the level, and it is at zero on every frame we captured.', 
+      'Rack space is the constraint to watch. No frame shows a rack full, so the first thing to learn is how much each side takes before it refuses more.',
+      'You begin with one charge of each tool. Using all three on the first board means having nothing for the boards that actually need them.',
+      'Because the clock starts immediately, tapping around the interface to look for a "ready" button just burns the 05:00.',
+      'Level 1 is two blocks. Later trays stack more colours, and the arrows on the racks are the only on-screen hint of which side is taking what.'
     ],
     mistakes: [
-      'Claiming a long lane with a colour that only needs two of its cells, which strands the larger groups in short lanes.',
-      'Placing a block without checking whether it will ever be possible to reach the far end of that lane again.',
-      'Rotating at random instead of deliberately; a piece has four states, and testing them in order finds the fit in a couple of taps.'
+      'Assuming it is a relaxed sort puzzle. It is the one game in this category with a countdown running on the very first board.',
+      'Selecting a block whose colour has nowhere left to go — the tap does nothing useful and the clock does not stop.',
+      'Treating the tools as unlimited. Each badge says 1.'
     ],
-    device: 'Portrait, thumb-reachable, and the tap-rotate-drop sequence is comfortable one-handed. There is no drag gesture to fight with and no timing element, so a desktop mouse works just as well as a phone screen. On a large monitor the board stays centred rather than stretching, which keeps lane colours easy to distinguish.',
+    device: 'Portrait, with the tray in the upper-middle and the three tools along the bottom edge — thumb reach is fine on a phone. The HUD bar is tall, so on a small screen the tray itself is narrower than it looks in these captures. Keyboard is not used on any captured frame; pause is a button, not a key.',
     faq: [
-      { q: 'Is Chroma Jam a match-3 game?', a: 'No, despite the colour-grouped pieces. Nothing is matched or cleared by alignment — you are routing blocks into single-colour lanes, which makes it a packing and planning puzzle.' },
-      { q: 'Can a board become unsolvable mid-play?', a: 'In practice yes, which is why there is an exit rather than only a win or fail. If you lock the layout, leave and replay; nothing you earned is lost.' },
-      { q: 'Do I lose progress if I quit a level halfway?', a: 'The level resets to its starting layout and your position in the ladder is unchanged.' },
-      { q: 'Are there ads inside the levels?', a: 'Page-level ads on Tapzens run through our consent prompt. Some in-game bonus options are offered as optional rewarded videos, which you can always close.' },
-      { q: 'Does it work with a keyboard?', a: 'There is no keyboard scheme; pointer input only. On a laptop that means the trackpad, which is fine because nothing in the game requires speed.' },
-      { q: 'What is the best first move on a new board?', a: 'Counting. Spend the first few seconds on piece counts and free lane cells before touching anything — it is the single highest-value habit in this game.' }
-    ]
-  },
-
-  hunterevolveuprising: {
-    verdict: 'A merge-and-deploy battle game where unit composition decides the fight before it starts.',
-    about: [
-      'Hunter: Evolve Uprising is a landscape battle game built around merging. You deploy units onto a field, matching units combine into a stronger version, and the resulting squad has to survive escalating waves that end in boss encounters. Troop data, troop animation sets and a dedicated boss troop bundle are all separate asset groups in the build, which is why different unit families behave and look distinctly from one another.',
-      'The second layer is equipment. There is a gear set with its own configuration and evolution bundles, so units can be upgraded between fights rather than only within one. Add a card-based selection layer and a set of battle maps, and the game stops being a reflex test: you are choosing an army before the level begins, and the fight mostly validates that choice.',
-      'Play sessions are short. A single battle runs to a boss in a couple of minutes, and losing costs you the attempt rather than your progression, so the natural loop is to try a composition, see how far the boss pushes back, and change one thing.'
+      { q: 'Is Chroma Jam a match-3?', a: 'No. The in-game caption says "Tap to select colored blocks to remove" (frame 3) — blocks are removed by colour and sent to the matching side rack, not by lining three up.' },
+      { q: 'Is there a time limit?', a: 'Yes, and it is on screen from the first frame: the "Countdown" pill reads 05:00. The "+Time" tool is there to extend it.' },
+      { q: 'What are Hammer, Magic Ball and +Time?', a: 'The three tools under the tray, each starting with a single charge. +Time adds to the countdown; the other two clear blocks. Their exact reach is not demonstrated in the frames we captured.' },
+      { q: 'What do the purple and orange strips on the sides mean?', a: 'They are colour racks — purple on the left, orange on the right — each with an arrow pointing at the tray, and each matching one of the two brick colours. The tutorial hand moves from a purple block to the purple strip, which is as far as the captured frames go in explaining them.' },
+      { q: 'What is the 0% next to the character?', a: 'A percentage readout in the green HUD bar, sitting between the pause button and the countdown. It is still 0% on every frame we captured, so we can only say it is the level\'s progress indicator, not what it counts.' }
     ],
-    systems: [
-      { h: 'Merging is the economy', p: 'Two matching units combine into the next tier. Because tiers compound, a single high-tier unit is usually worth more than several low-tier ones — but it also takes twice the deployments to reach, so a rush to the top tier can leave your field undefended on the way up.' },
-      { h: 'Gear and evolution between battles', p: 'Units carry equipment that has its own upgrade track. Gear is persistent, so a lost battle still leaves your hunters better armed than before; this is the game’s main defence against a hard boss feeling like wasted time.' },
-      { h: 'Boss waves are the difficulty wall', p: 'The boss asset set is separate from regular troops, and it behaves differently — the encounter tests whether your composition has an answer to its pattern rather than whether your total power is high. The first attempt at a new boss is information, and it is fine to spend it that way.' }
-    ],
-    howTo: [
-      'Deploy early and constantly. Empty field space is where an enemy wave reaches your back line, so keep a unit landing even while you plan.',
-      'Merge deliberately toward one or two strong units rather than scattering upgrades across the whole bench.',
-      'Watch which damage type the current wave resists and merge into the unit family that is working, not your favourite one.',
-      'Spend earned gear upgrades after a loss, not only after a win — that is when they buy you the next attempt.',
-      'Hold one merge in reserve for emergencies. A ready pair can be dropped straight into a gap when a boss breaks your line.',
-      'On landscape, rotate your phone properly and use both thumbs; the deploy area is wide and reaching the far edge one-handed causes mis-deployments.'
-    ],
-    tips: [
-      'The merge chain matters more than the count. Six deployed low-tier units lose to three tier-matched ones far more often than the raw numbers suggest.',
-      'Enemy waves are predictable within a level. Once you have failed a stage twice you know the timing of every spawn — plan your merges around that schedule.',
-      'Front-line units absorb the damage your back line needs to land. If your squad melts, fix the front rather than upgrading the attackers.',
-      'Skip no gear screen. Upgrades you leave unpurchased are the cheapest power available, since they cost currency you already have.',
-      'A boss that beats you at the same phase every time is a positioning problem, not a power problem — change where you deploy before you change what you deploy.'
-    ],
-    mistakes: [
-      'Merging everything into one unit. One kill removes your entire frontline and the waves behind it arrive untouched.',
-      'Deploying the strongest unit you have instead of the one the current enemy type is weak against.',
-      'Replaying a lost battle unchanged. The composition is the variable; if you do not change it, the result will not either.'
-    ],
-    device: 'Landscape on purpose — the battlefield is wide and units need room to be placed, so the game asks you to turn the phone. On a tablet the extra width is a real advantage, and on desktop it plays with a mouse with no keyboard requirements.',
-    faq: [
-      { q: 'Is this a strategy game or a reflex game?', a: 'Mostly strategy. Deploy and merge taps are unhurried, and outcome is decided by unit choice, merge timing and gear rather than how fast you react.' },
-      { q: 'Do I lose gear or units when a battle fails?', a: 'No. Persistent upgrades stay; the battle itself resets so you can retry with a changed squad.' },
-      { q: 'Why does my squad die on the same boss every time?', a: 'Almost always an unanswered mechanic in that boss pattern rather than a power gap. Watch the phase where the wipe happens and change what you deploy into it.' },
-      { q: 'Does it need a strong connection during play?', a: 'No, the fight is simulated locally. Only the initial load pulls assets from our servers.' },
-      { q: 'Where are ads placed?', a: 'At page level through the Tapzens consent prompt, plus optional rewarded videos if you choose a bonus. Nothing plays an ad over you mid-battle without a choice.' }
-    ]
-  },
-
-  acestrike: {
-    verdict: 'An arcade dogfight that aims for you, so the whole game is movement discipline.',
-    about: [
-      'Ace Strike is a jet fighter shooter that removes aiming from the equation. Your guns lock on and fire on their own, which at first sounds like it takes skill away and then turns out to be the point: with aiming automated, every mistake you make is a positioning mistake. You are steering into or out of incoming fire, choosing which cluster to commit to, and deciding whether that power-up is worth flying through a wall of tracers.',
-      'The game runs in landscape and hands you an on-screen joystick, or arrow keys on a desktop, with tap-to-fire layered on top for when you want to override the auto-target. Enemy squadrons arrive in waves that repeat their patterns, so a run that ends badly the first time becomes readable by the third. Upgrades are collected mid-flight rather than purchased, which means your build is decided by which risks you took in the first two minutes.',
-      'It is the most demanding game in our action section in terms of attention, and the least forgiving of a laggy connection, because the load is a continuous stream of enemies rather than a puzzle board that waits for you. Sessions are short by design — one sortie, one score, one retry.'
-    ],
-    systems: [
-      { h: 'Auto-targeting changes what you practise', p: 'Since your weapons acquire targets themselves, damage output is roughly fixed and survival is variable. Improving at Ace Strike means learning how long you can stay inside a firing line, not how fast you can tap.' },
-      { h: 'Power-ups are a routing decision', p: 'Upgrades drift into lanes you may or may not cross. Grabbing one usually means leaving the safe edge of the screen, so the real skill is judging whether the upgrade is worth the exposure the pickup demands.' },
-      { h: 'Waves repeat, so memory is power', p: 'Enemy formations within a stage are fixed. After two or three attempts you know where the next crossfire arrives, and planning one wave ahead is what separates a long run from an early death.' }
-    ],
-    howTo: [
-      'Pick up the joystick with your right thumb and keep your jet slightly below the vertical centre, which leaves room to retreat upward when a wave appears.',
-      'Let auto-target do the aiming. Your attention belongs on the incoming fire, not on lining up shots.',
-      'Tap to fire manually only when a single high-value target is isolated — otherwise you are wasting the moment you could spend moving.',
-      'Clear the screen edges first. Enemies stream in from the top and sides, and a blocked edge is how a run ends.',
-      'Take damage on a climb, not on a descent. Losing altitude into a wall of fire usually costs you the whole run.',
-      'Bank power-ups you cannot safely reach and come back for them after the wave passes.'
-    ],
-    tips: [
-      'Small movements beat big ones. Over-committing to one side of the screen is the most common cause of being caught flat-footed by the next formation.',
-      'Study the spawn rhythm rather than the bullets. Once you know the interval, dodging becomes anticipatory and stops being reactive.',
-      'If your run keeps ending at the same wave, stop trying to out-fly it — change which upgrade you take on the way in.',
-      'Stay near your pickups. Flying far from a power-up you intend to grab doubles the exposure cost of getting it.',
-      'Short sessions are more productive here than long ones; pattern memory forms fast and the frustration ceiling is low if you retry in bursts.'
-    ],
-    mistakes: [
-      'Hugging the bottom of the screen. It feels safe and removes your only retreat direction.',
-      'Chasing a power-up through a firing line — the upgrade is worth less than the health you spend getting it.',
-      'Fighting at the spawn edge, where new enemies arrive inside your own hitbox.'
-    ],
-    device: 'Landscape is mandatory here: the battlefield is wide and the joystick needs thumb room, so rotate the phone and hold it with both hands. On a desktop, the arrow keys replace the joystick with no learning curve, and a mouse works if you prefer precise control over the tap-to-fire. Frame rate matters more than screen size, so if the action ever feels uneven, closing other tabs helps more than anything you can change in the game.',
-    faq: [
-      { q: 'Do I have to aim?', a: 'No. Weapons acquire targets automatically; manual fire exists as an override for isolated high-value targets.' },
-      { q: 'Are upgrades permanent between runs?', a: 'They are collected within a sortie. Progression systems unlock over time, but a power-up you grabbed in a previous run does not carry into the next one.' },
-      { q: 'Why does my jet die instantly in later waves?', a: 'Almost always crossfire from two directions. Screen-edge spawns overlap, and the fix is to engage formations before they close rather than weaving through them.' },
-      { q: 'Does it work with a controller?', a: 'There is no gamepad binding; joystick or keyboard only.' },
-      { q: 'Will a slow connection ruin a run?', a: 'It can. Waves stream in continuously, so a stall mid-sortie puts you in fire you could not see. The page reports its load state, so give it a second before you press play on a weak network.' }
-    ]
-  },
-
-  smashblocks: {
-    verdict: 'A break-out hybrid where the launcher angle is the whole game, plus a rank ladder to climb.',
-    about: [
-      'Smash Blocks asks you to aim a launcher, fire a stream of blocks into a packed wall, and clear the stage before your supply runs out. Chain reactions are the engine of it: a well-chosen angle that hits several adjacent weak points at once breaks far more than a direct hit, and the game scores you on that rather than on raw shots.',
-      'The boards are dense and colourful, deliberately readable at a glance — each row of blocks has its own colour and durability, so the tactical layer is choosing which band to attack first. Later stages add geometry that shields parts of the wall, which turns each shot into a bounce problem: you are calculating at least one reflection before firing.',
-      'There is a rank ladder attached to it as well, with rank badges shown on the results screen, so performance is tracked against tiers rather than only against the stage. It is the closest thing in our arcade section to a score-chase game, and the session length is whatever you have.'
-    ],
-    systems: [
-      { h: 'Angles over force', p: 'Every block reflects the projectile, so a shallow angle walks sideways across a row and a steep one drills down one column. Shallow angles clear width; steep angles clear depth. Choosing between them is most of the decision.' },
-      { h: 'Combos are the score', p: 'One shot that breaks a long chain multiplies what it destroyed. The stage can usually be cleared with fewer shots than you take if you line up chains first and fire second.' },
-      { h: 'Rank badges', p: 'Results show rank progression, which rewards clearing stages with blocks left over rather than scraping through. A stage cleared with supply to spare moves you up; a lucky clear does not.' }
-    ],
-    howTo: [
-      'Drag from the launcher to set the angle and release to fire. Drag further for a finer adjustment; the guide line follows your finger.',
-      'Before firing, pick one row and commit to walking along it. Scattered single hits are what run your supply out.',
-      'Use the side walls deliberately. A shot that looks awkward because it banked twice is often the cleanest path to a shielded band.',
-      'Break the outer shell before aiming at the core, since blocks in front absorb everything you fire at what is behind them.',
-      'When the wall has thinned, switch to steep angles to drill the remaining column rather than continuing to sweep.',
-      'If you have shots to spare at the end, aim at the largest contiguous group instead of the leftovers — chain bonuses are where rank points come from.'
-    ],
-    tips: [
-      'Fire at the junction between two colours rather than the middle of a group; boundaries tend to be structurally weaker and start longer chains.',
-      'Bank off a corner. A single corner hit redistributes into both axes and can clear a band that would have taken three shots.',
-      'Never fire without thinking about where the projectile ends up. Shots that leave your launcher crowded side are wasted even if they destroy something.',
-      'Learn which blocks absorb rather than reflect. Some stage pieces eat the shot instead of bouncing it, and treating them as walls loses you the angle.',
-      'Clearing a stage in fewer shots is worth more than clearing it safely; the rank ladder separates the two.'
-    ],
-    mistakes: [
-      'Spraying at the densest area because it looks like it does the most damage — dense rows absorb, and the shot returns early.',
-      'Ignoring the return path and stranding yourself with no good angle left.',
-      'Rushing the last few blocks; they are usually shielded behind the geometry the earlier shots exposed.'
-    ],
-    device: 'Portrait, and the drag-to-aim gesture is the reason: the launcher sits at the bottom of a tall screen and your thumb has the full height to set an angle. On desktop, a click-drag with the mouse does the same job with slightly better precision. The board never scales down to unreadable, so a small phone is not a handicap.',
-    faq: [
-      { q: 'Is this Breakout?', a: 'Same family, different goal. You are throwing blocks at a wall to collapse it, not bouncing a ball to survive; the shot count is finite and each stage is a puzzle.' },
-      { q: 'What determines my rank?', a: 'Efficiency. Clearing stages with shots and supply left over advances the rank ladder; barely scraping through holds it.' },
-      { q: 'Can I undo a shot?', a: 'No. Once released the block stream commits, so aim before you release rather than relying on a retry.' },
-      { q: 'Does it need fast reflexes?', a: 'No. Nothing moves on its own; the projectile is yours to place. It is a geometry game with an arcade coat.' },
-      { q: 'Are ads shown between stages?', a: 'Page-level advertising runs through our consent prompt, and some bonus options are offered as optional rewarded videos you can decline.' }
-    ]
-  },
-
-  bubblesafari: {
-    verdict: 'Bubble shooter with a jungle coat and an unusually strong bias toward dropping hanging clusters.',
-    about: [
-      'Bubble Safari is the classic aim-and-pop loop: a curved launcher at the bottom of the screen shoots bubbles upward onto a descending field, three or more touching pop, and anything left without support falls. The jungle theme does more than decorate it — the field drifts down a little after every few shots, which puts a soft clock on a game that otherwise lets you think as long as you like.',
-      'Scoring is dominated by drops rather than matches. Popping a small cluster is worth little; cutting a whole hanging section free is worth a lot, and the boards are drawn so that the biggest drop is nearly always available if you are patient enough to look for it instead of taking the easy match.',
-      'Levels are rated with stars, and the rating survives a failed attempt, so a stage you clear sloppily can be revisited for the higher score. Coins are earned by playing and can be spent on the shop options the game offers; there is also a feedback screen if something about a stage is not working for you.'
-    ],
-    systems: [
-      { h: 'Star ratings on every stage', p: 'Clearing is the pass mark, not the result. Each level grades you, and replaying a stage you already beat is a legitimate way to farm the coins the shop needs — the board layout is fixed, so a run you improve on is genuinely yours.' },
-      { h: 'Coins from play, not from wallets', p: 'Currency is awarded on the results screen and can be converted through an optional rewarded video if you want a top-up. Nothing in the level ladder is gated behind a purchase.' },
-      { h: 'The descending field', p: 'After a set number of shots the wall pushes down one row, narrowing the gaps you can shoot into. Boards feel open early and close in steadily, which is why the first five shots matter more than the last twenty.' }
-    ],
-    howTo: [
-      'Drag from the launcher to aim; the guide line shows the first bounce so you can read the wall path before you commit.',
-      'Release to fire. The bubble sticks where it lands, so a bad shot is not just wasted — it occupies a spot you may have needed.',
-      'Look for the anchor first: which single bubble, if popped, disconnects the largest hanging section?',
-      'Bank off the side walls deliberately to reach columns you cannot hit directly. Most boards are built around at least one wall shot.',
-      'When a colour is scarce, shoot it into a cluster as filler rather than hunting for a match; you are buying board control until it reappears.',
-      'Keep the ceiling path open near the middle. Once the field hangs low in the centre, your bank angles disappear and the shot count to solve the board triples.'
-    ],
-    tips: [
-      'Three matches are for clearing; five-cluster cut-offs are for scoring. Prioritise the second whenever both are available.',
-      'Empty the sides before the middle. Bubbles on the far edges are hard to reach once the field descends, and dropping them early keeps your angles open.',
-      'Use the preview of the next bubble to plan two shots ahead, since a good bank shot is often the second one.',
-      'Never fire a colour into the middle of a mixed pack unless you can pop it next turn — that bubble is now a lid you have to remove.',
-      'If the field is getting low, stop optimising for points and play for survival; a stage failed for a high score earns nothing at all.'
-    ],
-    mistakes: [
-      'Taking the obvious three-match when a cut-off worth five times as much is on the board.',
-      'Filling the ceiling gap in the centre, which is the lane every future bank shot needs.',
-      'Panicking once the wall descends; the board usually still has the same solution, it has just narrowed.'
-    ],
-    device: 'Portrait, thumb on the launcher, and the aim guide is generous enough to be readable on a small screen. On desktop the mouse replaces the drag with better precision for tight bank shots, which is where the keyboard-and-mouse setup actually beats a phone. Nothing in the game needs fast reaction, so a trackpad is fine.',
-    faq: [
-      { q: 'Do I lose stars if I replay a level?', a: 'No. The game keeps your best result, so replaying to improve a sloppy clear is safe.' },
-      { q: 'Can I buy my way past hard levels?', a: 'Coins and shop items exist, but the ladder is designed to be completed by playing. A hard stage is a layout problem, and the same solution works whether or not you spend.' },
-      { q: 'What makes a bubble fall?', a: 'Support. Any bubble that no longer has a connected path back to the ceiling drops, and that is the main scoring mechanic rather than a side effect.' },
-      { q: 'Does the game need a connection during play?', a: 'Only to load. Once a level is on screen the physics and scoring run locally on your device.' },
-      { q: 'Is it suitable for young children?', a: 'The mechanic is simple enough for a child who can aim, but Tapzens is a general-audience site with advertising, so an adult should decide.' }
+    shots: [
+      'Level 1 with the tutorial hand on the purple block: Countdown 05:00, the purple and orange side racks, and Hammer / Magic Ball / +Time each showing one charge.',
+      'The tutorial hand has moved off the purple block and is now pointing at the purple strip on the left edge — the game pairing a block colour with the side that takes it.',
+      'The instruction caption in its own words: "Tap to select colored blocks to remove".'
     ]
   },
 
   spinscrewjam: {
-    verdict: 'A nuts-and-bolts sorting puzzle where the difficulty comes from boards with almost no free slots.',
+    verdict: 'A screw-sorting puzzle: unscrew coloured screws from overlapping plates and get each colour into its matching box, with a short buffer rail you can extend.',
     about: [
-      'Spin Screw Jam asks you to unscrew pins from wooden boards and park them in slots, then clear every board. Pick up a screw, tap an empty slot, and the piece moves — that is the entire control scheme. The puzzle is that the slot tray is small, so the order in which you remove screws matters more than the removal itself.',
-      'Boards typically present several overlapping plates held by coloured screws, and a plate cannot come free until every screw holding it is out. Because slots fill as you work and only empty when a whole colour leaves the board, the game is really a queue-management problem: you need the last screws of one colour to arrive before the tray runs dry.',
-      'The build carries up to eight hole positions per board, so layouts stack plates in genuinely awkward configurations, and there is a limited-attempt model behind it — when the runs are gone you wait or replay rather than churn. It is the most unforgiving sort puzzle on the site, and the most satisfying when a board finally falls apart in sequence.'
+      'The board is a stack of salmon-pink plates — squares and round washers, overlapping each other — held down by cross-head screws in red, blue and cyan (frames 1–2). Take a plate\'s screws out and the plate lifts, exposing what was under it. The point is not the plates though; it is where the screws go.',
+      'Along the top, under "Level 1", sit the destinations: a red-outlined box with three holes, a blue-outlined box with three holes, and two teal buttons reading "Unlock Box" (frames 1–2). A screw only belongs in the box of its own colour, and each box has three holes, so the sorting has to be exact rather than approximate.',
+      'Between the boxes and the board is a rail of seven grey circles — five open and two padlocked at the right end (frames 1–2). That is the temporary buffer: the screws you have removed but cannot yet file. To the right of it sits a wrench icon over a small tally reading 0 (frames 1–2), which is the currency the rail upgrade asks for. Tapping "+1 Slot!" opens an "Add Slot" panel showing the same seven positions — three already carrying a red, a yellow-green and a blue screw, two empty, two padlocked — above the line "Unlock by watching a short ad", with two buttons below it: a yellow "+1 Slot!" badged 36 with that same wrench, and a blue "+1 Slot!" carrying a video icon (frame 3).'
     ],
     systems: [
-      { h: 'Slots are your only workspace', p: 'Each screw you lift occupies a slot until it can be matched away with others of its colour. The tray holds a handful, so three careless pickups can leave you with no legal move on a board that still looks half-solved.' },
-      { h: 'Overlapping plates', p: 'A plate is freed only when all of its screws are out, and upper plates hide the screws of plates below. Solving means removing in an order that the layering dictates, not the order that looks easiest.' },
-      { h: 'Limited attempts', p: 'You do not get unlimited retries on a stuck board. Once attempts are spent the level waits, which pushes you to study a layout before committing to it instead of burning through guesses.' }
+      { h: 'Colour-matched boxes with three holes each', p: 'The red and blue boxes at the top take three screws apiece, and two more boxes are locked behind "Unlock Box" (frames 1–2). Because a wrong-colour screw cannot be filed, the boxes act as the acceptance test for everything you remove.' },
+      { h: 'A seven-circle buffer, five of them yours', p: 'The rail of grey circles is where removed screws wait. Five are open and two are padlocked at the end (frame 1); the "Add Slot" panel spells out that the locked ones come from watching an ad, and prices the other route at 36 wrenches against a balance of 0 (frame 3). Buffer space is the difference between being able to lift a plate now and having to wait for a colour to clear.' },
+      { h: 'Reroll Peg, +1 Slot! and Clear', p: 'Three tools sit along the bottom: "Reroll Peg" with a circular-arrow icon, "+1 Slot!" with a grey slot and a green plus, and "Clear" with a broom (frames 1–2). They are the pressure valves — a reshuffle when no plate is free, an extra buffer slot when the rail is full, and a sweep when the board has stalled. None of the three shows a price on the board itself.' }
     ],
     howTo: [
-      'Tap a screw to pull it; it flies into the first free slot in the tray.',
-      'When three screws of the same colour sit in the tray, they clear together automatically and free those slots.',
-      'Before pulling anything, identify which colour is closest to three in the tray and find its remaining screws on the board.',
-      'Prefer screws from plates that are nearly free. Finishing a plate exposes screws that were physically unreachable.',
-      'Never pull a colour you cannot complete unless you are deliberately building a match for the next turn.',
-      'Leave the top-right and bottom-left corners of a layout until last; those screws usually hold the final two plates together.'
+      'Look at which boxes are open first. On the first board only red and blue are available, so cyan screws have nowhere to be filed (frames 1–2).',
+      'Unscrew a screw only when its box has a free hole, or when you have buffer space to hold it.',
+      'Work the topmost plates first — a plate that is covered cannot lift no matter how many screws you take out of its neighbours.',
+      'Count the buffer rail before you commit. Five open circles is the whole working memory of the puzzle on the first board.',
+      'Use Reroll Peg when nothing on the board is both exposed and wanted, rather than tapping plates hoping one frees.',
+      'Spend the "+1 Slot!" unlock on boards where you keep hitting the rail limit, not on the first board you feel stuck on.'
     ],
     tips: [
-      'Count down to three. If the tray holds two of a colour, that colour is a priority regardless of where it sits in the stack.',
-      'Two free slots is the danger zone. Below that you need a completion this turn, so if none is available, the previous pickup was the mistake.',
-      'Screws that only hold a decorative top plate are cheap openings — take them to expand your workspace before touching the load-bearing ones.',
-      'Read colour distribution before you commit: a colour scattered across four different plates is a liability, and you want it out of the way early.',
-      'On a fresh board, spend the first ten seconds doing nothing. Layouts with tight trays are almost always lost by an opening pickup made on instinct.'
+      'A screw sitting on a covered plate still counts against you — you can see its colour and plan for it.',
+      'The two padlocked buffer slots and the two "Unlock Box" buttons are the same idea at different places: the game starts you small and grows the puzzle by opening them.',
+      'The upgrade currency is the wrench, not the coin. Its tally reads 0 on the board frames and the paid "+1 Slot!" asks for 36 (frame 3), so the video route is the one available immediately.',
+      'The "Add Slot" panel shows a yellow-green screw as well as red, blue and cyan (frame 3) — the first board only uses three of them, so more colours are coming.',
+      '"Next Challenge!" appears above the tool row once a board is finished (frame 3) — the levels run one after another rather than through a map.'
     ],
     mistakes: [
-      'Pulling the accessible screw rather than the useful one. Reachability is not the same as priority when plates overlap.',
-      'Filling the tray with three different colours in three moves, which is how a half-empty board becomes unsolvable.',
-      'Restarting immediately when you get stuck — the mistake is normally three pulls back, and replaying with that in mind beats random retrying.'
+      'Pulling screws out to see what is underneath. Every screw you lift has to live in the buffer until its box has room.',
+      'Ignoring the locked boxes. If cyan has nowhere to go, cyan screws are dead weight.',
+      'Unlocking a buffer slot the first time the rail fills, instead of noticing that the real problem was a colour with no box.'
     ],
-    device: 'Portrait, and the tap-lift-then-tap-slot transfer is one of the most comfortable thumb sequences on the site: the board is high, the tray is low, and your thumb travels vertically. On desktop, clicks replace taps exactly. Because there is no timing, a small screen costs you nothing beyond being able to distinguish screw colours — the pieces are large enough that it is not a problem.',
+    device: 'Portrait. The boxes and buffer rail are at the top and the tools at the bottom, with the board between them, so the whole puzzle is visible at once on a phone without scrolling — which matters here, because the buffer rail has to stay in view while you plan. Nothing on the captured frames uses keyboard input.',
     faq: [
-      { q: 'Why do slots fill up so quickly?', a: 'Because a screw only leaves the tray when its colour reaches three. Every pickup is a debt that only a completed colour set can repay, and that is the whole difficulty of the game.' },
-      { q: 'Can a board become unsolvable?', a: 'Yes, which is what the attempt limit is for. If no legal move exists, replay the level; progress elsewhere is unaffected.' },
-      { q: 'What do the different coloured screws mean?', a: 'They are the sorting categories. Colour is the only grouping rule — size and position do not matter for matching.' },
-      { q: 'Are there multiple boards at once?', a: 'Layouts stack several plates with up to eight fixing positions, so most boards are a single interlocking puzzle rather than separate boards.' },
-      { q: 'Is there a way to undo a bad pull?', a: 'There is no undo. Plan the sequence instead; the tray is small enough that a two-move lookahead prevents nearly every dead end.' }
-    ]
-  },
-
-  puzzlehex: {
-    verdict: 'A quiet tile-clearing puzzle where hex geometry removes most of the guesswork from matching.',
-    about: [
-      'Puzzle Hex presents a packed layout of hexagonal tiles and asks you to remove them all by picking groups that match. The hex grid is the whole design decision: because each tile touches six neighbours instead of four, a tile you can pick is far more likely to have its partner within reach, and boards resolve in a smoother, less stalled rhythm than the square-tile versions of the same idea.',
-      'The important word in the rules is free. Only tiles that are not covered by another layer can be taken, so a layout is really a stack with a visible front edge, and each pick changes what is exposed underneath. Good play in Puzzle Hex is mostly choosing which of two available matches to take so that the tile you uncover next is one you already have a pair for.',
-      'It is the most relaxed game in the catalogue — no timer, no descending pressure, no score chase. If you get genuinely stuck there is a hint control that surfaces a legal pick. Boards are self-contained, so a session can be one layout or twenty.'
+      { q: 'What is the goal of each board?', a: 'Get every screw off the plates and into the box of its own colour. The boxes have three holes each, and the buffer rail holds the ones you cannot file yet.' },
+      { q: 'Why are two boxes labelled "Unlock Box"?', a: 'They are extra destinations that are not available at the start. The first board only gives you a red and a blue box (frames 1–2).' },
+      { q: 'How do I get more buffer slots?', a: 'The "Add Slot" panel offers two ways: a yellow "+1 Slot!" button badged 36 with the wrench icon, or a blue "+1 Slot!" button with a video icon, captioned "Unlock by watching a short ad" (frame 3). The last two positions on the rail are padlocked until you do, and the wrench tally read 0 on our frames.' },
+      { q: 'What does Reroll Peg do?', a: 'It is the reshuffle tool on the bottom row (frames 1–2). It is there for the state where no plate on the board is both exposed and wanted. How it rearranges the board is not shown in our frames.' },
+      { q: 'Is there a timer?', a: 'No countdown appears on any captured frame. The pressure in this one comes from the five open buffer circles rather than from the clock.' }
     ],
-    systems: [
-      { h: 'Layered layouts', p: 'Tiles sit on top of one another and only the exposed ones can be picked. Clearing a top tile is as much about what it reveals as about what it removes.' },
-      { h: 'Six-way matching', p: 'Hexagonal tiling means neighbours come in six directions, which gives every tile more candidate partners than a square grid and makes long dead stretches rarer.' },
-      { h: 'Hints as a teaching tool', p: 'The hint control points at one legal pick rather than solving the layout. Used on boards you are stuck on, it shows the kind of exposure-planning the game expects from you.' }
-    ],
-    howTo: [
-      'Tap a free hex tile to select it, then tap matching free tiles to complete the group; a set clears once it is whole.',
-      'Scan for the rarest symbol first. A pair that is only two tiles deep in the stack becomes a blocker for everything around it.',
-      'Prefer picks that uncover a tile you already have two of. The best move in Puzzle Hex is usually the one that sets up the next.',
-      'Do not hoard tiles that have no partner yet — clear the groups that are complete now and trust the layout to surface the rest.',
-      'When the board is half cleared, switch to protecting your pair count: a single unmatched tile in the stack costs far more in a thinning layout.',
-      'Use the hint rather than churning when nothing is available; three taps of shuffling in a stuck layout is the main way time disappears here.'
-    ],
-    tips: [
-      'Read the stack edges, not the face of the board. The tiles along the exposed border decide what is possible for the next several picks.',
-      'If two picks look equal, take the one on the higher layer — it unseals more tiles underneath.',
-      'Rarest symbols are the constraint. Early in a layout, clearing common ones is procrastination.',
-      'A layout that looks crowded is usually easier than one that looks sparse, because depth gives you more legal options at once.',
-      'Take your time on the last ten tiles. Almost every stuck endgame was created by a convenient pick made too early.'
-    ],
-    mistakes: [
-      'Clearing the most obvious group repeatedly while a rare symbol stays buried under the pile you are ignoring.',
-      'Selecting tiles by reflex and then finding the group cannot be finished, because the third copy is still covered.',
-      'Treating a hint as a failure. In a puzzle with no timer, using it costs you nothing except the small satisfaction of finding the pick yourself.'
-    ],
-    device: 'Portrait, and the hex tiles are large enough that mis-taps are rare on a phone. Because the game has no clock, a smaller screen is not a disadvantage — you can inspect the layout as long as you want. On desktop it is a pure clicking game; there is no keyboard input and no drag gesture.',
-    faq: [
-      { q: 'What makes a tile unselectable?', a: 'Coverage. A tile with another tile resting on it cannot be picked until the one above is cleared, which is why layouts have a visible working edge.' },
-      { q: 'Is there a time pressure?', a: 'No. Nothing descends and no clock is running. The only pressure is your own preference for finishing the board.' },
-      { q: 'Can a layout end unsolvable?', a: 'It can end with a shape you cannot finish from the state you left it in. Restarting that layout is cheap — nothing else is affected.' },
-      { q: 'Does the hint cost anything?', a: 'It is there for when you are stuck, and using it does not remove the board from your progress.' },
-      { q: 'Why hexagons rather than squares?', a: 'Six neighbours instead of four means matching partners are almost always reachable, so the puzzle flows without the artificial dead stops square grids produce.' }
-    ]
-  },
-
-  blockpuzzlesavegirl: {
-    verdict: 'A sliding-block traffic puzzle with a rescue theme and an honest star rating for move efficiency.',
-    about: [
-      'Block Puzzle: Save Girl is a Rush-Hour-style logic puzzle: a grid packed with vehicles and blocks that only slide along their own axis, a girl boxed in somewhere in the layout, and an exit you have to clear a path to. Nothing is rotated and nothing is lifted; a piece moves back and forth in its lane or it does not move at all, and one blocked lane can make six other moves irrelevant.',
-      'The rescue framing is not just decoration — it changes how you read the board. Instead of “free the red car”, you are looking for the shortest sequence of lane-clearing moves, and the stars you are graded on are tied directly to how few of them you use. A solution that works in fourteen moves is a two-star answer to a nine-move puzzle.',
-      'Boards escalate the same way the genre always has, by adding pieces that must be shuffled twice before they get out of the way. What keeps it interesting is the “Help!” prompt from the girl: the board always shows what needs to be reachable, so you are never guessing the goal.'
-    ],
-    systems: [
-      { h: 'One-axis movement', p: 'Every block slides only along its own row or column. Before moving anything, trace the lane it would occupy — half of apparent blockers are pieces that never needed to move at all.' },
-      { h: 'Star ratings by move count', p: 'Clearing the board is the pass, the stars are the result. Each layout has a par, and replaying a stage for a better rating is a legitimate way to engage with a board you already solved.' },
-      { h: 'The dependency chain', p: 'Puzzles of this type are solved backwards: the final lane must be clear, which means the pieces in it must have moved, which means the lanes they need must have been clear first. Working from the exit outward is faster than experimenting from the start.' }
-    ],
-    howTo: [
-      'Do not touch a piece at first. Find the exit and trace the straight corridor that leads to the girl.',
-      'List every block sitting in that corridor. Those are your actual tasks; everything else on the board is scenery until it is needed.',
-      'For each blocker, ask where it can go and what stops it going there. That gives you a chain, and the chain is the solution.',
-      'Execute the chain from the far end — clear the deepest blocker first — because moving a piece out of a lane you still need wastes two moves.',
-      'Keep each lane reusable. A piece parked at one end of its own lane blocks that lane for the rest of the puzzle.',
-      'Once solved, replay it looking for a shorter route. The second solution is almost always several moves cheaper.'
-    ],
-    tips: [
-      'Count your moves before you make them. In a star-rated puzzle the difference between three stars and two is often a single redundant slide.',
-      'The longest piece on a lane is the most dangerous one. It needs the most clear space, so deal with long pieces early while the board is still open.',
-      'Two-piece shuttles are the usual trap: a short piece that has to move aside twice. Identify them before you start.',
-      'Ignore the pieces that cannot reach the corridor at all. Board clutter is the main way these puzzles waste your attention.',
-      'If you have made more than six moves without the corridor shortening, you are solving the wrong problem — restart and re-trace.'
-    ],
-    mistakes: [
-      'Moving the obvious blocker out of the way in the wrong direction, then spending four moves undoing it.',
-      'Solving the first board layout in your head and not re-checking after the fourth move; these puzzles change character as they open up.',
-      'Chasing a clear without chasing a short clear. Getting the girl out is not the grade — the move count is.'
-    ],
-    device: 'Portrait, with drag-to-slide on the pieces themselves, which is the right gesture for a lane puzzle — you pull a block along its track and your finger stays on it. On desktop, click-drag does the same thing. There is no timing element and no small-target problem, so any screen size works.',
-    faq: [
-      { q: 'What do the stars actually measure?', a: 'Move efficiency against the layout’s par. Fewer moves means a better rating; finishing at all is the pass mark.' },
-      { q: 'Can I rotate a block?', a: 'No. Orientation is fixed when the board starts, which is what turns each layout into a real logic problem rather than a packing exercise.' },
-      { q: 'Is there a move limit?', a: 'No hard limit. You can wander a board as long as you like; the star rating is what responds to how efficiently you finish.' },
-      { q: 'Why do I redo a puzzle I already beat?', a: 'For the rating. Layouts are fixed, so a cleaner solution is a real improvement rather than a luckier run.' },
-      { q: 'Are the later boards harder or just bigger?', a: 'Both, but mostly more interdependent. Later layouts are won by a longer dependency chain, not by a larger board.' }
-    ]
-  },
-
-  royalmatcher: {
-    verdict: 'A conventional gem matcher that puts nearly all of its depth into booster combinations.',
-    about: [
-      'Royal Matcher is a gem-swapping match-3 with the full shape of the genre: a coloured grid, a swap of two adjacent gems, goals per stage and a move budget. What it adds is an unusually rich set of boosters with combinations between them, and a coin economy that lets you bank them from play rather than only from purchase.',
-      'The booster layer is where the actual skill lives. A four-in-a-row produces a directional clear, a five produces a colour bomb, and matching two adjacent boosters against each other produces an effect larger than either alone. Late stages are cleared by setting those combinations up over several moves, not by finding one lucky swap.',
-      'Presentation is the most formal of our puzzle section — regal palette, framed grids, grand objectives. Stages come in blocks that share a theme, and there is an in-game currency screen if a goal is genuinely out of reach; the ladder itself is playable without spending.'
-    ],
-    systems: [
-      { h: 'Booster generation rules', p: 'Four in a line creates a striped gem that clears a row or column; five creates a colour bomb that removes a whole colour. Both are set off by swapping them like an ordinary match, so producing them is only half the value.' },
-      { h: 'Combining boosters', p: 'Swapping two adjacent special gems against each other is the strongest move in the game — a striped-plus-striped crosses both axes, and a colour bomb plus a striped gem converts a whole colour into directional clears. Setup for a combo is worth several ordinary matches.' },
-      { h: 'Coins and the shop', p: 'Coins accumulate from play and there is a purchase flow when you spend them on a shortage. A stage you cannot finish is normally a move-budget problem, and boosters bought in do not fix a bad opening plan.' }
-    ],
-    howTo: [
-      'Read the goal before the board. Clearing a colour, dropping obstacles and collecting ingredients each want a different area of the grid.',
-      'Swap to create a four-in-a-row wherever the goal needs the most damage, because that booster is aimed at a specific line.',
-      'Work from the bottom of the grid upward. Low clears lift the whole column and generate cascades you get for free.',
-      'Build toward a two-booster combination instead of spending each one as it appears.',
-      'Avoid a five-match on an almost-empty board. The colour bomb is best while the target colour is still spread out.',
-      'When moves run short, stop chasing the goal and chase the cascade — a single good drop can finish a stage that three planned swaps cannot.'
-    ],
-    tips: [
-      'Aim a colour bomb at the colour you need, not the colour that is easiest to reach; that is where most wasted boosters come from.',
-      'Obstacle stages reward horizontal thinking. A striped gem fired along the row that carries the blockers is worth more than two matches near them.',
-      'Ingredient levels want the bottom rows. Anything cleared above the drop zone takes several moves to reach the exit.',
-      'Save a move you do not need. Most failed stages end with one move left and no available match, which is a sequencing error twenty moves earlier.',
-      'The rarest colour on the board is a promise, not a problem. A five-run in it is nearly always more valuable than clearing common colours.'
-    ],
-    mistakes: [
-      'Using each booster the instant it appears, which throws away the combination mechanic entirely.',
-      'Planning a five-match too late in a stage, when there are not enough moves left to benefit from it.',
-      'Ignoring the move counter until the last three moves, at which point the goal is usually unreachable.'
-    ],
-    device: 'Portrait, and the board is sized for thumbs — most swaps land in the lower two-thirds, which is where the grid sits on a phone. Desktop play works with click-drags and is slightly faster for careful reading of the whole board, but the swap gesture is designed for touch first.',
-    faq: [
-      { q: 'Do boosters carry between levels?', a: 'Special gems you generate are for the current stage. Coins and unlocked progress persist, but a board does not start with the boosters from the last one.' },
-      { q: 'Can I finish the game without spending?', a: 'The ladder is playable through effort and planning. The shop exists for stages you want to force, not as a gate.' },
-      { q: 'Why did my five-in-a-row not create a colour bomb?', a: 'The line has to be formed by the swap itself rather than pre-existing, and some boards only permit certain shapes depending on the obstacles around them.' },
-      { q: 'Is there a time limit?', a: 'No timer — stages are limited by moves, not seconds. Take as long as you need to find the best swap.' },
-      { q: 'Which swap is usually best?', a: 'Whichever one creates a cascade while advancing the goal. A cascade is free progress; a direct match spends the move it consumes.' }
-    ]
-  },
-
-  arrowmazesolve: {
-    verdict: 'A draw-the-route puzzle: you build the path with arrow tiles, then watch a ball take it exactly as written.',
-    about: [
-      'Arrow Maze Solve splits into two phases and that split is the whole design. First you place and rotate arrow tiles on an empty grid to define a route; then you press Play and a ball runs that route with no further input. There is no steering during the run, which means the game is not testing reflexes at all — it is testing whether you thought through the path before you committed to it.',
-      'The planning phase is genuinely logical. Arrows have four orientations, some cells are fixed, some are blocked and the grid has gaps the ball will happily fall through. A single wrong tile near the start invalidates everything you laid afterwards, so the boards reward reading the maze from both the goal and the entrance.',
-      'Because the run is deterministic, solving means debugging. Failed attempts are not losses so much as a replay that shows you exactly which tile was wrong, and the built-in hint shows a segment of the route rather than the whole answer.'
-    ],
-    systems: [
-      { h: 'Build phase and run phase', p: 'You cannot change arrows while the ball is moving. Once you press Play the layout is fixed, so treat the run as a test of a plan rather than as the game itself.' },
-      { h: 'Rotation as the core verb', p: 'Tapping an arrow rotates it. Because orientation is the only variable per tile, most boards can be attacked by rotating one tile through four states and watching which one the ball needs.' },
-      { h: 'Fall-off and dead ends', p: 'A route that leaves the grid or enters a walled pocket fails the run immediately, and the level restarts with your arrows in place — so the layout you built is not lost when the ball goes wrong.' }
-    ],
-    howTo: [
-      'Start from the goal and work backwards. The last tile before the exit has only one orientation that can feed it, and that constraint narrows everything upstream.',
-      'Place the forced tiles first — corners, cells beside walls and dead ends have one legal orientation each.',
-      'Leave the open middle of the grid until last. Central cells usually have several valid orientations, so they are the flexible part of the route.',
-      'Before pressing Play, trace the entire path with a finger. One missed rotation is the difference between a solved board and a restart.',
-      'If the ball overshoots, look one tile before the failure point rather than at it — the direction was set by the previous cell.',
-      'On a board with fixed arrows, treat them as walls. Their orientation is not a choice you have, and building around them is the puzzle.'
-    ],
-    tips: [
-      'Solve the geometry before the route: find which cells must be used and which can never be part of a valid path.',
-      'Use the minimum number of arrow tiles you can. Every extra tile in the run is another one that can be wrong.',
-      'When a hint shows a segment, check the tile that feeds it rather than the segment itself; the error is usually one before the visible problem.',
-      'Board layouts repeat their shapes across the later stages, so what you learn here transfers — these are pattern puzzles with a rolling ball attached.',
-      'Take the second run slowly. The first run tells you where it breaks, and the fix is nearly always a single tap.'
-    ],
-    mistakes: [
-      'Building a route that reaches the exit and then pressing Play without tracing it. Deterministic puzzles do not forgive this.',
-      'Rotating tiles near the entrance when the failure was near the goal, because the start of a run is the part you see first.',
-      'Forgetting that a blocked cell is not empty space — laying a path through it is the most common wasted attempt.'
-    ],
-    device: 'Landscape, because the maze is wide: you need horizontal room for a path that doubles back, and a portrait grid would force tiles down to an un-tappable size. Rotate the phone. On a tablet or desktop you get extra clarity when tracing a long route; there is no keyboard control and no timing to worry about.',
-    faq: [
-      { q: 'Can I change arrows while the ball is moving?', a: 'No. That is the point of the two-phase design: the build phase is where the thinking happens, and the run only checks it.' },
-      { q: 'Does a failed run cost anything?', a: 'It restarts the ball with your arrows still placed, so you keep the work and get feedback about which tile was wrong.' },
-      { q: 'Are there multiple valid routes?', a: 'Usually one intended route per board, though some layouts tolerate an equivalent path. Efficiency is graded, so fewer tiles tends to mean a better result.' },
-      { q: 'What does the hint show?', a: 'A segment of the correct route rather than a completed board, which keeps the last part of the solve yours.' },
-      { q: 'Is this a maze game or a logic game?', a: 'Logic. Maze games ask you to find a path; this asks you to construct one under constraints and verify it before committing.' }
-    ]
-  },
-
-  wizardsort: {
-    verdict: 'The same pour-puzzle engine as our water sort entry, retooled as potion brewing — here is what differs.',
-    about: [
-      'Wizard Sort is built on the same game engine as Puzzle: Water Sort, right down to the shared set of modes: the standard pour board, a conveyor variant, deeper vessels and a knot-unwinding side puzzle, plus a daily challenge board, a hint system and a collectibles screen. The rules are identical — pour only onto a matching colour or into an empty flask — so if you have played one you already know how to play the other.',
-      'What actually changes is the texture of the boards. Potions are presented in flasks with a magical theme, the colour palette is richer and the later layouts lean harder on partially-filled vessels, which makes the lid problem (a colour you need buried under a colour you do not) the dominant pattern. The tone is also calmer: brewing instead of pouring, with no time-up pressure on the main boards.',
-      'Because the two games share systems, progress in each is stored separately. Hearts, coins and gold are per-game, and neither one unlocks the other. If you like both, the honest advice is to play them as separate ladders rather than expecting one to carry over.'
-    ],
-    systems: [
-      { h: 'Shared modes, separate boards', p: 'Conveyor, tall-vessel and knot side modes exist here exactly as they do in the water sort game, but the layouts are different boards, so the skills transfer while the solutions do not.' },
-      { h: 'Hearts, hints and gold', p: 'Failed boards draw from a heart pool that refills over time; hints spend gold, and gold comes from clearing levels. The economy is the same one the water sort game uses, tracked independently.' },
-      { h: 'Collectibles and the daily board', p: 'There is a collection screen for unlocked items and a single daily challenge layout that resets, which is where the sharpest boards in the game tend to appear.' }
-    ],
-    howTo: [
-      'Tap a flask to lift its top layer, tap another to pour. Pouring is legal only onto the same colour or into empty glass.',
-      'Open every board by finding colours that are almost assembled — one or two units from completion.',
-      'Deliberately keep one flask fully empty. It is the only tool that lets you reorder, and boards stop being solvable the moment you fill it.',
-      'Do not pour a colour you cannot finish onto a vessel you may want to complete later; that layer becomes a lid you have to remove twice.',
-      'In the conveyor variant, plan for what is arriving rather than what is in front of you.',
-      'Use a hint when you have looked for thirty seconds and found nothing, because a locked board looked lockable from two moves back.'
-    ],
-    tips: [
-      'Sort by depth, not by colour. The layers at the bottom of each flask decide what is possible; count them before you commit.',
-      'A half-full vessel of a colour you do not need yet is an asset, not a problem, as long as it still has room.',
-      'If two flasks both hold the same colour near the top, merge them early. Combining partial stacks frees whole vessels for reuse.',
-      'The daily board is designed for one clean solve, so it tends to have exactly one opening move that keeps everything else reachable.',
-      'When you get stuck mid-pour, undo before you restart. These layouts have a small number of fatal moves and undo recovers the one you made.'
-    ],
-    mistakes: [
-      'Filling the last empty flask because a single matching unit was waiting there.',
-      'Assuming progress carries over from Puzzle: Water Sort. Same engine, separate saves and separate currencies.',
-      'Chasing the visually tidiest option: a nearly-complete vessel is only useful if the colour beneath it is already sorted.'
-    ],
-    device: 'Portrait, tall vessels and readable layers on any phone size, and the tap-tap pour needs no precision. On desktop it is a pure mouse game with no keyboard scheme. Saves live in browser storage on the device you play on.',
-    faq: [
-      { q: 'Is Wizard Sort the same game as Puzzle: Water Sort?', a: 'Same engine, same rule set and the same extra modes — different boards, different theme and separate progression. Learning one means you already know the other.' },
-      { q: 'Do I keep my coins and hearts between the two games?', a: 'No. Currency, hearts and completed levels are stored per game.' },
-      { q: 'What is the knot puzzle?', a: 'A side mode that replaces liquid with overlapping rope. It exercises the same forward-planning skill, but a pour-instinct approach leads to dead ends.' },
-      { q: 'Does the daily challenge reset?', a: 'Yes, one board per period. It is a single layout rather than part of the main ladder, and it does not carry over between days.' },
-      { q: 'Can I play without spending real money?', a: 'The whole ladder is designed around earning gold from play. Purchases exist as a shortcut for hearts or hints, not as a wall.' }
-    ]
-  },
-
-  groceryadventuremaster: {
-    verdict: 'A shelf-organising sort puzzle — the rare casual game whose appeal is tidying rather than clearing.',
-    about: [
-      'Grocery Adventure: Master gives you a cluttered shelf and asks you to make it tidy: tap an item, tap the place it belongs, group matching goods together, and clear the aisle once a section is right. It sits in the same family as the screw and bottle sorters, but the goal is different — you are not solving a layout so much as resolving a mess, and the reward is the moment a shelf reads cleanly.',
-      'The puzzle structure comes from limited space. Every store layout has fewer free positions than you would like, so moving one item blocks three others, and the order of operations matters. Later stores add more item types and narrower aisles rather than bigger boards, which raises the planning load without making the screen busy.',
-      'Progression is by store rather than by level number: you unlock new shops as you finish the aisles in the current one, each with its own stock list and layout. That gives the game a gentle, episodic shape — a store is a satisfying unit to play, and most take a few minutes.'
-    ],
-    systems: [
-      { h: 'Group-by-type clearing', p: 'Items clear once a section holds the matching goods together. Partial groupings are not neutral — they occupy positions that a finished group could have used.' },
-      { h: 'Locked goals per aisle', p: 'Each aisle shows what has to be completed before it counts. Ignoring the stated goal and tidying what looks messy is the main way moves get spent on the wrong thing.' },
-      { h: 'Store unlocking', p: 'Completing goals opens new stores with new layouts and item sets. The difficulty step between stores is usually the number of item types in play at once, not board size.' }
-    ],
-    howTo: [
-      'Survey the whole shelf before moving anything and identify which item type appears most; that group will need the most space.',
-      'Tap an item, then tap the destination slot to move it. Only one thing moves at a time, so a move that blocks itself is genuinely wasted.',
-      'Clear the largest group first, even if a small one looks easier. Big groups are what free up working room.',
-      'Keep one lane empty for as long as you can. It is your only temporary storage, and once everything is packed you have to undo.',
-      'Work items that sit in the way of two other groups before items that are only in the way of one.',
-      'When an aisle resists, re-read the goal rather than re-shuffling — the target is usually narrower than the tidy version you were aiming for.'
-    ],
-    tips: [
-      'Treat free space as the resource and items as the obstacle. Almost every stuck shelf was caused by three moves that looked productive and removed the only gaps.',
-      'Group in one direction. Building a type from left to right keeps your temporary storage on the same side and shortens every later trip.',
-      'Rare items are placeholders. A single instance of a type sitting in a good spot is worth moving out of the way early.',
-      'If you are two groups from finishing, stop optimising the whole shelf and finish what is close. Partial tidying scores nothing.',
-      'New stores change what “most common” means; re-read the layout instead of reusing your previous aisle plan.'
-    ],
-    mistakes: [
-      'Moving an item to a nicer-looking position rather than to a position that unblocks something.',
-      'Filling the last empty slot because the item there looked like it belonged.',
-      'Trying to finish an aisle completely when the goal only asked for one type — perfectionism spends moves.'
-    ],
-    device: 'Portrait, with tap-to-select and tap-to-place rather than dragging, which matters on a small screen where a drag can slip off a shelf edge. Items are drawn large and distinct enough to read on a phone without zooming. On desktop it is a two-click interaction with no keyboard shortcuts.',
-    faq: [
-      { q: 'Is this a matching game?', a: 'No — nothing is matched or cleared by alignment. You are relocating items into groups under a space constraint, which makes it a sorting puzzle with a tidying theme.' },
-      { q: 'What happens if I make it unsolvable?', a: 'Restart the aisle. Your completed stores and unlocks are unaffected; only the current shelf resets.' },
-      { q: 'Do the stores get bigger or harder?', a: 'Harder rather than bigger. Later layouts hold more item types in roughly the same space, which is what tightens the planning.' },
-      { q: 'Is there a timer?', a: 'No. Aisles are constrained by moves and space, not by the clock, so you can plan as long as you want.' },
-      { q: 'Does it save between devices?', a: 'No. Progress is stored in your browser on the device you play on, so switching phones starts the current aisle from its beginning.' }
+    shots: [
+      'Level 1: red and blue boxes with three holes each, two "Unlock Box" buttons, a seven-circle buffer rail with two padlocked slots, and the tools Reroll Peg / +1 Slot! / Clear.',
+      'The same board with the tutorial hand on "+1 Slot!" — the buffer rail is the thing the game points you at first.',
+      'The "Add Slot" panel: the seven rail positions with three screws already on them, "Unlock by watching a short ad", and the two upgrade buttons — one badged 36 wrenches, one taking a video.'
     ]
   },
 
   zombiedown: {
-    verdict: 'A portrait survival shooter with an upgrade economy, where wave order matters more than aim.',
+    verdict: 'A portrait zombie game fronted by a twelve-location stage map with three difficulty tiers; the map is what you actually see first, and it gates locations behind coin costs.',
     about: [
-      'Zombie Down is a wave survival shooter held in portrait: you drag to aim and release to fire, zombies close in from the top of the screen, and the level ends when the horde reaches you or when you outlast it. Unlike the wide-screen shooters in our action section, the narrow vertical field means you are managing one axis of approach and one lane of retreat, which makes position discipline count for much more than precision.',
-      'The economy is the real game. Coins drop from kills and are spent between waves on weapon upgrades, so every run is a series of choices about whether to buy now or bank for something better. A stage that seems too hard is usually a stage where the upgrade path was wrong rather than where your aim was.',
-      'There is an objective layer on top of survival — the game tracks goals such as finishing a level once, and shows them separately from the wave counter — so clearing a stage and clearing it well are two different results.'
+      'What greets a first load is not a level. It is a "Daily Check-in" panel: seven day cards in two rows, paying 200, 200, 200, 300, 300, 500 and 700 coins, with Day 1 pre-selected and a yellow "Receive" button carrying a video icon (frame 1). Closing it with the red cross is the first thing you have to do to see anything else.',
+      'Behind it is the map (frame 2): twelve location cards in a four-row grid, each with a name, a difficulty label and a star count, and each showing a zombie holding a torch. Four cards carry a coin figure and no padlock — "Wilderness 200 Easy" (teal, and the one drawn with a highlight border), "Tunnel 400 Easy" (green), "Town 800 Norma" (dark red) and "Ruins 2000" (green, labelled "| Hard", its zombie in gold armour). The other eight — Forest, Factory, Basement, Hospital, School, Prison, Laboratory and Nightclub — are dimmed orange under a large padlock. A red "HOT" tag sits at the top-right corner of every card in rows two to four, nine cards in all, so Ruins is the only unlocked card wearing one. Note how the difficulty text actually renders on the locked cards: "| Hard", with the leading bar.',
+      'Every card shows "★0", and the coin counter at the top-left of the map reads 0 (frame 2). That combination is the honest description of a new session: nothing banked, two-thirds of the map locked, and a bottom bar offering "Rhythm King", "Sign In", "Shop" and a heart badged "+400" with a video-play icon. We captured the map and the check-in; our run did not get into a combat round, so this page describes the structure you can see rather than the shooting itself.'
     ],
     systems: [
-      { h: 'Drag-aim, release-fire', p: 'Aiming and firing are separate actions. Holding to line up a group and releasing into it beats tapping at whatever is closest, because a single shot that passes through two targets is worth the pause.' },
-      { h: 'Coins and between-wave upgrades', p: 'Kills pay out in coins that are spent on firepower and utility upgrades. Buying early keeps you alive; buying late buys the stronger option. Runs are decided in that trade-off, not in the shooting.' },
-      { h: 'Objectives beside the waves', p: 'Stage goals are tracked independently of survival, so a run that ends badly can still complete an objective and pay for it.' }
+      { h: 'Locations, not levels', p: 'Progress is expressed as places — Wilderness, Tunnel, Town, Forest, Factory, Basement, Hospital, School, Prison, Laboratory, Ruins, Nightclub — each with its own difficulty label and star count (frame 2). Four of the twelve show a price and no padlock on a fresh load; the other eight are locked.' },
+      { h: 'Three difficulty tiers, printed on the card', p: 'The labels read Easy, Norma and Hard (frame 2). "Norma" is what the card actually says — the text is truncated in the layout, and the Hard cards print it as "| Hard" with a leading bar. Both are the game\'s own rendering rather than a different mode.' },
+      { h: 'Coins, stars and a rewarded heart', p: 'The check-in pays coins on a seven-day ladder that runs 200, 200, 200, 300, 300, 500, 700 (frame 1), the map spends them on locations, and the bottom-right heart badged "+400" with a video icon is the other way in (frame 2). "Sign In" sits in the same bar, but there is no account requirement to reach the map.' }
     ],
     howTo: [
-      'Drag anywhere on the screen to swing the crosshair, release to fire. Get comfortable with the drag distance before the first wave.',
-      'Kill the nearest cluster, not the toughest individual. A zombie that reaches you is worth more than three that are still walking.',
-      'Buy an upgrade as soon as you can afford one in the first two waves; income compounds and a weak early weapon costs health you cannot buy back.',
-      'Keep moving laterally. Standing still in a vertical shooter concentrates everything you are trying to spread out.',
-      'Save the strong upgrade you are banking for a wave you know is coming rather than spending it the instant it unlocks.',
-      'Learn the spawn rhythm rather than the individual enemies — once you know which wave surrounds you, you can start it on the side of the screen you want.'
+      'Dismiss the "Daily Check-in" with the red cross before anything else — it covers the whole map on first load (frame 1).',
+      'Take the free day-one coin reward while the panel is open, since the location cards are priced in coins.',
+      'Start on Wilderness. It is the card drawn with the highlight border and the cheapest of the four priced ones at 200 (frame 2).',
+      'Read the difficulty label before committing: Easy, Norma and Hard are printed on the card, and the Hard ones are the locked tier.',
+      'If you are short of coins, the "+400" heart in the bottom bar is the rewarded option; the Shop is the non-rewarded one.',
+      'Come back to the map between runs — locations unlock individually, so the card you could not afford is the one to aim at next.'
     ],
     tips: [
-      'Vertical space is health. The further a horde is from the bottom of the screen, the more shots you get at it; retreat is a weapon.',
-      'Upgrade fire rate before damage in the early stages, because more shots forgives more bad positioning.',
-      'Group kills come from the edges. Shooting into a cluster from the side passes through more targets than shooting the front of the pack.',
-      'Do not bank coins to a number you will never spend. Unspent currency at the point you die is worth nothing.',
-      'Watch the top corners. That is where the runs end, since they are the slowest part of the screen to reach when you need to.'
+      'Every card on the map reads "★0" on a fresh load, so stars are something you earn per location — the frames do not show what the maximum is or what moves it.',
+      'Eight of the twelve cards are padlocked at the start. That is a coin problem, not a progression-order problem you have to solve.',
+      'The "Rhythm King" entry in the bottom bar is a link to a different game, not a mode inside this one.',
+      '"Sign In" is offered but not required to reach the map — you can play without an account.'
     ],
     mistakes: [
-      'Tapping reflexively at the nearest single zombie instead of the group it belongs to.',
-      'Saving for the perfect upgrade and dying before buying it.',
-      'Standing still because the front of the screen looks clear — the back of the field is where the next threat already spawned.'
+      'Spending the first coins on the highest-numbered location. Ruins costs 2000 and is labelled "| Hard".',
+      'Leaving the check-in panel open and tapping through it — it sits over the whole map (frame 1).',
+      'Assuming the "HOT" tags mean unlocked content. Nine cards wear one and eight of those nine are padlocked.'
     ],
-    device: 'Portrait on purpose: the field is tall and narrow, so the whole encounter fits one thumb’s reach and the drag-aim distance stays short. On a phone this is a one-handed game; on desktop a mouse controls the crosshair directly and is a little more precise, but the vertical field never widens to use the extra space.',
+    device: 'Portrait, and the map is a single screenful — twelve cards, a coin counter and a four-button bottom bar, with no scrolling needed on a phone. On desktop the same layout runs in a tall window with the bar pinned at the bottom. Nothing in the captured frames is keyboard-driven.',
     faq: [
-      { q: 'Do upgrades carry to the next level?', a: 'Progression unlocks persist, but the coins you banked inside a run do not survive a failed attempt.' },
-      { q: 'What are the objectives for?', a: 'They are separate goals tracked alongside survival — finishing a level, or finishing it a particular way — and they pay out independently.' },
-      { q: 'Is it a twin-stick shooter?', a: 'No. There is no movement stick; you aim and fire, and your position within the vertical field is managed through the same gesture.' },
-      { q: 'Why do I die on the same wave every time?', a: 'Usually an upgrade timing problem rather than a skill problem. If you always fail at the same point, buy something earlier on the next attempt and see whether the wave breaks.' },
-      { q: 'Does it have ads?', a: 'Page advertising on Tapzens runs through our consent prompt, and in-game bonuses may be offered as optional rewarded videos you can close.' }
+      { q: 'Why does a Daily Check-in pop up before the game?', a: 'It is the first thing the build shows. The panel offers seven days of coin rewards, 200 up to 700, with a "Receive" button; close it with the red cross to reach the map (frame 1).' },
+      { q: 'How many locations are there?', a: 'Twelve are printed on the map: Wilderness, Tunnel, Town, Forest, Factory, Basement, Hospital, School, Prison, Laboratory, Ruins and Nightclub. Four show a coin price and no padlock on a fresh load — Wilderness 200, Tunnel 400, Town 800 and Ruins 2000; the other eight are padlocked (frame 2). Ruins is priced but unlocked, which makes it the expensive trap on a first visit.' },
+      { q: 'Do I need to sign in?', a: 'No. A "Sign In" button sits in the bottom bar, but the map is reachable without it.' },
+      { q: 'What does the heart labelled +400 do?', a: 'It carries a video-play icon in the bottom bar (frame 2), which is the usual marker for a rewarded video — you watch one and receive 400 of whatever the heart counts.' },
+      { q: 'Can you describe the combat?', a: 'Not from what we captured. Our run reached the check-in panel and the location map but did not get into a round, so we have left the shooting mechanics out rather than write them from the blurb.' }
+    ],
+    shots: [
+      'The first screen: the "Daily Check-in" panel, seven days paying 200 to 700 coins, Day 1 selected, with a video-backed "Receive" button.',
+      'The map behind it — twelve location cards, four of them priced (Wilderness 200, Tunnel 400, Town 800, Ruins 2000), eight dimmed under a padlock, nine wearing a red "HOT" tag, every card reading ★0, plus the coin counter and the bottom bar.'
+    ]
+  },
+
+  puzzlehex: {
+    verdict: 'A bolt-and-nut sorting puzzle: hex nuts have to be moved between threaded bolts until each bolt carries one colour, with an undo and an extra-nut boost both behind rewarded videos.',
+    about: [
+      'The name is about the nut, not the board. Level 1 is two steel bolts standing on washers, one carrying three teal hex nuts and one carrying a single nut at its base (frames 1–2). Nothing else is on screen. The task in this genre is to shuffle nuts between bolts so that every bolt ends up loaded with one colour only, and the first level is a single colour — it exists to teach the move, not to test it.',
+      'The header is a plain dark panel: "LEVEL.1" centred, three gold stars under it, and a yellow bar with the number 20 beside it (both frames). A gear button sits top-left and an orange circular-arrow restart top-right. The number 20 is the only counter on screen and it read the same on both frames we captured, including after the taps that drove the sweep — so treat it as the level budget rather than a clock, and note that we never saw it move.',
+      'Along the bottom are two orange buttons, each badged with a video-play icon: "Revoke" and "Nut+1" (both frames). Pressing Revoke with nothing to undo produces the game\'s own toast, "There is no revocable operation!" (frame 2) — which is the clearest confirmation in the whole set of what that button is for.'
+    ],
+    systems: [
+      { h: 'Bolts are the only storage', p: 'Nuts live on bolts, and a bolt holds a stack. In a sorting puzzle of this shape the number of bolts and the height of each stack are the entire constraint: you can only park a nut somewhere that has room and will take its colour, so counting free bolt space matters more than looking at the nuts themselves.' },
+      { h: 'Revoke is an undo, and it is ad-funded', p: 'The button carries a video-play icon (frames 1–2), and the toast "There is no revocable operation!" appears when the undo history is empty (frame 2). It rewinds a move rather than clearing a region, which makes it the cheapest way out of a wrong transfer.' },
+      { h: 'Nut+1 buys room', p: 'The second rewarded button, "Nut+1" (both frames), is the game\'s pressure valve: when no bolt can accept a nut, the usual fix in this genre is to gain an extra nut position somewhere on the board. We did not capture the result of pressing it, so we are describing what the label offers rather than what it does.' }
+    ],
+    howTo: [
+      'Start by counting bolts and free space. On Level 1 there are two bolts and one of them has room (frames 1–2).',
+      'Tap a nut to lift it, then tap the bolt you want it on. Only the top nut of a stack can move, so the order you clear a bolt matters.',
+      'Never move a nut onto a bolt unless it either matches the nuts already there or the bolt is empty.',
+      'Keep one bolt free as a parking space for as long as you can; a board where every bolt is occupied has usually lost.',
+      'Use Revoke the moment a transfer turns out to be wrong — the undo history is short, so the earlier you use it the more it is worth (frame 2).',
+      'Restart with the orange arrow at the top-right rather than grinding at a dead board; the level budget shown as 20 does not move on its own.'
+    ],
+    tips: [
+      'The three stars at the top are gold before a single move has been made (frame 1). In this shape of game they mark the thresholds you are scored against, not how hard the board is.',
+      'Single-colour early levels are teaching the lift-and-place gesture. Do not expect the sorting problem to appear before the board has two colours on it.',
+      'Both bottom buttons cost a video, so a board you can undo your way out of is worth more than a board you boost your way out of.',
+      'The gear at top-left is settings; the orange arrow is restart. They are the only two non-game buttons on the screen.'
+    ],
+    mistakes: [
+      'Filling the last empty bolt early. Once no bolt is free, a wrong-colour nut on top of a stack has nowhere to go.',
+      'Pressing Revoke out of habit — with an empty history it does nothing and says so.',
+      'Reading the "20" as a countdown. It did not change between our two frames.'
+    ],
+    device: 'Portrait with a very sparse layout: the header strip at the top, the bolts in the middle band and the two boost buttons at the bottom, leaving a lot of dark space around the board. That empty middle is where the genre puts more bolts as levels grow, so the pieces stay thumb-sized on a phone even on busy boards. No keyboard control appears on any captured frame.',
+    faq: [
+      { q: 'Is Puzzle Hex a hexagon tile puzzle?', a: 'No. The board is threaded bolts with hex nuts on them — the "hex" is the nut shape. The captured frames show two bolts and four nuts and nothing resembling tiles or a circuit.' },
+      { q: 'What does Revoke do?', a: 'It undoes your last move. The game confirms this itself: pressing it with nothing to undo shows the toast "There is no revocable operation!" (frame 2). It carries a video icon, so it is a rewarded action.' },
+      { q: 'What is Nut+1?', a: 'The second rewarded button on the bottom row. It offers an extra nut position when a board has run out of room; the exact effect is not shown in the frames we captured.' },
+      { q: 'What is the number 20 at the top?', a: 'A counter beside the yellow bar under the stars. It read 20 on both frames we took, including after input, so it behaves like a level budget rather than a timer.' },
+      { q: 'Why does Level 1 only have one colour?', a: 'It is the tutorial board. With a single colour there is exactly one thing to learn — lifting a nut from one bolt and placing it on another — which every later level then builds on.' }
+    ],
+    shots: [
+      'Level 1: two bolts on washers, three teal nuts on the left one and one on the right, with the three gold stars, the bar reading 20, the gear and orange restart buttons in the corners, and the Revoke / Nut+1 buttons below.',
+      'The game confirming its own undo: the toast "There is no revocable operation!" after Revoke was pressed with an empty history. The board and the 20 are unchanged.'
     ]
   },
 
   tankera: {
-    verdict: 'A landscape tank battle game where the upgrade screen between fights matters more than the fight itself.',
+    verdict: 'A top-down car game where your vehicle carries a roof turret: the home screen sells you a colour, a second car and a heart top-up, and one button starts the run.',
     about: [
-      'Tank Era puts you in command of an armoured column on a wide landscape battlefield: steer with the on-screen controls, bring your guns to bear on enemy tanks, and take ground. Individual engagements are short and survivable; the game is structured as a sequence of battles with an upgrade screen in between, which is where the outcome is actually decided.',
-      'There are two progress tracks running through it. Currency is earned by winning engagements, and armour and firepower are bought with it. Both are tracked on persistent screens — a leaderboard, a currency total, and a list of what you have already acquired — so a bad battle costs you the attempt rather than the run.',
-      'As a military-arcade hybrid it asks for reading the battlefield rather than fast aiming. Enemy tanks approach along predictable lines, terrain channels them, and the players who advance are the ones who pick the engagement rather than the ones who react fastest to it.'
+      'Everything on the first screen is a car seen from directly above, driving toward the top of the screen down a grey road with yellow dashes, bordered by sand and scattered rocks (frames 1–2). The car is pink and white, and the detail that defines the game is bolted to its roof: a barrel and mount, i.e. a turret. This is not a racing game — it is a driving game with a gun on it.',
+      'The right-hand column is the whole menu. A rainbow balloon labelled "Pick color", a green armed jeep labelled "Buy a car", and a red heart badged "+1000" carrying a video-play icon (frames 1–2). The cash counter at the top of the road reads 2000. So the three things the game offers before a run are the paint, the vehicle and a heart top-up — and the armed jeep in the "Buy a car" icon is a preview of what a purchased vehicle looks like.',
+      'A large yellow "Start Game" button sits at the bottom-left (frames 1–2). Our capture run pressed around it repeatedly and stayed on this screen, with only the road scrolling underneath — so this page describes the home screen and the economy you can see, and stops short of the driving itself rather than inventing it.'
     ],
     systems: [
-      { h: 'Between-battle upgrades', p: 'Armour and firepower are purchased with earned currency after each fight. Choosing which to upgrade first is the main strategic decision in the game — armour buys you survival, firepower buys you tempo.' },
-      { h: 'Territory, not just kills', p: 'Objectives are about capturing the battlefield, which means moving forward under fire is often correct even when it costs health. A battle you win by hiding at the edge is usually a battle that goes worse on the next attempt.' },
-      { h: 'Leaderboard and record screens', p: 'Performance is tracked against a rank list and your own acquired items, so the game distinguishes between what you have unlocked and how well you cleared a stage.' }
+      { h: 'Cash, not stars', p: 'The only counter on the home screen is a stack of notes reading 2000 (frames 1–2). There is no level number, no star row and no score displayed, which tells you the loop is measured in money: earn it on a run, spend it in the two menu buttons on the right.' },
+      { h: 'A turret on a car', p: 'The weapon is mounted on the roof and points forward, in the direction the car drives (frames 1–2). That single piece of art defines the control problem: aiming and driving are the same action, so steering is the game\'s real skill — though no frame we captured shows the turret firing.' },
+      { h: 'A heart bought with a video', p: 'The red heart is badged "+1000" with a video-play icon (frames 1–2), the standard marker for a rewarded video. It is the only option on the screen that does not appear to spend the cash balance — the other two are a cosmetic choice and a purchase.' }
     ],
     howTo: [
-      'Use the drive control to keep your hull angled toward the enemy rather than nose-on; a sloped front profile survives more incoming shots.',
-      'Bring your guns to bear before you shoot. Strafe until the target is in your arc instead of firing down your own barrel line.',
-      'Take the long-range duel. Your first shots should be fired from the furthest distance where you can still hit, because that distance is health.',
-      'Spend currency on firepower through the early battles, then switch to armour once you start losing fights you should have won.',
-      'Break line of sight between your shots. Fire, reverse behind cover, repeat; static trading is how a won battle turns into a lost one.',
-      'On a hard stage, lose the first attempt deliberately to learn the enemy approach routes, then replay it with your guns pre-aimed.'
+      'Set the paint first if you care about it: "Pick color" is the rainbow balloon at the top of the right-hand column (frames 1–2).',
+      'Press the yellow "Start Game" button at the bottom-left to leave the home screen.',
+      'Spend from the 2000 before you start if you want a second vehicle — "Buy a car" is the only purchase on the screen, and its icon shows an armed jeep rather than the pink car you are shown driving.',
+      'Take the "+1000" heart if you are starting a session short: it carries a video icon, so it costs a video rather than cash.',
+      'Everything above the "Start Game" button is a menu, not a control. The road behind it scrolls on its own (frames 1–2), which is an idle animation rather than a run in progress.',
+      'What the run itself asks of you is not on any frame we captured, so we are deliberately not writing steering or shooting advice for this one.'
     ],
     tips: [
-      'Focus fire. Two enemy tanks engaging one at a time are beatable; the same two engaging together usually are not, so kill the nearest and make the second re-approach.',
-      'Keep moving laterally while reloading. A target that is tracking you wastes its shells; a stationary one does not.',
-      'Upgrade the thing you ran out of. If you finished the battle with low health, you needed armour; if you took forever to kill anything, you needed firepower.',
-      'Terrain is a reload timer. Using cover buys the seconds a slow-firing upgrade needs to pay for itself.',
-      'Do not bank currency for the big purchase at the back of the shop. Two modest upgrades you can use now outperform one you die before affording.'
+      'The home screen is the only place we saw where the car can be changed, so decide before you press Start rather than mid-run.',
+      'A purchased vehicle looks like a different chassis in its icon, while "Pick color" is a balloon — cosmetic — so the two buttons are not competing for the same decision.',
+      'The heart and the cash are separate counters. The heart is badged in thousands and takes a video; the cash is a stack of notes and is what the two shop buttons appear to spend.',
+      'The desert road on the home screen has no junctions, exits or traffic drawn on it, so whatever the run adds is not hinted at here.'
     ],
     mistakes: [
-      'Rushing into contact to feel aggressive, which throws away the range advantage your first shots had.',
-      'Buying the flashiest upgrade instead of the one that fixes the specific way you just lost.',
-      'Fighting with your hull presented nose-on, which is the profile that absorbs the most shots.'
+      'Expecting a racer. The turret is the point — the vehicle exists to carry a forward-facing weapon.',
+      'Reading the scrolling road as gameplay. It is the idle animation on the menu screen; the run only begins from "Start Game" (frames 1–2).',
+      'Assuming the "+1000" heart is a life counter. It is topped up in thousands, which is not how lives are usually drawn, and no frame shows what it counts.'
     ],
-    device: 'Landscape, and it needs it: the battlefield is wide and the drive and gun controls sit on opposite thumbs. Hold the phone in both hands and use the left for movement, the right for aiming and firing. On desktop the mouse handles the guns, and there is no reason to prefer it — the on-screen control layout is designed around touch.',
+    device: 'Portrait. The road runs up the middle of a phone-shaped frame, the menu buttons are stacked down the right edge and Start Game is a wide button at the bottom — all of it inside thumb reach in one hand. On desktop the same portrait canvas is centred with the surroundings dark. We saw no keyboard control on the captured frames.',
     faq: [
-      { q: 'Is this a real-time strategy game?', a: 'No. You command one tank at a time in short engagements with an upgrade layer between them; there is no base building and no unit management during a battle.' },
-      { q: 'Do I lose progress when a battle goes badly?', a: 'You lose the engagement and can retry. Currency already earned and upgrades already bought stay with you.' },
-      { q: 'Which should I upgrade first, armour or firepower?', a: 'Firepower early, because faster kills preserve health you cannot buy back; switch to armour once stages start outlasting your damage.' },
-      { q: 'Is there a leaderboard?', a: 'Yes, performance is ranked against other results, and there is a record of what you have acquired — separate from the rank list.' },
-      { q: 'Does it require a strong connection?', a: 'The battle itself runs locally; you only need the network to load the game and the assets for the stage you are entering.' }
+      { q: 'Is Tank Era landscape or portrait?', a: 'Portrait. The build we captured renders as a vertical road filling a 720×1280 canvas (frames 1–2). Our catalogue metadata said landscape, which is one of the things this rewrite corrected.' },
+      { q: 'What is the difference between "Pick color" and "Buy a car"?', a: '"Pick color" is the rainbow balloon and is cosmetic. "Buy a car" is priced from the same cash balance and swaps the chassis — its icon shows an armed jeep rather than the pink car you start in.' },
+      { q: 'What does the +1000 heart cost?', a: 'A video. The heart carries a play icon (frames 1–2), which is the rewarded-video marker, so it is the free way to top up the resource the heart counts.' },
+      { q: 'Do I need to sign in or install anything?', a: 'No. It runs in the browser at its own address with no download and no account, like everything else in the catalogue.' },
+      { q: 'What happens once you press Start Game?', a: 'We can only tell you as far as the home screen. Our capture run stayed there with the road scrolling, so we have described the visible economy instead of writing the driving section from the blurb.' }
+    ],
+    shots: [
+      'The home screen: a pink and white pickup with a roof turret seen from above, driving toward the top of the frame down a desert road, cash at 2000, and the menu down the right edge — "Pick color", "Buy a car", and a "+1000" heart with a video icon.',
+      'The same screen a moment later with the road scrolled forward underneath the car — the idle animation behind the yellow "Start Game" button.'
+    ]
+  },
+
+  bubblesafari: {
+    verdict: 'A straightforward bubble shooter with a real twist worth knowing about: the star meter fills from burst value, and every power-up is charged by watching an ad.',
+    about: [
+      'A dense triangular raft of bubbles hangs from the top of a brown cave wall — red, orange and green clusters on Level 1, purple, blue and red on Level 2 (frames 1, 3). Below it sits the shooter: a circular reticle carrying the loaded bubble and the next one in the queue, with a number in the middle that read 35 on the first board and 30 on the second (frames 1, 3). Aim, release, and a group of a colour pops.',
+      'The purple HUD bar carries the whole scoring story: a pause button, the score, a row of three star slots over a fill bar, and a three-bubble icon with a number beside it (frames 1–3). Mid-shot, the score had climbed to 6640, two of the three stars had turned gold with the green fill bar running behind them, and eight value popups were rising off the board — every one of them reading 500 (frame 2). The stars are therefore paid for in burst value, not in moves saved.',
+      'Two things sit outside the board and both matter. On the left is a gift box with its own countdown — 00:54, then 00:46, then 00:35 across our three frames — which is a timed free prize rather than a level timer. Along the bottom are four power-up slots, each wearing a clapperboard badge and a green plus sign (frames 1–3): a striped rocket, a cluster of multicolour balloons, a lightning bolt and a pink mallet. The charges in those slots come from watching videos.'
+    ],
+    systems: [
+      { h: 'Burst value buys the stars', p: 'Frame 2 shows eight separate popups from one collapse, each worth 500, and the star row had already turned two of its three stars gold at a score of 6640. A single good drop is therefore worth several plain hits, which is why the counters are the numbers to respect rather than the score itself.' },
+      { h: 'Two counters, and we could not settle which is the shot budget', p: 'The reticle number read 35 on Level 1 and 30 on Level 2 (frames 1, 3), while the three-bubble icon in the HUD read 63 on Level 1, 0 part-way through the same level, and 101 on the fresh Level 2 (frames 1–3). The icon is the one that clearly gets spent and resets per level; the reticle number changes between levels but we never watched it tick down. Treat the icon as the budget you are spending and the reticle number as something the level config sets.' },
+      { h: 'Four power-ups, all ad-charged', p: 'The bottom row holds a striped rocket, a balloon cluster, a lightning bolt and a pink mallet, each with a clapperboard icon and a green plus (frames 1–3). The plus is how you add a charge, and the clapperboard is what it costs.' }
+    ],
+    howTo: [
+      'Check the colour of the bubble in the reticle before you aim, then find the largest group of that colour hanging on the wall (frame 1).',
+      'Aim for the seam between two clusters rather than the middle of one — a bubble that lands on a boundary can pop both.',
+      'Bank on the drop: anything left hanging after a pop falls and scores on its own, which is where the eight 500-value popups in one burst come from (frame 2).',
+      'Watch the three-bubble counter in the HUD. It read 63 at the start of Level 1 and 0 part-way through the same level (frames 1–2), so it is the number the level spends down.',
+      'Save a power-up for a cluster you physically cannot reach, not for one that merely looks tedious.',
+      'Tap the gift box while its timer still runs — it counts down during play, from 00:54 to 00:35 across our three frames.'
+    ],
+    tips: [
+      'The three stars are a value threshold, so a level can be finished and still rate poorly if you got there with small pops. On frame 2 two of them are gold and the third is still grey at 6640.',
+      'The two numeric counters disagree and the game does not label either. The bubble icon went 63 → 0 → 101 across our frames while the reticle read 35 then 30, so we are reporting both readings rather than guessing which one is ammo.',
+      'Every power-up slot carries a green plus on the first board (frames 1–3): a charge you did not buy is not there, so plan shots without them.',
+      'The pause button is in the HUD bar, which is also where the score is — the top strip is information, the bottom strip is action.'
+    ],
+    mistakes: [
+      'Reading the gift box countdown as a level timer. The board does not expire; the gift does.',
+      'Firing at the nearest cluster instead of the one whose removal drops the most bubbles.',
+      'Using an ad-charged power-up to finish a level you could have finished with two careful shots.'
+    ],
+    device: 'Portrait, with the bubble wall occupying the top third and the shooter in the lower middle — the aim line is dragged with a thumb and the four power-up slots are all within reach at the bottom edge. On desktop the same drag becomes a mouse aim. No keyboard input appears on any captured frame.',
+    faq: [
+      { q: 'Is there a time limit in Bubble Safari?', a: 'Not on the board. The only countdown on screen is attached to the gift box at the left, which ticks down while you play (00:54 to 00:35 across our frames). What does end a level is one of the two counters running out.' },
+      { q: 'How do you earn stars?', a: 'From burst value. The HUD shows three star slots over a fill bar, and two of the three had turned gold by a score of 6640 while eight popups of 500 each were rising off the board (frame 2).' },
+      { q: 'What are the four icons along the bottom?', a: 'Power-ups — a striped rocket, a balloon cluster, a lightning bolt and a pink mallet. Each carries a clapperboard badge and a green plus, meaning charges are added by watching a video.' },
+      { q: 'What does the number in the circle at the bottom mean?', a: 'It is one of two counters and the game never labels it: 35 on Level 1 and 30 on Level 2 (frames 1, 3). The other one, the three-bubble icon in the HUD, read 63, then 0 on the same level, then 101 on Level 2. We are not going to tell you which is shots when the frames do not settle it.' },
+      { q: 'Does it need an account?', a: 'No. There is no sign-up on Tapzens, and the game runs in the browser. A "Sign In" style prompt inside a build would be the game\'s own save option, not a requirement to play.' }
+    ],
+    shots: [
+      'Level 1 before the first shot: the hanging bubble wall in red, orange and green, the reticle loaded with a red bubble and reading 35, and the gift box counting down from 00:54.',
+      'A burst in progress — bubbles falling, eight value popups each reading 500, score at 6640 and two of the three stars turned gold over the green fill bar.',
+      'Level 2 with a different colour mix (purple, blue, red), a fresh score of 0, a bubble counter of 101 and 30 in the reticle.'
     ]
   },
 
   shiftdashreac: {
-    verdict: 'A pure reflex lane-dodger. There is no strategy here beyond reading the pattern one gap earlier.',
+    verdict: 'A lane runner played on a four-lane road where the whole interface is a single column on the right: Turn, Shop, Sign In, and a skin you have already unlocked.',
     about: [
-      'Shift Dash Reac is the fastest game in our catalogue and the simplest to describe: obstacles arrive down a set of lanes, you tap or swipe to shift between them, and the pace rises until you make the mistake. There are no power-ups to manage, no currency to spend and no upgrade path — score is the entire game.',
-      'The lane-shift verb is why it feels good. Because the only action is lateral, the game reads as a pattern problem rather than a dexterity problem, and the pattern is telegraphed: each approach has a visible gap, and your job is to be in it one beat before it arrives. Players improve by learning to read two obstacles ahead, not by moving faster.',
-      'The rising speed curve does the rest. A run starts comfortable and becomes unplayable, which means every attempt ends at a point you can identify — and that identifiability is what makes a fifteen-second game worth retrying.'
+      'The scene is a wide grey road cut diagonally across a green hillside, marked with four lanes of dashes, and a caption across the bottom that reads "Tap the screen to start" (frames 1–2). Three plain blue stick figures run up the lanes on the left and a red map pin floats over the road ahead (frame 1); in the next frame a dark armoured figure has joined them in the middle lane (frame 2). Nothing on screen is a joystick — the only control named anywhere in the interface is the "Turn" button.',
+      'The right-hand column is the entire menu, stacked vertically: a notepad icon labelled "Sign In", a spoked wheel labelled "Turn", and a gift box labelled "Shop" (frames 1–2). Above them, at the top of a flight of steps, stands a golden-helmeted character tagged "Warframe" with a red "NEW" badge — the game\'s skin showcase, sitting inside the level rather than behind a menu.',
+      'The top of the screen holds a coin counter reading 0 on the left, a settings gear on the right, and between them a bar with a purple circle marked 1 at one end and a red circle marked 2 at the other (frames 1–2). Frame 2 also carries a toast reading "Got Iron Man Skin Fragment – Success!" with the quotes butted up against the words, which is how the game tells you that skins are assembled from fragments — and it is the same moment the armoured figure appears on the road.'
     ],
     systems: [
-      { h: 'Speed as the difficulty curve', p: 'Nothing about obstacle variety increases; the interval shrinks. Your reaction budget per obstacle falls from comfortable to about a quarter of a second, so a long run is a record of how early you started reading ahead.' },
-      { h: 'Perfect dashes and streaks', p: 'Clean shifts through a gap in rhythm build a streak that multiplies score. A survivable but sloppy run scores below a tighter one, which is what separates a good score from a long run.' },
-      { h: 'Lane commitment', p: 'Shifting costs the same whether you move one lane or several, so the correct play is often to move early and far rather than to edge over one lane at a time.' }
+      { h: 'Turn is the control', p: 'The wheel button on the right is labelled "Turn" and no other input affordance appears on the start screen (frames 1–2). In a game whose road runs diagonally through four lanes, that points to direction being the decision — you commit to a turn and the runner takes that lane.' },
+      { h: 'Skins are built from fragments', p: 'The toast in frame 2 announces a "Skin Fragment" for Iron Man, and the armoured runner appears on the road in that same frame; the character standing on the steps is a "Warframe" skin marked NEW. So cosmetics are a collection track that fills during play, and the showcase is placed where you can see it while running.' },
+      { h: 'A 1-versus-2 bar across the top', p: 'The purple 1 and red 2 sit at opposite ends of a progress bar (frames 1–2). The frames we captured do not show it moving, so we describe it as the level\'s two-sided counter rather than guess at what tips it.' }
     ],
     howTo: [
-      'Tap the side of the screen, or swipe, to shift one lane. Find which input feels crisper before chasing score.',
-      'Watch the gap between obstacles rather than the obstacles themselves; the gap is where you are going.',
-      'Position one lane before the threat, not on it. Being early in lane two beats being correct at the last instant.',
-      'Never cross into an occupied lane to escape — commit to the lane you can hold for two beats.',
-      'At high speed, stop making extra shifts. Every unnecessary lane change is a chance to be wrong.',
-      'After a death, name the lane you should have been in two obstacles earlier. That is the only feedback that improves a run.'
+      'Tap anywhere to get off the "Tap the screen to start" caption — the runner is already moving underneath it (frames 1–2).',
+      'Watch which of the four lanes the red pin is floating over; it is the only marker on the road ahead.',
+      'Use the "Turn" wheel when the road branches rather than steering continuously — it is a button, not a stick.',
+      'Collect skin fragments as they drop; the toast in frame 2 is the game confirming one landed, and the armoured runner on the road is what the fragment belongs to.',
+      'Open the "Shop" from the right column between runs, not mid-lane, since it is the only place the coin counter at the top-left can be spent.',
+      'Skip "Sign In" if you only want a run — it is offered on the start screen but the game is already playable at that point.'
     ],
     tips: [
-      'Fix your eyes a third of the way up the screen, not on your own vehicle. Watching the top is what buys the reaction time.',
-      'Learn the recurring approach sequences. The obstacle set repeats shapes, and once you recognise a shape you stop reacting to it.',
-      'Play the first thirty seconds slowly and deliberately. Early mistakes compound because they put you in the wrong lane before the speed arrives.',
-      'A short, clean run scores better than a longer, ragged one, so value tidy shifts over survival at any cost.',
-      'Physical comfort matters more than you would think: a phone on a table with two thumbs outperforms one held in the air.'
+      'The interface lives entirely in the right column, so keep your thumb off that strip while running; taps there open menus instead of moving you.',
+      'The coin balance was 0 on both captured frames, so the early lanes are where the economy actually starts.',
+      'A "NEW" badge on the showcase character is the game telling you a skin is waiting to be equipped.',
+      'The settings gear is top-right, well away from the Turn wheel — easy to hit by accident on a phone, worth knowing before it matters.'
     ],
     mistakes: [
-      'Steering reactively at the last moment, which is the only way to be caught by the next obstacle.',
-      'Panic-shifting multiple lanes when one was enough, arriving in the wrong place with confidence.',
-      'Playing tired. Reaction games are the most sensitive genre on this site to fatigue, and a run after a long break is worse than the one before it.'
+      'Looking for a joystick. The only named control on the start screen is "Turn".',
+      'Tapping the right-hand column during a run and ending up in the Shop.',
+      'Assuming the 1-versus-2 bar is a score; the coin counter and the bar are different things and only one of them is money.'
     ],
-    device: 'Landscape, because the lanes run horizontally across a wide field and the game needs room to telegraph an approach. On a phone in landscape, both thumbs have a lane-width of travel each, which is why it plays better with two hands than held in one. On desktop the arrow keys or clicks do the same job, with a slightly sharper input than a trackpad.',
+    device: 'Portrait, and deliberately one-handed: the road fills the left two-thirds of the screen and every button is stacked down the right edge. Our first capture pass rendered this build rotated 90 degrees because the catalogue had it filed as landscape; captured at the size it actually draws, it is a vertical game (frames 1–2).',
     faq: [
-      { q: 'Is there any way to get better equipment or unlocks?', a: 'No. There is nothing to buy or upgrade — score and streak are the whole progression.' },
-      { q: 'Tap or swipe — which is better?', a: 'Tapping is faster for single-lane shifts and swiping is more reliable for deliberate multi-lane moves. Pick one and stop switching mid-run.' },
-      { q: 'Why does it become impossible around the same point?', a: 'Because speed, not obstacle variety, is the difficulty. That point is where your reading-ahead stops covering two obstacles and becomes pure reaction.' },
-      { q: 'Does lag affect it?', a: 'Only during loading. Once a run is going, everything is local, so a slow connection will not steal a run from you.' },
-      { q: 'Is there an offline mode?', a: 'The game needs the page loaded, so plan on needing a connection to start it. Nothing about the run itself talks to a server.' }
+      { q: 'How do you control the runner?', a: 'The start screen names one control: the "Turn" wheel in the right-hand column (frames 1–2). There is no on-screen stick, and the game begins from a plain tap anywhere.' },
+      { q: 'What are the buttons on the right?', a: 'From top to bottom: "Sign In" (a notepad), "Turn" (a spoked wheel) and "Shop" (a gift box). The character on the steps above them is the "Warframe" skin showcase.' },
+      { q: 'What is the Iron Man message?', a: 'A toast reading "Got Iron Man Skin Fragment – Success!" (frame 2), rendered with the quotation marks butted up against the words. Skins are collected in fragments during runs, and this is the game confirming one — the armoured figure on the road in the same frame is the skin it refers to.' },
+      { q: 'Do I have to sign in?', a: 'No. "Sign In" is a button on the start screen, but the level is already loaded and waiting on a tap.' },
+      { q: 'Is it landscape?', a: 'No — portrait. It is filed as landscape in our own metadata, which the capture contradicted; that error is fixed as part of this rewrite.' }
+    ],
+    shots: [
+      'The attract screen before a run: "Tap the screen to start" across the bottom, three blue stick figures on the four-lane road with a red pin ahead of them, the purple-1-versus-red-2 bar, the Warframe bust with its NEW badge, and the Sign In / Turn / Shop column down the right edge.',
+      'The same screen a moment later: the toast "Got Iron Man Skin Fragment – Success!" across the road and a dark armoured runner now running in the middle lane, with the menu column unchanged.'
+    ]
+  },
+
+  acestrike: {
+    verdict: 'A vertical space shooter played by swiping a small fighter across a moonlit foreground while numbered burning targets descend; the level is tracked as a virus percentage, not as a score.',
+    about: [
+      'The opening screen is a hangar without walls: a grey-and-cyan fighter idling on a cratered moon surface, a nebula above it, and one line of instruction in the middle of the screen — "Swipe to Engage" (frame 1). Two hexagon badges sit above that line, a large lit "1" and a smaller dim "2", which is the whole level selector (frames 1–2). Along the bottom are three buttons: "Rank", "Upgrade" and "Get Coins", the last wearing a video icon (frame 1).',
+      'Once a run starts, the same ship sits at the bottom of the screen firing cyan bolts upward at a cluster of burning planets drifting down from the top (frame 2). Each planet carries a large number — 1, 2, 7, 13 and 79 are all visible in one frame — and that is the only feedback the targets give. There is no crosshair and no fire button, which is consistent with the one instruction the menu gives: you swipe, the ship moves, the guns run themselves.',
+      'The header is the interesting part. A cyan bar runs under the two hexagons, and beneath it a line reads "Xeno-Virus: 97%" (frame 2). That percentage, not the coin counter beside it, is what the level is actually measuring — you are burning a virus down, and the numbered planets are the things standing between you and it.'
+    ],
+    systems: [
+      { h: 'Swipe to Engage is the entire control set', p: 'The menu states the verb outright (frame 1) and the play frame shows no fire button, no stick and no lane markers (frame 2). Position is the only decision, so the game rewards staying in the part of the screen where the densest cluster of targets is overhead.' },
+      { h: 'Numbers on targets are the difficulty', p: 'The burning planets in frame 2 are labelled 1, 2, 7, 13 and 79. A 1 and a 79 in the same cluster is not decoration: the big numbers are the ones that will still be on screen when the small ones are gone, and they decide how long a wave lasts.' },
+      { h: 'Coins, and three ways to spend or get them', p: '"Rank", "Upgrade" and "Get Coins" line the bottom of the menu (frame 1), and a floating card on the right offers a coin payout behind a video — it read 2 at the menu and 18 during the run, both above a "Claim Now" button (frames 1–2). Upgrades are the persistent track; the claim card is the top-up.' }
+    ],
+    howTo: [
+      'Swipe on the lower half of the screen to move the fighter — the menu tells you this is the control before the run even starts (frame 1).',
+      'Pick off the low-number targets first. A planet showing 1 clears in a moment and leaves the screen, while a 79 is still standing there after the rest are gone.',
+      'Stay under the gap in the cluster rather than under the cluster itself; drifting into the middle of a dense group costs position you cannot get back.',
+      'Watch the cyan bar and the "Xeno-Virus" percentage rather than the coin counter — the percentage is the level\'s finish line (frame 2).',
+      'Between runs, spend coins on "Upgrade" before worrying about "Rank" — the rank button is a ladder you are placed on, the upgrade button is the one that changes what you bring to it (frame 1).',
+      'Tap "Claim Now" on the coin card when it is offering a payout you have already earned (frames 1–2) — it costs a video, not coins.'
+    ],
+    tips: [
+      'The two hexagons at the top are the level list. Only "1" is lit at the start (frame 1), so the second stage is earned, not chosen.',
+      'The ship fires continuously once a run is going — you never press fire, so all your attention belongs to positioning.',
+      '"Get Coins" carries a video icon on the menu itself, which means the currency has a free path and you are not required to spend real money to upgrade.',
+      'The coin counter in the header was 16 mid-run against 0 at the menu (frames 1–2), so a single wave pays for itself quickly.'
+    ],
+    mistakes: [
+      'Hunting the highest-number target first because it looks important. It soaks time; the small ones clear the screen.',
+      'Treating the percentage as a health bar. "Xeno-Virus" is the objective meter, not your condition.',
+      'Ignoring the claim card until it is empty — it is the only free coin source visible on either screen.'
+    ],
+    device: 'Portrait, and it was filed as landscape in our own catalogue until this rewrite. The ship sits in the bottom quarter where a thumb can drag it across the full width, the targets come down from the top, and the three menu buttons are wide enough for one-handed use. No keyboard control appears on either captured frame.',
+    faq: [
+      { q: 'How do you shoot in Ace Strike?', a: 'You do not press fire. The menu instruction is "Swipe to Engage" (frame 1) and the play frame shows no fire button (frame 2) — the fighter runs its guns while you move it.' },
+      { q: 'What do the numbers on the planets mean?', a: 'They are the targets\' values — 1, 2, 7, 13 and 79 are all visible in a single frame (frame 2). They behave like hit points: the big ones take longer to clear.' },
+      { q: 'What is Xeno-Virus?', a: 'The objective meter shown under the level hexagons, reading 97% in our captured run frame (frame 2). It is the thing the level is measuring.' },
+      { q: 'Do I have to pay for coins?', a: 'No. "Get Coins" on the menu carries a video icon, and the floating card with "Claim Now" is also video-backed (frames 1–2).' },
+      { q: 'Is there more than one level?', a: 'The selector shows two hexagons, 1 and 2, with only 1 lit at the start (frame 1). The second is locked until you clear the first.' }
+    ],
+    shots: [
+      'The menu: the fighter idling on the moon, "Swipe to Engage", the level hexagons 1 and 2, the coin card with "Claim Now", and the Rank / Upgrade / Get Coins row.',
+      'A run in progress: cyan bolts rising into a cluster of burning planets numbered 1, 2, 7, 13 and 79, with the header reading "Xeno-Virus: 97%".'
+    ]
+  },
+
+  arrowmazesolve: {
+    verdict: 'A one-screen arrow-routing puzzle that teaches itself with three words — "Tap to Move!" — and runs a clock, a battery and three hearts at the same time.',
+    about: [
+      'Level 1 is a single drawing in the middle of a pale blue screen: a rectangular track containing two rows of hooked arrows — three pointing up in the top row, three pointing down in the bottom one — wrapped by an outer loop whose left side rises and whose right side falls (frames 1–3). It reads like a wiring diagram rather than a board game, and there is nothing else in the play area: no grid, no pieces, no timer bar across the puzzle itself.',
+      'The game\'s whole tutorial is two words. On the untouched board a hand points into the top row of arrows and a caption above it reads "Tap to Move!" (frame 1). That is the verb, stated outright, and it is gone by the next frame we captured (frame 2) — the level is one object you shift, not a maze you walk.',
+      'The header holds four separate readouts, which is more than any other puzzle here carries. Top-left is a coin balance of 1000, unchanged across all three frames. Centre-top are three hearts under a clock that reads 05:00, then 04:55, then 04:36. Top-right is a green battery pill that prints the word "Full" on the fresh board and a number once it has started draining — 4 in frame 2 and 2 in frame 3, with a second small clock reading 04:34 under it (frame 3). Below the puzzle sits a horizontal slider with a minus at one end, a plus at the other and a knob in the middle: a zoom control for the board.',
+      'Along the bottom are three blue tools, each with a coin price printed on it: a lightbulb at 200, a stopwatch at 300 and a pair of crossed arrows at 400 (frames 1–3). Settings and a "Shop" gift box are stacked down the right edge. Between them, the game is entirely self-service: you can buy your way out of a stuck board, and the prices are on the buttons.'
+    ],
+    systems: [
+      { h: 'Three failure counters running at once', p: 'A clock, a battery and three hearts all sit in the header, and our three frames show all three moving: 05:00 → 04:55 → 04:36 on the clock, "Full" → 4 → 2 on the battery, and three red hearts reduced to one red and two grey by the last frame (frames 1–3). Whatever the hearts are for, they are demonstrably spendable on this board.' },
+      { h: 'Three hints with prices on them', p: 'Lightbulb 200, stopwatch 300, crossed arrows 400, printed on the buttons (frames 1–3). Against a starting balance of 1000 that is five hints before you are broke, so the coin balance is a real resource here, not decoration. It did not move across any of our frames.' },
+      { h: 'A zoom slider for the board', p: 'The slider under the puzzle, marked with minus and plus (frames 1–3), is unusual and it is the answer to this game\'s main difficulty: arrow tracks are hard to read at the size they fit on a phone. The knob sat in the same place on all three frames, so we never moved it — but it is the only free control on the screen.' }
+    ],
+    howTo: [
+      'Read "Tap to Move!" as the rule, not as decoration: an arrow segment is shifted by tapping it, and that is the only action the game teaches (frame 1).',
+      'Before doing anything, drag the zoom slider toward the plus and read the whole track. The puzzle is one connected drawing, and the outer loop is part of it (frames 1–3).',
+      'Follow the flow from the arrowheads. On Level 1 the top row points up into the outer loop and the bottom row points down out of it, so the two halves are not independent.',
+      'Work one row at a time rather than the whole rectangle — a change in the top row is visible against the outer track immediately.',
+      'Keep the clock in view, and treat the battery pill as a second timer: it read "Full" untouched and 2 by the last frame, so something on this board drains it (frames 1–3).',
+      'Buy the 200 lightbulb before you lose another heart. On the frame where two hearts had already gone grey, a group of three arrows in the lower row was boxed in black and redrawn dark red — the game flagging a segment you have to deal with (frame 3).'
+    ],
+    tips: [
+      'The hearts are the resource that does not come back between attempts. Two of the three were grey in our last frame while the coins still read 1000 (frame 3) — the board spends lives, not money.',
+      'Zoom is free. Players stuck on an arrow maze are usually misreading a junction, not out of ideas.',
+      'The three tools are priced differently for a reason: the lightbulb is the cheapest way to keep a run alive and the 400 crossed arrows the most expensive.',
+      'The "Shop" on the right edge is the only place the 1000 balance can go, and nothing on the captured frames shows a second currency to spend it on.',
+      'A dark-red segment inside a black box is the game marking a group as relevant rather than as solved — check what a boxed group is pointing into before you tap it (frame 3).'
+    ],
+    mistakes: [
+      'Playing at the default zoom. The whole puzzle is thin lines on a pale background, and the slider is sitting right under it.',
+      'Assuming the clock is the only fail state. Two of the three hearts were already greyed while the clock still read 04:36 (frame 3).',
+      'Spending the 1000 starting coins on 400 shuffles when a 200 lightbulb is the cheaper read on the same board.'
+    ],
+    device: 'Portrait. Our first capture pass rendered this build sideways because the catalogue had it filed as landscape; drawn at the size it actually uses, the puzzle sits in the middle third with the zoom slider and three tool buttons all below the thumb line (frames 1–3). Keyboard arrows are not used on any captured frame — the input is taps and drags.',
+    faq: [
+      { q: 'Is Arrow Maze Solve landscape or portrait?', a: 'Portrait. The build draws a vertical board with the tools along the bottom (frames 1–3). It was listed as landscape in our own metadata, which this rewrite corrected.' },
+      { q: 'Is there a time limit?', a: 'Yes — a clock in the header ran 05:00, 04:55 and 04:36 across our three frames, and the 300-coin stopwatch tool is priced as a time purchase.' },
+      { q: 'What do the three hearts mean?', a: 'They are a life-style counter, and they are spendable: on the last frame we captured only one of the three is still red and two are grey (frame 3). What specifically costs one is not shown in the stills.' },
+      { q: 'What is the green battery icon?', a: 'A second counter in the top-right. It prints "Full" on the untouched board and then a number — 4, then 2 — as the frames go on, with a small 04:34 clock appearing under it in the last frame (frames 1–3). We could not tie it to an action from stills, so treat it as a resource rather than as lives, which are the hearts.' },
+      { q: 'What does the slider under the board do?', a: 'It is marked with a minus at the left end and a plus at the right, under the puzzle (frames 1–3) — a zoom control. It is the only free control on the screen.' },
+      { q: 'How much do the hints cost?', a: '200 coins for the lightbulb, 300 for the stopwatch and 400 for the crossed arrows, printed on the buttons themselves, against a balance of 1000 that never moved across our frames.' }
+    ],
+    shots: [
+      'The untouched Level 1: the hand and the caption "Tap to Move!" over the top row of arrows, the clock at 05:00, three red hearts, the battery pill reading "Full", the coin balance at 1000, the zoom slider and the 200 / 300 / 400 tools.',
+      'The same board with the tutorial gone — 04:55 on the clock and the battery pill now showing 4 instead of "Full".',
+      'Later on the same board: one red heart and two greyed, the battery down to 2 with a 04:34 clock under it, and three arrows in the lower row redrawn dark red inside a black box.'
+    ]
+  },
+
+  royalmatcher: {
+    verdict: 'A real match-3 on a nine-by-nine board: five tile designs, a two-part collection goal printed as flower 8 and castle 7, and a "Steps" budget of 22 on Level 1.',
+    about: [
+      'The board is a nine-by-nine grid of chunky tiles in five designs: a green leaf, a gold helmet, a red heart, a pink flower and a blue castle (frame 3). Above it a crimson header states the contract — "Goal" over a flower and a castle, "Steps" over the number 22. Nothing is implied: the level names the two shapes to collect and how many swaps you get.',
+      'Before the board there is a chooser (frame 2). A red "Level 1" banner with a round X at its right sits over a "Goal" panel showing a flower marked 8 and a castle marked 7, and under that a "Select Boosters" row of three yellow buttons, each wearing a red badge reading 1: a pair of purple-and-white rockets, a rainbow-panelled ball, and a purple-and-white striped ball. A green "Start" button finishes the panel. You pick your loadout on the way in.',
+      'Behind all of it is the estate screen (frame 1): a red-brick castle with orange-roofed turrets in terraced gardens, a round portrait medallion of the queen at top-left, a coin pill reading 500 and a heart pill reading 3 — each with a green plus badge — and a five-icon navigation strip along the bottom with "Home" lit. A green button labelled "Level1" sits over the lawn.'
+    ],
+    systems: [
+      { h: 'A two-part goal, not a score', p: 'The header tracks the flower and the castle separately (frame 3). On the board frame the flower carries the number 5 and the castle carries a green check disc, while "Steps" still reads its full 22 — so we can see the two halves are marked independently, but the frames do not settle whether that check means the castle half is finished or is just a marker.' },
+      { h: '22 steps is the whole difficulty', p: '"Steps 22" is printed on the board frame (frame 3), so the fail state is a swap budget rather than a clock. That makes Royal Matcher the planning game of this group — the opposite of Chroma Jam, which puts 05:00 on the screen and dares you to read fast.' },
+      { h: 'Boosters you pick, and boosters the board made', p: 'The pre-level row offers three boosters at one charge each (frame 2). Under the board during play there are four badged buttons, each also reading 1, plus a plain gear: a rocket pair, a gold-banded purple ring, a purple-and-gold striped ball and the rainbow ball (frame 3). The ring matches the two tiles already sitting in the left column of the grid, so at least one of those four is a booster the board generated rather than one you selected.' }
+    ],
+    howTo: [
+      'Read the "Goal" panel first. On Level 1 you are collecting flowers and castles, so hearts, leaves and helmets only matter as scaffolding (frames 2–3).',
+      'Swap to make three or more of a kind; the tiles that matter are the two in the goal.',
+      'Clear goal tiles from the bottom of the grid upward — dropping new tiles into a cleared lower row is what sets up the next match for free.',
+      'Watch the step counter. Once it is well under 22 with either goal unfinished, stop setting up big cascades and start taking any legal goal match.',
+      'Match next to the gold-banded ring tiles in the left column instead of moving them — a booster already on the grid is the cheapest one you have (frame 3).',
+      'If a level fails, replay it from the "Select Boosters" panel and take a different one; all three start at a single charge (frame 2).'
+    ],
+    tips: [
+      'The coin pill of 500 and the heart pill of 3 on the estate screen (frame 1) are the resources with plus badges over them — that is where top-ups come from.',
+      'Every booster badge reads 1, in the chooser and under the board alike. Nothing here comes in multiples at Level 1.',
+      'Five tile designs across eighty-one cells is a dense mix, so genuine three-matches appear often — which is why the step budget is tighter than 22 sounds.',
+      'The bottom navigation strip has five icons and "Home" is the lit one (frame 1); the board itself has no navigation, so leaving a level means going back to that strip.'
+    ],
+    mistakes: [
+      'Matching whatever is easiest. Only the two designs named in the goal matter, and the header says which.',
+      'Spending a booster charge early in a level; each badge says 1.',
+      'Ignoring the estate screen — the hearts there are what a failed level costs you.'
+    ],
+    device: 'Portrait, with the nine-by-nine board filling the middle of the screen and the four badged boosters plus the gear in a row along the bottom edge, all comfortably thumb-sized on a phone. On desktop the swaps become clicks: press a tile, click its neighbour. The header panel is compact enough that the goal and the step count never need scrolling.',
+    faq: [
+      { q: 'What is the goal of each level?', a: 'It is printed twice. The pre-level panel says flower 8 and castle 7 (frame 2), and the in-play header repeats "Goal" over the same two shapes with "Steps" reading 22 (frame 3) — a collection target plus a swap budget, not a score.' },
+      { q: 'How big is the board and how many tile types are there?', a: 'Nine columns by nine rows, in five designs: leaf, helmet, heart, flower and castle (frame 3). Only the two named in the goal score.' },
+      { q: 'What are the icons under the board?', a: 'Four booster buttons, each badged 1 — a rocket pair, a gold-banded ring, a striped ball and a rainbow ball — followed by a settings gear (frame 3). Two of those shapes also appear as tiles inside the grid.' },
+      { q: 'Are the hearts and coins on the castle screen important?', a: 'Yes. The top bar of the estate screen shows 500 coins and 3 hearts (frame 1), each with a green plus badge — hearts are what a failed level takes, coins buy the rest.' },
+      { q: 'Is there a timer?', a: 'No. The constraint is the step counter in the header, which reads 22 (frame 3). Nothing on any frame counts down.' }
+    ],
+    shots: [
+      'The estate screen: the red-brick castle in its gardens, the queen\'s portrait medallion, a coin pill of 500 and a heart pill of 3 each with a green plus, the green "Level1" button and the five-icon strip with "Home" lit.',
+      'The pre-level panel: a "Level 1" banner with a round X, "Goal" over a flower marked 8 and a castle marked 7, the "Select Boosters" row of three yellow buttons each badged 1, and the green "Start" button.',
+      'The board in play — nine by nine, five tile designs, two gold-banded ring boosters already in the left column, the "Goal" and "Steps 22" header, and the four badged boosters plus a gear along the bottom.'
     ]
   },
 
   satisfyingstack: {
-    verdict: 'A stack-sorting puzzle with the cleanest feedback in the genre — and a habitable difficulty curve.',
+    verdict: 'A merge puzzle on a twelve-cell tray: choose a stack, then Push or Merge it, with a milestone track reading 5, 6, 7, 9 and 10 and only five of the twelve cells open at the start.',
     about: [
-      'Satisfying Stack gives you a board of cluttered item stacks and asks you to consolidate them: tap a stack, tap another, and the top items move across. Group like with like until every stack holds one thing and the board is tidy. It belongs to the same sorting family as the screw and shelf puzzles on this site, but with fewer pieces on screen and more visible state, which makes it the easiest of them to read.',
-      'What it does better than most is feedback. Every transfer animates cleanly, every completed stack resolves with a snappy clear, and the board visibly simplifies as you work. That is the entire appeal — the game is short on systems and long on the feeling of a mess becoming order.',
-      'The constraint is capacity. Stacks hold a limited number of items, so the puzzle is not “can I group these” but “can I free a stack in time to receive the next group”. Levels state a goal and unlock the next as you complete it, and there are occasional bonus offers if you want a hand.'
+      'The board is a grey tray of twelve slots in three rows of four, and most of them are not yours. The top-left slot carries a keyhole, and the three beside it are labelled "Temp Slot" and each wear a video-camera icon. Of the middle row, the leftmost is an empty grey pedestal and the other three carry keyholes. Only the bottom row is fully open (frame 1). Five usable cells out of twelve is what Level 1 actually gives you.',
+      'The game tells you the first move outright. An orange callout reading "Tap to Choose" hangs over the leftmost stack, with a white gloved hand underneath it, and that stack is drawn inside a white rounded selection frame (frame 1). Two stacks are on the board, both with a red top disc stamped "1": one in the left cell, one in the third cell, with empty grey pedestals in between and to the right.',
+      'Below the tray are the two verbs: a yellow "Push" button and a purple "Merge" button side by side. Tucked at the bottom-right corner of the tray is a smaller "Sort" control — a blue-and-pink looped arrow with a video-camera badge on it. Above the board, "Level 1" sits next to a gold trophy cup, and under it a green track links five numbered nodes reading 5, 6, 7, 9 and 10, with the 5 filled teal and the 10 wearing a radiating sunburst (frame 1). The header carries a gear, a gold coin stamped G over a balance of 0 with a green plus, and a "Rank" button drawn as a sack of coins.'
     ],
     systems: [
-      { h: 'Capacity is the real limit', p: 'A stack that is nearly full can still receive nothing, and a single item sitting on top of a completed colour turns a finished stack back into a working one. Watch capacity, not just colour.' },
-      { h: 'One-goal-per-level structure', p: 'Each layout names what has to be grouped. Solving more of the board than the goal asks for is not a better result — it is just more moves.' },
-      { h: 'Bonus offers instead of a shop', p: 'There are optional rewarded bonuses on a stuck board rather than a store to grind. Taking one changes the layout, not your progression.' }
+      { h: 'Choose, then Push or Merge', p: 'The interface separates selection from action: "Tap to Choose" picks a stack, and only then do "Push" or "Merge" apply (frame 1). Two buttons for one move means direction and combination are different decisions — Push relocates, Merge combines. No frame shows what either one does once pressed, so treat the first few moves as the tutorial.' },
+      { h: 'Milestones at 5, 6, 7, 9 and 10', p: 'The node track under "Level 1" names the targets rather than a score, and the numbers are 5, 6, 7, 9 and 10 — note there is no 8 (frame 1). Since the live stacks start at value 1, every milestone is a stacking problem: you cannot reach 5 by pushing ones around, only by merging them repeatedly.' },
+      { h: 'Temp Slots, keyholes and a locked-open tray', p: 'Three cells are reserved as "Temp Slot", each with a video-camera icon, and four more carry a keyhole (frame 1). The Temp Slots sit in the top row and the keyholes are split between the top-left and the middle row, so the tray opens in two different ways — one you buy with a video, one you reach.' }
     ],
     howTo: [
-      'Do nothing for the first few seconds. Count how many distinct item types are on the board and how much free capacity exists.',
-      'Tap a source stack, then a destination; the top items move in order, so a stack that looks tidy may deliver items in the wrong sequence.',
-      'Consolidate toward the type with the fewest scattered copies first. Those are the stacks that will end up with nowhere to go.',
-      'Empty a whole stack as early as you can. An empty stack is a workspace, and every board becomes solvable the moment you have one.',
-      'Avoid splitting a completed group to reach something underneath unless you can restore it in one move.',
-      'When the board stops simplifying, undo. Two moves of tidying that leave the same number of partial stacks means you have already gone wrong.'
+      'Tap a stack until the "Tap to Choose" callout is satisfied and the stack is framed in white (frame 1).',
+      'Press "Merge" when the neighbour you are facing carries the same number; press "Push" when you only need to move a stack out of the way.',
+      'Keep the two red 1-stacks apart until each has grown — merging two value-1 stacks wastes a merge that could have advanced both.',
+      'Aim at the teal node on the track first. On Level 1 that is 5, and the rest of the track reads 6, 7, 9, 10 (frame 1).',
+      'Use "Sort" when the tray is cluttered and you can no longer see which stacks match — but note it wears a video-camera badge, so it costs a video, not a tap.',
+      'Open a "Temp Slot" only when the five open cells are genuinely full; the extra cell is parking space you paid a video for.'
     ],
     tips: [
-      'Chase stack count, not tidiness. The number of partially-filled stacks is the real measure of progress on this kind of board.',
-      'Leave one stack deliberately untouched as a buffer. Filling every available space is how an almost-solved board locks.',
-      'Move the item that is in the way of two groups before the one in the way of one, even if the second looks like a quicker clear.',
-      'Read what a stack will deliver before you tip it. Items transfer in order, and a stack that empties onto the wrong host can create two problems.',
-      'Short, decisive sessions work better here than long ones; the genre punishes the point at which you stop checking capacity and start tidying by instinct.'
+      'The empty pedestals are not decoration — the middle-row and bottom-row grey columns are the cells you can grow stacks into, and there are three of them on this board.',
+      'The coin balance read 0 on the frame (frame 1), so the early board is not a shopping exercise.',
+      'The gold trophy beside "Level 1" and the "Rank" sack in the header are the two competitive elements; neither is required to play.',
+      'Four keyhole cells and three Temp Slots means the tray opens up as you progress — later levels have more room, not more rules.'
     ],
     mistakes: [
-      'Completing a decorative stack early that later has to be broken again to reach what is under it.',
-      'Moving single items across the board to make things look grouped, spending moves without reducing stack count.',
-      'Ignoring the stated goal and solving the whole board instead, which is the same puzzle with more steps.'
+      'Merging the first pair you see. With only five open cells, an early merge can lock the layout.',
+      'Treating "Push" and "Merge" as the same button — one moves, the other combines, and only one of them advances a milestone.',
+      'Counting the tray as a four-by-four grid. It is three rows of four, and most of it is closed on Level 1.'
     ],
-    device: 'Portrait, with the board in the upper half and the stacks close enough apart that taps do not mis-fire on a small screen. There is no drag and no timing, so it works equally well on a phone held one-handed or on a desktop with a mouse. Layouts scale rather than shrink, so a small device is not a handicap.',
+    device: 'Portrait, with the tray filling the middle of the screen and Push and Merge as two large buttons side by side along the bottom edge. The "Tap to Choose" callout and hand cursor (frame 1) are sized for a phone, which is what the layout assumes. No keyboard control appears on any captured frame.',
     faq: [
-      { q: 'Is this the same as the shelf-organising game?', a: 'Same family, different verb. Grocery Adventure moves items into places; Satisfying Stack consolidates stacks into groups, and its constraint is stack capacity rather than shelf space.' },
-      { q: 'Can a board get stuck?', a: 'Yes, and the escape is the undo or a restart rather than more shuffling. A stuck layout usually became stuck one transfer earlier.',
-        },
-      { q: 'Do I need to do anything to keep the board easy?', a: 'Play the goal rather than the tidiness. Levels that are solved for the stated objective are consistently shorter than levels solved “properly”.' },
-      { q: 'Are the bonuses required?', a: 'No. They exist for boards you want out of, and the ladder is designed to be cleared by play.' },
-      { q: 'Does my progress carry between devices?', a: 'No. State is stored locally in your browser, so a different phone or a cleared profile starts at your first unfinished level.' }
+      { q: 'What do Push and Merge do?', a: 'They are the two action buttons under the tray — yellow and purple respectively. You select a stack first, which the game labels "Tap to Choose" (frame 1), then Push moves it and Merge combines it. The frames we captured show the choice, not the result.' },
+      { q: 'What are the Temp Slots?', a: 'Three cells across the top of the tray, each labelled "Temp Slot" and carrying a video-camera icon (frame 1). They are extra parking space bought with a rewarded video.' },
+      { q: 'What do the numbers 5, 6, 7, 9 and 10 mean?', a: 'The milestone track under "Level 1". They are the stack values the level wants you to build; the 5 is filled teal as the current target and the 10 has a sunburst behind it as the last node.' },
+      { q: 'Why are some cells locked?', a: 'Four cells show a keyhole rather than a pedestal (frame 1) — one at the top-left and three across the middle row. Five cells are usable at the start.' },
+      { q: 'What is the Sort button?', a: 'A small control at the bottom-right of the tray: a blue-and-pink looped arrow with a video-camera badge and the label "Sort". The badge means it is video-backed; what it reorders is not shown in the frames we captured.' }
+    ],
+    shots: [
+      'Level 1 as the game presents it: twelve tray cells of which five are open — three "Temp Slot" cells with video icons and four keyhole cells closing the rest — with the orange "Tap to Choose" callout and hand over a white-framed stack of red discs stamped 1, a second 1-stack two cells along, the milestone track reading 5, 6, 7, 9, 10 under "Level 1", and the yellow Push / purple Merge buttons with the video-badged "Sort" at the tray corner.'
     ]
-  }
+  },
+
+  hunterevolveuprising: {
+    verdict: 'A portrait hunting game built on a staggered field of pale markers: a caveman with a club, gulls crossing the board, and a shop that sells a multiplier gear and a unit for meat.',
+    about: [
+      'The field is a staggered grid of pale six-sided flower-shaped markers under a blue sky with clouds and acacia trees, and the only living things on it are two white gulls (frame 1). A gold cup-shaped marker sits in the middle of the grid, and immediately to its right one of the flower markers is drawn in bright white with a cartoon gloved hand pointing at it — the game showing you where to tap. Above it all, a level badge reading 1 sits at the left end of a long, empty black bar, and a grey tab under it says "Campaign1".',
+      'The lower half of the screen is a wooden panel under a blue sign reading "Shop", with a small triangle either side of the word. The first card is "Multiplier Gear": a gold gear with the number 1 in its centre, priced below with a meat icon and the number 10. The second is "Unit": a grey gear carrying a bearded caveman in a skin tunic holding a club, also priced at 10 meat. The third slot is an empty dark panel. The top bar explains the pricing — a coin counter reading 0 and a meat counter reading 30, so the currency that works here is meat, not coins.',
+      'A translucent orange "Fight On!" button sits over the bottom edge of the shop panel, on cracked dirt scattered with rocks. At the far left and right edges of the panel two small bars — blue on the left, red on the right — sit over piles of grey rock. That pairing is the honest summary of the screen: you buy a multiplier and a unit with the meat you hold, then send the campaign forward.'
+    ],
+    systems: [
+      { h: 'Meat is the working currency', p: 'The top bar carries two counters and they are not equal: coins read 0 while meat reads 30 (frame 1), and both shop cards are priced at 10 meat. Anything you earn on a hunt goes into the meat column, so the coin balance staying at 0 is normal rather than a problem.' },
+      { h: 'A multiplier gear that shows its level', p: '"Multiplier Gear" is drawn as a gear with the number 1 in a circle at its centre (frame 1). It starts at 1, which tells you what the first purchase is for: raising that number, which scales whatever the run pays out.' },
+      { h: 'Units, and a shop with a third empty slot', p: 'The "Unit" card shows a caveman holding a club set into a grey gear (frame 1) — the hunter is a purchasable body, not a fixed player character. The third shop slot is blank, so the panel has room for an offering you have not unlocked yet.' }
+    ],
+    howTo: [
+      'Tap the white-highlighted marker the hand is pointing at, next to the gold cup — that is the first lesson the board gives (frame 1).',
+      'Buy the Multiplier Gear before the second Unit. At 10 meat each and a starting 30, the multiplier is what makes the next hunt pay more.',
+      'Aim at the gulls crossing the field rather than at the pale markers; the birds are the only moving objects on the board.',
+      'Press "Fight On!" to commit the run once the shop is settled — the button sits over the panel\'s bottom edge for that purpose.',
+      'Watch the black bar beside the level badge. It is the campaign progress meter, and it starts empty at level 1.',
+      'Track the two small bars at the edges of the shop panel — blue on the left, red on the right — since they are the only indication on screen of who is winning a bout.'
+    ],
+    tips: [
+      'The shop is open on the same screen as the board, so you can spend between shots without leaving the level.',
+      'The gold cup marker in the middle of the grid is the one object that is not a marker or a bird — treat it as the aim point the tutorial is directing you to.',
+      '"Campaign1" is a label, not a difficulty choice; there is only one campaign tab visible on the frame.',
+      'A multiplier at 1 is the cheapest possible upgrade, which is why it is the first thing worth buying.'
+    ],
+    mistakes: [
+      'Saving meat instead of buying the first multiplier. The gear pays for itself over a campaign.',
+      'Reading the coin counter as your budget — it is the meat column that prices the shop.',
+      'Shooting at the static pale markers. The field is scenery; the birds are the targets.'
+    ],
+    device: 'Portrait, and it was filed as landscape in our own catalogue before this rewrite. The board occupies the upper half of the screen and the shop the lower half, so the thumb rests naturally on the purchase buttons while the targets move above them. No keyboard control appears on any captured frame — the tutorial hand is pointing at a tap.',
+    faq: [
+      { q: 'What is the currency in Hunter: Evolve Uprising?', a: 'Meat. The top bar shows a coin counter of 0 and a meat counter of 30, and both shop cards are priced at 10 meat (frame 1).' },
+      { q: 'What does Multiplier Gear do?', a: 'It is the first shop card, drawn as a gold gear with the number 1 at its centre and priced at 10 meat (frame 1). Buying it raises that number, which scales what your hunts pay out.' },
+      { q: 'What is a Unit?', a: 'The second shop card — a grey gear showing a bearded caveman holding a club, also 10 meat. The hunter you play is a purchasable unit rather than a fixed character.' },
+      { q: 'Is it landscape?', a: 'No. It draws a vertical board with the shop underneath it (frame 1). Our metadata said landscape; the capture contradicted that and it has been corrected.' },
+      { q: 'What are Campaign1 and Fight On!?', a: '"Campaign1" is the label on the tab under the level bar, and "Fight On!" is the translucent orange button over the bottom edge of the shop panel (frame 1).' }
+    ],
+    shots: [
+      'The board and the shop together: a staggered field of pale six-sided markers with two gulls in flight, the tutorial hand on a white-highlighted marker beside a gold cup, "Campaign1" under the level-1 progress bar, and the wooden Shop panel selling a Multiplier Gear and a caveman Unit for 10 meat each above the "Fight On!" button, with a blue bar at the panel\'s left edge and a red one at its right.'
+    ]
+  },
+
+  smashblocks: {
+    verdict: 'A triple-match tile game: tap blocks out of a nine-by-nine grid whose centre three columns are stacked with symbols, into a three-cell tray, where three identical symbols vanish.',
+    about: [
+      'The board is a grid of nine columns by nine rows of dark cells, and only the three centre columns hold tiles (frames 1–2). Those tiles are colour-coded and each colour carries its own symbol — red with a diamond, green with a green gem, purple with a triangle, orange with a coin, blue with a pale crystal. Four rows run down from the top (red, green, purple, orange), then two empty rows, then three more (blue, red, green). That gap is the whole puzzle: you are clearing a column of symbols, not hitting a wall with a ball.',
+      'Tucked under the bottom row of the grid is a strip of three cells, drawn semi-transparent with a faint orange coin inside each one, and the tutorial hand points straight at it (frame 1). Below that, separated by open sky, is a tight row of three solid orange coin tiles (frames 1–2). Nothing on screen labels either element, so the honest reading is: the strip the hand is on is the tray a tapped tile lands in, and the solid row is what is coming next. Three identical symbols in the tray clear them; three different ones is the dead end this genre is built around.',
+      'The header holds a crown counter reading 0, a trophy button, a settings gear and a large score of 0 in the middle. Along the bottom edge are two tools, each wearing a white video-camera badge: a lit black bomb labelled "Clear 10+", and a red heart carrying a white infinity sign, labelled "Refresh" (frames 1–2).'
+    ],
+    systems: [
+      { h: 'A three-cell tray is the entire risk', p: 'The strip under the board holds exactly three tiles (frames 1–2). Every tap commits one of those three positions, so the game is a packing problem: a tap that cannot possibly complete a triple is not neutral, it is one third of your remaining life spent.' },
+      { h: 'Symbols matter more than colours', p: 'Each colour carries a distinct shape — diamond, gem, triangle, coin, crystal — and no two colours share one (frames 1–2). Matching is on the symbol, so reading the shape rather than the colour is the safer habit when the board gets busy, especially with red appearing twice in the stack.' },
+      { h: 'Two escapes, both behind a video', p: '"Clear 10+" is the bomb and "Refresh" is the heart, each badged with a video-camera icon (frames 1–2). They are the only recovery options visible on screen, and neither shows a coin price — the crown counter read 0 throughout. The heart also carries an infinity sign, which is the only hint on screen that one of the two is not counted out.' }
+    ],
+    howTo: [
+      'Before tapping anything, count how many of each symbol are visible in the centre columns. A symbol with only two on the board can never complete a triple (frames 1–2).',
+      'Tap a tile to send it to the tray, and keep the tray showing pairs rather than singles whenever you can.',
+      'Never fill the third cell with a lone symbol when a matching pair is still on the board — clear the pair first.',
+      'Work the stack in runs. The board is two blocks here, four rows above the gap and three below, and the lower block is the one you can see whole.',
+      'Save "Clear 10+" for a tray holding three unmatched symbols, which is the only state that actually loses the run.',
+      'Use "Refresh" when the remaining board has no pair you can reach, not when the board merely looks tedious — it is the heart with the infinity sign, so it is the one that stays available.'
+    ],
+    tips: [
+      'The row of three orange coin tiles under the tray is the preview — checking it is free and prevents most dead trays.',
+      'The two empty rows in the middle of the stack are not slack, they are where the board gets awkward later.',
+      'The score in the header stayed at 0 across our frames, so early clears are about surviving the tray rather than building a number.',
+      'The crown counter and the trophy button are a separate progression track from the score; neither was needed to start a board.'
+    ],
+    mistakes: [
+      'Calling it a break-out game. There is no launcher, no angle and no bouncing — the verb is a single tap into a three-cell tray.',
+      'Tapping a tile because it looks satisfying rather than because it completes or sets up a triple.',
+      'Using the bomb early. It is the only thing that saves a jammed tray, and a video costs real time.'
+    ],
+    device: 'Portrait, with the grid occupying the upper two-thirds and the tray, preview row and two tools stacked below it — all reachable with one thumb. The tiles are large relative to the board because only three of the nine columns are populated, which makes mis-taps rare even on a small phone. No keyboard control appears on any captured frame.',
+    faq: [
+      { q: 'Is Smash Blocks a brick-breaker?', a: 'No. There is no paddle, ball or launch angle anywhere on screen. The board is a grid of symbol tiles and you tap them into a three-cell tray to match three of a kind (frames 1–2).' },
+      { q: 'How do you lose?', a: 'By filling the three tray cells with symbols that do not form a triple. The tray is the only fail state visible on the board.' },
+      { q: 'What does Clear 10+ do?', a: 'It is the bomb at the bottom-left, badged with a video-camera icon, and its label reads "Clear 10+" (frames 1–2) — ten or more tiles at once. What it clears is named by the label, not shown by any frame.' },
+      { q: 'What is Refresh?', a: 'The red heart at the bottom-right, also video-backed, and drawn with a white infinity sign on it (frames 1–2). The label says it refreshes the board; the infinity is the only quantity shown anywhere on it.' },
+      { q: 'What are the three orange tiles under the tray?', a: 'A row of three coin-symbol tiles sitting below the tray strip (frames 1–2). Nothing labels them, but they are the only other three-wide element on the screen and they read as the incoming queue.' }
+    ],
+    shots: [
+      'The opening board: a nine-by-nine grid with the centre three columns stacked red, green, purple and orange, two empty rows, then blue, red and green — and the tutorial hand pointing at the translucent three-cell tray strip with a faint orange coin in each cell.',
+      'The same board with the hand moved up onto the tiles themselves, the preview row of three solid orange coin tiles clear below the tray, and the two video-badged tools along the bottom: the lit bomb "Clear 10+" and the infinity-marked heart "Refresh".'
+    ]
+  },
+
+  blockpuzzlesavegirl: {
+    verdict: 'An arrow-sequence puzzle with a dragon for a clock: lay arrows into a six-slot tray so a box reaches the girl, while a segmented dragon crawls the same road toward her.',
+    about: [
+      'Across the top of the screen runs a grey serpentine road folded back on itself over a wall of pale hexagonal stone. A speech bubble reading "Help!" hangs over a girl in a purple gown and crown, and "Level 1" is printed at the centre with a white pause button at the top-right (frame 1). Then the dragon arrives: a long body of overlapping scales in yellow, green, red and blue, its red head at the left end of the road (frames 2–3). In the third frame its mouth is open and a tongue of fire comes out. That is the timer in this game — not a clock, an approaching dragon.',
+      'The middle of the screen is a tray of six circular slots on a blue-grey band. The outer two are labelled "UNLCOK" — the label as the build actually renders it, with the final E cut off — and each carries a video-camera icon beneath the text; the four between them are plain dark circles with dashed outlines. Every one of the six is empty in all three frames we captured (frames 1–3), so this is the pre-move state, not a solved one.',
+      'Below the tray, four blocks are arranged in a cross, each a coloured arrow: green pointing up at the top, yellow pointing left, red pointing right, and blue pointing down at the bottom, with the tutorial hand on the yellow one in every frame (frames 1–3). A dark grey caption bar above them states the rule in four words — "Box moves arrow way". Notably, no box appears anywhere in the captured frames: the caption names one and the tray is where it would be instructed, but we never photographed the object itself.'
+    ],
+    systems: [
+      { h: 'A tray of four, expandable to six', p: 'Only the four middle slots are usable at the start; the two ends read "UNLCOK" with a video-camera icon (frames 1–3). Since the road folds back on itself, four moves is likely the whole budget you have, and the two extra slots are the difference between a route that reaches the girl and one that runs out of arrows short of her.' },
+      { h: 'The dragon is the clock', p: 'Frame 1 has no dragon on the road at all. In frames 2 and 3 its body fills the top run of the road with its head at the left and the girl further along it to the right, and by frame 3 it is breathing fire (frames 1–3). Nothing on screen counts down, so the pressure is entirely visual — you are reading how much road the dragon has covered, not how much time is left.' },
+      { h: 'Four arrows, one instruction', p: 'Up, down, left and right, each a different colour, laid out in a cross under the tray (frames 1–3). "Box moves arrow way" means the sequence is executed in order, so the puzzle is planning a route through the folds of the road from a fixed set of four directions.' }
+    ],
+    howTo: [
+      'Trace the road with your eye first. It runs along the top, folds back below, and folds again, and the girl is standing on it (frames 1–3).',
+      'Put an arrow into the leftmost tray slot — the sequence reads left to right, and "Box moves arrow way" is executed in that order. None of our frames shows a filled slot, so expect the first placement to be the lesson.',
+      'Build only as far as you can see. A spare slot is worth more than a wrong arrow.',
+      'Watch the dragon while you plan, not the timer you wish were there — the distance it has covered along the road is the only budget shown.',
+      'Unlock a fifth or sixth slot on levels where the road folds more than twice, since four arrows will not cover the route.',
+      'If the run stops short, change the direction of the last arrow before adding more length to the sequence.'
+    ],
+    tips: [
+      'The four arrow colours are fixed: green up, blue down, yellow left, red right. Learning them removes a lookup on every attempt.',
+      'The pause button is the white circle at the top-right, which is the one thing on this screen that can stop the clock.',
+      'The coin counter read 0 on all three frames, so early levels are not about buying anything — the only paid action visible is the video-backed UNLCOK.',
+      'A route that looks shortest is often the one with the most bends; each bend costs a slot.'
+    ],
+    mistakes: [
+      'Filling all four slots before checking where the first arrow sends things.',
+      'Reading this as a sliding-block puzzle. Nothing on the board is rearranged — you are programming a path, not pushing tiles.',
+      'Ignoring the two UNLCOK slots on later levels, where the road needs more moves than four.'
+    ],
+    device: 'Portrait, and split into three clear bands: the road and the girl at the top, the tray across the middle, the arrow blocks at the bottom where a thumb naturally rests. The dragon and the girl are both large enough to read at a glance on a phone, which matters because they are the timer and the goal. No keyboard control appears on any captured frame.',
+    faq: [
+      { q: 'What does "Box moves arrow way" mean?', a: 'It is the game\'s own caption for the rule, in a grey bar above the arrows (frames 1–3): the box follows the arrows you place in the tray, in order, and each arrow gives one direction — up, down, left or right. Worth knowing: no box is visible in any frame we captured, so the caption is the only place the word appears.' },
+      { q: 'What is the dragon for?', a: 'It is the timer. It crawls along the same road toward the girl — absent in frame 1, on the road with its head at the left in frame 2, and breathing fire in frame 3. If it gets there first, the level is lost.' },
+      { q: 'Why do two tray slots say UNLCOK?', a: 'That is the label as the build renders it — "UNLOCK" with the last letter cut off. The board starts with four usable slots; the outer two show that label over a video-camera icon (frames 1–3), and unlocking them gives you more moves in a sequence.' },
+      { q: 'Is this a block-sliding puzzle?', a: 'No. The blocks never slide. You place arrow tiles into a sequence tray and a box walks that route along the road.' },
+      { q: 'What happens when the box reaches the girl?', a: 'We captured the setup, not the rescue — all six tray slots are empty in every frame, and our last frame ends with the dragon breathing fire. So we are describing what is on screen rather than the win screen.' }
+    ],
+    shots: [
+      'Level 1 before anything moves: the grey road folded over a hexagonal stone wall, the girl in a purple gown under a "Help!" bubble at its left end, the six-slot tray with both outer slots labelled "UNLCOK" over a video icon, and the four arrow blocks in a cross under the caption "Box moves arrow way".',
+      'The dragon on the road — a long body of yellow, green, red and blue scales along the top run, its red head at the left and the girl standing further along it to the right, with the tutorial hand still on the yellow left-arrow.',
+      'The same level a moment later with the dragon\'s mouth open and a tongue of fire coming out of it, and the tray still empty.'
+    ]
+  },
+
+  groceryadventuremaster: {
+    verdict: 'A timed triple-match on supermarket shelves: "Collect 3 to clear the shelf!", with an alarm clock counting down from 03:24 and four one-charge tools under the board.',
+    about: [
+      'The rule is printed above the board in its own words: "Collect 3 to clear the shelf!" (frames 2–3). The shelf itself is six wooden compartments set at staggered heights against a tan wall, holding four kinds of produce — a mango, a bunch of two cherries, a spiky yellow durian and a bumpy green cucumber. Count them on the Level 1 board and there are exactly three of each, twelve items in four triples, scattered so that matching pieces sit in different boxes at different heights (frames 2–3).',
+      'The header makes this the most constrained puzzle in our sorting group: a gear and "Level 1" on the left, an alarm-clock icon over 03:24 in the middle, and a gold coin pill reading 0 on the right (frame 2). By frame 3 the clock had fallen to 03:13 with the board completely unchanged, so it counts down while you look rather than up while you play. No other game in this category combines a countdown with a triple-match rule.',
+      'Under the board are four tools, each badged with a single charge: "Power" on a blue clock face carrying a snowflake, "Clear" on a black bomb, "Refresh" on a pair of green-and-yellow looped arrows and "2X Rewards" on a gold star marked x2 (frames 2–3). The title screen adds the economy around them — a "Gift" button drawn as an open chest of pink gems with a purple pill reading "0/5", a "Spin" wheel, and a "+1000" present, all under the yellow "Start Game" button (frame 1).'
+    ],
+    systems: [
+      { h: 'Three of a kind, anywhere on the shelf', p: 'The caption says collect three, and the produce is scattered rather than lined up (frames 2–3). The cherry bunches are the clearest example on this board: there are exactly three of them, one in a top compartment and two in the bottom-left one, so the cheapest clear available is the item that already appears in threes. Counting what is left of each kind is the whole opening move.' },
+      { h: 'A countdown, not a move limit', p: '03:24 on one frame and 03:13 on the next with nothing else changed (frames 2–3). This is the only puzzle in the category where the clock is the fail state rather than a tray or a step budget, which is why the "2X Rewards" star exists — it doubles what a finished board pays, not what time you have.' },
+      { h: 'Four tools, one charge each', p: 'Power, Clear, Refresh and 2X Rewards all show a badge of 1 (frames 2–3). They are single-use, and the coin balance of 0 means none of them can obviously be bought back mid-board.' }
+    ],
+    howTo: [
+      'Press "Start Game" on the title screen (frame 1) and read the shelf before tapping — the clock is already running by then.',
+      'Find the kind that already has three copies visible. On this board cherries appear as three bunches and the other three kinds also appear three times each (frames 2–3).',
+      'Tap the three matching items to clear their slots; anything left hanging after a clear stays where it is, so plan the next triple while you tap.',
+      'Work the compartments with two items in them first — a mango and a cherry bunch sharing a box tells you two kinds at once, which the single-item boxes do not.',
+      'Use "Refresh" when the remaining produce cannot form a triple, and "Clear" when the clock is low and the shelf is still busy.',
+      'Save "2X Rewards" for a board you are certain to finish — it doubles the payout, and a doubled zero is still zero.'
+    ],
+    tips: [
+      'The four kinds on Level 1 are mango, cherry, durian and cucumber. With only four kinds and three of each, the puzzle is spotting them at different heights rather than finding them at all.',
+      'The coin balance read 0 on every frame, so the "Spin" wheel and the "+1000" present on the title screen are the only ways in that are visible before you have played.',
+      'The "Gift" pill reads 0/5 (frame 1) — that is a count out of five, not a timer, so treat it as a set of prizes you work through.',
+      'Because the clock starts before you see the board, the first ten seconds of a run are usually spent orienting. Memorising the tool row costs you nothing and saves those seconds.'
+    ],
+    mistakes: [
+      'Treating it as a tidying game. The caption is explicit — "Collect 3 to clear the shelf!" — and the clock is what ends the run.',
+      'Tapping a lone item because it looks like half a pair. Only triples clear.',
+      'Spending a charged tool early; every one of the four starts at a single charge with no coins to replace it.'
+    ],
+    device: 'Portrait. The shelf occupies the middle third with the timer directly above it and the four tools in a row below, so the whole decision surface is between two thumb positions. The compartments are small on a phone — the durians and cucumbers are the easiest two to confuse at arm\'s length, which is worth knowing before you blame the board.',
+    faq: [
+      { q: 'What is the goal in Grocery Adventure: Master?', a: 'The game states it above the board: "Collect 3 to clear the shelf!" (frames 2–3). Tap three of the same produce item to empty those slots before the clock runs out.' },
+      { q: 'Is there a time limit?', a: 'Yes — an alarm-clock icon in the header reads 03:24 on one frame of Level 1 and 03:13 on the next, with the board otherwise identical (frames 2–3). It is the only timed triple-match in this category.' },
+      { q: 'What do the four buttons under the board do?', a: '"Clear" is a bomb, "Refresh" is a pair of looped arrows, "Power" is a blue clock face with a snowflake on it and "2X Rewards" is a gold star marked x2. Each starts with one charge (frames 2–3). The names are the evidence — no frame shows any of them being used.' },
+      { q: 'What are Gift, Spin and +1000 on the title screen?', a: 'An open chest of pink gems with a "0/5" pill, a segmented wheel and a purple present labelled "+1000", sitting in a row under the "Start Game" button (frame 1). They are the economy you draw on before a run.' },
+      { q: 'How many item types are on the first shelf?', a: 'Four, three of each: mango, cherry bunch, durian and cucumber — twelve items across six compartments (frames 2–3).' }
+    ],
+    shots: [
+      'The title screen: the Grocery Adventure: Master logo with a tangerine and a green apple, the yellow "Start Game" button, and Gift with its "0/5" pill, Spin and +1000 along the bottom.',
+      'Level 1 with the caption "Collect 3 to clear the shelf!", the alarm clock at 03:24, mangoes, cherry bunches, durians and cucumbers spread over six staggered wooden compartments, and the four single-charge tools Power, Clear, Refresh and 2X Rewards.',
+      'The same shelf with the clock down to 03:13 and not one item moved — the frame that proves the timer is counting down while you read the board.'
+    ]
+  },
+
+  puzzlewatersort: {
+    verdict: 'A liquid-sorting puzzle — the build calls itself "Hue & Brew" on screen — where coloured drinks have to be gathered into single bottles, with three charges each of shuffle, undo and a bottle tool.',
+    about: [
+      'The header chip does not say Water Sort. It reads "Hue & Brew" (frame 1), and that is the name the build uses for itself; the catalogue entry above it is ours. Beside the chip is a gold coin pill reading 1000 with a green plus, a purple settings gear at the right, and a blue level tab reading "Lv 1" underneath.',
+      'The board is two glass bottles standing on a dark starfield, each holding a column of liquid. The left one is about two-thirds full of a deep red drink under a grey rim; the right one is nearly empty with a short, brighter red layer at its bottom under a white rim, and a white gloved hand points at it from the right (frame 1). The rule of the genre follows from that picture: you pour from one bottle to another, and a bottle only accepts a pour if the colour it receives matches what is already on top.',
+      'The caption across the middle reads "All drinks done - Level cleared!" (frame 1), so the board we photographed is a finished one — which is why only two bottles remain in play. Along the bottom is a rounded tool bar of three buttons, each badged with 3 charges: a purple button with crossed arrows, a dark button with a counter-clockwise circular arrow, and a dark button showing a bottle marked with a plus. Our three captured frames are the same state, so everything here is read off that one board.'
+    ],
+    systems: [
+      { h: 'One colour per bottle, and only the top layer matters', p: 'The two bottles on screen both end in red (frame 1). In a pour puzzle the surface is what a new liquid lands on, so a bottle that looks nearly finished can still be the blocker — the colour at the top decides what you are allowed to move anywhere else on the board.' },
+      { h: 'Three tools, three charges each', p: 'The shuffle, the undo and the bottle-with-a-plus all carry a badge of 3 (frame 1). Undo is the one that pays for itself: a bad pour in this genre is rarely fatal, it is just unrecoverable without it.' },
+      { h: 'A coin balance you start with', p: 'Unlike most games here, which open at 0, this one shows 1000 coins on the very first frame with a green plus beside it (frame 1). The balance is a stock you draw on, and the plus is where more comes from.' }
+    ],
+    howTo: [
+      'Read the surface of every bottle before pouring. Only the top colour of a bottle is reachable (frame 1).',
+      'Tap the bottle you want to pour from, then the bottle you want to pour into.',
+      'Prefer pouring onto a bottle that already holds the same colour and still has room, rather than opening an empty bottle you may need later.',
+      'Keep at least one bottle empty if you can — a spare bottle is the only space the puzzle gives you to reorder.',
+      'Use undo the moment a pour turns out to block you, while the three charges still cover more than one mistake.',
+      'Save the shuffle for a board where no legal pour exists at all; it rearranges everything, including the parts you had already solved.'
+    ],
+    tips: [
+      'The caption "All drinks done - Level cleared!" (frame 1) is the win message, and it tells you the goal is expressed in drinks, not in score.',
+      'A bottle with a short layer at the bottom, like the right-hand one the hand is pointing at, is the easiest place to build a finished colour.',
+      'The level tab reads "Lv 1" — the progression is a straight ladder rather than a map.',
+      'Three charges is the whole tool budget for a run, so counting them is as useful as counting the bottles.'
+    ],
+    mistakes: [
+      'Filling the last empty bottle. Once every bottle is occupied and none of them match, the shuffle is the only way out.',
+      'Pouring a colour onto itself when the receiving bottle has a different colour under the surface — it looks progress and is not.',
+      'Spending all three undos early, then playing the rest of the board defensively.'
+    ],
+    device: 'Portrait, with the bottles standing in the middle of a dark field and the three tools in a rounded bar along the bottom. The bottles are wide enough to tap accurately on a phone even when four or five share a row, which is the main reason this genre works one-handed. No keyboard control appears on any captured frame.',
+    faq: [
+      { q: 'Why does the game say Hue & Brew?', a: 'That is the name the build gives itself — it is printed in the chip at the top of the screen (frame 1). "Puzzle: Water Sort" is the title we list it under in the catalogue.' },
+      { q: 'What is the goal?', a: 'Gather each colour into a single bottle. The win caption on the board reads "All drinks done - Level cleared!" (frame 1).' },
+      { q: 'What are the three buttons at the bottom?', a: 'A shuffle on crossed arrows, an undo on a counter-clockwise arrow, and a bottle marked with a plus — each badged with three charges (frame 1). They are limited, not on a timer.' },
+      { q: 'Is there a time limit?', a: 'Nothing on the captured frame counts down. The pressure is the number of bottles and the three tool charges.' },
+      { q: 'Why do I start with 1000 coins?', a: 'The balance shown in the header is 1000, with a green plus to add more (frame 1). It is the currency the tools and any extra helps draw on.' }
+    ],
+    shots: [
+      'A cleared Lv 1 board: two glass bottles of deep red drink on a starfield — one two-thirds full, one with a short layer at its bottom that the tutorial hand points at — the header chip reading "Hue & Brew" beside 1000 coins and a purple gear, the caption "All drinks done - Level cleared!", and the tool bar of shuffle, undo and a plus-marked bottle each badged 3.'
+    ]
+  },
 
 };
 
 /*
- * Per-category landing copy. Written from the guide entries above, so each category page
- * describes the titles actually filed under it instead of running a shared template with
- * the category name substituted in. Orientation counts and engine relationships here are
- * taken from games.json and from the shipped bundles, not from genre assumptions.
+ * Category-page copy. Written from the captured frames of the games actually filed in each
+ * category, not from the old shared template — which named titles belonging to a different
+ * category and described mechanics the builds do not have.
+ *
+ * One fact the captures overturned: every game on this site draws a portrait canvas. Five
+ * of them were catalogued as landscape (Ace Strike, Arrow Maze Solve, Hunter: Evolve
+ * Uprising, Tank Era, Shift Dash Reac) and all five render vertically, so the previous
+ * "X of them want landscape" sentences on these pages were wrong and are gone.
  */
 export const CAT_COPY = {
+
   puzzle: {
-    lead: 'Twelve puzzle games across three unrelated mechanics: sorting, matching and route planning. They share a label only, so it is worth reading which family a game belongs to before picking one.',
+    lead: 'Twelve puzzle games here, and the interesting part is that they share almost no mechanics: sorting, matching, merging, routing and shooting a bubble all live under the same label. Every one of them draws a portrait board.',
     body: [
-      'The sorting group is the largest. Puzzle: Water Sort and Wizard Sort run on the same pour engine - one framed as liquids in tubes, the other as potion brewing - and both carry a daily challenge and an earned-reward continue system on top of the main level run. Spin Screw Jam and Satisfying Stack sort against geometry rather than colour: remove, reseat and stack so that like items end up together, with the board itself as the constraint. Grocery Adventure: Master is the odd one out, because its appeal is tidying a shelf rather than clearing a board.',
-      'The matching group is four games that look interchangeable and are not. Puzzle Yarn Fun is a calm swap-and-match with no timer, where long chains matter more than speed. Royal Matcher is a conventional gem grid whose depth sits almost entirely in booster combinations. Bubble Safari is a bubble shooter that pays far better for dropping a whole hanging cluster than for clearing three at a time. Puzzle Hex uses a hexagonal grid, which removes most of the square-grid ambiguity about what counts as adjacent.',
-      'The planning group is where the genre gets closest to programming. Chroma Jam routes coloured blocks into lanes that accept a single colour each. Arrow Maze Solve makes you build the path out of arrow tiles and then commit to it - the ball follows exactly what you wrote, so there is no correcting halfway through. Block Puzzle: Save Girl is a sliding-block traffic puzzle that scores move efficiency, which makes it the one here worth replaying for a better result rather than just a win.',
-      'Eleven of the twelve are designed portrait and work one-handed on a phone. Arrow Maze Solve is the exception and wants landscape.'
+      'Four of the twelve are sorting puzzles, and they sort different stuff. Hue & Brew — listed here as Puzzle: Water Sort — pours coloured drinks between glass tubes until each tube holds one colour, and gives you three charges each of shuffle, undo and a bottle tool. Puzzle Hex is the same idea with hardware: hex nuts moved between threaded bolts, with an undo button the game labels "Revoke". Puzzle Yarn Fun sorts yarn off a hexagonal board into spool lanes, and its tutorial line is literally "First check order colors". Spin Screw Jam does it with screws and overlapping plates, filing each colour into a box with three holes.',
+      'Three are matching puzzles that only look alike. Royal Matcher is the only true swap-three here: an eight-by-eight grid, a printed goal of 8 flowers and 7 castles, and 22 steps to do it in. Grocery Adventure: Master matches triples on supermarket shelves under a running stopwatch — "Collect 3 to clear the shelf!" — and Smash Blocks, filed under arcade, sends tapped tiles into a three-slot tray. Chroma Jam sits between the two: tap coloured blocks off a tray into matching side racks, with 05:00 on the clock.',
+      'Two are planning puzzles. Arrow Maze Solve is a single wiring-diagram board with a five-minute clock, three hearts and a zoom slider under the puzzle. Block Puzzle: Save Girl makes you program a route — the rule is printed as "Box moves arrow way" — while a segmented dragon crawls along the same track toward a princess, so the timer is something you can see coming.',
+      'The last three are harder to classify, which is why they are worth trying first. Satisfying Stack is a merge game on a four-by-four tray where you "Tap to Choose" and then Push or Merge toward milestones at 5, 6, 7, 8 and 10. Bubble Safari is a bubble shooter with a shot budget in the reticle and four ad-charged power-ups. Wizard Sort is listed as a separate entry but is the same build as Hue & Brew down to its level files, so read the Water Sort page for what it actually plays like.'
     ],
     faq: [
-      { q: 'Which of these is closest to a classic match-3?', a: 'Puzzle Yarn Fun and Royal Matcher, both built on swapping two adjacent pieces. Yarn Fun rewards chain length and Royal Matcher rewards booster combinations. Bubble Safari is a match-3 in spirit, but you shoot rather than swap, which changes the pace entirely.' },
-      { q: 'What is the difference between Puzzle: Water Sort and Wizard Sort?', a: 'They share the same pour engine. Wizard Sort reframes the tubes as potion ingredients and brings its own level set and presentation, but the underlying rule - a container only ever holds one colour - is identical. If you have played one, the other is familiar within a minute.' },
-      { q: 'Which puzzle game here has the most content?', a: 'Puzzle: Water Sort ships the most modes rather than the most levels: a daily challenge and several alternate pour layouts sit alongside the main run. Chroma Jam has by far the largest level bundle in the catalogue.' },
-      { q: 'Do any of these need fast reflexes?', a: 'No. Every title in this category is turn-based or pauses cleanly, and the pressure is usually a move budget rather than a clock. Arrow Maze Solve animates after you build, but you can take as long as you like building.' },
-      { q: 'Is anything here paywalled?', a: 'No. All twelve load free in the browser. Several offer an optional rewarded-video bonus - a hint, a second chance, a coin multiplier - which you can decline and keep playing without penalty.' }
+      { q: 'Which of these is a real match-3?', a: 'Royal Matcher is the only swap-three: an eight-by-eight grid of five tile types with a collection goal and a step budget printed in the header. Grocery Adventure: Master and Smash Blocks match in threes but do not swap tiles, and Puzzle Yarn Fun is a colour-sort despite what its blurb says.' },
+      { q: 'Which puzzle games are timed?', a: 'Chroma Jam counts down from 05:00, Arrow Maze Solve from 04:55, and Grocery Adventure: Master from 03:24. Block Puzzle: Save Girl has no clock but sends a dragon along the track instead. The rest are untimed.' },
+      { q: 'Do any of them need landscape?', a: 'No. All twelve draw a portrait canvas. Five games in this catalogue were filed as landscape until we captured them, and every one of those entries was wrong.' },
+      { q: 'Which is hardest?', a: 'On the evidence of the first board, Arrow Maze Solve — it is the only one that charges you for help, with hints priced at 200, 300 and 400 coins against a starting balance of 1000, and it puts three lives and a clock on the same screen.' },
+      { q: 'Is Wizard Sort a different game from Puzzle: Water Sort?', a: 'Not in the builds we ship. The two folders share identical level data and the same on-screen title, "Hue & Brew"; only the wrapper differs. The Water Sort guide describes both.' }
     ]
   },
+
   action: {
-    lead: 'Four action games split by where their difficulty actually lives: three build power between fights, one builds it under fire.',
+    lead: 'Four action games, all portrait, and none of them is a twin-stick shooter: a vertical space shooter, a hunting campaign, a car with a turret on it and a zombie game whose first screen is a location map.',
     body: [
-      'Hunter: Evolve Uprising and Tank Era spend most of their depth outside the battle. Each has an upgrade and selection screen between rounds, and it is that screen which decides the next fight - unit composition in one, loadout order in the other. If you prefer preparing to reacting, start with either of these and expect the first few rounds to feel deliberately weak.',
-      'Ace Strike is a dogfight where the game aims for you. That one decision removes the aiming skill entirely, so the whole learning curve is movement discipline. It is the most mechanical of the four and the easiest to pick up cold.',
-      'Zombie Down is the portrait entry and the only one here you can play one-handed. It is a wave survival shooter with an upgrade economy, and the order in which you take the waves matters more than your precision.',
-      'Three of the four are landscape and are uncomfortable to hold one-handed for long. That is a design decision in the games, not a limitation of the site - we publish each title in the orientation it was built for.'
+      'Ace Strike is the closest to a classic shooter. A small fighter sits at the bottom of a moonlit foreground firing cyan bolts upward at burning planets that drift down carrying numbers — 1, 2, 7, 13 and 79 were all visible in one frame — and the level is measured as a percentage called Xeno-Virus. The menu states the control in three words: "Swipe to Engage". There is no fire button; you move and the guns run themselves.',
+      'Hunter: Evolve Uprising is a hunting game played over a hexagonal bush field with gulls crossing it, and its economy is meat. The shop panel under the board sells a "Multiplier Gear" and a "Unit" — a caveman with a slingshot — for 10 drumsticks each, and a translucent "Fight On!" button starts the bout. Coins and meat are separate counters, and it is the meat that prices things.',
+      'Tank Era is a car with a roof-mounted turret seen from directly above, driving toward the top of a desert road. Its garage screen offers three choices and nothing else: "Pick color", "Buy a car" and a heart badged "+1000" behind a video, with a cash balance of 2000 to spend. Because the turret points where the car points, steering is the aiming.',
+      'Zombie Down is the one that shows you a map first: twelve location cards — Wilderness, Tunnel, Town, Forest, Factory, Basement, Hospital, School, Prison, Laboratory, Ruins and Nightclub — each with a coin price, an Easy, Norma or Hard label and a star count. Three are open on a fresh load and the rest are padlocked, and a "Daily Check-in" panel pays 200 to 700 coins before you ever see it.'
     ],
     faq: [
-      { q: 'Which action game can I play one-handed?', a: 'Zombie Down - it is the only portrait title in the category. The other three are landscape and want both thumbs.' },
-      { q: 'Do I have to grind before these get good?', a: 'Hunter: Evolve Uprising and Tank Era are structured around an upgrade screen between fights, so early rounds are intentionally weaker. If you want to be challenged from the first minute, start with Ace Strike or Zombie Down instead.' },
-      { q: 'Is there aiming to learn?', a: 'Not in Ace Strike, which assists your shots and leaves positioning as the only skill. Zombie Down gives you direct control, but its upgrade economy still matters more than precision.' },
-      { q: 'Do these cost anything to continue?', a: 'No. When a run ends you either watch a rewarded video, spend currency the game pays out during play, or restart. There is nothing to purchase and no account to create.' }
+      { q: 'Are any of these landscape games?', a: 'No. All four render portrait. Every one of them was catalogued as landscape or described that way on this site until we captured the builds and checked.' },
+      { q: 'Which one has the simplest controls?', a: 'Ace Strike. The menu instruction is a single swipe — "Swipe to Engage" — and the ship fires on its own with no button to press.' },
+      { q: 'Do I need to sign in to play any of them?', a: 'No. Zombie Down offers a "Sign In" button on its map and Tank Era has no account screen at all, but none of the four requires an account to start.' },
+      { q: 'What do the rewarded videos get you?', a: 'The free currency in each. Tank Era tops up hearts for "+1000" behind a video, Hunter: Evolve Uprising unlocks extra shop slots, and Ace Strike has a "Get Coins" button and a "Claim Now" card, both video-backed.' },
+      { q: 'Which is the odd one out?', a: 'Zombie Down. It is the only one of the four whose first screen is a location map rather than the game itself, and the only one that opens with a daily reward panel covering the board.' }
     ]
   },
+
   arcade: {
-    lead: 'Two arcade games, because two is how many fit the label honestly. They cover the two shapes the word describes: a score attack and a pure reflex run.',
+    lead: 'Two arcade games, and they have almost nothing in common beyond being quick to pick up: a triple-match tile game and a lane runner. Both draw portrait.',
     body: [
-      'Smash Blocks starts from break-out and then changes the question. The interesting decision is the launcher angle - where you send the ball, not what happens when it lands - which puts it closer to a billiards game than a brick breaker. It carries a rank ladder, so there is something to climb.',
-      'Shift Dash Reac asks nothing else of you. There is no economy to grow into and no strategy beyond reading the next gap earlier than the game expects. It is landscape, which is the right call for a game that is entirely lateral movement.',
-      'Because this category is only two titles deep, the tags below are more useful than the grid: reaction, speed and block point at games in the puzzle and action categories that scratch the same itch.'
+      'Smash Blocks is a matching game, not a brick-breaker — the name is the only thing that suggests otherwise. A nine-by-eight grid holds symbol tiles in the three centre columns: red diamonds, green circles, purple triangles, orange coins and blue arrows. You tap a tile and it goes into a tray of three slots below the board; three identical symbols clear, three different ones end the run. A row of three squares previews what is coming, and two video-backed tools sit under it, a bomb labelled "Clear 10+" and a "Refresh".',
+      'Shift Dash Reac is a runner on a four-lane road cut diagonally across a green hillside, and the start screen gives you one instruction — "Tap the screen to start" — and one named control, a wheel button labelled "Turn". There is no joystick anywhere on it. The rest of the interface is a column down the right edge: Sign In, Turn and Shop, with a character showcase standing on some steps above them.',
+      'The two share an economy rather than a mechanic. Smash Blocks gives you no currency at all — its crown counter read 0 across every frame we took — while Shift Dash Reac pays out skin fragments during runs, announcing one on screen as `Got"Iron Man"Skin Fragment – Success!` and keeping a balance of coins for its shop.'
     ],
     faq: [
-      { q: 'Why are there only two arcade games?', a: 'Because two is what we have published that fits. The label overlaps heavily with genres already covered by the puzzle and action categories, and a padded list helps nobody find a game. The tag pages below are a better way in for now.' },
-      { q: 'Which of the two is harder?', a: 'Shift Dash Reac, clearly. It has no progression to fall back on - the only way to improve is to read the pattern one gap earlier. Smash Blocks gives you a rank ladder, so its difficulty is something you work up to.' },
-      { q: 'Is Smash Blocks just a Breakout clone?', a: 'It borrows the brick grid, then moves the skill. In a breakout game the ball angle is an outcome you react to; here the launch angle is the decision you are making, and the rank ladder rewards choosing it well.' },
-      { q: 'Do games in other categories feel arcade-like?', a: 'Yes. Bubble Safari, Satisfying Stack and Block Puzzle: Save Girl all play fast enough to serve the same purpose, and are filed under puzzle because their core loop is a board rather than a run.' }
+      { q: 'Is Smash Blocks a brick-breaker?', a: 'No. There is no paddle, ball or launch angle on screen. You tap symbol tiles out of a grid into a three-slot tray and match three of a kind.' },
+      { q: 'How do you steer in Shift Dash Reac?', a: 'With the "Turn" wheel in the right-hand column. It is the only control the start screen names, and the game begins from a plain tap.' },
+      { q: 'Are either of them landscape?', a: 'No. Both render portrait. Shift Dash Reac was filed as landscape here until we captured it and found it drawing sideways.' },
+      { q: 'Which is the faster game?', a: 'Shift Dash Reac — it is a runner, so the board moves whether you are ready or not. Smash Blocks waits for your tap, and its only pressure is the three-slot tray.' }
     ]
   }
 };
