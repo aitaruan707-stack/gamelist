@@ -45,7 +45,7 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
 <script defer src="/assets/js/consent.js"></script>
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
-<body>
+<body class="detail" data-game="tankera">
 <header class="topbar"><div class="wrap">
     <a class="logo" href="/" aria-label="Tapzens home"><img src="/assets/logo.svg" alt="Tapzens" width="30" height="30"><span class="word">Tapzens</span></a>
     <nav class="nav-main">
@@ -70,26 +70,66 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
     <span class="cur">Tank Era</span>
   </nav>
 
-  <div class="detail-head">
-    <div class="detail-cover"><img src="/assets/covers/tankera.webp" alt="Tank Era cover" width="240" height="240"></div>
-    <div class="detail-meta">
-      <h1>Tank Era</h1>
-      <div class="row">
-        <span class="cat">Action</span><span class="dot"></span>
-        <span>tank · battle · military · mobile</span>
+  <section class="game-hero">
+    <aside class="gh-info">
+      <div class="info-card">
+        <img class="gh-cover" src="/assets/covers/tankera.webp" alt="Tank Era cover" width="240" height="180">
+        <h2 class="eyebrow">Game Info</h2>
+        <h1 class="gh-title">Tank Era</h1>
+        <p class="gh-desc">Drive a top-down car fitted with a roof turret, and choose between a fresh colour, a second vehicle and a video-funded heart top-up before the run.</p>
+        <dl class="spec">
+          <dt>Category</dt><dd><a href="/c/action.html">Action</a></dd>
+          <dt>Orientation</dt><dd>portrait</dd>
+          <dt>Platform</dt><dd>Web / Mobile</dd>
+          <dt>Price</dt><dd>Free</dd>
+        </dl>
+        <div class="taglist" style="margin-top:12px"><a class="t" href="/t/tank.html">tank</a><a class="t" href="/t/battle.html">battle</a><a class="t" href="/t/military.html">military</a><a class="t" href="/t/mobile.html">mobile</a></div>
       </div>
-      <div class="actions">
-        <a class="btn lg" href="/play.html?id=tankera">▶ Play Now</a>
+      <div class="info-card" id="gh-recent-card" hidden>
+        <h2 class="eyebrow">Recently Played</h2>
+        <div class="mini-list" id="gh-recent"></div>
+      </div>
+    </aside>
+
+    <div class="gh-stage">
+      <div class="phone-frame portrait">
+        <iframe src="/hyper-feed/tankera/index.html" title="Play Tank Era" loading="lazy" allow="fullscreen; autoplay; gamepad"></iframe>
+      </div>
+      <div class="gh-actions">
+        <a class="btn lg" href="/play.html?id=tankera">⛶ Fullscreen</a>
         <button class="btn ghost" data-fav="tankera"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span class="lbl">Favorite</span></button>
-        <a class="btn ghost" href="/c/action.html">More Games</a>
       </div>
     </div>
-  </div>
 
-  <div class="live-band">
-    <div class="bg grad"></div>
-    <img class="band-cover" src="/assets/covers/tankera.webp" alt="" aria-hidden="true" loading="lazy">
-  </div>
+    <!-- ambient comment column: decorative pool rolled client-side by danmaku.js -->
+    <aside class="gh-live">
+      <div class="info-card live-card">
+        <h2 class="eyebrow"><span class="live-dot" aria-hidden="true"></span>What Players Are Saying</h2>
+        <div class="gh-comments" aria-hidden="true"></div>
+        <p class="live-note">Ambient activity stream — not verified reviews, ratings or play counts.</p>
+      </div>
+    </aside>
+
+    <aside class="gh-side">
+      <div class="info-card">
+        <h2 class="eyebrow">You Might Also Like</h2>
+        <div class="mini-list"><a class="mini" href="/hyper-feed/hunterevolveuprising/game.html" aria-label="Hunter: Evolve Uprising">
+    <img src="/assets/covers/hunterevolveuprising.webp" alt="" loading="lazy" width="62" height="46">
+    <span><span class="mt">Hunter: Evolve Uprising</span><span class="ms">Action</span></span>
+  </a><a class="mini" href="/hyper-feed/acestrike/game.html" aria-label="Ace Strike">
+    <img src="/assets/covers/acestrike.webp" alt="" loading="lazy" width="62" height="46">
+    <span><span class="mt">Ace Strike</span><span class="ms">Action</span></span>
+  </a><a class="mini" href="/hyper-feed/zombiedown/game.html" aria-label="Zombie Down">
+    <img src="/assets/covers/zombiedown.webp" alt="" loading="lazy" width="62" height="46">
+    <span><span class="mt">Zombie Down</span><span class="ms">Action</span></span>
+  </a></div>
+      </div>
+      <div class="info-card more-cta">
+        <h2 class="eyebrow">More Action</h2>
+        <a class="btn ghost" href="/c/action.html" style="width:100%">Browse Action games →</a>
+      </div>
+    </aside>
+  </section>
 
   <div class="detail-body">
     <div class="detail-main">
@@ -148,25 +188,6 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
     </div>
   </a></div>
     </div>
-    <aside class="detail-side">
-      <div class="side-card">
-        <h3>Quick Info</h3>
-        <dl class="spec">
-          <dt>Category</dt><dd><a href="/c/action.html">Action</a></dd>
-          <dt>Orientation</dt><dd>portrait</dd>
-          <dt>Platform</dt><dd>Web / Mobile</dd>
-          <dt>Price</dt><dd>Free</dd>
-        </dl>
-      </div>
-      <div class="side-card">
-        <h3>Tags</h3>
-        <div class="taglist"><a class="t" href="/t/tank.html">tank</a><a class="t" href="/t/battle.html">battle</a><a class="t" href="/t/military.html">military</a><a class="t" href="/t/mobile.html">mobile</a></div>
-      </div>
-      <div class="side-card side-cta">
-        <h3>Ready to play?</h3>
-        <a class="btn accent" href="/play.html?id=tankera" style="width:100%">▶ Play Tank Era</a>
-      </div>
-    </aside>
   </div>
 </main>
 <footer class="footer"><div class="wrap">
@@ -189,6 +210,8 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
     <a href="/#favorites" class=""><svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.9 6.2 21l1.1-6.5L2.6 9.8l6.5-.9z"/></svg><span>Favorites</span></a>
     <a href="/#recent" class=""><svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Recent</span></a>
   </nav>
+<script type="application/json" id="games-data">[{"slug":"nutssnake","title":"Nuts Snake","category":"Puzzle","cover":"nutssnake.webp"},{"slug":"mahjongvalley","title":"Mahjong Valley","category":"Puzzle","cover":"mahjongvalley.webp"},{"slug":"puzzleyarnfun","title":"Puzzle Yarn Fun","category":"Puzzle","cover":"puzzleyarnfun.webp"},{"slug":"puzzlewatersort","title":"Puzzle: Water Sort","category":"Puzzle","cover":"watersort.webp"},{"slug":"chromajam","title":"Chroma Jam","category":"Puzzle","cover":"chromajam.webp"},{"slug":"hunterevolveuprising","title":"Hunter: Evolve Uprising","category":"Action","cover":"hunterevolveuprising.webp"},{"slug":"acestrike","title":"Ace Strike","category":"Action","cover":"acestrike.webp"},{"slug":"smashblocks","title":"Smash Blocks","category":"Arcade","cover":"blockblastpop.webp"},{"slug":"bubblesafari","title":"Bubble Safari","category":"Puzzle","cover":"bubblesafari.webp"},{"slug":"spinscrewjam","title":"Spin Screw Jam","category":"Puzzle","cover":"spinscrewjam.webp"},{"slug":"puzzlehex","title":"Puzzle Hex","category":"Puzzle","cover":"puzzlehex.webp"},{"slug":"blockpuzzlesavegirl","title":"Block Puzzle: Save Girl","category":"Puzzle","cover":"blockpuzzlesavegirl.webp"},{"slug":"royalmatcher","title":"Royal Matcher","category":"Puzzle","cover":"royalmatcher.webp"},{"slug":"arrowmazesolve","title":"Arrow Maze Solve","category":"Puzzle","cover":"arrowmazesolve.webp"},{"slug":"wizardsort","title":"Wizard Sort","category":"Puzzle","cover":"wizardsort.webp"},{"slug":"zombiedown","title":"Zombie Down","category":"Action","cover":"zombiedown.webp"},{"slug":"tankera","title":"Tank Era","category":"Action","cover":"tankera.webp"},{"slug":"shiftdashreac","title":"Shift Dash Reac","category":"Arcade","cover":"shiftdashreac.webp"},{"slug":"satisfyingstack","title":"Satisfying Stack","category":"Puzzle","cover":"satisfyingstack.webp"}]</script>
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/danmaku.js"></script>
 </body>
 </html>

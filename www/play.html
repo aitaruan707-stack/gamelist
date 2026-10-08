@@ -2,21 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="robots" content="noindex, follow">
-  <meta name="theme-color" content="#05080F">
+  <meta name="theme-color" content="#F6F5FB">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Play — Tapzens</title>
   <link rel="stylesheet" href="/assets/css/style.css">
   <link rel="icon" href="/assets/favicon.svg">
-  <style>
-    html,body{margin:0;height:100%;background:#05080F;overflow:hidden;}
-  </style>
 </head>
-<body class="play">
+<body class="play-page">
   <div class="play-wrap">
-    <!-- Top bar with return navigation: Home › All Games › [Game Title] -->
+    <!-- Slim top bar: return navigation only; the game itself lives in the hero below -->
     <div class="play-bar">
       <a class="back" id="p-back" href="/" aria-label="Back to game detail" title="Back to game">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -25,27 +21,65 @@
       <span class="crumb-p">
         <a href="/" class="lnk">All Games</a>
         <span class="sep">›</span>
-        <span class="cur" id="p-title">Loading…</span>
+        <span class="cur" id="p-crumb">Loading…</span>
       </span>
       <div class="grow"></div>
-      <button class="back" id="p-fullscreen" title="Fullscreen" aria-label="Fullscreen">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M16 21h3a2 2 0 0 0 2-2v-3M8 21H5a2 2 0 0 1-2-2v-3"/></svg>
-      </button>
     </div>
-    <!-- Game stage -->
-    <div class="play-stage" id="p-stage">
-      <div class="play-loader" id="p-loader">
-        <div class="spin"></div>
-        <div class="lt">Loading game…</div>
-      </div>
-      <div class="rotate-hint" id="rotate-hint">
-        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.7 3"/><path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-6.7-3"/><path d="M21 3v6h-6M3 21v-6h6"/></svg>
-        <div style="font-weight:600;color:#E8ECF5;font-size:15px">Rotate your device</div>
-        <div style="font-size:13px" id="rotate-hint-mode">This game plays best in portrait mode.</div>
-        <button class="rh-dismiss" id="rotate-dismiss" type="button">Keep playing</button>
-      </div>
-    </div>
+
+    <main class="container">
+      <section class="game-hero">
+        <!-- LEFT: game info + recently played (populated by player.js) -->
+        <aside class="gh-info">
+          <div class="info-card" id="p-info"></div>
+          <div class="info-card" id="gh-recent-card" hidden>
+            <h2 class="eyebrow">Recently Played</h2>
+            <div class="mini-list" id="gh-recent"></div>
+          </div>
+        </aside>
+
+        <!-- CENTER: the playable game in a phone frame -->
+        <div class="gh-stage">
+          <div class="phone-frame portrait" id="p-stage">
+            <div class="play-loader" id="p-loader">
+              <div class="spin"></div>
+              <div class="lt">Loading game…</div>
+            </div>
+            <div class="rotate-hint" id="rotate-hint">
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 6.7 3"/><path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-6.7-3"/><path d="M21 3v6h-6M3 21v-6h6"/></svg>
+              <div style="font-weight:600;color:#E8ECF5;font-size:15px">Rotate your device</div>
+              <div style="font-size:13px" id="rotate-hint-mode">This game plays best in portrait mode.</div>
+              <button class="rh-dismiss" id="rotate-dismiss" type="button">Keep playing</button>
+            </div>
+          </div>
+          <div class="gh-actions">
+            <button class="btn lg" id="p-fullscreen" type="button">⛶ Fullscreen</button>
+          </div>
+        </div>
+
+        <!-- AMBIENT: comment column, decorative pool rolled client-side by danmaku.js -->
+        <aside class="gh-live">
+          <div class="info-card live-card">
+            <h2 class="eyebrow"><span class="live-dot" aria-hidden="true"></span>What Players Are Saying</h2>
+            <div class="gh-comments" aria-hidden="true"></div>
+            <p class="live-note">Ambient activity stream — not verified reviews, ratings or play counts.</p>
+          </div>
+        </aside>
+
+        <!-- RIGHT: related games + more-in-category (populated by player.js) -->
+        <aside class="gh-side">
+          <div class="info-card" id="p-related-card" hidden>
+            <h2 class="eyebrow">You Might Also Like</h2>
+            <div class="mini-list" id="p-related"></div>
+          </div>
+          <div class="info-card more-cta" id="p-more-card" hidden>
+            <h2 class="eyebrow">More <span id="p-more-cat"></span></h2>
+            <a class="btn ghost" id="p-more-link" href="/#all" style="width:100%">Browse →</a>
+          </div>
+        </aside>
+      </section>
+    </main>
   </div>
   <script src="/assets/js/player.js"></script>
+  <script src="/assets/js/danmaku.js"></script>
 </body>
 </html>

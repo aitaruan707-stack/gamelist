@@ -181,6 +181,29 @@
     btn.addEventListener('click', function () { toggleFav(slug); paint(); });
   }
 
+  /* ---------- detail: recently played (real localStorage, populated on play) ---------- */
+  function initDetailRecent() {
+    var box = document.getElementById('gh-recent');
+    var card = document.getElementById('gh-recent-card');
+    if (!box || !card) return;
+    var cur = document.body.getAttribute('data-game') || '';
+    var data = getData();
+    var byId = {};
+    (data.games || []).forEach(function (g) { byId[g.slug] = g; });
+    var items = read(LS_REC)
+      .map(function (r) { return byId[r.id]; })
+      .filter(function (g) { return g && g.slug !== cur; })
+      .slice(0, 6);
+    if (!items.length) { card.hidden = true; return; }
+    card.hidden = false;
+    box.innerHTML = items.map(function (g) {
+      return '<a class="mini" href="' + detailUrl(g) + '" aria-label="' + escapeHtml(g.title) + '">' +
+        '<img src="' + coverUrl(g) + '" alt="" loading="lazy">' +
+        '<span><span class="mt">' + escapeHtml(g.title) + '</span>' +
+        '<span class="ms">' + escapeHtml(g.category) + '</span></span></a>';
+    }).join('');
+  }
+
   /* ---------- shared card markup ---------- */
   function cardHtml(g) {
     var fav = isFav(g.slug);
@@ -283,6 +306,7 @@
     initNavHighlight();
     initCategoryFilter();
     initDetailFav();
+    initDetailRecent();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

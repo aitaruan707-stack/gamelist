@@ -31,6 +31,95 @@
   ],
   "games": [
     {
+      "slug": "nutssnake",
+      "title": "Nuts Snake",
+      "category": "Puzzle",
+      "tags": [
+        "casual",
+        "mobile",
+        "reaction"
+      ],
+      "description": "Steer a hungry little snake around the board, gobbling up nuts to grow longer while dodging the walls and your own tail.",
+      "controls": [
+        "Swipe or use the arrow keys to steer the snake.",
+        "Eat the nuts to grow longer and raise your score.",
+        "Avoid running into the walls or your own tail."
+      ],
+      "entry": "index.html",
+      "cover": "nutssnake.webp",
+      "banner": "nutssnake-banner.webp",
+      "splash": null,
+      "orientation": "portrait",
+      "featured": false,
+      "popularWeight": 1000,
+      "publishedAt": "2026-10-08",
+      "developer": "Tapzens",
+      "faq": [
+        {
+          "q": "Is Nuts Snake free?",
+          "a": "Yes, completely free to play in your browser."
+        },
+        {
+          "q": "Does it work on mobile?",
+          "a": "Yes, it is optimized for touch and mobile screens."
+        },
+        {
+          "q": "Do I need to install anything?",
+          "a": "No installation required — just press Play and it loads instantly."
+        },
+        {
+          "q": "Is my progress saved?",
+          "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+        }
+      ]
+    },
+    {
+      "slug": "mahjongvalley",
+      "title": "Mahjong Valley",
+      "category": "Puzzle",
+      "tags": [
+        "mahjong",
+        "tile-match",
+        "solitaire",
+        "relaxing",
+        "mobile"
+      ],
+      "description": "Flat mahjong pairing rather than a stacked pyramid: clear the board by matching two identical tiles that sit in the same row or column with nothing between them, and slide a tile into an empty cell when no pair lines up. The first level teaches the four tap patterns and the two slide directions one step at a time, and a hint bulb and a shuffle button carry counted charges for the boards that lock up.",
+      "controls": [
+        "Tap two identical tiles that share a row or a column with no tile between them to clear the pair.",
+        "Drag a tile along its row or its column into an empty cell to line it up with its twin.",
+        "Tap the bulb under the board to reveal a pair, or the crossed arrows to restack it; both show how many charges are left.",
+        "Clear every pair to finish the level and collect the reward payout."
+      ],
+      "entry": "index.html",
+      "cover": "mahjongvalley.webp",
+      "splash": null,
+      "orientation": "portrait",
+      "featured": false,
+      "popularWeight": 980,
+      "publishedAt": "2026-10-08",
+      "developer": "Tapzens",
+      "faq": [
+        {
+          "q": "Is Mahjong Valley free?",
+          "a": "Yes, completely free to play in your browser."
+        },
+        {
+          "q": "Does it work on mobile?",
+          "a": "Yes, it is optimized for touch and mobile screens."
+        },
+        {
+          "q": "Do I need to install anything?",
+          "a": "No installation required — just press Play and it loads instantly."
+        },
+        {
+          "q": "Is my progress saved?",
+          "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+        }
+      ],
+      "icon": "mahjongvalley-icon.webp"
+    },
+    {
       "slug": "puzzleyarnfun",
       "title": "Puzzle Yarn Fun",
       "category": "Puzzle",
@@ -780,95 +869,6 @@
           "a": "Progress is saved in your browser only, so clearing browser data may reset it."
         }
       ]
-    },
-    {
-      "slug": "nutssnake",
-      "title": "Nuts Snake",
-      "category": "Puzzle",
-      "tags": [
-        "casual",
-        "mobile",
-        "reaction"
-      ],
-      "description": "Steer a hungry little snake around the board, gobbling up nuts to grow longer while dodging the walls and your own tail.",
-      "controls": [
-        "Swipe or use the arrow keys to steer the snake.",
-        "Eat the nuts to grow longer and raise your score.",
-        "Avoid running into the walls or your own tail."
-      ],
-      "entry": "index.html",
-      "cover": "nutssnake.webp",
-      "banner": "nutssnake-banner.webp",
-      "splash": null,
-      "orientation": "portrait",
-      "featured": false,
-      "popularWeight": 570,
-      "publishedAt": "2026-10-08",
-      "developer": "Tapzens",
-      "faq": [
-        {
-          "q": "Is Nuts Snake free?",
-          "a": "Yes, completely free to play in your browser."
-        },
-        {
-          "q": "Does it work on mobile?",
-          "a": "Yes, it is optimized for touch and mobile screens."
-        },
-        {
-          "q": "Do I need to install anything?",
-          "a": "No installation required — just press Play and it loads instantly."
-        },
-        {
-          "q": "Is my progress saved?",
-          "a": "Progress is saved in your browser only, so clearing browser data may reset it."
-        }
-      ]
-    },
-    {
-      "slug": "mahjongvalley",
-      "title": "Mahjong Valley",
-      "category": "Puzzle",
-      "tags": [
-        "mahjong",
-        "tile-match",
-        "solitaire",
-        "relaxing",
-        "mobile"
-      ],
-      "description": "Flat mahjong pairing rather than a stacked pyramid: clear the board by matching two identical tiles that sit in the same row or column with nothing between them, and slide a tile into an empty cell when no pair lines up. The first level teaches the four tap patterns and the two slide directions one step at a time, and a hint bulb and a shuffle button carry counted charges for the boards that lock up.",
-      "controls": [
-        "Tap two identical tiles that share a row or a column with no tile between them to clear the pair.",
-        "Drag a tile along its row or its column into an empty cell to line it up with its twin.",
-        "Tap the bulb under the board to reveal a pair, or the crossed arrows to restack it; both show how many charges are left.",
-        "Clear every pair to finish the level and collect the reward payout."
-      ],
-      "entry": "index.html",
-      "cover": "mahjongvalley.webp",
-      "splash": null,
-      "orientation": "portrait",
-      "featured": false,
-      "popularWeight": 560,
-      "publishedAt": "2026-10-08",
-      "developer": "Tapzens",
-      "faq": [
-        {
-          "q": "Is Mahjong Valley free?",
-          "a": "Yes, completely free to play in your browser."
-        },
-        {
-          "q": "Does it work on mobile?",
-          "a": "Yes, it is optimized for touch and mobile screens."
-        },
-        {
-          "q": "Do I need to install anything?",
-          "a": "No installation required — just press Play and it loads instantly."
-        },
-        {
-          "q": "Is my progress saved?",
-          "a": "Progress is saved in your browser only, so clearing browser data may reset it."
-        }
-      ],
-      "icon": "mahjongvalley-icon.webp"
     }
   ]
 }

@@ -25,6 +25,14 @@
     try { localStorage.setItem(LS_REC, JSON.stringify(list.slice(0, 12))); } catch (e) {}
   }
 
+  function coverUrl(g) { return g.cover ? '/assets/covers/' + g.cover : '/assets/covers/' + g.slug + '.svg'; }
+  function tagSlug(t) { return String(t).toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+  function miniHtml(x) {
+    return '<a class="mini" href="/hyper-feed/' + x.slug + '/game.html" aria-label="' + escapeHtml(x.title) + '">' +
+      '<img src="' + coverUrl(x) + '" alt="" loading="lazy" width="62" height="46">' +
+      '<span><span class="mt">' + escapeHtml(x.title) + '</span><span class="ms">' + escapeHtml(x.category) + '</span></span></a>';
+  }
+
   var slug = getParam('id');
   var elTitle = document.getElementById('p-title');
   var elCrumb = document.getElementById('p-crumb');
@@ -52,15 +60,69 @@
       var games = data.games || [];
       var g = games.filter(function (x) { return x.slug === slug; })[0];
       if (!g) { fail('Game not found: ' + slug); return; }
-      start(g);
+      start(g, games, data);
     })
     .catch(function () { fail('Could not load game data. Please check your connection.'); });
 
-  function start(g) {
+  function start(g, games, data) {
     document.title = 'Play ' + g.title + ' — Tapzens';
     if (elTitle) elTitle.textContent = g.title;
     if (elCrumb) elCrumb.textContent = g.title;
     if (elBack) { elBack.setAttribute('href', '/hyper-feed/' + g.slug + '/game.html'); elBack.setAttribute('title', 'Back to ' + g.title); elBack.setAttribute('aria-label', 'Back to ' + g.title); }
+
+    /* three-column framing (image-1 layout): LEFT info, RIGHT related, plus real Recently-Played */
+    elStage.className = 'phone-frame ' + (g.orientation === 'landscape' ? 'landscape' : 'portrait');
+
+    var cats = (data && data.categories) || [];
+    var cc = cats.filter(function (x) { return x.name.toLowerCase() === String(g.category).toLowerCase(); })[0];
+    var catHref = cc ? '/c/' + cc.slug + '.html' : '/#all';
+
+    var elInfo = document.getElementById('p-info');
+    if (elInfo) {
+      var tags = (g.tags || []).slice(0, 6).map(function (t) {
+        return '<a class="t" href="/t/' + tagSlug(t) + '.html">' + escapeHtml(t) + '</a>';
+      }).join('');
+      elInfo.innerHTML =
+        '<img class="gh-cover" src="' + coverUrl(g) + '" alt="' + escapeHtml(g.title) + ' cover" width="240" height="180">' +
+        '<h2 class="eyebrow">Game Info</h2>' +
+        '<h1 class="gh-title">' + escapeHtml(g.title) + '</h1>' +
+        (g.description ? '<p class="gh-desc">' + escapeHtml(g.description) + '</p>' : '') +
+        '<dl class="spec">' +
+          '<dt>Category</dt><dd><a href="' + catHref + '">' + escapeHtml(g.category) + '</a></dd>' +
+          '<dt>Orientation</dt><dd>' + escapeHtml(g.orientation || 'portrait') + '</dd>' +
+          '<dt>Platform</dt><dd>Web / Mobile</dd>' +
+          '<dt>Price</dt><dd>Free</dd>' +
+        '</dl>' +
+        (tags ? '<div class="taglist" style="margin-top:12px">' + tags + '</div>' : '');
+    }
+
+    var elRelCard = document.getElementById('p-related-card');
+    var elRel = document.getElementById('p-related');
+    if (elRel) {
+      var related = (games || []).filter(function (x) { return x.slug !== g.slug && x.category === g.category; }).slice(0, 6);
+      elRel.innerHTML = related.map(miniHtml).join('');
+      if (elRelCard) elRelCard.hidden = related.length === 0;
+    }
+
+    var elMoreCard = document.getElementById('p-more-card');
+    if (elMoreCard) {
+      var elMoreCat = document.getElementById('p-more-cat');
+      var elMoreLink = document.getElementById('p-more-link');
+      if (elMoreCat) elMoreCat.textContent = g.category || '';
+      if (elMoreLink) { if (cc) elMoreLink.setAttribute('href', '/c/' + cc.slug + '.html'); elMoreLink.textContent = 'Browse ' + (g.category || '') + ' games \u2192'; }
+      elMoreCard.hidden = false;
+    }
+
+    var elRecCard = document.getElementById('gh-recent-card');
+    var elRec = document.getElementById('gh-recent');
+    if (elRec) {
+      var byId = {};
+      (games || []).forEach(function (x) { byId[x.slug] = x; });
+      var recents = read(LS_REC).map(function (r) { return byId[r.id]; })
+        .filter(function (x) { return x && x.slug !== g.slug; }).slice(0, 4);
+      elRec.innerHTML = recents.map(miniHtml).join('');
+      if (elRecCard) elRecCard.hidden = recents.length === 0;
+    }
 
     /* orientation hint — warn when the device matches neither the game's
        native aspect nor a comfortable window size; user can dismiss it */
@@ -96,53 +158,19 @@
       checkOrientation();
     }
 
-    /* build iframe — every game's playable entry is now hyper-feed/<slug>/index.html
-       (the site-side entry swap normalised all builds to that filename). */
+    /* playable entry is always hyper-feed/<slug>/index.html; the iframe fills the
+       phone-frame via CSS (.phone-frame iframe), so no JS sizing is needed here. */
     var src = '/hyper-feed/' + g.slug + '/index.html';
     var frame = document.createElement('iframe');
     frame.setAttribute('src', src);
     frame.setAttribute('allow', 'autoplay; fullscreen; gamepad; clipboard-write; accelerometer; gyroscope');
-    frame.setAttribute('allowfullscreen', '');
     frame.setAttribute('loading', 'eager');
     frame.setAttribute('title', g.title);
     elStage.appendChild(frame);
 
-    /* stage sizing, per spec:
-       - phone mode: iframe fills the stage edge-to-edge (100% x 100%);
-       - non-phone (desktop): upright portrait frame, MIN 400 wide x 800 tall,
-         growing with the 1:2 portrait ratio when the stage allows. */
-    var mqDesk = window.matchMedia('(min-width: 900px) and (pointer: fine)');
-    var STAGE_MIN_W = 400, STAGE_MIN_H = 800;
-    function fitFrame() {
-      if (document.fullscreenElement) return;
-      if (!mqDesk.matches) {
-        /* phone mode: full-bleed */
-        frame.style.width = '100%';
-        frame.style.height = '100%';
-        frame.style.transform = '';
-        return;
-      }
-      var availW = Math.max(elStage.clientWidth - 36, 120);  /* 36 = desk-fit padding 18×2 */
-      var availH = Math.max(elStage.clientHeight - 36, 120);
-      var w = Math.min(availW, availH / 2);   /* portrait 1:2 ratio fit */
-      var h = w * 2;
-      w = Math.max(w, STAGE_MIN_W);           /* min width 400 */
-      h = Math.max(h, STAGE_MIN_H);           /* min height 800 */
-      frame.style.width = Math.round(w) + 'px';
-      frame.style.height = Math.round(h) + 'px';
-      frame.style.transform = '';
-    }
-    function applyDesk() {
-      if (mqDesk.matches) { elStage.classList.add('desk-fit'); }
-      else { elStage.classList.remove('desk-fit'); }
-      fitFrame();
-    }
-    applyDesk();
-    window.addEventListener('resize', applyDesk);
-    if (mqDesk.addEventListener) mqDesk.addEventListener('change', applyDesk);
     document.addEventListener('fullscreenchange', function () {
-      if (document.fullscreenElement) { frame.style.width = frame.style.height = frame.style.transform = ''; lockOrientation(); }
-      else { unlockOrientation(); applyDesk(); }
+      if (document.fullscreenElement) { lockOrientation(); }
+      else { unlockOrientation(); }
     });
 
     var ready = false;

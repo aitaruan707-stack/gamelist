@@ -328,6 +328,13 @@ function cardHtml(g, opts = {}) {
   </a>`;
 }
 
+function miniHtml(g) {
+  return `<a class="mini" href="${detailUrl(g)}" aria-label="${esc(g.title)}">
+    <img src="${coverUrl(g)}" alt="" loading="lazy" width="62" height="46">
+    <span><span class="mt">${esc(g.title)}</span><span class="ms">${esc(g.category)}</span></span>
+  </a>`;
+}
+
 function featCardHtml(g) {
   return `<a class="fcard" href="${detailUrl(g)}" aria-label="${esc(g.title)}">
     <div class="fcard-art">
@@ -348,14 +355,9 @@ function featCardHtml(g) {
 
 /* ---------- home page ---------- */
 function buildHome() {
-    const FEAT_ORDER = ['puzzleyarnfun', 'puzzlewatersort', 'chromajam', 'hunterevolveuprising', 'bubblesafari', 'blockpuzzlesavegirl'];
-    /* every listed game goes into the rail: the curated picks keep their hand-set order at the
-       front, the rest follow in catalogue order. */
-    const featRank = g => {
-      const i = FEAT_ORDER.indexOf(g.slug);
-      return i < 0 ? FEAT_ORDER.length + games.indexOf(g) : i;
-    };
-    const featured = games.slice().sort((a, b) => featRank(a) - featRank(b));
+    /* the front block shows the whole catalogue: games.json order is popularWeight descending,
+       which is also the order used by the All Games grid, so both lists agree. */
+    const featured = games;
   const cats = data.categories || [];
   const firstFour = games.slice(0, 4);
 
@@ -593,7 +595,7 @@ ${faqList && faqList.length ? `<script type="application/ld+json">${JSON.stringi
 ${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
-<body>
+<body class="detail" data-game="${g.slug}">
 ${topbar('')}
 <main class="container">
   <nav class="crumb" aria-label="Breadcrumb">
@@ -602,26 +604,57 @@ ${topbar('')}
     <span class="cur">${esc(g.title)}</span>
   </nav>
 
-  <div class="detail-head">
-    <div class="detail-cover"><img src="${coverUrl(g)}" alt="${esc(g.title)} cover" width="240" height="240"></div>
-    <div class="detail-meta">
-      <h1>${esc(g.title)}</h1>
-      <div class="row">
-        <span class="cat">${esc(g.category)}</span><span class="dot"></span>
-        <span>${esc((g.tags || []).join(' · '))}</span>
+  <section class="game-hero">
+    <aside class="gh-info">
+      <div class="info-card">
+        <img class="gh-cover" src="${coverUrl(g)}" alt="${esc(g.title)} cover" width="240" height="180">
+        <h2 class="eyebrow">Game Info</h2>
+        <h1 class="gh-title">${esc(g.title)}</h1>
+        <p class="gh-desc">${esc(g.description)}</p>
+        <dl class="spec">
+          <dt>Category</dt><dd><a href="${catHref}">${esc(g.category)}</a></dd>
+          <dt>Orientation</dt><dd>${esc(g.orientation)}</dd>
+          <dt>Platform</dt><dd>Web / Mobile</dd>
+          <dt>Price</dt><dd>Free</dd>
+        </dl>
+        <div class="taglist" style="margin-top:12px">${tagLinks(g)}</div>
       </div>
-      <div class="actions">
-        <a class="btn lg" href="${playUrl(g)}">▶ Play Now</a>
+      <div class="info-card" id="gh-recent-card" hidden>
+        <h2 class="eyebrow">Recently Played</h2>
+        <div class="mini-list" id="gh-recent"></div>
+      </div>
+    </aside>
+
+    <div class="gh-stage">
+      <div class="phone-frame ${g.orientation === 'landscape' ? 'landscape' : 'portrait'}">
+        <iframe src="/hyper-feed/${g.slug}/index.html" title="Play ${esc(g.title)}" loading="lazy" allow="fullscreen; autoplay; gamepad"></iframe>
+      </div>
+      <div class="gh-actions">
+        <a class="btn lg" href="${playUrl(g)}">⛶ Fullscreen</a>
         <button class="btn ghost" data-fav="${g.slug}">${ICON_HEART}<span class="lbl">Favorite</span></button>
-        <a class="btn ghost" href="${catHref}">More Games</a>
       </div>
     </div>
-  </div>
 
-  <div class="live-band">
-    <div class="bg grad"></div>
-    <img class="band-cover" src="${coverUrl(g)}" alt="" aria-hidden="true" loading="lazy">
-  </div>
+    <!-- ambient comment column: decorative pool rolled client-side by danmaku.js -->
+    <aside class="gh-live">
+      <div class="info-card live-card">
+        <h2 class="eyebrow"><span class="live-dot" aria-hidden="true"></span>What Players Are Saying</h2>
+        <div class="gh-comments" aria-hidden="true"></div>
+        <p class="live-note">Ambient activity stream — not verified reviews, ratings or play counts.</p>
+      </div>
+    </aside>
+
+    <aside class="gh-side">
+      ${related.length ? `<div class="info-card">
+        <h2 class="eyebrow">You Might Also Like</h2>
+        <div class="mini-list">${related.slice(0, 6).map(miniHtml).join('')}</div>
+      </div>` : ''}
+      <div class="info-card more-cta">
+        <h2 class="eyebrow">More ${esc(g.category)}</h2>
+        <a class="btn ghost" href="${catHref}" style="width:100%">Browse ${esc(g.category)} games →</a>
+      </div>
+    </aside>
+  </section>
 
   <div class="detail-body">
     <div class="detail-main">
@@ -650,30 +683,13 @@ ${topbar('')}
       <div class="faq">${faqList.map(f => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</div>
       ${related.length ? `<h2>More ${esc(g.category)} Games <a class="more" href="${catHref}" style="float:right">View all</a></h2><div class="grid">${related.map(cardHtml).join('')}</div>` : ''}
     </div>
-    <aside class="detail-side">
-      <div class="side-card">
-        <h3>Quick Info</h3>
-        <dl class="spec">
-          <dt>Category</dt><dd><a href="${catHref}">${esc(g.category)}</a></dd>
-          <dt>Orientation</dt><dd>${esc(g.orientation)}</dd>
-          <dt>Platform</dt><dd>Web / Mobile</dd>
-          <dt>Price</dt><dd>Free</dd>
-        </dl>
-      </div>
-      <div class="side-card">
-        <h3>Tags</h3>
-        <div class="taglist">${tagLinks(g)}</div>
-      </div>
-      <div class="side-card side-cta">
-        <h3>Ready to play?</h3>
-        <a class="btn accent" href="${playUrl(g)}" style="width:100%">▶ Play ${esc(g.title)}</a>
-      </div>
-    </aside>
   </div>
 </main>
 ${footer()}
 ${bottomNav('')}
+<script type="application/json" id="games-data">${JSON.stringify(games.map(gg => ({ slug: gg.slug, title: gg.title, category: gg.category, cover: gg.cover })))}</script>
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/danmaku.js"></script>
 </body>
 </html>`;
   ensureDir(`hyper-feed/${g.slug}`);

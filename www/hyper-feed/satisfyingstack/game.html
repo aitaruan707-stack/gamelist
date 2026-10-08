@@ -45,7 +45,7 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
 <script defer src="/assets/js/consent.js"></script>
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
-<body>
+<body class="detail" data-game="satisfyingstack">
 <header class="topbar"><div class="wrap">
     <a class="logo" href="/" aria-label="Tapzens home"><img src="/assets/logo.svg" alt="Tapzens" width="30" height="30"><span class="word">Tapzens</span></a>
     <nav class="nav-main">
@@ -70,26 +70,75 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
     <span class="cur">Satisfying Stack</span>
   </nav>
 
-  <div class="detail-head">
-    <div class="detail-cover"><img src="/assets/covers/satisfyingstack.webp" alt="Satisfying Stack cover" width="240" height="240"></div>
-    <div class="detail-meta">
-      <h1>Satisfying Stack</h1>
-      <div class="row">
-        <span class="cat">Puzzle</span><span class="dot"></span>
-        <span>stack · sort · satisfying · casual · mobile</span>
+  <section class="game-hero">
+    <aside class="gh-info">
+      <div class="info-card">
+        <img class="gh-cover" src="/assets/covers/satisfyingstack.webp" alt="Satisfying Stack cover" width="240" height="180">
+        <h2 class="eyebrow">Game Info</h2>
+        <h1 class="gh-title">Satisfying Stack</h1>
+        <p class="gh-desc">Pick up a stack and Push or Merge it on a twelve-cell tray, chasing milestone targets that read 5, 6, 7, 9 and 10.</p>
+        <dl class="spec">
+          <dt>Category</dt><dd><a href="/c/puzzle.html">Puzzle</a></dd>
+          <dt>Orientation</dt><dd>portrait</dd>
+          <dt>Platform</dt><dd>Web / Mobile</dd>
+          <dt>Price</dt><dd>Free</dd>
+        </dl>
+        <div class="taglist" style="margin-top:12px"><a class="t" href="/t/stack.html">stack</a><a class="t" href="/t/sort.html">sort</a><a class="t" href="/t/satisfying.html">satisfying</a><a class="t" href="/t/casual.html">casual</a><a class="t" href="/t/mobile.html">mobile</a></div>
       </div>
-      <div class="actions">
-        <a class="btn lg" href="/play.html?id=satisfyingstack">▶ Play Now</a>
+      <div class="info-card" id="gh-recent-card" hidden>
+        <h2 class="eyebrow">Recently Played</h2>
+        <div class="mini-list" id="gh-recent"></div>
+      </div>
+    </aside>
+
+    <div class="gh-stage">
+      <div class="phone-frame portrait">
+        <iframe src="/hyper-feed/satisfyingstack/index.html" title="Play Satisfying Stack" loading="lazy" allow="fullscreen; autoplay; gamepad"></iframe>
+      </div>
+      <div class="gh-actions">
+        <a class="btn lg" href="/play.html?id=satisfyingstack">⛶ Fullscreen</a>
         <button class="btn ghost" data-fav="satisfyingstack"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span class="lbl">Favorite</span></button>
-        <a class="btn ghost" href="/c/puzzle.html">More Games</a>
       </div>
     </div>
-  </div>
 
-  <div class="live-band">
-    <div class="bg grad"></div>
-    <img class="band-cover" src="/assets/covers/satisfyingstack.webp" alt="" aria-hidden="true" loading="lazy">
-  </div>
+    <!-- ambient comment column: decorative pool rolled client-side by danmaku.js -->
+    <aside class="gh-live">
+      <div class="info-card live-card">
+        <h2 class="eyebrow"><span class="live-dot" aria-hidden="true"></span>What Players Are Saying</h2>
+        <div class="gh-comments" aria-hidden="true"></div>
+        <p class="live-note">Ambient activity stream — not verified reviews, ratings or play counts.</p>
+      </div>
+    </aside>
+
+    <aside class="gh-side">
+      <div class="info-card">
+        <h2 class="eyebrow">You Might Also Like</h2>
+        <div class="mini-list"><a class="mini" href="/hyper-feed/nutssnake/game.html" aria-label="Nuts Snake">
+    <img src="/assets/covers/nutssnake.webp" alt="" loading="lazy" width="62" height="46">
+    <span><span class="mt">Nuts Snake</span><span class="ms">Puzzle</span></span>
+  </a><a class="mini" href="/hyper-feed/mahjongvalley/game.html" aria-label="Mahjong Valley">
+    <img src="/assets/covers/mahjongvalley.webp" alt="" loading="lazy" width="62" height="46">
+    <span><span class="mt">Mahjong Valley</span><span class="ms">Puzzle</span></span>
+  </a><a class="mini" href="/hyper-feed/puzzleyarnfun/game.html" aria-label="Puzzle Yarn Fun">
+    <img src="/assets/covers/puzzleyarnfun.webp" alt="" loading="lazy" width="62" height="46">
+    <span><span class="mt">Puzzle Yarn Fun</span><span class="ms">Puzzle</span></span>
+  </a><a class="mini" href="/hyper-feed/puzzlewatersort/game.html" aria-label="Puzzle: Water Sort">
+    <img src="/assets/covers/watersort.webp" alt="" loading="lazy" width="62" height="46">
+    <span><span class="mt">Puzzle: Water Sort</span><span class="ms">Puzzle</span></span>
+  </a><a class="mini" href="/hyper-feed/chromajam/game.html" aria-label="Chroma Jam">
+    <img src="/assets/covers/chromajam.webp" alt="" loading="lazy" width="62" height="46">
+    <span><span class="mt">Chroma Jam</span><span class="ms">Puzzle</span></span>
+  </a><a class="mini" href="/hyper-feed/bubblesafari/game.html" aria-label="Bubble Safari">
+    <img src="/assets/covers/bubblesafari.webp" alt="" loading="lazy" width="62" height="46">
+    <span><span class="mt">Bubble Safari</span><span class="ms">Puzzle</span></span>
+  </a></div>
+      </div>
+      <div class="info-card more-cta">
+        <h2 class="eyebrow">More Puzzle</h2>
+        <a class="btn ghost" href="/c/puzzle.html" style="width:100%">Browse Puzzle games →</a>
+      </div>
+    </aside>
+  </section>
 
   <div class="detail-body">
     <div class="detail-main">
@@ -119,7 +168,25 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
       <p>Portrait, with the tray filling the middle of the screen and Push and Merge as two large buttons side by side along the bottom edge. The &quot;Tap to Choose&quot; callout and hand cursor (frame 1) are sized for a phone, which is what the layout assumes. No keyboard control appears on any captured frame.</p>
       <h2>Frequently Asked Questions</h2>
       <div class="faq"><details><summary>What do Push and Merge do?</summary><p>They are the two action buttons under the tray — yellow and purple respectively. You select a stack first, which the game labels &quot;Tap to Choose&quot; (frame 1), then Push moves it and Merge combines it. The frames we captured show the choice, not the result.</p></details><details><summary>What are the Temp Slots?</summary><p>Three cells across the top of the tray, each labelled &quot;Temp Slot&quot; and carrying a video-camera icon (frame 1). They are extra parking space bought with a rewarded video.</p></details><details><summary>What do the numbers 5, 6, 7, 9 and 10 mean?</summary><p>The milestone track under &quot;Level 1&quot;. They are the stack values the level wants you to build; the 5 is filled teal as the current target and the 10 has a sunburst behind it as the last node.</p></details><details><summary>Why are some cells locked?</summary><p>Four cells show a keyhole rather than a pedestal (frame 1) — one at the top-left and three across the middle row. Five cells are usable at the start.</p></details><details><summary>What is the Sort button?</summary><p>A small control at the bottom-right of the tray: a blue-and-pink looped arrow with a video-camera badge and the label &quot;Sort&quot;. The badge means it is video-backed; what it reorders is not shown in the frames we captured.</p></details></div>
-      <h2>More Puzzle Games <a class="more" href="/c/puzzle.html" style="float:right">View all</a></h2><div class="grid"><a class="card" href="/hyper-feed/puzzleyarnfun/game.html" aria-label="Puzzle Yarn Fun">
+      <h2>More Puzzle Games <a class="more" href="/c/puzzle.html" style="float:right">View all</a></h2><div class="grid"><a class="card" href="/hyper-feed/nutssnake/game.html" aria-label="Nuts Snake">
+    <div class="thumb">
+      <img src="/assets/covers/nutssnake.webp" alt="Nuts Snake cover" loading="lazy"  width="240" height="240">
+      <div class="play-ov"><div class="pcircle"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div></div>
+    </div>
+    <div class="info">
+      <div class="title">Nuts Snake</div>
+      <div class="meta"><span class="cat">Puzzle</span><span class="plays">Free · No install</span></div>
+    </div>
+  </a><a class="card" href="/hyper-feed/mahjongvalley/game.html" aria-label="Mahjong Valley">
+    <div class="thumb">
+      <img src="/assets/covers/mahjongvalley.webp" alt="Mahjong Valley cover" loading="lazy"  width="240" height="240">
+      <div class="play-ov"><div class="pcircle"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div></div>
+    </div>
+    <div class="info">
+      <div class="title">Mahjong Valley</div>
+      <div class="meta"><span class="cat">Puzzle</span><span class="plays">Free · No install</span></div>
+    </div>
+  </a><a class="card" href="/hyper-feed/puzzleyarnfun/game.html" aria-label="Puzzle Yarn Fun">
     <div class="thumb">
       <img src="/assets/covers/puzzleyarnfun.webp" alt="Puzzle Yarn Fun cover" loading="lazy"  width="240" height="240">
       <div class="play-ov"><div class="pcircle"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -155,45 +222,8 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
       <div class="title">Bubble Safari</div>
       <div class="meta"><span class="cat">Puzzle</span><span class="plays">Free · No install</span></div>
     </div>
-  </a><a class="card" href="/hyper-feed/spinscrewjam/game.html" aria-label="Spin Screw Jam">
-    <div class="thumb">
-      <img src="/assets/covers/spinscrewjam.webp" alt="Spin Screw Jam cover" loading="lazy"  width="240" height="240">
-      <div class="play-ov"><div class="pcircle"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div></div>
-    </div>
-    <div class="info">
-      <div class="title">Spin Screw Jam</div>
-      <div class="meta"><span class="cat">Puzzle</span><span class="plays">Free · No install</span></div>
-    </div>
-  </a><a class="card" href="/hyper-feed/puzzlehex/game.html" aria-label="Puzzle Hex">
-    <div class="thumb">
-      <img src="/assets/covers/puzzlehex.webp" alt="Puzzle Hex cover" loading="lazy"  width="240" height="240">
-      <div class="play-ov"><div class="pcircle"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div></div>
-    </div>
-    <div class="info">
-      <div class="title">Puzzle Hex</div>
-      <div class="meta"><span class="cat">Puzzle</span><span class="plays">Free · No install</span></div>
-    </div>
   </a></div>
     </div>
-    <aside class="detail-side">
-      <div class="side-card">
-        <h3>Quick Info</h3>
-        <dl class="spec">
-          <dt>Category</dt><dd><a href="/c/puzzle.html">Puzzle</a></dd>
-          <dt>Orientation</dt><dd>portrait</dd>
-          <dt>Platform</dt><dd>Web / Mobile</dd>
-          <dt>Price</dt><dd>Free</dd>
-        </dl>
-      </div>
-      <div class="side-card">
-        <h3>Tags</h3>
-        <div class="taglist"><a class="t" href="/t/stack.html">stack</a><a class="t" href="/t/sort.html">sort</a><a class="t" href="/t/satisfying.html">satisfying</a><a class="t" href="/t/casual.html">casual</a><a class="t" href="/t/mobile.html">mobile</a></div>
-      </div>
-      <div class="side-card side-cta">
-        <h3>Ready to play?</h3>
-        <a class="btn accent" href="/play.html?id=satisfyingstack" style="width:100%">▶ Play Satisfying Stack</a>
-      </div>
-    </aside>
   </div>
 </main>
 <footer class="footer"><div class="wrap">
@@ -216,6 +246,8 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
     <a href="/#favorites" class=""><svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.9 6.2 21l1.1-6.5L2.6 9.8l6.5-.9z"/></svg><span>Favorites</span></a>
     <a href="/#recent" class=""><svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Recent</span></a>
   </nav>
+<script type="application/json" id="games-data">[{"slug":"nutssnake","title":"Nuts Snake","category":"Puzzle","cover":"nutssnake.webp"},{"slug":"mahjongvalley","title":"Mahjong Valley","category":"Puzzle","cover":"mahjongvalley.webp"},{"slug":"puzzleyarnfun","title":"Puzzle Yarn Fun","category":"Puzzle","cover":"puzzleyarnfun.webp"},{"slug":"puzzlewatersort","title":"Puzzle: Water Sort","category":"Puzzle","cover":"watersort.webp"},{"slug":"chromajam","title":"Chroma Jam","category":"Puzzle","cover":"chromajam.webp"},{"slug":"hunterevolveuprising","title":"Hunter: Evolve Uprising","category":"Action","cover":"hunterevolveuprising.webp"},{"slug":"acestrike","title":"Ace Strike","category":"Action","cover":"acestrike.webp"},{"slug":"smashblocks","title":"Smash Blocks","category":"Arcade","cover":"blockblastpop.webp"},{"slug":"bubblesafari","title":"Bubble Safari","category":"Puzzle","cover":"bubblesafari.webp"},{"slug":"spinscrewjam","title":"Spin Screw Jam","category":"Puzzle","cover":"spinscrewjam.webp"},{"slug":"puzzlehex","title":"Puzzle Hex","category":"Puzzle","cover":"puzzlehex.webp"},{"slug":"blockpuzzlesavegirl","title":"Block Puzzle: Save Girl","category":"Puzzle","cover":"blockpuzzlesavegirl.webp"},{"slug":"royalmatcher","title":"Royal Matcher","category":"Puzzle","cover":"royalmatcher.webp"},{"slug":"arrowmazesolve","title":"Arrow Maze Solve","category":"Puzzle","cover":"arrowmazesolve.webp"},{"slug":"wizardsort","title":"Wizard Sort","category":"Puzzle","cover":"wizardsort.webp"},{"slug":"zombiedown","title":"Zombie Down","category":"Action","cover":"zombiedown.webp"},{"slug":"tankera","title":"Tank Era","category":"Action","cover":"tankera.webp"},{"slug":"shiftdashreac","title":"Shift Dash Reac","category":"Arcade","cover":"shiftdashreac.webp"},{"slug":"satisfyingstack","title":"Satisfying Stack","category":"Puzzle","cover":"satisfyingstack.webp"}]</script>
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/danmaku.js"></script>
 </body>
 </html>
