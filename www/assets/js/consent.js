@@ -8,7 +8,7 @@
         review or withdraw a decision later (required by the EU user consent policy);
      4. records the IAB TCF v2 listener state for debugging.
    Loaded with `defer`, after the synchronous bootstrap. Must never throw into the page.
-   This is site code only — it never touches the games under /game/. */
+   This is site code only — it never touches the games under /hyper-feed/. */
 (function () {
   'use strict';
 

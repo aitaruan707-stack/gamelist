@@ -111,8 +111,32 @@ function copyAvatars() {
 /* ---------- shared markup ---------- */
 function coverUrl(g) { return g.cover ? `/assets/covers/${g.cover}` : `/assets/covers/${g.slug}.svg`; }
 function artUrl(g) { return g.art ? `/assets/covers/${g.art}` : coverUrl(g); }
-function detailUrl(g) { return `/g/${g.slug}.html`; }
+/* only some entries carry a dedicated 512px icon; the feature card falls back to the square cover */
+function iconUrl(g) { return g.icon ? `/assets/covers/${g.icon}` : coverUrl(g); }
+function detailUrl(g) { return `/hyper-feed/${g.slug}/game.html`; }
 function playUrl(g) { return `/play.html?id=${g.slug}`; }
+
+/* Legacy /g/{slug}.html SEO URLs now live under /hyper-feed/{slug}/game.html. The old path
+   emits a redirect stub (canonical + meta refresh + location.replace) so inbound links and the
+   search index keep resolving. noindex so the stub never competes with the real page. */
+function redirectStub(targetPath) {
+  const t = esc(targetPath);
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://${esc(SITE.domain)}${t}">
+<meta http-equiv="refresh" content="0; url=${t}">
+<title>Moved — ${esc(SITE.name)}</title>
+<script>location.replace(${JSON.stringify(targetPath)});</script>
+</head>
+<body>
+<p>This page has moved. <a href="${t}">Continue to the game</a>.</p>
+</body>
+</html>`;
+}
 
 const ICON_SEARCH = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>`;
 const ICON_CLOSE = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>`;
@@ -310,7 +334,7 @@ function featCardHtml(g) {
       <img src="${artUrl(g)}" alt="${esc(g.title)} screenshot" loading="lazy" width="1024" height="576">
     </div>
     <div class="fcard-body">
-      <img class="fcard-ico" src="/assets/covers/${g.icon}" alt="${esc(g.title)} icon" loading="lazy" width="52" height="52">
+      <img class="fcard-ico" src="${iconUrl(g)}" alt="${esc(g.title)} icon" loading="lazy" width="52" height="52">
       <div class="fcard-t">
         <div class="fcard-title">${esc(g.title)}</div>
         <div class="fcard-sub">${esc(g.category)} · Free to play</div>
@@ -325,7 +349,13 @@ function featCardHtml(g) {
 /* ---------- home page ---------- */
 function buildHome() {
     const FEAT_ORDER = ['puzzleyarnfun', 'puzzlewatersort', 'chromajam', 'hunterevolveuprising', 'bubblesafari', 'blockpuzzlesavegirl'];
-    const featured = games.filter(g => g.featured).sort((a, b) => FEAT_ORDER.indexOf(a.slug) - FEAT_ORDER.indexOf(b.slug));
+    /* every listed game goes into the rail: the curated picks keep their hand-set order at the
+       front, the rest follow in catalogue order. */
+    const featRank = g => {
+      const i = FEAT_ORDER.indexOf(g.slug);
+      return i < 0 ? FEAT_ORDER.length + games.indexOf(g) : i;
+    };
+    const featured = games.slice().sort((a, b) => featRank(a) - featRank(b));
   const cats = data.categories || [];
   const firstFour = games.slice(0, 4);
 
@@ -371,7 +401,7 @@ function buildHome() {
 <meta name="twitter:card" content="summary">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"${esc(SITE.name)}","url":"https://${esc(SITE.domain)}/"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"${esc(SITE.name)}","url":"https://${esc(SITE.domain)}/","logo":"https://${esc(SITE.domain)}/assets/logo.png"}</script>
-<script type="application/ld+json">${JSON.stringify({ '@context':'https://schema.org','@type':'ItemList', name: SITE.name + ' Free Online Games', itemListElement: games.map((g,i)=>({ '@type':'ListItem', position:i+1, url:`https://${SITE.domain}/g/${g.slug}.html`, name:g.title })) })}</script>
+<script type="application/ld+json">${JSON.stringify({ '@context':'https://schema.org','@type':'ItemList', name: SITE.name + ' Free Online Games', itemListElement: games.map((g,i)=>({ '@type':'ListItem', position:i+1, url:`https://${SITE.domain}${detailUrl(g)}`, name:g.title })) })}</script>
 <script type="application/ld+json">${faqLd}</script>
 ${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
@@ -470,7 +500,7 @@ function buildDetail(g) {
   const related = games.filter(x => x.slug !== g.slug && x.category === g.category).slice(0, 6);
   const splash = g.splash ? `/assets/covers/${g.slug}-splash.png` : null;
   const catHref = cat ? '/c/' + cat.slug + '.html' : '/#all';
-  const url = `https://${SITE.domain}/g/${g.slug}.html`;
+  const url = `https://${SITE.domain}${detailUrl(g)}`;
   const premise = (g.description || '').replace(/\s+$/g, '');
   const kw = `Play ${g.title} free online — no download, works on mobile & desktop.`;
   let desc = premise ? `${premise} ${kw}` : kw;
@@ -610,8 +640,10 @@ ${topbar('')}
       <p class="cat-note">Captured from the build running on this page, not promotional art. Every claim in the guide above names the frame it comes from.</p>
       <div class="shots">${shots.map((s, i) => `<figure><img src="/${SHOT_DIR}/${s.file}" alt="${esc(g.title)} — ${esc(caps[i] || 'gameplay frame')}" loading="lazy"><figcaption><b>${i + 1}</b> ${esc(caps[i] || 'Gameplay frame')}</figcaption></figure>`).join('')}</div>`;
       })()}
-      <h2>How to Play</h2>
-      <ol class="controls">${howToSteps.map(c => `<li>${esc(c)}</li>`).join('')}</ol>
+      <div class="how-to">
+        <h2>How to Play</h2>
+        <ol class="controls">${howToSteps.map(c => `<li>${esc(c)}</li>`).join('')}</ol>
+      </div>
       ${guide ? guideMain : `<h2>Features</h2>
       <ul class="feat-list">${featuresFor(g).map(f => `<li>${esc(f)}</li>`).join('')}</ul>`}
       <h2>Frequently Asked Questions</h2>
@@ -619,20 +651,20 @@ ${topbar('')}
       ${related.length ? `<h2>More ${esc(g.category)} Games <a class="more" href="${catHref}" style="float:right">View all</a></h2><div class="grid">${related.map(cardHtml).join('')}</div>` : ''}
     </div>
     <aside class="detail-side">
-      <div>
+      <div class="side-card">
         <h3>Quick Info</h3>
-        <div class="row" style="flex-direction:column;align-items:flex-start;gap:6px">
-          <span>Category: <strong style="color:var(--accent)">${esc(g.category)}</strong></span>
-          <span>Orientation: <strong>${esc(g.orientation)}</strong></span>
-          <span>Platform: <strong>Web / Mobile</strong></span>
-          <span>Price: <strong>Free</strong></span>
-        </div>
+        <dl class="spec">
+          <dt>Category</dt><dd><a href="${catHref}">${esc(g.category)}</a></dd>
+          <dt>Orientation</dt><dd>${esc(g.orientation)}</dd>
+          <dt>Platform</dt><dd>Web / Mobile</dd>
+          <dt>Price</dt><dd>Free</dd>
+        </dl>
       </div>
-      <div>
+      <div class="side-card">
         <h3>Tags</h3>
         <div class="taglist">${tagLinks(g)}</div>
       </div>
-      <div>
+      <div class="side-card side-cta">
         <h3>Ready to play?</h3>
         <a class="btn accent" href="${playUrl(g)}" style="width:100%">▶ Play ${esc(g.title)}</a>
       </div>
@@ -644,7 +676,9 @@ ${bottomNav('')}
 <script src="/assets/js/app.js"></script>
 </body>
 </html>`;
-  write(`g/${g.slug}.html`, html);
+  ensureDir(`hyper-feed/${g.slug}`);
+  write(`hyper-feed/${g.slug}/game.html`, html);
+  write(`g/${g.slug}.html`, redirectStub(detailUrl(g)));
 }
 
 function buildDetails() {
@@ -1131,7 +1165,7 @@ function buildCategory(cat) {
   const itemList = {
     '@context': 'https://schema.org', '@type': 'ItemList',
     name: cat.name + ' Games', description: cat.description,
-    itemListElement: list.map((g, i) => ({ '@type': 'ListItem', position: i + 1, url: 'https://' + SITE.domain + '/g/' + g.slug + '.html', name: g.title }))
+    itemListElement: list.map((g, i) => ({ '@type': 'ListItem', position: i + 1, url: 'https://' + SITE.domain + detailUrl(g), name: g.title }))
   };
   const m = catMeta(cat.slug);
   const copy = CAT_COPY[cat.slug] || null;
@@ -1184,7 +1218,7 @@ ${topbar('categories')}
     <div class="section-head"><h2>Which ${esc(cat.name.toLowerCase())} game to play first</h2></div>
     <p class="cat-note">One line per game, written from the full guide on its page — the shortest way to tell these apart before opening anything.</p>
     <ul class="pick-list">
-      ${list.map(g => `<li><a href="/g/${g.slug}.html"><b>${esc(g.title)}</b></a>${GUIDES[g.slug] ? ' — ' + esc(GUIDES[g.slug].verdict) : ' — ' + esc(g.description)}</li>`).join('\n      ')}
+      ${list.map(g => `<li><a href="${detailUrl(g)}"><b>${esc(g.title)}</b></a>${GUIDES[g.slug] ? ' — ' + esc(GUIDES[g.slug].verdict) : ' — ' + esc(g.description)}</li>`).join('\n      ')}
     </ul>
   </section>
   <section class="block">
@@ -1224,7 +1258,7 @@ function buildTags() {
     const bcrumb = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://' + SITE.domain + '/' },
       { '@type': 'ListItem', position: 2, name: t.name + ' Games', item: url } ] };
-    const itemList = { '@context': 'https://schema.org', '@type': 'ItemList', name: t.name + ' Games', itemListElement: list.map((g, i) => ({ '@type': 'ListItem', position: i + 1, url: 'https://' + SITE.domain + '/g/' + g.slug + '.html', name: g.title })) };
+    const itemList = { '@context': 'https://schema.org', '@type': 'ItemList', name: t.name + ' Games', itemListElement: list.map((g, i) => ({ '@type': 'ListItem', position: i + 1, url: 'https://' + SITE.domain + detailUrl(g), name: g.title })) };
     const related = tags.filter(x => x.slug !== t.slug).slice(0, 14);
     const cats = [...new Set(list.map(g => g.category))];
     const catLine = 'These titles are filed under ' + cats.map(c => {
@@ -1277,7 +1311,7 @@ ${topbar('categories')}
     <div class="section-head"><h2>${esc(t.name)} games, one line each</h2></div>
     <p class="cat-note">Written from the full guide on each game's page. ${catLine}</p>
     <ul class="pick-list">
-      ${list.map(g => `<li><a href="/g/${g.slug}.html"><b>${esc(g.title)}</b></a>${GUIDES[g.slug] ? ' — ' + esc(GUIDES[g.slug].verdict) : ' — ' + esc(g.description)}</li>`).join('\n      ')}
+      ${list.map(g => `<li><a href="${detailUrl(g)}"><b>${esc(g.title)}</b></a>${GUIDES[g.slug] ? ' — ' + esc(GUIDES[g.slug].verdict) : ' — ' + esc(g.description)}</li>`).join('\n      ')}
     </ul>
   </section>
   <section class="block">
@@ -1395,7 +1429,7 @@ function buildSitemap() {
     ...ARTICLES.map(a => `\n  <url><loc>https://${SITE.domain}/guides/${a.slug}.html</loc><lastmod>${today}</lastmod><priority>0.8</priority></url>`),
     ...cats.map(c => `\n  <url><loc>https://${SITE.domain}/c/${c.slug}.html</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>`),
     ...sp.map(s => `\n  <url><loc>https://${SITE.domain}/${s}.html</loc><lastmod>${today}</lastmod><priority>0.7</priority></url>`),
-    ...games.map(g => `\n  <url><loc>https://${SITE.domain}/g/${g.slug}.html</loc><lastmod>${(g.publishedAt || today).slice(0, 10)}</lastmod><priority>0.8</priority></url>`),
+    ...games.map(g => `\n  <url><loc>https://${SITE.domain}${detailUrl(g)}</loc><lastmod>${(g.publishedAt || today).slice(0, 10)}</lastmod><priority>0.8</priority></url>`),
   ].join('');
   write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}\n</urlset>\n`);
   console.log('sitemap.xml generated');
@@ -1431,14 +1465,17 @@ function ownIds() {
 }
 
 function auditTrackers() {
-  const roots = [dist('game'), resolve(ROOT, '..', 'puzzle-yarnfun')];
+  const roots = [dist('hyper-feed'), resolve(ROOT, '..', 'puzzle-yarnfun')];
   const mine = ownIds();
   const findings = [];
   let scanned = 0;
   for (const root of roots) {
     if (!existsSync(root)) continue;
-    const inGames = basename(root) === 'game';
+    const inGames = basename(root) === 'hyper-feed';
     for (const file of walkCodeFiles(root, 0, [])) {
+      /* skip the intro page we generate into each game folder — it is a consent-covered
+         portal page, not a delivered game bundle, and carries our own AdSense tag */
+      if (inGames && basename(file) === 'game.html') continue;
       let src;
       try { src = readFileSync(file, 'utf8'); } catch (e) { continue; }
       scanned++;

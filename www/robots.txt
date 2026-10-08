@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /game/
+# Keep the raw playable game builds (canvas apps) out of the crawl; the SEO surface is the
+# intro pages at /hyper-feed/<slug>/game.html, which stay allowed.
+Disallow: /hyper-feed/*/index.html
 
 Sitemap: https://tapzens.com/sitemap.xml

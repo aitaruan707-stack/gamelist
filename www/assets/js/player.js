@@ -60,7 +60,7 @@
     document.title = 'Play ' + g.title + ' — Tapzens';
     if (elTitle) elTitle.textContent = g.title;
     if (elCrumb) elCrumb.textContent = g.title;
-    if (elBack) { elBack.setAttribute('href', '/g/' + g.slug + '.html'); elBack.setAttribute('title', 'Back to ' + g.title); elBack.setAttribute('aria-label', 'Back to ' + g.title); }
+    if (elBack) { elBack.setAttribute('href', '/hyper-feed/' + g.slug + '/game.html'); elBack.setAttribute('title', 'Back to ' + g.title); elBack.setAttribute('aria-label', 'Back to ' + g.title); }
 
     /* orientation hint — warn when the device matches neither the game's
        native aspect nor a comfortable window size; user can dismiss it */
@@ -96,8 +96,9 @@
       checkOrientation();
     }
 
-    /* build iframe */
-    var src = '/game/' + g.slug + '/' + (g.entry || 'index.html');
+    /* build iframe — every game's playable entry is now hyper-feed/<slug>/index.html
+       (the site-side entry swap normalised all builds to that filename). */
+    var src = '/hyper-feed/' + g.slug + '/index.html';
     var frame = document.createElement('iframe');
     frame.setAttribute('src', src);
     frame.setAttribute('allow', 'autoplay; fullscreen; gamepad; clipboard-write; accelerometer; gyroscope');

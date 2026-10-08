@@ -8,11 +8,11 @@ export const ARTICLES = [
   {
     slug: 'sorting-puzzles',
     title: 'Sorting puzzles: the single rule behind every sort game',
-    desc: 'Water glasses, screws, grocery shelves and item stacks all run on one constraint. Understand it and every sorting puzzle on Tapzens gets easier.',
+    desc: 'Water glasses, screws and item stacks all run on one constraint. Understand it and every sorting puzzle on Tapzens gets easier.',
     kicker: 'Genre guide',
     minutes: 5,
     intro: [
-      'Four games in our catalogue look nothing alike: Puzzle: Water Sort pours coloured liquid between bottles, Spin Screw Jam lifts screws out of wooden plates, Grocery Adventure: Master tidies shop shelves, and Satisfying Stack consolidates piles of items. They share an art style no more than a chess board shares a parking lot. But they are the same game, and once you see the shared shape you will play all four better.',
+      'Three games in our catalogue look nothing alike: Puzzle: Water Sort pours coloured liquid between bottles, Spin Screw Jam lifts screws out of wooden plates, and Satisfying Stack consolidates piles of items. They share an art style no more than a chess board shares a parking lot. But they are the same game, and once you see the shared shape you will play all three better.',
       'The shared shape is a resource you never get back. In each of these puzzles, every action moves a thing into a space that then stops being available, and the only way to recover the space is to finish a group. So the difficulty is never “can I make this move” — it is “have I just destroyed my ability to make the four moves after it.”'
     ],
     sections: [
@@ -27,7 +27,7 @@ export const ARTICLES = [
         h: 'Why the last empty slot is where boards die',
         p: [
           'Every sorting puzzle hides a hard wall behind a soft-looking middle. While there are gaps, many moves are legal and the board feels manageable. The moment the final free space is filled with something that cannot be completed, the number of legal moves drops to zero and the layout is over.',
-          'This is why the instinct to “finish what is nearly done” is often wrong. A near-complete group that consumes your last parking space is a worse trade than leaving it incomplete. In water-sort games this is the classic mistake: one blue unit sits alone at the top of a bottle, and pouring it into the last empty bottle ends the board. In Screw Jam it is pulling a colour you cannot finish, filling the tray with three unrelated screws. In the shelf and stack games it is moving an item into the only gap because it looked like the right place.'
+          'This is why the instinct to “finish what is nearly done” is often wrong. A near-complete group that consumes your last parking space is a worse trade than leaving it incomplete. In water-sort games this is the classic mistake: one blue unit sits alone at the top of a bottle, and pouring it into the last empty bottle ends the board. In Screw Jam it is pulling a colour you cannot finish, filling the tray with three unrelated screws. In the stack game it is moving an item into the only gap because it looked like the right place.'
         ],
         list: [
           'Count free spaces before you act, not just matching items.',
@@ -39,30 +39,29 @@ export const ARTICLES = [
         h: 'Ordering: work from the constraint, not from the surface',
         p: [
           'The second universal technique is to identify what is most constrained and handle it first. In these puzzles the constrained thing is rarely the obvious thing.',
-          'In water sort, it is the colour with only one or two units left somewhere buried at the bottom of a tall bottle — that colour cannot be moved until everything above it is lifted, so it dictates your order long before you touch it. In Screw Jam, it is the plate at the bottom of the stack, whose screws are physically unreachable until the plates above are free. On the shelf and stack games, it is the item that sits between two groups: it is in the way of more than one plan, so it should move first even though it is not part of either.'
+          'In water sort, it is the colour with only one or two units left somewhere buried at the bottom of a tall bottle — that colour cannot be moved until everything above it is lifted, so it dictates your order long before you touch it. In Screw Jam, it is the plate at the bottom of the stack, whose screws are physically unreachable until the plates above are free. On the stack tray, it is the item that sits between two groups: it is in the way of more than one plan, so it should move first even though it is not part of either.'
         ]
       },
       {
         h: 'Reading a board you cannot undo',
         p: [
           'Most of these games let you undo a move, but not all of them, and undo changes what you should be practising. Where undo exists, you can afford to probe: make the uncertain move, look at what it revealed, step back. Where it does not exist — Spin Screw Jam has no undo — a wasted pickup is permanent for that attempt, and the correct habit is to spend the first ten seconds doing nothing except reading.',
-          'A useful trick that works on all four games: before moving, say out loud what the board will look like after the move. If you cannot describe the resulting arrangement of gaps, you are not planning, you are reacting. Reacting is what makes an easy board fail.'
+          'A useful trick that works on all three games: before moving, say out loud what the board will look like after the move. If you cannot describe the resulting arrangement of gaps, you are not planning, you are reacting. Reacting is what makes an easy board fail.'
         ]
       },
       {
-        h: 'Which of our four to start with',
+        h: 'Which of our three to start with',
         p: [
-          'If you want the gentlest introduction, start with Satisfying Stack. It shows you the whole state at once, has few pieces, and the feedback makes each correct decision obvious. Puzzle: Water Sort is the deepest of the four and the one with the most modes to explore once the base rule clicks. Spin Screw Jam is the harshest — tight trays and no undo — and it is best played after you already think in terms of space. Grocery Adventure: Master sits in the middle and is the most relaxing, because its goals are narrower than its boards.',
+          'If you want the gentlest introduction, start with Satisfying Stack. It shows you the whole state at once, has few pieces, and the feedback makes each correct decision obvious. Puzzle: Water Sort is the deepest of the three and the one with the most modes to explore once the base rule clicks. Spin Screw Jam is the harshest — tight trays and no undo — and it is best played after you already think in terms of space.',
           'They are all free, they all run in a browser with no install, and none of them needs an account.'
         ]
       }
     ],
     closing: 'Once you start seeing these boards as space rather than as objects, the genre stops being about spotting matches and starts being about sequencing — which is the same skill in a different coat, and the reason a good sort puzzle is satisfying for far longer than its simple rule suggests.',
     links: [
-      { label: 'Puzzle: Water Sort', href: '/g/puzzlewatersort.html' },
-      { label: 'Spin Screw Jam', href: '/g/spinscrewjam.html' },
-      { label: 'Grocery Adventure: Master', href: '/g/groceryadventuremaster.html' },
-      { label: 'Satisfying Stack', href: '/g/satisfyingstack.html' }
+      { label: 'Puzzle: Water Sort', href: '/hyper-feed/puzzlewatersort/game.html' },
+      { label: 'Spin Screw Jam', href: '/hyper-feed/spinscrewjam/game.html' },
+      { label: 'Satisfying Stack', href: '/hyper-feed/satisfyingstack/game.html' }
     ]
   },
 
@@ -116,9 +115,9 @@ export const ARTICLES = [
     ],
     closing: 'None of this requires faster tapping or better eyes. It requires treating the move counter as money, and most of the frustration people feel in match-3 games is the gap between how they spend it and how the stage was priced.',
     links: [
-      { label: 'Puzzle Yarn Fun', href: '/g/puzzleyarnfun.html' },
-      { label: 'Royal Matcher', href: '/g/royalmatcher.html' },
-      { label: 'Bubble Safari', href: '/g/bubblesafari.html' }
+      { label: 'Puzzle Yarn Fun', href: '/hyper-feed/puzzleyarnfun/game.html' },
+      { label: 'Royal Matcher', href: '/hyper-feed/royalmatcher/game.html' },
+      { label: 'Bubble Safari', href: '/hyper-feed/bubblesafari/game.html' }
     ]
   },
 
@@ -245,7 +244,7 @@ export const ARTICLES = [
         h: 'What portrait is actually good for',
         p: [
           'Portrait puts the play area in front of your thumb’s natural arc and leaves the top of the screen for information. That is why every sorting and stacking puzzle here is portrait: the board is above, the tray or the launcher is below, and a move is a vertical trip between two regions your thumb reaches without your hand moving.',
-          'Portrait games also survive being played badly. Standing in a doorway, holding a phone in one hand with a coffee in the other — the games that work there are the ones where the only verbs are tap and short drag. On our site that is Puzzle Yarn Fun, Water Sort, Wizard Sort, Chroma Jam, Spin Screw Jam, Puzzle Hex, Satisfying Stack, Grocery Adventure and Royal Matcher.'
+          'Portrait games also survive being played badly. Standing in a doorway, holding a phone in one hand with a coffee in the other — the games that work there are the ones where the only verbs are tap and short drag. On our site that is Puzzle Yarn Fun, Water Sort, Wizard Sort, Chroma Jam, Spin Screw Jam, Puzzle Hex, Satisfying Stack and Royal Matcher.'
         ]
       },
       {
@@ -284,8 +283,8 @@ export const ARTICLES = [
     ],
     closing: 'Orientation is the cheapest thing to get right about a mobile game and the thing people blame themselves for most often. Before you decide a game is too hard, check whether it wanted both your hands.',
     links: [
-      { label: 'Shift Dash Reac', href: '/g/shiftdashreac.html' },
-      { label: 'Tank Era', href: '/g/tankera.html' },
+      { label: 'Shift Dash Reac', href: '/hyper-feed/shiftdashreac/game.html' },
+      { label: 'Tank Era', href: '/hyper-feed/tankera/game.html' },
       { label: 'All Action games', href: '/c/action.html' }
     ]
   },

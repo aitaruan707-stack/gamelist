@@ -700,52 +700,6 @@ export const GUIDES = {
     ]
   },
 
-  groceryadventuremaster: {
-    verdict: 'A timed triple-match on supermarket shelves: "Collect 3 to clear the shelf!", with an alarm clock counting down from 03:24 and four one-charge tools under the board.',
-    about: [
-      'The rule is printed above the board in its own words: "Collect 3 to clear the shelf!" (frames 2–3). The shelf itself is six wooden compartments set at staggered heights against a tan wall, holding four kinds of produce — a mango, a bunch of two cherries, a spiky yellow durian and a bumpy green cucumber. Count them on the Level 1 board and there are exactly three of each, twelve items in four triples, scattered so that matching pieces sit in different boxes at different heights (frames 2–3).',
-      'The header makes this the most constrained puzzle in our sorting group: a gear and "Level 1" on the left, an alarm-clock icon over 03:24 in the middle, and a gold coin pill reading 0 on the right (frame 2). By frame 3 the clock had fallen to 03:13 with the board completely unchanged, so it counts down while you look rather than up while you play. No other game in this category combines a countdown with a triple-match rule.',
-      'Under the board are four tools, each badged with a single charge: "Power" on a blue clock face carrying a snowflake, "Clear" on a black bomb, "Refresh" on a pair of green-and-yellow looped arrows and "2X Rewards" on a gold star marked x2 (frames 2–3). The title screen adds the economy around them — a "Gift" button drawn as an open chest of pink gems with a purple pill reading "0/5", a "Spin" wheel, and a "+1000" present, all under the yellow "Start Game" button (frame 1).'
-    ],
-    systems: [
-      { h: 'Three of a kind, anywhere on the shelf', p: 'The caption says collect three, and the produce is scattered rather than lined up (frames 2–3). The cherry bunches are the clearest example on this board: there are exactly three of them, one in a top compartment and two in the bottom-left one, so the cheapest clear available is the item that already appears in threes. Counting what is left of each kind is the whole opening move.' },
-      { h: 'A countdown, not a move limit', p: '03:24 on one frame and 03:13 on the next with nothing else changed (frames 2–3). This is the only puzzle in the category where the clock is the fail state rather than a tray or a step budget, which is why the "2X Rewards" star exists — it doubles what a finished board pays, not what time you have.' },
-      { h: 'Four tools, one charge each', p: 'Power, Clear, Refresh and 2X Rewards all show a badge of 1 (frames 2–3). They are single-use, and the coin balance of 0 means none of them can obviously be bought back mid-board.' }
-    ],
-    howTo: [
-      'Press "Start Game" on the title screen (frame 1) and read the shelf before tapping — the clock is already running by then.',
-      'Find the kind that already has three copies visible. On this board cherries appear as three bunches and the other three kinds also appear three times each (frames 2–3).',
-      'Tap the three matching items to clear their slots; anything left hanging after a clear stays where it is, so plan the next triple while you tap.',
-      'Work the compartments with two items in them first — a mango and a cherry bunch sharing a box tells you two kinds at once, which the single-item boxes do not.',
-      'Use "Refresh" when the remaining produce cannot form a triple, and "Clear" when the clock is low and the shelf is still busy.',
-      'Save "2X Rewards" for a board you are certain to finish — it doubles the payout, and a doubled zero is still zero.'
-    ],
-    tips: [
-      'The four kinds on Level 1 are mango, cherry, durian and cucumber. With only four kinds and three of each, the puzzle is spotting them at different heights rather than finding them at all.',
-      'The coin balance read 0 on every frame, so the "Spin" wheel and the "+1000" present on the title screen are the only ways in that are visible before you have played.',
-      'The "Gift" pill reads 0/5 (frame 1) — that is a count out of five, not a timer, so treat it as a set of prizes you work through.',
-      'Because the clock starts before you see the board, the first ten seconds of a run are usually spent orienting. Memorising the tool row costs you nothing and saves those seconds.'
-    ],
-    mistakes: [
-      'Treating it as a tidying game. The caption is explicit — "Collect 3 to clear the shelf!" — and the clock is what ends the run.',
-      'Tapping a lone item because it looks like half a pair. Only triples clear.',
-      'Spending a charged tool early; every one of the four starts at a single charge with no coins to replace it.'
-    ],
-    device: 'Portrait. The shelf occupies the middle third with the timer directly above it and the four tools in a row below, so the whole decision surface is between two thumb positions. The compartments are small on a phone — the durians and cucumbers are the easiest two to confuse at arm\'s length, which is worth knowing before you blame the board.',
-    faq: [
-      { q: 'What is the goal in Grocery Adventure: Master?', a: 'The game states it above the board: "Collect 3 to clear the shelf!" (frames 2–3). Tap three of the same produce item to empty those slots before the clock runs out.' },
-      { q: 'Is there a time limit?', a: 'Yes — an alarm-clock icon in the header reads 03:24 on one frame of Level 1 and 03:13 on the next, with the board otherwise identical (frames 2–3). It is the only timed triple-match in this category.' },
-      { q: 'What do the four buttons under the board do?', a: '"Clear" is a bomb, "Refresh" is a pair of looped arrows, "Power" is a blue clock face with a snowflake on it and "2X Rewards" is a gold star marked x2. Each starts with one charge (frames 2–3). The names are the evidence — no frame shows any of them being used.' },
-      { q: 'What are Gift, Spin and +1000 on the title screen?', a: 'An open chest of pink gems with a "0/5" pill, a segmented wheel and a purple present labelled "+1000", sitting in a row under the "Start Game" button (frame 1). They are the economy you draw on before a run.' },
-      { q: 'How many item types are on the first shelf?', a: 'Four, three of each: mango, cherry bunch, durian and cucumber — twelve items across six compartments (frames 2–3).' }
-    ],
-    shots: [
-      'The title screen: the Grocery Adventure: Master logo with a tangerine and a green apple, the yellow "Start Game" button, and Gift with its "0/5" pill, Spin and +1000 along the bottom.',
-      'Level 1 with the caption "Collect 3 to clear the shelf!", the alarm clock at 03:24, mangoes, cherry bunches, durians and cucumbers spread over six staggered wooden compartments, and the four single-charge tools Power, Clear, Refresh and 2X Rewards.',
-      'The same shelf with the clock down to 03:13 and not one item moved — the frame that proves the timer is counting down while you read the board.'
-    ]
-  },
-
   puzzlewatersort: {
     verdict: 'A liquid-sorting puzzle — the build calls itself "Hue & Brew" on screen — where coloured drinks have to be gathered into single bottles, with three charges each of shuffle, undo and a bottle tool.',
     about: [
@@ -790,6 +744,57 @@ export const GUIDES = {
     ]
   },
 
+  mahjongvalley: {
+    verdict: 'A single-layer mahjong pairing game: two identical tiles clear only when they share a row or a column with nothing between them, and when nothing lines up you slide a tile into an empty cell to build the line — there is no stacked pyramid to peel and no difficulty picker on the way in.',
+    about: [
+      'The first thing Level 1 asks of you is a rule, not a goal. A dark panel slides up from the bottom of the screen and reads "Tap to match Mahjong tiles" over a second line with one word picked out in gold — "Tap horizontal Mahjong pairs" (frame 1). Below it two 七萬 tiles sit side by side in the bottom row, tinted gold, with a cartoon hand resting on the right one. The whole first board is a lesson in reading lines rather than a puzzle to solve.',
+      'What that board is made of settles the genre question. Every tile sits on one flat plane, scattered with empty cells between them, and each face is a full mahjong tile: 發, 中, the bird that stands for one bamboo, a ring of dots, plum and chrysanthemum blossoms, and two tiles carrying nothing but a red rectangular frame (frame 1). There is no second storey, no half-covered tile and no shadow under a stack, because there is no stack — which is the whole difference from the layered mahjong solitaire the catalogue blurb describes.',
+      'Level 2 deals the same tray full: four columns by six rows, twenty-four tiles, faces repeating — bamboo, iris, whale, plum, chrysanthemum and a dot tile drawn as two red rings over four green ones (frame 4). The furniture is minimal: a rabbit-face badge reading 0 in the top-left corner, a gear in the top-right, the level name centred above the tiles, and two fat buttons on the wooden shelf under the board — a light bulb left, crossed arrows right, each wearing a red count badge reading 3 (frame 4). Nothing anywhere on the board counts down.'
+    ],
+    systems: [
+      { h: 'The pair has to see itself', p: 'Same row or same column, with nothing in between. The tutorial spends four of its seven steps on the variations — horizontal pairs, vertical pairs, then "distant same-row" and "distant same-column" pairs (frame 1 shows the first of those lines as the game renders it). "Distant" is qualifying how far the clear line may run, not licensing a route around the board: in frame 4 the third row holds two whale tiles with a plum blossom sitting between them, and that is a row of three look-alikes with no pair in it.' },
+      { h: 'Tiles slide; the board does not', p: 'The fifth and sixth steps change the verb: "Move Mahjong", "Try horizontal pair moves", then "Try vertical moves on Mahjong pairs" — frame 2 is caught on exactly that panel, with the level down to four tiles. A tile can be pushed along its row or column into an empty cell, which is how you build a line that does not exist yet. What the board never does is close up: between frames 1 and 2 the Level 1 tray empties almost completely and the two 發 tiles are still sitting in the cells they started in. Cleared pairs leave holes, and nothing falls into them.' },
+      { h: 'Two tools, both metered', p: 'The bulb and the crossed arrows carry counts, not free uses — both badges read 3 on the first board you actually play (frame 4). Clearing a level hands out more: the panel between Level 1 and Level 2 shows a bulb, a rabbit card and the crossed arrows with "×2" beside them (frame 3). So the tools are a stock you build up and spend down, and the level-clear payout is where the stock grows. Under that panel sits a green "Reward" button wearing a red "2+" flag and a film-strip icon (frame 3) — the ad-backed version of the same payout.' },
+      { h: 'The rabbit in the header', p: 'A rabbit-face chip in the top-left corner reads 0 across the Level 2 board (frame 4), and no label on screen says what it counts. No captured frame shows it move, so it is best read as a collectible the game tracks rather than as your score — there is no score anywhere on the board.' }
+    ],
+    howTo: [
+      'Start with the pairs that touch. The game\'s own first lessons are adjacency — "Tap horizontal Mahjong pairs", then the vertical version (frame 1).',
+      'Then run your eye down a row or a column past the gaps: a clear line is enough however far apart the two tiles are, but only if nothing stands in the middle (frame 4 shows the blocked version — two whale tiles either side of a flower).',
+      'When nothing lines up, drag a tile along its row or its column into an empty cell to make the line. That is the "Move Mahjong" step, and it is how you reach a pair that sits on a diagonal (frame 2).',
+      'Clear the pairs sitting in the way of the pair you want. Holes are permanent, so every removal widens the lines left on the board (frames 1–2).',
+      'Tap the bulb when you cannot find a pair and the crossed arrows when the board genuinely has none to line up. Both badges show what you have left before you commit (frame 4).',
+      'Empty the board rather than playing for points — the level ends on the last pair and pays out tool charges (frame 3).'
+    ],
+    tips: [
+      'An empty cell is a permanent lane, not a temporary gap. Slide tiles into the holes near the pair you are chasing, and leave the rows that already have a clear line alone.',
+      'Work the crowded corners first. On a full board like Level 2 (frame 4) most faces appear two or four times, so a tile with several identical neighbours in its row is a better first move than an isolated pair.',
+      'The tool badges are a budget you can read before tapping (frame 4). Three charges is enough to finish a board you have actually looked at, and not enough to finish one you are guessing at.',
+      'A shuffle restacks the whole board you are trying to remember, so it costs you your own read of the layout as well as a charge. Take a lap of the board first.',
+      'There is no clock on any captured frame (frames 1, 2, 4), so a locked board costs a tool charge and nothing else. Staring at it is free.'
+    ],
+    mistakes: [
+      'Looking for a pyramid to peel. Every tile here is on the same plane, and there is no free-tile rule to learn — the constraint is the line, not the stack.',
+      'Tapping two identical tiles that share a row but have a neighbour between them. That is not a pair, and the board will not pretend otherwise (frame 4).',
+      'Treating a diagonal pair as dead. It is usually one slide away — the game teaches the slide for exactly this reason (frame 2).',
+      'Believing the blurb. The difficulty choice the store copy describes does not appear on the way into a level here; the game deals the board and lets you play it.'
+    ],
+    device: 'Portrait and built for one thumb: the board owns the middle of the screen, the two tool buttons sit on the shelf beneath it, and the settings gear is top-right where the rabbit chip is top-left (frame 4). The tutorial panel rises from the bottom edge and is clipped mid-animation in both Level 1 frames (frames 1–2), which is the tween and not a layout that wants a bigger screen. No keyboard control appears on any captured frame — everything is a tap or a drag.',
+    faq: [
+      { q: 'How do you clear a pair in Mahjong Valley?', a: 'Two identical tiles in the same row or the same column, with no tile between them. The tutorial drills the four versions of that — horizontal, vertical, distant same-row and distant same-column — across its first steps (frame 1).' },
+      { q: 'Can you move tiles around?', a: 'Yes, and the game teaches it as its own step: "Move Mahjong", with "Try horizontal pair moves" and "Try vertical moves on Mahjong pairs" (frame 2). A tile slides along its row or column into an empty cell, which is how you create a line that does not exist yet.' },
+      { q: 'Is this the stacked mahjong solitaire where you peel a pyramid?', a: 'No. Every tile sits on a single flat layer with gaps around it (frames 1–2), and a full board is a four-by-six grid (frame 4). Nothing is half-covered, so there is no free-tile rule.' },
+      { q: 'What do the bulb and the crossed arrows do?', a: 'They are hint and shuffle, and both are metered — each badge shows the charges left, reading 3 on Level 2 (frame 4). Clearing a level pays out more, including a shuffle badged "×2" (frame 3).' },
+      { q: 'What is the rabbit counter in the corner?', a: 'It reads 0 through the Level 2 frames (frame 4) and nothing on screen labels it. No captured frame shows it increasing, so we are not going to invent what it counts.' },
+      { q: 'Is there a time limit?', a: 'No clock appears on the board in any captured frame. The pressure is board state, not the timer — a locked layout costs you a shuffle charge, not a run.' }
+    ],
+    shots: [
+      'Level 1\'s first lesson: a single flat layout with gaps between the tiles, two 七萬 tiles tinted gold side by side under a pointing hand, and the tip panel rising from the bottom edge — "Tap to match Mahjong tiles" over "Tap horizontal Mahjong pairs".',
+      'The same Level 1 board on its "Move Mahjong" step ("Try vertical moves on Mahjong pairs"): four tiles left in total, the two 發 tiles still in the cells they started in, and the rest of the tray open.',
+      'The level-clear panel — "Remarkable!" over a bulb, a rabbit card and crossed arrows badged "×2", with the orange "Level 2" button and a green ad-flagged "Reward" button under it.',
+      'Level 2 dealt full: four columns by six rows, the rabbit badge at 0 top-left and a gear top-right, a gold-highlighted vertical pair in the right-hand column, and the bulb and shuffle buttons on the shelf below each wearing a red "3".'
+    ]
+  },
+
 };
 
 /*
@@ -808,13 +813,13 @@ export const CAT_COPY = {
     lead: 'Twelve puzzle games here, and the interesting part is that they share almost no mechanics: sorting, matching, merging, routing and shooting a bubble all live under the same label. Every one of them draws a portrait board.',
     body: [
       'Four of the twelve are sorting puzzles, and they sort different stuff. Hue & Brew — listed here as Puzzle: Water Sort — pours coloured drinks between glass tubes until each tube holds one colour, and gives you three charges each of shuffle, undo and a bottle tool. Puzzle Hex is the same idea with hardware: hex nuts moved between threaded bolts, with an undo button the game labels "Revoke". Puzzle Yarn Fun sorts yarn off a hexagonal board into spool lanes, and its tutorial line is literally "First check order colors". Spin Screw Jam does it with screws and overlapping plates, filing each colour into a box with three holes.',
-      'Three are matching puzzles that only look alike. Royal Matcher is the only true swap-three here: an eight-by-eight grid, a printed goal of 8 flowers and 7 castles, and 22 steps to do it in. Grocery Adventure: Master matches triples on supermarket shelves under a running stopwatch — "Collect 3 to clear the shelf!" — and Smash Blocks, filed under arcade, sends tapped tiles into a three-slot tray. Chroma Jam sits between the two: tap coloured blocks off a tray into matching side racks, with 05:00 on the clock.',
+      'Three are matching puzzles that only look alike. Royal Matcher is the only true swap-three here: an eight-by-eight grid, a printed goal of 8 flowers and 7 castles, and 22 steps to do it in. Smash Blocks, filed under arcade, sends tapped tiles into a three-slot tray. Chroma Jam sits between the two: tap coloured blocks off a tray into matching side racks, with 05:00 on the clock.',
       'Two are planning puzzles. Arrow Maze Solve is a single wiring-diagram board with a five-minute clock, three hearts and a zoom slider under the puzzle. Block Puzzle: Save Girl makes you program a route — the rule is printed as "Box moves arrow way" — while a segmented dragon crawls along the same track toward a princess, so the timer is something you can see coming.',
       'The last three are harder to classify, which is why they are worth trying first. Satisfying Stack is a merge game on a four-by-four tray where you "Tap to Choose" and then Push or Merge toward milestones at 5, 6, 7, 8 and 10. Bubble Safari is a bubble shooter with a shot budget in the reticle and four ad-charged power-ups. Wizard Sort is listed as a separate entry but is the same build as Hue & Brew down to its level files, so read the Water Sort page for what it actually plays like.'
     ],
     faq: [
-      { q: 'Which of these is a real match-3?', a: 'Royal Matcher is the only swap-three: an eight-by-eight grid of five tile types with a collection goal and a step budget printed in the header. Grocery Adventure: Master and Smash Blocks match in threes but do not swap tiles, and Puzzle Yarn Fun is a colour-sort despite what its blurb says.' },
-      { q: 'Which puzzle games are timed?', a: 'Chroma Jam counts down from 05:00, Arrow Maze Solve from 04:55, and Grocery Adventure: Master from 03:24. Block Puzzle: Save Girl has no clock but sends a dragon along the track instead. The rest are untimed.' },
+      { q: 'Which of these is a real match-3?', a: 'Royal Matcher is the only swap-three: an eight-by-eight grid of five tile types with a collection goal and a step budget printed in the header. Smash Blocks matches in threes but does not swap tiles, and Puzzle Yarn Fun is a colour-sort despite what its blurb says.' },
+      { q: 'Which puzzle games are timed?', a: 'Chroma Jam counts down from 05:00 and Arrow Maze Solve from 04:55. Block Puzzle: Save Girl has no clock but sends a dragon along the track instead. The rest are untimed.' },
       { q: 'Do any of them need landscape?', a: 'No. All twelve draw a portrait canvas. Five games in this catalogue were filed as landscape until we captured them, and every one of those entries was wrong.' },
       { q: 'Which is hardest?', a: 'On the evidence of the first board, Arrow Maze Solve — it is the only one that charges you for help, with hints priced at 200, 300 and 400 coins against a starting balance of 1000, and it puts three lives and a clock on the same screen.' },
       { q: 'Is Wizard Sort a different game from Puzzle: Water Sort?', a: 'Not in the builds we ship. The two folders share identical level data and the same on-screen title, "Hue & Brew"; only the wrapper differs. The Water Sort guide describes both.' }

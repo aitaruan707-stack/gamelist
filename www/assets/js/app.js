@@ -29,7 +29,7 @@
     if (g.cover) return '/assets/covers/' + g.cover;
     return '/assets/covers/' + g.slug + '.svg';
   }
-  function detailUrl(g) { return '/g/' + g.slug + '.html'; }
+  function detailUrl(g) { return '/hyper-feed/' + g.slug + '/game.html'; }
   function playUrl(g) { return '/play.html?id=' + g.slug; }
 
   /* ---------- favorites ---------- */
