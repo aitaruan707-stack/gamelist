@@ -1,0 +1,127 @@
+{
+  "Music": [
+    {
+      "name": "Wilderness",
+      "urlName": "Wilderness",
+	    "duration":80,
+      "tMiss": 3,
+      "difficulty":0,
+      "type": "Popular",
+      "coin":200,
+      "isNew":false
+    },
+	 {
+      "name": "Tunnel",
+      "urlName": "Tunnel",
+	    "duration":85,
+      "tMiss": 3,
+      "difficulty":0,
+      "type": "Electronica",
+      "coin":400,
+      "isNew":false
+    },
+    {
+      "name": "Town",
+      "urlName": "Town",
+	  "duration":90,
+      "tMiss": 2.5,
+      "difficulty":1,
+      "type": "Popular",
+      "coin":800,
+      "isNew":false
+   
+    },
+    {
+      "name": "Forest",
+      "urlName": "Forest",
+	  "duration":90,
+      "tMiss": 2.5,
+      "difficulty":1,
+      "type": "Popular",
+      "coin":-1,
+      "isNew":false
+    },
+    {
+      "name": "Factory",
+      "urlName": "Factory",
+	  "duration":90,
+      "tMiss": 2.2,
+      "difficulty":1,
+      "type": "Popular",
+      "coin":-1,
+      "isNew":false
+    },
+
+
+    {
+      "name": "Basement",
+      "urlName": "Basement",
+	    "duration":100,
+      "tMiss":3,
+      "difficulty":2,
+      "type": "Electronica",
+      "coin":-1,
+      "isNew":false
+    },
+    {
+      "name": "Hospital",
+      "urlName": "Hospital",
+	  "duration":100,
+      "tMiss":3,
+      "difficulty":2,
+      "type": "Popular",
+      "coin":-1,
+      "isNew":true
+    },
+    {
+      "name": "School",
+      "urlName": "School",
+	    "duration":100,
+      "tMiss":3,
+      "difficulty":2,
+      "type": "Popular",
+      "coin":-1,
+      "isNew":true
+    },
+    {
+      "name": "Prison",
+      "urlName": "Prison",
+	  "duration":100,
+      "tMiss":3,
+      "difficulty":2,
+      "type": "Popular",
+      "coin":-1,
+      "isNew":true
+    },
+    {
+      "name": "Laboratory",
+      "urlName": "Laboratory",
+	    "duration":100,
+      "tMiss": 3,
+      "difficulty":2,
+      "type": "Popular",
+      "coin":-1,
+      "isNew":true
+    },
+    {
+      "name": "Ruins",
+      "urlName": "Ruins",
+	    "duration":100,
+      "tMiss": 3,
+      "difficulty":2,
+      "type": "Popular",
+      "coin":2000,
+      "isNew":true
+    },
+    {
+      "name": "Nightclub",
+      "urlName": "Nightclub",
+	   "duration":100.00,
+      "tMiss":3,
+      "difficulty":2,
+      "type": "Popular",
+      "coin":-1,
+      "isNew":true
+    }
+  ]
+}

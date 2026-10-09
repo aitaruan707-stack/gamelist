@@ -42,19 +42,28 @@
 })();
 </script>
 
-<!-- Mixed-content repair: this build points its remote level art and music at
-     http://club.loveat.cn/ (config field `url` in src/project.*.js). On our HTTPS
-     origin Chrome blocks those subresource requests, the preloader never completes
-     and the game sits on "Loading..." forever. The upstream host has no working TLS
-     (https:// fails the handshake), so upgrading the scheme is not an option. Every
-     request to that origin is instead rewritten onto our own /loveat/ path, which
-     vercel.json proxies server-side to the HTTP upstream. Patching the network layer
-     keeps the game's own files untouched. -->
+<!-- Mixed-content repair: this build points its level list, level cards and music
+     preview at http://club.loveat.cn/ (config field `url` in src/project.3110c.js).
+     That host has no working TLS (https:// fails the handshake), so on our HTTPS
+     origin Chrome blocks those subresources as mixed content, the preloader never
+     completes and the page sits on "Loading..." forever.
+
+     The level manifest and card art (Song.json + pic/*.png, ~25KB total) are now
+     mirrored under this game's own directory, because they gate startup. Music
+     previews are ~1.8MB each and stay on the upstream, reached through the
+     /loveat/ rewrite in vercel.json. The game's JS files are left untouched. -->
 <script>
 (function () {
-  var FROM = 'http://club.loveat.cn/', TO = '/loveat/';
+  var ORIGIN = 'http://club.loveat.cn/';
+  var MIRROR = '/hyper-feed/zombiedown/loveat/';
+  var PROXY = '/loveat/';
+  /* Startup-critical paths come from our own mirror; anything else (the mp3s)
+     still goes to the upstream through the rewrite. */
+  var MIRRORED = /^play\/DancingBlade\/(Song\.json|pic\/)/;
   function fix(u) {
-    return typeof u === 'string' && u.indexOf(FROM) === 0 ? TO + u.slice(FROM.length) : u;
+    if (typeof u !== 'string' || u.indexOf(ORIGIN) !== 0) return u;
+    var rest = u.slice(ORIGIN.length);
+    return (MIRRORED.test(rest) ? MIRROR : PROXY) + rest;
   }
 
   var XO = XMLHttpRequest.prototype.open;
@@ -127,11 +136,29 @@
 
   <link rel="stylesheet" type="text/css" href="style-mobile.6e9cd.css"/>
   <link rel="icon" href="favicon.8de18.ico"/>
-<!-- Tapzens standalone shell: phone-sized stage + back bar for direct visits, no-op inside the
-     site iframe. Injected by build.mjs, do not edit by hand. -->
-<script>window.__tz={title:"Zombie Down",back:"/hyper-feed/zombiedown/game.html"};</script>
+<!-- Tapzens standalone shell: phone-sized stage, back bar and ad + more-games rails for direct visits,
+     no-op inside the site iframe. Injected by build.mjs, do not edit by hand. -->
+<script>window.__tz={"title":"Zombie Down","back":"/hyper-feed/zombiedown/game.html","cat":"Action","more":"/c/action.html","ad":"ca-pub-3338178325446150","rec":[["Hunter: Evolve Uprising","action · rpg","/assets/covers/hunterevolveuprising.webp","/hyper-feed/hunterevolveuprising/game.html"],["Ace Strike","action · shooter","/assets/covers/acestrike.webp","/hyper-feed/acestrike/game.html"],["Tank Era","tank · battle","/assets/covers/tankera.webp","/hyper-feed/tankera/game.html"],["Nuts Snake","casual · mobile","/assets/covers/nutssnake.webp","/hyper-feed/nutssnake/game.html"],["Mahjong Valley","mahjong · tile-match","/assets/covers/mahjongvalley.webp","/hyper-feed/mahjongvalley/game.html"],["Puzzle Yarn Fun","match-3 · casual","/assets/covers/puzzleyarnfun.webp","/hyper-feed/puzzleyarnfun/game.html"]]};</script>
 <link rel="stylesheet" href="/assets/css/game-shell.css">
 <script src="/assets/js/game-shell.js"></script>
+<template id="tz-monetize">
+<!-- consent bridge bootstrap: synchronous on purpose — must run before the CMP and any Google tag -->
+<script>
+window.googlefc=window.googlefc||{};window.googlefc.callbackQueue=window.googlefc.callbackQueue||[];
+window.__tzConsentKey='tapzens:consent:v1';
+(function(){var K=window.__tzConsentKey;window.dataLayer=window.dataLayer||[];
+function g(){dataLayer.push(arguments)}window.gtag=window.gtag||g;
+try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.consent==='object'){g('consent','default',c.consent);}}catch(e){}
+})();
+</script>
+<!-- Google AdSense: auto ads -->
+<meta name="google-adsense-account" content="ca-pub-3338178325446150">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3338178325446150" crossorigin="anonymous"></script>
+<!-- Google certified CMP — ad privacy consent message (GDPR / CCPA) -->
+<script async src="https://fundingchoicesmessages.google.com/i/pub-3338178325446150?ers=1"></script>
+<script>(function s(){if(!window.frames.googlefcPresent){if(document.body){var f=document.createElement('iframe');f.style.cssText='display:none';f.name='googlefcPresent';document.body.appendChild(f);}else{setTimeout(s,0);}}})();</script>
+<!-- consent bridge: persists the CMP decision and exposes the revocation entrypoint -->
+<script defer src="/assets/js/consent.js"></script></template>
 </head>
 <body>
   <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>

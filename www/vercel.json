@@ -8,7 +8,7 @@
   ],
   "headers": [
     {
-      "source": "/hyper-feed/:slug/(assets|src|cocos-js|remote|libs|js|res|subRes|subRes1|subRes2|skin|scenes|res3d|loading|json|h5|utils)/(.*)",
+      "source": "/hyper-feed/:slug/(assets|src|cocos-js|remote|libs|js|res|subRes|subRes1|subRes2|skin|scenes|res3d|loading|json|h5|utils|loveat)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
