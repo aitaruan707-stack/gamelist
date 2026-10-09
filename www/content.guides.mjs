@@ -795,6 +795,55 @@ export const GUIDES = {
     ]
   },
 
+  lihuadoku: {
+    verdict: 'Sudoku with the digits replaced by cats and the nine boxes replaced by painted territories: Level 1 is a four-by-four grid in four colours, one cat may go in each colour, one in each row and one in each column, and no two may touch — and the board crosses itself out after every placement instead of ever telling you a cat is wrong.',
+    about: [
+      'The way in is a menu, not a board. A chip row along the top carries a sun at 0, a light bulb at 6 and a paw print at 6 beside an orange plus and a settings gear, and the LihuaDoku wordmark sits over a background grid of faded cat silhouettes, paw prints and crosses. Under it two cards: a locked purple "DAILY CHALLENGE" reading "COMPLETE LEVEL 21 TO UNLOCK" and a yellow "DAILY CHECK-IN" reading "DAY 1 · READY". One orange "Level 1" button starts the game, and a lantern at the foot of the screen notes "TERRITORY EXPEDITION — Complete 10 levels to unlock" (frame 1).',
+      'The rules are printed on the play screen rather than filed behind a help button. Three chips sit under the header: "1 Cat per color" beside a five-square swatch, "1 Cat per column and row" beside a grid icon, and "Cats can\'t be adjacent" beside a red one (frames 2–3). Level 1 adds nothing to that text. What it gives you instead is a 4x4 grid, a cat chip that counts the four cats the board wants, a fish chip reading "x 10", and a score that pays a flat 600 per cat.',
+      'The grid is painted, and the paint is uneven. Level 1 uses olive, teal, blue-grey and pink, and the split is eleven olive cells, three pink, one teal and one blue-grey (frame 2) — four colours against a four-cat requirement, which is the entire clue. The territories are not squares: the pink one is an L of three cells tucked into the bottom-right corner, and only one of those three can ever hold the pink cat.'
+    ],
+    systems: [
+      { h: 'Colour is the box, and it can be any shape', p: 'The "1 Cat per color" chip does the work a sudoku block does, except the regions are painted freely. Drop one cat into the pink corner cell and the other two pink cells cross out alongside its row and column (frame 2). The eleven-cell olive mass is the same rule running the other way: one cat anywhere in it retires ten candidates, which is why the board looks half-solved after a single move.' },
+      { h: 'The crosses are the whole interface', p: 'Each placement re-annotates the grid in the same beat — no confirm dialog, no invalid-move toast, nothing that ever says a cat is wrong. Seven crosses appear around the first corner cat (frame 2); by three cats down there are twelve crosses and exactly one uncrossed square left, with the chip reading "3/4" (frame 3). That last frame is the puzzle arriving: the game has not placed the fourth cat for you, it has simply left one cell where a cat is still legal.' },
+      { h: 'A wrong move costs the fish meter, not the score', p: 'Score is flat — 600 with one cat on the board (frame 2), 1800 with three (frame 3). The fish chip is the part that reacts. On a capture where a second double-tap landed on a cell the board had already crossed out, no cat appeared, the counter stayed at "1/4" and the score stayed at 600, while the fish chip fell from "x 10" to "x 9". Guessing is legal and it is priced; the board never blocks it.' },
+      { h: 'Undo, Reveal and Hint are stock you spend', p: 'All three sit under the board wearing an orange badge reading 6 on a fresh level (frame 2), and Reveal burns one of its own to place a correct cat for you — after three uses its badge reads 3 while Undo and Hint are untouched at 6 (frame 3). The win screen restocks: "CLAIM 100 PAWS" over an orange "WATCH VIDEO · 2X REWARD" that spells out "200 PAWS · 2 HINTS · 2 REVEALS" (frame 4).' }
+    ],
+    howTo: [
+      'Find the one-cell territories before you place anything. On Level 1 the teal and the blue-grey cells are a whole colour each, so those two cats have exactly one legal home apiece and everything else has to be arranged around them.',
+      'Double-tap to drop a cat — the game labels the gesture with its own callout over the first board.',
+      'Read the crosses as a live elimination log rather than as decoration: the rest of that row, the rest of that column, the cells touching it on all eight sides, and every other cell of that colour all go out at once (frame 2).',
+      'Count before you commit. The cat chip says how many cats the board still wants and the crosses say where a cat is still legal; if the uncrossed cells run short of the number you still owe, undo rather than pressing on.',
+      'Work the crowded colour last. The eleven-cell olive mass is decided by whatever else you have already placed, so pinning down teal and blue-grey first narrows it down for free.',
+      'Tap Reveal when the board is genuinely stuck — it places a correct cat and spends one of its six charges — and Undo when a placement has crossed out a cell a later cat still needs (frame 3).'
+    ],
+    tips: [
+      'A single legal cat can strand the board. On one capture an olive cat in the third row crossed out the lone blue-grey cell sitting in the same column — and since that cell was a whole territory on its own, three cats were still owed with only two places left to put them. Nothing on screen warns you when this happens.',
+      'The uncrossed cells are candidates, not answers. A cell with no cross on it only means the current layout has not ruled it out yet; frame 3 is the rare case where a single survivor is left, and most boards get there much later.',
+      'Score is not the objective. It moves in fixed 600 steps (frames 2–3) while the level ends on the cat counter, so a run that finishes four-for-four beats one that is still racking up points on a board it cannot close.',
+      'The three rule chips are the complete ruleset. There is no fourth constraint hiding behind the gear, and every cross on the grid traces back to one of those three lines.'
+    ],
+    mistakes: [
+      'Waiting for the game to reject a bad cat. It never does — a placement that breaks nothing visible just quietly spends a step of your fish multiplier and reshuffles the crosses.',
+      'Reading the territories as squares. This is not sudoku with nine boxes: Level 1 paints eleven of its sixteen cells one colour, and the pink one is an L in the corner.',
+      'Treating the "x 10" fish chip as a bonus you can ignore. It is the only thing a wrong move takes away, and it is what makes guessing expensive on a board you have not narrowed down.'
+    ],
+    device: 'Portrait, and the play screen is one column of furniture with nothing off-screen: a "LEVEL" and score chip across the top with a back arrow and a gear, the cat counter and fish multiplier under it, then the three rule chips, the grid, and three round tool buttons along the bottom (frames 2–3). The menu is the only screen that scrolls into cards you cannot reach yet (frame 1). No keyboard control appears on any captured frame — the whole game is double-taps.',
+    faq: [
+      { q: 'What are the rules of LihuaDoku?', a: 'Three, and the game prints them on the play screen: "1 Cat per color", "1 Cat per column and row", "Cats can\'t be adjacent" (frames 2–3). Fill the number of cats the counter asks for and the level ends.' },
+      { q: 'What do the crosses on the cells mean?', a: 'They are the board eliminating itself. Every placement crosses out the rest of its row, the rest of its column, the cells touching it — diagonals included — and every other cell of the same colour (frame 2). A crossed cell cannot take a cat while the current layout stands.' },
+      { q: 'What happens if I place a cat wrongly?', a: 'Nothing stops you. A double-tap that does not add a cat leaves the score and the counter where they were and drops the fish multiplier one notch — "x 10" to "x 9" on one capture — and Undo takes a placed cat back at the cost of one of its six charges.' },
+      { q: 'How big are the boards?', a: 'Level 1 is a 4x4 (frame 2). The shipped build\'s own level files name boards from 4x4 up to 12x12 — 3,370 of them, split between a "normal" run and a 200-board "expedition" set, which lines up with the "TERRITORY EXPEDITION" card the menu gates behind 10 levels (frame 1).' },
+      { q: 'Is there a time limit?', a: 'No countdown appears on the board in any captured frame. The win screen shows "TIME 00:15" as a result line under "LEVEL COMPLETE", not as a constraint (frame 4).' },
+      { q: 'What are Paws for?', a: 'Each clear pays "CLAIM 100 PAWS", and the optional video doubles it to "200 PAWS" while adding 2 HINTS and 2 REVEALS (frame 4). The menu carries a paw counter beside the hint bulb along the top, so both stocks are visible before you enter a level (frame 1).' }
+    ],
+    shots: [
+      'The menu: sun / bulb / paw counters along the top with an orange plus and a gear, the LihuaDoku wordmark over a faded grid of cat silhouettes, paws and crosses, a locked purple "DAILY CHALLENGE — COMPLETE LEVEL 21 TO UNLOCK" beside a yellow "DAILY CHECK-IN — DAY 1 · READY", the orange "Level 1" button, and "TERRITORY EXPEDITION — Complete 10 levels to unlock" at the foot.',
+      'Level 1 after one cat: the orange tabby sitting in the bottom-right pink cell with "Score 600" and "1/4" in the header, the fish chip at "x 10", the three rule chips above the grid, and seven cells crossed out — the rest of row four, the rest of column four and both remaining pink cells — with Undo, Reveal and Hint each badged 6 below.',
+      'Three cats down and the board decided: teal, blue-grey and pink occupied, "Score 1800", "3/4", twelve crosses, and a single uncrossed olive cell left in the bottom row for the fourth cat. Reveal has dropped to 3 charges while Undo and Hint still read 6.',
+      'The clear screen: "LEVEL COMPLETE" over "TIME 00:15" and the tabby sounding a trumpet inside a burst of rings, a "CURIOUS COMPANION — Lihua joined your journey. 1 / 10" card, "CLAIM 100 PAWS", and the orange "WATCH VIDEO · 2X REWARD — 200 PAWS · 2 HINTS · 2 REVEALS" button under it.'
+    ]
+  },
+
 };
 
 /*

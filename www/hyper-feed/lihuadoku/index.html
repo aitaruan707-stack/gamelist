@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Hidden-context fallback: HTML5 game engines (Cocos 2.x/3.x, Laya) never finish
+     init when the page is hidden (embedded preview webviews, background tabs) —
+     requestAnimationFrame never fires and the engine self-pauses on visibilitychange.
+     We wrap rAF with a setTimeout fallback that engages whenever the page is truly
+     hidden (checked at call time, so late hiding is covered), and spoof visibility
+     so the engine never self-pauses. -->
+<script>
+(function () {
+  var proto = Object.getOwnPropertyDescriptor(Document.prototype, 'hidden') ? Document.prototype : HTMLDocument.prototype;
+  var hiddenGet = (Object.getOwnPropertyDescriptor(proto, 'hidden') || {}).get;
+  if (!hiddenGet) return;
+  var trueHidden = function () { return hiddenGet.call(document); };
+
+  /* 1) setTimeout-driven rAF whenever truly hidden (native rAF starves there) */
+  var nRAF = window.requestAnimationFrame.bind(window);
+  var nCAF = window.cancelAnimationFrame.bind(window);
+  var slow = {};
+  window.requestAnimationFrame = function (cb) {
+    if (trueHidden()) {
+      var t = setTimeout(function () { delete slow[t]; cb(performance.now()); }, 16);
+      slow[t] = 1;
+      return t;
+    }
+    return nRAF(cb);
+  };
+  window.cancelAnimationFrame = function (id) {
+    if (slow[id]) { clearTimeout(id); delete slow[id]; }
+    else nCAF(id);
+  };
+
+  /* 2) spoof visibility so the engine never self-pauses */
+  Object.defineProperty(document, 'hidden', { configurable: true, get: function () { return false; } });
+  Object.defineProperty(document, 'visibilityState', { configurable: true, get: function () { return 'visible'; } });
+  var origAdd = document.addEventListener.bind(document);
+  document.addEventListener = function (type, fn, opts) {
+    if (type === 'visibilitychange') return;
+    return origAdd(type, fn, opts);
+  };
+})();
+</script>
+  <meta charset="utf-8">
+
+  <title>LihuaDoku: Cat Logic Puzzle</title>
+  <link rel="icon" href="data:,">
+
+  <meta name="viewport"
+        content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1,minimal-ui=true"/>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+
+  <meta name="renderer" content="webkit"/>
+  <meta name="force-rendering" content="webkit"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <meta name="full-screen" content="yes"/>
+  <meta name="x5-fullscreen" content="true"/>
+  <meta name="360-fullscreen" content="true"/>
+  <meta name="x5-page-mode" content="app">
+
+  <link rel="stylesheet" type="text/css" href="style.css"/>
+  <style>
+    #brand-loading-cover {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      overflow: hidden;
+      background: #fbf3e7;
+      transition: opacity .28s ease, visibility .28s ease;
+    }
+    #brand-loading-cover.is-ready {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .brand-loading-background {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      pointer-events: none;
+    }
+    .brand-loading-logo {
+      position: absolute;
+      z-index: 2;
+      top: max(54px, 10.5vh);
+      left: 50%;
+      width: min(82vw, 720px);
+      height: auto;
+      opacity: 0;
+      filter: drop-shadow(0 5px 9px rgba(128, 63, 24, .12));
+      transform: translate(-50%, 10px) scale(.985);
+      animation: brand-logo-enter .68s cubic-bezier(.2,.78,.24,1) .08s forwards;
+      pointer-events: none;
+    }
+    .brand-loading-cat-stage {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      bottom: max(34px, 5.5vh);
+      width: min(84vw, 650px);
+      aspect-ratio: 1155 / 1337;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .brand-loading-cat-expression {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity .1s ease-out;
+    }
+    .brand-loading-cat-open { opacity: 1; }
+    .brand-loading-cat-stage.is-blinking .brand-loading-cat-open,
+    .brand-loading-cat-stage.is-tilting .brand-loading-cat-open { opacity: 0; }
+    .brand-loading-cat-stage.is-blinking .brand-loading-cat-blink,
+    .brand-loading-cat-stage.is-tilting .brand-loading-cat-tilt { opacity: 1; }
+    @keyframes brand-logo-enter {
+      to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+    }
+    .brand-loading-progress {
+      position: absolute;
+      z-index: 4;
+      left: 50%;
+      bottom: max(18px, 2.5vh);
+      width: 144px;
+      height: 4px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(143, 84, 49, .12);
+      transform: translateX(-50%);
+    }
+    .brand-loading-progress::after {
+      content: '';
+      display: block;
+      width: 48%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #f1782b, #ffac2f);
+      animation: brand-loading-slide 1.05s ease-in-out infinite alternate;
+    }
+    @keyframes brand-loading-slide {
+      from { transform: translateX(-8%); }
+      to { transform: translateX(118%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .brand-loading-logo { opacity: 1; transform: translate(-50%, 0); animation: none; }
+      .brand-loading-cat-expression { transition: none; }
+      .brand-loading-progress::after { animation: none; width: 100%; }
+    }
+    @media (max-height: 680px) {
+      .brand-loading-logo { top: 7.5vh; width: min(76vw, 650px); }
+      .brand-loading-cat-stage { bottom: 4.5vh; width: min(74vw, 560px); }
+    }
+  </style>
+<!-- Tapzens standalone shell: phone-sized stage, back bar and ad + more-games rails for direct visits,
+     no-op inside the site iframe. Injected by build.mjs, do not edit by hand. -->
+<script>window.__tz={"title":"LihuaDoku: Cat Logic Puzzle","back":"/hyper-feed/lihuadoku/game.html","cat":"Puzzle","more":"/c/puzzle.html","ad":"ca-pub-3338178325446150","rec":[["Mahjong Valley","mahjong · tile-match","/assets/covers/mahjongvalley.webp","/hyper-feed/mahjongvalley/game.html"],["Wizard Sort","sort · magic","/assets/covers/wizardsort.webp","/hyper-feed/wizardsort/game.html"],["Royal Matcher","match-3 · casual","/assets/covers/royalmatcher.webp","/hyper-feed/royalmatcher/game.html"],["Chroma Jam","sort · match-3","/assets/covers/chromajam.webp","/hyper-feed/chromajam/game.html"],["Puzzle Yarn Fun","match-3 · casual","/assets/covers/puzzleyarnfun.webp","/hyper-feed/puzzleyarnfun/game.html"],["Bubble Safari","bubble · match-3","/assets/covers/bubblesafari.webp","/hyper-feed/bubblesafari/game.html"]]};</script>
+<link rel="stylesheet" href="/assets/css/game-shell.css">
+<script src="/assets/js/game-shell.js"></script>
+<template id="tz-monetize">
+<!-- consent bridge bootstrap: synchronous on purpose — must run before the CMP and any Google tag -->
+<script>
+window.googlefc=window.googlefc||{};window.googlefc.callbackQueue=window.googlefc.callbackQueue||[];
+window.__tzConsentKey='tapzens:consent:v1';
+(function(){var K=window.__tzConsentKey;window.dataLayer=window.dataLayer||[];
+function g(){dataLayer.push(arguments)}window.gtag=window.gtag||g;
+try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.consent==='object'){g('consent','default',c.consent);}}catch(e){}
+})();
+</script>
+<!-- Google AdSense: auto ads -->
+<meta name="google-adsense-account" content="ca-pub-3338178325446150">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3338178325446150" crossorigin="anonymous"></script>
+<!-- Google certified CMP — ad privacy consent message (GDPR / CCPA) -->
+<script async src="https://fundingchoicesmessages.google.com/i/pub-3338178325446150?ers=1"></script>
+<script>(function s(){if(!window.frames.googlefcPresent){if(document.body){var f=document.createElement('iframe');f.style.cssText='display:none';f.name='googlefcPresent';document.body.appendChild(f);}else{setTimeout(s,0);}}})();</script>
+<!-- consent bridge: persists the CMP decision and exposes the revocation entrypoint -->
+<script defer src="/assets/js/consent.js"></script></template>
+</head>
+<body>
+  <div id="brand-loading-cover" role="status" aria-label="Loading LihuaDoku: Cat Logic Puzzle">
+    <img class="brand-loading-background" src="landing/landing-background-v1.jpg" alt="" aria-hidden="true" fetchpriority="high">
+    <img class="brand-loading-logo" src="landing/landing-logo-v1.webp" alt="LihuaDoku" fetchpriority="high">
+    <div class="brand-loading-cat-stage" aria-hidden="true">
+      <img class="brand-loading-cat-expression brand-loading-cat-open" src="landing/landing-cat-open-v1.webp" alt="">
+      <img class="brand-loading-cat-expression brand-loading-cat-blink" src="landing/landing-cat-blink-v1.webp" alt="">
+      <img class="brand-loading-cat-expression brand-loading-cat-tilt" src="landing/landing-cat-tilt-v1.webp" alt="">
+    </div>
+    <div class="brand-loading-progress" aria-hidden="true"></div>
+  </div>
+  <div id="GameDiv" cc_exact_fit_screen="true">
+    <div id="Cocos3dGameContainer">
+      <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="99"></canvas>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var cover = document.getElementById('brand-loading-cover');
+      var catStage = cover && cover.querySelector('.brand-loading-cat-stage');
+      var expressionTimer = 0;
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var scheduleCatExpression = function () {
+        if (!catStage || reduceMotion || !document.documentElement.contains(catStage)) return;
+        expressionTimer = window.setTimeout(function () {
+          var isBlink = Math.random() < .76;
+          var className = isBlink ? 'is-blinking' : 'is-tilting';
+          if (isBlink) catStage.classList.add('is-blinking');
+          else catStage.classList.add('is-tilting');
+          window.setTimeout(function () {
+            catStage && catStage.classList.remove(className);
+            scheduleCatExpression();
+          }, className === 'is-blinking' ? 145 : 420);
+        }, 2500 + Math.random() * 2700);
+      };
+      scheduleCatExpression();
+      var dismiss = function () {
+        if (!cover || cover.classList.contains('is-ready')) return;
+        window.clearTimeout(expressionTimer);
+        cover.classList.add('is-ready');
+        window.setTimeout(function () { cover && cover.remove(); }, 360);
+      };
+      window.addEventListener('cat-territory-ready', dismiss, { once: true });
+      window.setTimeout(dismiss, 15000);
+    }());
+  </script>
+  
+
+<!-- Polyfills bundle. -->
+
+<script src="src/polyfills.bundle.js" charset="utf-8"> </script>
+
+
+<!-- SystemJS support. -->
+<script src="src/system.bundle.js" charset="utf-8"> </script>
+
+<!-- Import map -->
+<script src="src/import-map.json" type="systemjs-importmap" charset="utf-8"> </script>
+
+<script>
+    System.import('./index.js').catch(function(err) { console.error(err); })
+</script>
+
+</body>
+</html>

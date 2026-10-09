@@ -869,6 +869,56 @@
           "a": "Progress is saved in your browser only, so clearing browser data may reset it."
         }
       ]
+    },
+    {
+      "slug": "lihuadoku",
+      "title": "LihuaDoku: Cat Logic Puzzle",
+      "category": "Puzzle",
+      "tags": [
+        "logic",
+        "sudoku",
+        "relaxing",
+        "casual",
+        "mobile"
+      ],
+      "description": "Sudoku rebuilt as a cat game: the board is divided into colored territories, every territory has to hold exactly one cat, and no two cats may share a row, a column or a border - diagonals count as touching. Double-tap drops a cat and the game crosses out every cell the new layout rules out straight away, so each placement narrows the search instead of just filling the grid. Boards run from 4x4 up to 12x12, a correct cat pays score and lifts the fish multiplier, and Undo, Reveal and Hint carry counted charges rather than being free.",
+      "controls": [
+        "Double-tap a cell to place a cat; the crossed-out cells are the ones the current layout already rules out.",
+        "Keep exactly one cat in each colored territory, one in every row and one in every column, and never let two cats sit side by side, diagonals included.",
+        "Tap Undo to take a cat back, Reveal to have the game place one correct cat, or Hint to light up the next move - each button shows how many charges are left.",
+        "Fill the cat count shown under the top bar to finish the level, then claim the paw reward; the optional video doubles it and adds hint and reveal charges."
+      ],
+      "entry": "index.html",
+      "cover": "lihuadoku.webp",
+      "splash": null,
+      "orientation": "portrait",
+      "featured": false,
+      "popularWeight": 620,
+      "publishedAt": "2026-10-09",
+      "developer": "Tapzens",
+      "faq": [
+        {
+          "q": "Is LihuaDoku: Cat Logic Puzzle free?",
+          "a": "Yes, completely free to play in your browser."
+        },
+        {
+          "q": "What are the rules?",
+          "a": "One cat per colored territory, one cat per row and one per column, and no two cats may touch - diagonally included."
+        },
+        {
+          "q": "Do I need to install anything?",
+          "a": "No installation required — just press Play and it loads instantly on phone, tablet or desktop."
+        },
+        {
+          "q": "What if I get stuck?",
+          "a": "Undo, Reveal and Hint sit under the board with a limited number of charges, and the win screen can top them back up."
+        },
+        {
+          "q": "Is my progress saved?",
+          "a": "Progress is saved in your browser only, so clearing browser data may reset it."
+        }
+      ],
+      "icon": "lihuadoku-icon.webp"
     }
   ]
 }

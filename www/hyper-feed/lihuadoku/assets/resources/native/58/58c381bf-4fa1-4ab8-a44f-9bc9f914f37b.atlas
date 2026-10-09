@@ -1,0 +1,71 @@
+cat-board-idle-v10.png
+size: 1024,1024
+filter: Linear,Linear
+repeat: none
+pma: false
+idle
+  bounds: 0,0,1024,1024
+  rotate: false
+
+cat-board-blink-v10.png
+size: 1024,1024
+filter: Linear,Linear
+repeat: none
+pma: false
+blink
+  bounds: 0,0,1024,1024
+  rotate: false
+
+cat-board-look-left-v10.png
+size: 1024,1024
+filter: Linear,Linear
+repeat: none
+pma: false
+lookLeft
+  bounds: 0,0,1024,1024
+  rotate: false
+
+cat-board-look-right-v10.png
+size: 1024,1024
+filter: Linear,Linear
+repeat: none
+pma: false
+lookRight
+  bounds: 0,0,1024,1024
+  rotate: false
+
+cat-board-happy-v10.png
+size: 1024,1024
+filter: Linear,Linear
+repeat: none
+pma: false
+happy
+  bounds: 0,0,1024,1024
+  rotate: false
+
+cat-board-surprise-v10.png
+size: 1024,1024
+filter: Linear,Linear
+repeat: none
+pma: false
+surprise
+  bounds: 0,0,1024,1024
+  rotate: false
+
+cat-board-curious-v10.png
+size: 1024,1024
+filter: Linear,Linear
+repeat: none
+pma: false
+curious
+  bounds: 0,0,1024,1024
+  rotate: false
+
+cat-board-ear-twitch-v10.png
+size: 1024,1024
+filter: Linear,Linear
+repeat: none
+pma: false
+earTwitch
+  bounds: 0,0,1024,1024
+  rotate: false
