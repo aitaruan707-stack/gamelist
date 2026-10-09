@@ -81,6 +81,11 @@
   <link rel="stylesheet" type="text/css" href="style-mobile.css"/>
   <link rel="icon" href="favicon.ico"/>
 <!-- analytics removed: game bundles must not fire trackers outside the site CMP -->
+<!-- Tapzens standalone shell: phone-sized stage + back bar for direct visits, no-op inside the
+     site iframe. Injected by build.mjs, do not edit by hand. -->
+<script>window.__tz={title:"Arrow Maze Solve",back:"/hyper-feed/arrowmazesolve/game.html"};</script>
+<link rel="stylesheet" href="/assets/css/game-shell.css">
+<script src="/assets/js/game-shell.js"></script>
 </head>
 <body>
   <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>

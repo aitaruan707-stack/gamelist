@@ -1,0 +1,98 @@
+/* Standalone game view — /hyper-feed/<slug>/index.html opened as its own page.
+
+   game-shell.js turns <body> into a phone-sized stage and adds the navigation bar the exported
+   page has none of. Inside the site the same file is the iframe src of a .phone-frame, the class
+   is never added and nothing here applies.
+
+   Loaded by game pages, which do not load style.css, so the tokens are repeated as literals. */
+
+html.tz-standalone {
+  width: 100%;
+  height: 100%;
+  background: #F6F5FB radial-gradient(1100px 620px at 50% -10%, rgba(108, 92, 231, 0.16), rgba(246, 245, 251, 0) 70%) no-repeat;
+}
+
+/* the game engine sizes its canvas from the window and pins it to <body>, so body becomes the phone */
+html.tz-standalone body {
+  position: fixed;
+  top: var(--tz-top, 52px);
+  left: calc(50% - var(--tz-w, 100vw) / 2);
+  width: var(--tz-w, 100vw);
+  height: var(--tz-h, 100vh);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background: #171717;
+  box-sizing: border-box;
+}
+
+#tz-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2147483000;
+  height: var(--tz-bar, 52px);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.88);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #E7E5F2;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+#tz-back {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #6C5CE7;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#tz-back:hover, #tz-back:active { background: #5A4AD6; color: #fff; }
+
+#tz-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #221F3B;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+#tz-home {
+  flex: none;
+  color: #6E6B8A;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+#tz-home:hover { color: #6C5CE7; }
+
+/* on a desktop window the stage reads as a phone standing on the page */
+@media (min-width: 761px) {
+  html.tz-standalone body {
+    border: 1px solid #E7E5F2;
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(20, 10, 60, 0.14);
+  }
+}
