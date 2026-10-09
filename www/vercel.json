@@ -1,5 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/loveat/:path*",
+      "destination": "http://club.loveat.cn/:path*"
+    }
+  ],
   "headers": [
     {
       "source": "/hyper-feed/:slug/(assets|src|cocos-js|remote|libs|js|res|subRes|subRes1|subRes2|skin|scenes|res3d|loading|json|h5|utils)/(.*)",
@@ -34,6 +40,15 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/loveat/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
         }
       ]
     }

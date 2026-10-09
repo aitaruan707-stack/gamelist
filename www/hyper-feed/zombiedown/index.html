@@ -42,6 +42,53 @@
 })();
 </script>
 
+<!-- Mixed-content repair: this build points its remote level art and music at
+     http://club.loveat.cn/ (config field `url` in src/project.*.js). On our HTTPS
+     origin Chrome blocks those subresource requests, the preloader never completes
+     and the game sits on "Loading..." forever. The upstream host has no working TLS
+     (https:// fails the handshake), so upgrading the scheme is not an option. Every
+     request to that origin is instead rewritten onto our own /loveat/ path, which
+     vercel.json proxies server-side to the HTTP upstream. Patching the network layer
+     keeps the game's own files untouched. -->
+<script>
+(function () {
+  var FROM = 'http://club.loveat.cn/', TO = '/loveat/';
+  function fix(u) {
+    return typeof u === 'string' && u.indexOf(FROM) === 0 ? TO + u.slice(FROM.length) : u;
+  }
+
+  var XO = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function (method, url) {
+    var a = Array.prototype.slice.call(arguments);
+    a[1] = fix(url);
+    return XO.apply(this, a);
+  };
+
+  if (window.fetch) {
+    var OF = window.fetch;
+    window.fetch = function (req, opt) {
+      if (typeof req === 'string') req = fix(req);
+      return OF.call(this, req, opt);
+    };
+  }
+
+  /* Cocos loads level art via new Image() and music via new Audio(), both of which
+     assign through the prototype `src` setter rather than XHR. */
+  ['HTMLImageElement', 'HTMLAudioElement', 'HTMLVideoElement', 'HTMLScriptElement'].forEach(function (n) {
+    var C = window[n];
+    if (!C) return;
+    var d = Object.getOwnPropertyDescriptor(C.prototype, 'src');
+    if (!d || !d.set) return;
+    Object.defineProperty(C.prototype, 'src', {
+      get: d.get,
+      set: function (v) { d.set.call(this, fix(v)); },
+      enumerable: d.enumerable,
+      configurable: true
+    });
+  });
+})();
+</script>
+
   <meta charset="utf-8">
 
   <title>Zombie Down</title>
