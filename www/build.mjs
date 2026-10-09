@@ -708,30 +708,55 @@ function buildDetails() {
 /* ---------- standalone game shell ---------- */
 /* hyper-feed/<slug>/index.html is the shipped game entry, and the Fullscreen button opens it as a
    page of its own. Bare, it sizes the canvas from the real window — a portrait game across a
-   desktop — and carries no link back. assets/{css,js}/game-shell.* add a phone-sized stage and a
-   back bar, and step aside when the page is embedded (the detail page iframe), so nothing inside a
-   game changes. They must load before the engine boots, hence the end of <head>, after the game's
-   own stylesheet. Idempotent: a page that already carries the marker is left untouched. */
+   desktop — and carries no link back. assets/{css,js}/game-shell.* add a phone-sized stage, a back
+   bar and the two side rails, and step aside when the page is embedded (the detail page iframe), so
+   nothing inside a game changes. They must load before the engine boots, hence the end of <head>,
+   after the game's own stylesheet. The ad + CMP tags ride along inside a <template>, where they are
+   inert: the shell moves them into <head> only on a standalone visit, so no tracker or consent
+   prompt ever initializes inside the site's iframe. Re-running replaces the old block, not stacks. */
 const SHELL_MARK = 'Tapzens standalone shell';
+const SHELL_RE = /<!-- Tapzens standalone shell:[\s\S]*?<\/head>/i;
 function installGameShell() {
-  let patched = 0, present = 0, skipped = [];
+  let patched = 0, same = 0, skipped = [];
   for (const g of games) {
     const rel = `hyper-feed/${g.slug}/index.html`;
     if (!existsSync(dist(rel))) { skipped.push(`${g.slug} (no entry)`); continue; }
     const src = readFileSync(dist(rel), 'utf8');
-    if (src.includes(SHELL_MARK)) { present++; continue; }
-    const tag = `<!-- ${SHELL_MARK}: phone-sized stage + back bar for direct visits, no-op inside the
-     site iframe. Injected by build.mjs, do not edit by hand. -->
-<script>window.__tz={title:${JSON.stringify(g.title)},back:${JSON.stringify(detailUrl(g))}};</script>
+    const cat = (data.categories || []).find((c) => c.slug === g.category.toLowerCase());
+    /* the rail reads best when it is full, so same-category picks come first and the popular
+       games back them up — Action and Arcade only hold 4 and 2 titles */
+    const rec = games.filter((x) => x.slug !== g.slug && x.category === g.category)
+      .concat(games.filter((x) => x.slug !== g.slug && x.category !== g.category)
+        .sort((a, b) => (b.popularWeight || 0) - (a.popularWeight || 0)))
+      .slice(0, 6);
+    const payload = JSON.stringify({
+      title: g.title,
+      back: detailUrl(g),
+      cat: g.category,
+      more: cat ? '/c/' + cat.slug + '.html' : '/#all',
+      ad: SITE.adsense || '',
+      rec: rec.map((x) => [x.title, (x.tags || []).slice(0, 2).join(' · ') || x.category, coverUrl(x), detailUrl(x)]),
+    }).replace(/</g, '\\u003c');
+    const tag = `<!-- ${SHELL_MARK}: phone-sized stage, back bar and ad + more-games rails for direct visits,
+     no-op inside the site iframe. Injected by build.mjs, do not edit by hand. -->
+<script>window.__tz=${payload};</script>
 <link rel="stylesheet" href="/assets/css/game-shell.css">
 <script src="/assets/js/game-shell.js"></script>
+<template id="tz-monetize">${headMonetization({ ads: true })}</template>
 </head>`;
-    if (/<\/head>/i.test(src)) write(rel, src.replace(/<\/head>/i, () => tag));
-    else if (/<body/i.test(src)) write(rel, src.replace(/<body/i, () => tag.replace('</head>', '') + '<body'));
-    else { skipped.push(`${g.slug} (no head/body)`); continue; }
+    const next = SHELL_RE.test(src)
+      ? src.replace(SHELL_RE, () => tag)
+      : /<\/head>/i.test(src)
+        ? src.replace(/<\/head>/i, () => tag)
+        : /<body/i.test(src)
+          ? src.replace(/<body/i, () => tag.replace('</head>', '') + '<body')
+          : null;
+    if (next === null) { skipped.push(`${g.slug} (no head/body)`); continue; }
+    if (next === src) { same++; continue; }
+    write(rel, next);
     patched++;
   }
-  console.log(`game shell: ${patched} entries patched, ${present} already carried it${skipped.length ? ', skipped ' + skipped.join(', ') : ''}`);
+  console.log(`game shell: ${patched} entries written, ${same} already current${skipped.length ? ', skipped ' + skipped.join(', ') : ''}`);
 }
 
 /* ---------- static pages ---------- */
@@ -1526,6 +1551,9 @@ function auditTrackers() {
       if (inGames && basename(file) === 'game.html') continue;
       let src;
       try { src = readFileSync(file, 'utf8'); } catch (e) { continue; }
+      /* the shell block build.mjs injects at the end of <head> is our own consent-covered tag set,
+         the same one game.html carries — drop it so this audit keeps describing the shipped bundle */
+      if (inGames) src = src.replace(SHELL_RE, '');
       scanned++;
       if (!/googletagmanager|doubleclick|googlesyndication|pub-|G-[A-Z0-9]{6,}/i.test(src)) continue;
       const urls = [...new Set((src.match(TRACKER_URL_RE) || []).map((u) => u.replace(/["');,]+$/, '')))];

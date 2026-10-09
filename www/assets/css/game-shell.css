@@ -96,3 +96,91 @@ html.tz-standalone body {
     box-shadow: 0 12px 30px rgba(20, 10, 60, 0.14);
   }
 }
+
+/* ---------- side rails ----------
+   The empty space beside the phone becomes an ad column (left) and a more-games column (right).
+   The row is fixed and spans the viewport, with an invisible hole in the middle exactly as wide as
+   the stage; pointer-events stay off over the hole so the game keeps every click. */
+#tz-aside {
+  position: fixed;
+  top: var(--tz-top, 52px);
+  left: 0;
+  right: 0;
+  height: var(--tz-h, 100vh);
+  box-sizing: border-box;
+  display: none;                                  /* shown from 1100px up, see the note at the bottom */
+  justify-content: center;
+  align-items: stretch;
+  gap: 20px;
+  padding: 0 20px;
+  pointer-events: none;
+  z-index: 2;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+#tz-aside > * { pointer-events: auto; }
+#tz-aside .tz-hole { flex: none; width: var(--tz-w, 100vw); pointer-events: none; }
+#tz-ad, #tz-rec { flex: none; width: 300px; }
+
+#tz-ad { display: flex; flex-direction: column; align-items: center; gap: 8px; min-height: 250px; }
+#tz-ad ins, #tz-ad iframe, #tz-ad > div { max-width: 100%; }
+
+.tz-eyebrow {
+  margin: 0;
+  color: #9B98B5;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#tz-rec {
+  box-sizing: border-box;
+  padding: 16px;
+  background: #FFFFFF;
+  border: 1px solid #E7E5F2;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(108, 92, 231, 0.08);
+  overflow: auto;
+}
+
+#tz-rec .tz-eyebrow { display: block; margin-bottom: 6px; }
+
+.tz-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid #F1EFFA;
+  text-decoration: none;
+}
+
+.tz-item:last-of-type { border-bottom: 0; }
+.tz-item:hover .tz-t { color: #6C5CE7; }
+.tz-item img { flex: none; width: 62px; height: 46px; border-radius: 10px; object-fit: cover; background: #F1EFFA; }
+.tz-t { display: block; color: #221F3B; font-size: 14px; font-weight: 600; line-height: 1.35; }
+.tz-c { display: block; color: #9B98B5; font-size: 12px; line-height: 1.35; }
+
+.tz-more {
+  display: block;
+  margin-top: 12px;
+  height: 38px;
+  line-height: 38px;
+  border-radius: 999px;
+  background: rgba(108, 92, 231, 0.10);
+  color: #6C5CE7;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.tz-more:hover { background: rgba(108, 92, 231, 0.16); }
+
+/* Below 1100px the two 300px columns and the phone no longer fit side by side, so the rails go away
+   and the page is just the phone again. game-shell.js asks for its ad slot on the same threshold
+   (RAILS) — a hidden placement is a bad placement, so the two must stay in step. */
+@media (min-width: 1100px) {
+  #tz-aside { display: flex; }
+}

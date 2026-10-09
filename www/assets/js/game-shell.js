@@ -7,9 +7,10 @@
 
    So, before the engine boots, we hand it a phone box instead of the raw window — same
    750:1625 ratio and rounded frame as the site player, never wider than 430px — and once the
-   document exists we add the one control the export is missing: a bar with Back. The box is
-   <body> itself, so every node an engine appends lands inside it on its own; no game file,
-   script or asset is touched. */
+   document exists we add what the export is missing: a bar with Back, and beside the phone an ad
+   column plus a "more games" rail, which is also what makes the empty desktop space worth having.
+   The box is <body> itself, so every node an engine appends lands inside it on its own; no game
+   file, script or asset is touched. */
 
 (function () {
   'use strict';
@@ -96,6 +97,114 @@
     document.body.insertBefore(el, document.body.firstChild);
   }
 
+ /* the ad + CMP tags ship inside an inert <template>, so an embedded view never touches them;
+     only a standalone visit moves them into <head>, in order (consent bridge before the Google tags) */
+  function monetize() {
+    var t = document.getElementById('tz-monetize');
+    if (!t || !t.content) return;
+    var frag = t.content.cloneNode(true);
+    t.parentNode.removeChild(t);
+    document.head.appendChild(frag);
+  }
+
+  /* the two empty columns beside the phone: an ad slot on the left, more games on the right */
+  function rails() {
+    if (!document.body || document.getElementById('tz-aside')) return;
+
+    var wrap = document.createElement('div');
+    wrap.id = 'tz-aside';
+
+    var ad = document.createElement('div');
+    ad.id = 'tz-ad';
+
+    var hole = document.createElement('div');
+    hole.className = 'tz-hole';
+
+    var rec = document.createElement('aside');
+    rec.id = 'tz-rec';
+    var head = document.createElement('h2');
+    head.className = 'tz-eyebrow';
+    head.textContent = 'More ' + (info.cat || 'Games');
+    rec.appendChild(head);
+    (info.rec || []).forEach(function (r) {
+      var a = document.createElement('a');
+      a.className = 'tz-item';
+      a.href = r[3];
+      var img = document.createElement('img');
+      img.src = r[2];
+      img.alt = '';
+      img.width = 62;
+      img.height = 46;
+      img.loading = 'lazy';
+      var txt = document.createElement('span');
+      var t = document.createElement('span');
+      t.className = 'tz-t';
+      t.textContent = r[0];
+      var c = document.createElement('span');
+      c.className = 'tz-c';
+      c.textContent = r[1];
+      txt.appendChild(t);
+      txt.appendChild(c);
+      a.appendChild(img);
+      a.appendChild(txt);
+      rec.appendChild(a);
+    });
+    if (info.more) {
+      var m = document.createElement('a');
+      m.className = 'tz-more';
+      m.href = info.more;
+      m.textContent = 'Browse all games →';
+      rec.appendChild(m);
+    }
+
+    wrap.appendChild(ad);
+    wrap.appendChild(hole);
+    wrap.appendChild(rec);
+    document.body.appendChild(wrap);   /* fixed: it sits beside the stage, not inside it */
+    askAd();
+  }
+
+  /* One placement, asked for only while the rails are actually on screen — a hidden ad slot is a bad
+     ad slot. The column keeps its space either way, but the "Advertisement" label waits for a real
+     fill, so an empty or no-fill column never puts that word above nothing. */
+  var RAILS = '(min-width: 1100px)';      /* keep in step with the @media in game-shell.css */
+  var adAsked = false;
+  function askAd() {
+    var ad = document.getElementById('tz-ad');
+    if (!ad || adAsked || !info.ad) return;
+    if (window.matchMedia && !window.matchMedia(RAILS).matches) return;
+    adAsked = true;
+
+    var ins = document.createElement('ins');
+    ins.className = 'adsbygoogle';
+    ins.style.cssText = 'display:block;width:100%';
+    ins.setAttribute('data-ad-client', info.ad);
+    /* a fixed 300x250, not "auto": an auto unit measures the viewport, and the viewport here is the
+       phone box we handed the engine, so it would come back 391px wide and lean on the stage */
+    ins.setAttribute('data-ad-format', 'rectangle');
+    ad.appendChild(ins);
+    ins.setAttribute('data-ad-width', String(ad.clientWidth || 300));
+    /* the push is safe before the tag loads — it waits in the array */
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+
+    function mark() {
+      if (ad.querySelector('.tz-eyebrow')) return;
+      if (ins.getAttribute('data-ad-status') !== 'filled') return;
+      var l = document.createElement('span');
+      l.className = 'tz-eyebrow';
+      l.textContent = 'Advertisement';
+      ad.insertBefore(l, ad.firstChild);
+    }
+    if (window.MutationObserver) new MutationObserver(mark).observe(ad, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-ad-status'] });
+    if (window.ResizeObserver) new ResizeObserver(mark).observe(ad);
+    mark();
+    /* a fill can arrive after both observers went quiet (late consent, slow response) */
+    var tries = 0;
+    var poll = setInterval(function () { if (++tries > 24 || ad.querySelector('.tz-eyebrow')) clearInterval(poll); else mark(); }, 500);
+  }
+
+  function ready() { bar(); rails(); monetize(); }
+
   var pending = 0;
   function onResize() {
     if (pending) return;
@@ -104,12 +213,13 @@
       var pw = w, ph = h;
       measure();
       apply();
+      askAd();   /* a window dragged out to desktop width earns its ad slot */
       if (pw !== w || ph !== h) window.dispatchEvent(new Event('resize'));   /* let the engine re-fit */
     }, 120);
   }
   window.addEventListener('resize', onResize);
   window.addEventListener('orientationchange', onResize);
 
-  if (document.body) bar();
-  else document.addEventListener('DOMContentLoaded', bar);
+  if (document.body) ready();
+  else document.addEventListener('DOMContentLoaded', ready);
 })();
