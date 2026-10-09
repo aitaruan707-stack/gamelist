@@ -115,7 +115,10 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
     <aside class="gh-side">
       <div class="info-card">
         <h2 class="eyebrow">You Might Also Like</h2>
-        <div class="mini-list"><a class="mini" href="/hyper-feed/mahjongvalley/game.html" aria-label="Mahjong Valley">
+        <div class="mini-list"><a class="mini" href="/hyper-feed/lihuadoku/game.html" aria-label="LihuaDoku: Cat Logic Puzzle">
+    <img src="/assets/covers/lihuadoku.webp" alt="" loading="lazy" width="62" height="46">
+    <span><span class="mt">LihuaDoku: Cat Logic Puzzle</span><span class="ms">Puzzle</span></span>
+  </a><a class="mini" href="/hyper-feed/mahjongvalley/game.html" aria-label="Mahjong Valley">
     <img src="/assets/covers/mahjongvalley.webp" alt="" loading="lazy" width="62" height="46">
     <span><span class="mt">Mahjong Valley</span><span class="ms">Puzzle</span></span>
   </a><a class="mini" href="/hyper-feed/wizardsort/game.html" aria-label="Wizard Sort">
@@ -130,9 +133,6 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
   </a><a class="mini" href="/hyper-feed/puzzleyarnfun/game.html" aria-label="Puzzle Yarn Fun">
     <img src="/assets/covers/puzzleyarnfun.webp" alt="" loading="lazy" width="62" height="46">
     <span><span class="mt">Puzzle Yarn Fun</span><span class="ms">Puzzle</span></span>
-  </a><a class="mini" href="/hyper-feed/bubblesafari/game.html" aria-label="Bubble Safari">
-    <img src="/assets/covers/bubblesafari.webp" alt="" loading="lazy" width="62" height="46">
-    <span><span class="mt">Bubble Safari</span><span class="ms">Puzzle</span></span>
   </a></div>
       </div>
       <div class="info-card more-cta">
@@ -170,7 +170,16 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
       <p>Portrait, and split into three clear bands: the road and the girl at the top, the tray across the middle, the arrow blocks at the bottom where a thumb naturally rests. The dragon and the girl are both large enough to read at a glance on a phone, which matters because they are the timer and the goal. No keyboard control appears on any captured frame.</p>
       <h2>Frequently Asked Questions</h2>
       <div class="faq"><details><summary>What does &quot;Box moves arrow way&quot; mean?</summary><p>It is the game&#39;s own caption for the rule, in a grey bar above the arrows (frames 1–3): the box follows the arrows you place in the tray, in order, and each arrow gives one direction — up, down, left or right. Worth knowing: no box is visible in any frame we captured, so the caption is the only place the word appears.</p></details><details><summary>What is the dragon for?</summary><p>It is the timer. It crawls along the same road toward the girl — absent in frame 1, on the road with its head at the left in frame 2, and breathing fire in frame 3. If it gets there first, the level is lost.</p></details><details><summary>Why do two tray slots say UNLCOK?</summary><p>That is the label as the build renders it — &quot;UNLOCK&quot; with the last letter cut off. The board starts with four usable slots; the outer two show that label over a video-camera icon (frames 1–3), and unlocking them gives you more moves in a sequence.</p></details><details><summary>Is this a block-sliding puzzle?</summary><p>No. The blocks never slide. You place arrow tiles into a sequence tray and a box walks that route along the road.</p></details><details><summary>What happens when the box reaches the girl?</summary><p>We captured the setup, not the rescue — all six tray slots are empty in every frame, and our last frame ends with the dragon breathing fire. So we are describing what is on screen rather than the win screen.</p></details></div>
-      <h2>More Puzzle Games <a class="more" href="/c/puzzle.html" style="float:right">View all</a></h2><div class="grid"><a class="card" href="/hyper-feed/mahjongvalley/game.html" aria-label="Mahjong Valley">
+      <h2>More Puzzle Games <a class="more" href="/c/puzzle.html" style="float:right">View all</a></h2><div class="grid"><a class="card" href="/hyper-feed/lihuadoku/game.html" aria-label="LihuaDoku: Cat Logic Puzzle">
+    <div class="thumb">
+      <img src="/assets/covers/lihuadoku.webp" alt="LihuaDoku: Cat Logic Puzzle cover" loading="lazy"  width="240" height="240">
+      <div class="play-ov"><div class="pcircle"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div></div>
+    </div>
+    <div class="info">
+      <div class="title">LihuaDoku: Cat Logic Puzzle</div>
+      <div class="meta"><span class="cat">Puzzle</span><span class="plays">Free · No install</span></div>
+    </div>
+  </a><a class="card" href="/hyper-feed/mahjongvalley/game.html" aria-label="Mahjong Valley">
     <div class="thumb">
       <img src="/assets/covers/mahjongvalley.webp" alt="Mahjong Valley cover" loading="lazy"  width="240" height="240">
       <div class="play-ov"><div class="pcircle"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div></div>
@@ -215,15 +224,6 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
       <div class="title">Puzzle Yarn Fun</div>
       <div class="meta"><span class="cat">Puzzle</span><span class="plays">Free · No install</span></div>
     </div>
-  </a><a class="card" href="/hyper-feed/bubblesafari/game.html" aria-label="Bubble Safari">
-    <div class="thumb">
-      <img src="/assets/covers/bubblesafari.webp" alt="Bubble Safari cover" loading="lazy"  width="240" height="240">
-      <div class="play-ov"><div class="pcircle"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div></div>
-    </div>
-    <div class="info">
-      <div class="title">Bubble Safari</div>
-      <div class="meta"><span class="cat">Puzzle</span><span class="plays">Free · No install</span></div>
-    </div>
   </a></div>
     </div>
   </div>
@@ -248,7 +248,7 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
     <a href="/#favorites" class=""><svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.9 6.2 21l1.1-6.5L2.6 9.8l6.5-.9z"/></svg><span>Favorites</span></a>
     <a href="/#recent" class=""><svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Recent</span></a>
   </nav>
-<script type="application/json" id="games-data">[{"slug":"mahjongvalley","title":"Mahjong Valley","category":"Puzzle","cover":"mahjongvalley.webp"},{"slug":"wizardsort","title":"Wizard Sort","category":"Puzzle","cover":"wizardsort.webp"},{"slug":"royalmatcher","title":"Royal Matcher","category":"Puzzle","cover":"royalmatcher.webp"},{"slug":"chromajam","title":"Chroma Jam","category":"Puzzle","cover":"chromajam.webp"},{"slug":"puzzleyarnfun","title":"Puzzle Yarn Fun","category":"Puzzle","cover":"puzzleyarnfun.webp"},{"slug":"bubblesafari","title":"Bubble Safari","category":"Puzzle","cover":"bubblesafari.webp"},{"slug":"puzzlewatersort","title":"Puzzle: Water Sort","category":"Puzzle","cover":"watersort.webp"},{"slug":"nutssnake","title":"Nuts Snake","category":"Puzzle","cover":"nutssnake.webp"},{"slug":"hunterevolveuprising","title":"Hunter: Evolve Uprising","category":"Action","cover":"hunterevolveuprising.webp"},{"slug":"acestrike","title":"Ace Strike","category":"Action","cover":"acestrike.webp"},{"slug":"smashblocks","title":"Smash Blocks","category":"Arcade","cover":"blockblastpop.webp"},{"slug":"spinscrewjam","title":"Spin Screw Jam","category":"Puzzle","cover":"spinscrewjam.webp"},{"slug":"puzzlehex","title":"Puzzle Hex","category":"Puzzle","cover":"puzzlehex.webp"},{"slug":"blockpuzzlesavegirl","title":"Block Puzzle: Save Girl","category":"Puzzle","cover":"blockpuzzlesavegirl.webp"},{"slug":"arrowmazesolve","title":"Arrow Maze Solve","category":"Puzzle","cover":"arrowmazesolve.webp"},{"slug":"zombiedown","title":"Zombie Down","category":"Action","cover":"zombiedown.webp"},{"slug":"tankera","title":"Tank Era","category":"Action","cover":"tankera.webp"},{"slug":"shiftdashreac","title":"Shift Dash Reac","category":"Arcade","cover":"shiftdashreac.webp"},{"slug":"satisfyingstack","title":"Satisfying Stack","category":"Puzzle","cover":"satisfyingstack.webp"},{"slug":"lihuadoku","title":"LihuaDoku: Cat Logic Puzzle","category":"Puzzle","cover":"lihuadoku.webp"}]</script>
+<script type="application/json" id="games-data">[{"slug":"lihuadoku","title":"LihuaDoku: Cat Logic Puzzle","category":"Puzzle","cover":"lihuadoku.webp"},{"slug":"mahjongvalley","title":"Mahjong Valley","category":"Puzzle","cover":"mahjongvalley.webp"},{"slug":"wizardsort","title":"Wizard Sort","category":"Puzzle","cover":"wizardsort.webp"},{"slug":"royalmatcher","title":"Royal Matcher","category":"Puzzle","cover":"royalmatcher.webp"},{"slug":"chromajam","title":"Chroma Jam","category":"Puzzle","cover":"chromajam.webp"},{"slug":"puzzleyarnfun","title":"Puzzle Yarn Fun","category":"Puzzle","cover":"puzzleyarnfun.webp"},{"slug":"bubblesafari","title":"Bubble Safari","category":"Puzzle","cover":"bubblesafari.webp"},{"slug":"puzzlewatersort","title":"Puzzle: Water Sort","category":"Puzzle","cover":"watersort.webp"},{"slug":"nutssnake","title":"Nuts Snake","category":"Puzzle","cover":"nutssnake.webp"},{"slug":"hunterevolveuprising","title":"Hunter: Evolve Uprising","category":"Action","cover":"hunterevolveuprising.webp"},{"slug":"acestrike","title":"Ace Strike","category":"Action","cover":"acestrike.webp"},{"slug":"smashblocks","title":"Smash Blocks","category":"Arcade","cover":"blockblastpop.webp"},{"slug":"spinscrewjam","title":"Spin Screw Jam","category":"Puzzle","cover":"spinscrewjam.webp"},{"slug":"puzzlehex","title":"Puzzle Hex","category":"Puzzle","cover":"puzzlehex.webp"},{"slug":"blockpuzzlesavegirl","title":"Block Puzzle: Save Girl","category":"Puzzle","cover":"blockpuzzlesavegirl.webp"},{"slug":"arrowmazesolve","title":"Arrow Maze Solve","category":"Puzzle","cover":"arrowmazesolve.webp"},{"slug":"zombiedown","title":"Zombie Down","category":"Action","cover":"zombiedown.webp"},{"slug":"tankera","title":"Tank Era","category":"Action","cover":"tankera.webp"},{"slug":"shiftdashreac","title":"Shift Dash Reac","category":"Arcade","cover":"shiftdashreac.webp"},{"slug":"satisfyingstack","title":"Satisfying Stack","category":"Puzzle","cover":"satisfyingstack.webp"}]</script>
 <script src="/assets/js/app.js"></script>
 <script src="/assets/js/scroll-relay.js" defer></script>
 <script src="/assets/js/danmaku.js"></script>
