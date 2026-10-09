@@ -95,6 +95,8 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
       <div class="phone-frame portrait">
         <iframe src="/hyper-feed/puzzlehex/index.html" title="Play Puzzle Hex" loading="lazy" allow="fullscreen; autoplay; gamepad"></iframe>
       </div>
+      <!-- the game eats one-finger touches, so scroll-relay.js relays a two-finger slide to page scrolling -->
+      <p class="gh-scrolltip">Two fingers on the game to scroll the page</p>
       <div class="gh-actions">
         <a class="btn lg" href="/hyper-feed/puzzlehex/index.html">⛶ Fullscreen</a>
         <button class="btn ghost" data-fav="puzzlehex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span class="lbl">Favorite</span></button>
@@ -248,6 +250,7 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
   </nav>
 <script type="application/json" id="games-data">[{"slug":"nutssnake","title":"Nuts Snake","category":"Puzzle","cover":"nutssnake.webp"},{"slug":"mahjongvalley","title":"Mahjong Valley","category":"Puzzle","cover":"mahjongvalley.webp"},{"slug":"puzzleyarnfun","title":"Puzzle Yarn Fun","category":"Puzzle","cover":"puzzleyarnfun.webp"},{"slug":"puzzlewatersort","title":"Puzzle: Water Sort","category":"Puzzle","cover":"watersort.webp"},{"slug":"chromajam","title":"Chroma Jam","category":"Puzzle","cover":"chromajam.webp"},{"slug":"hunterevolveuprising","title":"Hunter: Evolve Uprising","category":"Action","cover":"hunterevolveuprising.webp"},{"slug":"acestrike","title":"Ace Strike","category":"Action","cover":"acestrike.webp"},{"slug":"smashblocks","title":"Smash Blocks","category":"Arcade","cover":"blockblastpop.webp"},{"slug":"bubblesafari","title":"Bubble Safari","category":"Puzzle","cover":"bubblesafari.webp"},{"slug":"spinscrewjam","title":"Spin Screw Jam","category":"Puzzle","cover":"spinscrewjam.webp"},{"slug":"puzzlehex","title":"Puzzle Hex","category":"Puzzle","cover":"puzzlehex.webp"},{"slug":"blockpuzzlesavegirl","title":"Block Puzzle: Save Girl","category":"Puzzle","cover":"blockpuzzlesavegirl.webp"},{"slug":"royalmatcher","title":"Royal Matcher","category":"Puzzle","cover":"royalmatcher.webp"},{"slug":"arrowmazesolve","title":"Arrow Maze Solve","category":"Puzzle","cover":"arrowmazesolve.webp"},{"slug":"wizardsort","title":"Wizard Sort","category":"Puzzle","cover":"wizardsort.webp"},{"slug":"zombiedown","title":"Zombie Down","category":"Action","cover":"zombiedown.webp"},{"slug":"tankera","title":"Tank Era","category":"Action","cover":"tankera.webp"},{"slug":"shiftdashreac","title":"Shift Dash Reac","category":"Arcade","cover":"shiftdashreac.webp"},{"slug":"satisfyingstack","title":"Satisfying Stack","category":"Puzzle","cover":"satisfyingstack.webp"}]</script>
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/scroll-relay.js" defer></script>
 <script src="/assets/js/danmaku.js"></script>
 </body>
 </html>

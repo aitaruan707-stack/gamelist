@@ -629,6 +629,8 @@ ${topbar('')}
       <div class="phone-frame ${g.orientation === 'landscape' ? 'landscape' : 'portrait'}">
         <iframe src="/hyper-feed/${g.slug}/index.html" title="Play ${esc(g.title)}" loading="lazy" allow="fullscreen; autoplay; gamepad"></iframe>
       </div>
+      <!-- the game eats one-finger touches, so scroll-relay.js relays a two-finger slide to page scrolling -->
+      <p class="gh-scrolltip">Two fingers on the game to scroll the page</p>
       <div class="gh-actions">
         <a class="btn lg" href="${playUrl(g)}">⛶ Fullscreen</a>
         <button class="btn ghost" data-fav="${g.slug}">${ICON_HEART}<span class="lbl">Favorite</span></button>
@@ -689,6 +691,7 @@ ${footer()}
 ${bottomNav('')}
 <script type="application/json" id="games-data">${JSON.stringify(games.map(gg => ({ slug: gg.slug, title: gg.title, category: gg.category, cover: gg.cover })))}</script>
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/scroll-relay.js" defer></script>
 <script src="/assets/js/danmaku.js"></script>
 </body>
 </html>`;

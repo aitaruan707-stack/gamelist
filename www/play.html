@@ -51,6 +51,8 @@
               <button class="rh-dismiss" id="rotate-dismiss" type="button">Keep playing</button>
             </div>
           </div>
+          <!-- the game eats one-finger touches, so scroll-relay.js relays a two-finger slide to page scrolling -->
+          <p class="gh-scrolltip">Two fingers on the game to scroll the page</p>
           <div class="gh-actions">
             <button class="btn lg" id="p-fullscreen" type="button">⛶ Fullscreen</button>
           </div>
@@ -80,6 +82,7 @@
     </main>
   </div>
   <script src="/assets/js/player.js"></script>
+  <script src="/assets/js/scroll-relay.js" defer></script>
   <script src="/assets/js/danmaku.js"></script>
 </body>
 </html>
