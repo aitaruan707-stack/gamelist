@@ -41,6 +41,22 @@
   };
 })();
 </script>
+<!-- Standalone width cap: opened directly (not inside the site's phone frame) this page would
+     stretch the portrait board across the whole desktop window. The engine sizes the canvas from
+     window.innerWidth (settings screen.exactFitScreen = true -> BrowserWindow mode), so a CSS
+     max-width on #GameDiv only squashes an already-wide backing store and distorts it. Clamping
+     innerWidth before the engine boots makes it render a true 750px-wide frame instead; the
+     engine's own `margin: 0 auto` then centres it and the page background fills the sides.
+     Below 750 CSS px (phone, embedded iframe) the clamp is a no-op. -->
+<script>
+(function () {
+  var CAP = 750;
+  var d = Object.getOwnPropertyDescriptor(window, 'innerWidth') || Object.getOwnPropertyDescriptor(Window.prototype, 'innerWidth');
+  if (!d || !d.get) return;
+  var real = d.get.bind(window);
+  Object.defineProperty(window, 'innerWidth', { configurable: true, get: function () { return Math.min(CAP, real()); } });
+})();
+</script>
   <meta charset="utf-8">
   <meta name="theme-color" content="#00523b">
   <meta name="color-scheme" content="light">

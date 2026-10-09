@@ -365,6 +365,8 @@ section[id] { scroll-margin-top: 76px; }
 @media (max-width: 760px) {
   .game-hero { grid-template-columns: 1fr; grid-template-areas: "stage" "info" "comments" "side"; }
   .phone-frame.portrait { height: auto; width: min(82vw, 340px); }
+  /* phone: the game already fills the frame, so the Fullscreen / Favorite row under it is dropped */
+  .gh-actions { display: none; }
 }
 
 /* ---------- Empty states ---------- */
