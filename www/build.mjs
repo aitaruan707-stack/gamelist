@@ -114,7 +114,7 @@ function artUrl(g) { return g.art ? `/assets/covers/${g.art}` : coverUrl(g); }
 /* only some entries carry a dedicated 512px icon; the feature card falls back to the square cover */
 function iconUrl(g) { return g.icon ? `/assets/covers/${g.icon}` : coverUrl(g); }
 function detailUrl(g) { return `/hyper-feed/${g.slug}/game.html`; }
-function playUrl(g) { return `/play.html?id=${g.slug}`; }
+function playUrl(g) { return `/hyper-feed/${g.slug}/index.html`; }
 
 /* Legacy /g/{slug}.html SEO URLs now live under /hyper-feed/{slug}/game.html. The old path
    emits a redirect stub (canonical + meta refresh + location.replace) so inbound links and the
