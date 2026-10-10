@@ -121,6 +121,10 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
       <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="99"></canvas>
     </div>
   </div>
+  <!-- OPPO/instgame 聚合 SDK：必须是阻塞式经典脚本，先于下面的游戏模块脚本执行。
+       只注入 build-templates，不注入 preview-template —— Creator 预览保持无 SDK，
+       localhost 才能继续被判定为“非广告环境”，现有的 PREVIEW 遮罩验收能力才不会丢。 -->
+  <script src="https://sdk.instgame.com/sdk/h0.js"></script>
   
 
 <!-- Polyfills bundle. -->
@@ -135,7 +139,7 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
 <script src="src/import-map.b33fd.json" type="systemjs-importmap" charset="utf-8"> </script>
 
 <script>
-    System.import('./index.efae2.js').catch(function(err) { console.error(err); })
+    System.import('./index.0c3ac.js').catch(function(err) { console.error(err); })
 </script>
 
 </body>
