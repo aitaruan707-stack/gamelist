@@ -3,7 +3,44 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Royal Matcher</title>
+  <title>Cocos Creator | Royal Matcher</title>
+
+<!-- OPPO-H5:BEGIN instgame 接入，由 script/postbuild-oppo.js 生成，勿手改 -->
+  <!-- 提前和 SDK 域名完成 DNS + TCP + TLS，省掉下面这一趟往返 -->
+  <link rel="preconnect" href="https://sdk.instgame.com">
+  <link rel="dns-prefetch" href="https://sdk.instgame.com">
+  <!-- 官方口径的静态引入：不加 async/defer；状态由紧随其后的脚本判定，
+       不用 onload/onerror（内联事件属性在带 CSP 的容器里可能被拦） -->
+<script src="https://sdk.instgame.com/sdk/h0.js"></script>
+<script>
+  // 同步脚本到这里已执行完：instgame 在不在，一行就能定论
+  window.__oppoSdkState = window.instgame ? 1 : -1;
+  var SDK_WAIT = 2500, INIT_WAIT = 4000;
+  function hasSdk() { return !!(window.instgame && typeof window.instgame.initializeAsync === "function"); }
+  function bootGame(startGame) {
+    if (!hasSdk()) {
+      console.warn("[oppo-bridge] instgame unavailable, boot without SDK");
+      return Promise.resolve().then(startGame);
+    }
+    // 标记已发起握手，oppoH5Bridge.ts 看到后不会重复调 initializeAsync
+    window.__oppoSdkInited = true;
+    // SDK 初始化失败或超时也必须启动游戏，否则永久黑屏
+    var init = Promise.resolve(window.instgame.initializeAsync())
+      .catch(function (e) { console.error("[oppo-bridge] initializeAsync failed", e); });
+    return Promise.race([init, new Promise(function (r) { setTimeout(r, INIT_WAIT); })]).then(startGame);
+  }
+  window.__oppoBoot = function (startGame) {
+    var t0 = Date.now();
+    return new Promise(function (resolve) {
+      (function poll() {
+        // SDK 到位 / 明确加载失败 / 超出预算 —— 任一即放行，不留无限等待
+        if (hasSdk() || window.__oppoSdkState === -1 || Date.now() - t0 > SDK_WAIT) return resolve();
+        setTimeout(poll, 20);
+      })();
+    }).then(function () { return bootGame(startGame); });
+  };
+</script>
+<!-- OPPO-H5:END -->
 
   <!--http://www.html5rocks.com/en/mobile/mobifying/-->
   <meta name="viewport"
@@ -36,7 +73,11 @@
 
   <link rel="stylesheet" type="text/css" href="style.02f4a.css"/>
 
-<!-- analytics removed: game bundles must not fire trackers outside the site CMP -->
+<!-- PERF:BEGIN 启动预取，由 script/postbuild-oppo.js 生成，勿手改 -->
+  <link rel="preload" href="cocos-js/cc.9a0dc.js" as="script">
+  <link rel="preload" href="cocos-js/_virtual_cc-CvdoImzm.js?v=832ea99b"" as="script">
+  <link rel="preload" href="src/chunks/bundle.5227e.js" as="script">
+<!-- PERF:END -->
 <!-- Tapzens standalone shell: phone-sized stage, back bar and ad + more-games rails for direct visits,
      no-op inside the site iframe. Injected by build.mjs, do not edit by hand. -->
 <script>window.__tz={"title":"Royal Matcher","back":"/hyper-feed/royalmatcher/game.html","cat":"Puzzle","more":"/c/puzzle.html","ad":"ca-pub-3338178325446150","rec":[["LihuaDoku: Cat Logic Puzzle","logic · sudoku","/assets/covers/lihuadoku.webp","/hyper-feed/lihuadoku/game.html"],["Mahjong Valley","mahjong · tile-match","/assets/covers/mahjongvalley.webp","/hyper-feed/mahjongvalley/game.html"],["Wizard Sort","sort · magic","/assets/covers/wizardsort.webp","/hyper-feed/wizardsort/game.html"],["Chroma Jam","sort · match-3","/assets/covers/chromajam.webp","/hyper-feed/chromajam/game.html"],["Puzzle Yarn Fun","match-3 · casual","/assets/covers/puzzleyarnfun.webp","/hyper-feed/puzzleyarnfun/game.html"],["Bubble Safari","bubble · match-3","/assets/covers/bubblesafari.webp","/hyper-feed/bubblesafari/game.html"]]};</script>
@@ -67,7 +108,6 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
         <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="99"></canvas>
       </div>
     </div>
-  
 
 <!-- Hidden-context fallback: Cocos 3.x never finishes init when the page is hidden
      (embedded preview webviews, background tabs) — requestAnimationFrame never fires and
@@ -113,7 +153,6 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
 
 <script src="src/polyfills.bundle.5adbf.js" charset="utf-8"> </script>
 
-
 <!-- SystemJS support. -->
 <script src="src/system.bundle.543e6.js" charset="utf-8"> </script>
 
@@ -121,7 +160,7 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
 <script src="src/import-map.f021f.json" type="systemjs-importmap" charset="utf-8"> </script>
 
 <script>
-    System.import('./index.770c7.js').catch(function(err) { console.error(err); })
+    (window.__oppoBoot || function (start) { return start(); })(function(){ return System.import('./index.0b63b.js'); }).catch(function(err) { console.error(err); })
 </script>
 
 </body>
