@@ -1654,26 +1654,42 @@ function genVercelConfig() {
    the old build after we ship a new one. Here every relative, query-free reference in a game's
    index.html gets ?v=<md5-8 of the file it points at>; files whose name already embeds a content
    hash (name.<hex6>.ext) are born versioned and are skipped. Re-runs recompute the same digest, so
-   the step is idempotent and only touches disk state the export already had. */
+   the step is idempotent and only touches disk state the export already had.
+   RESOURCE HINTS ARE OFF-LIMITS: a preload/prefetch hint must carry the exact URL the engine will
+   ask for later, otherwise the hint warms a different cache key and the file is fetched twice
+   (measured on royalmatcher: a stamped preload of the 511 KB engine chunk = two full downloads,
+   +350 ms, plus a console "preloaded but not used" warning). Only real <script src> and
+   <link rel=stylesheet href> tags are stamped — the browser requests those URLs verbatim. */
 function versionStampAssets() {
   const HASHED = /\.[0-9a-f]{4,}\.(?:js|css|json|png|webp|wasm|mp3|mp4)$/i;
-  const REF = /\b((?:src|href)=")([^"?]*?\.(?:js|css|json))(\?[^"]*")?/g;   /* group3 kept for the skip test */
+  const HINT = /rel="(?:preload|modulepreload|prefetch|dns-prefetch|preconnect)"/;
+  const REF = /\b((?:src|href)=")([^"]*?\.(?:js|css|json))(\?[^"]*)?"/g;
   let touched = 0, stamped = 0;
   for (const slug of readdirSync(dist('hyper-feed'))) {
     const htmlPath = dist(`hyper-feed/${slug}/index.html`);
     if (!existsSync(htmlPath)) continue;
     const dir = `hyper-feed/${slug}`;
     const before = readFileSync(htmlPath, 'utf8');
-    const after = before.replace(REF, (whole, attr, ref, qs) => {
-      if (qs) return whole;                                   /* an explicit ? already wins */
-      if (!ref || /^(https?:|\/\/|\/|data:|mailto:|tel:)/.test(ref)) return whole;  /* remote or site-absolute */
-      const file = dist(`${dir}/${ref.replace(/^\.\//, '')}`);
-      if (!existsSync(file)) return whole;                    /* nothing on disk: don't invent a query */
-      if (HASHED.test(ref)) return whole;                     /* self-versioned already */
-      const v = createHash('md5').update(readFileSync(file)).digest('hex').slice(0, 8);
-      stamped++;
-      return `${attr}${ref}?v=${v}"`;
-    });
+    const after = before.split('\n').map((line) => {
+      /* Three deterministic repairs, in order: heal the doubled closing quote an older version of
+         this step could emit, drop our own previous digest so the current file content decides the
+         value, then stamp. Resource hints are the one exception — a preload/prefetch URL has to be
+         byte-identical to what the engine asks for later, so hints get stripped and left alone. */
+      const cleaned = line
+        .replace(/\?v=[0-9a-f]{8}(?=")/g, '')
+        .replace(/\.(js|css|json)""/g, '.$1"');
+      if (HINT.test(cleaned)) return cleaned;
+      return cleaned.replace(REF, (whole, attr, ref, qs) => {
+        if (qs) return whole;                                  /* an explicit ? already wins */
+        if (!ref || /^(https?:|\/\/|\/|data:|mailto:|tel:)/.test(ref)) return whole;  /* remote or site-absolute */
+        const file = dist(`${dir}/${ref.replace(/^\.\//, '')}`);
+        if (!existsSync(file)) return whole;                   /* nothing on disk: don't invent a query */
+        if (HASHED.test(ref)) return whole;                    /* self-versioned already */
+        const v = createHash('md5').update(readFileSync(file)).digest('hex').slice(0, 8);
+        stamped++;
+        return `${attr}${ref}?v=${v}"`;
+      });
+    }).join('\n');
     if (after !== before) { writeFileSync(htmlPath, after, 'utf8'); touched++; }
   }
   console.log(`version stamp: ${stamped} refs rewritten across ${touched} game page(s)`);
