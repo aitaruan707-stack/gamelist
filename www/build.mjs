@@ -4,6 +4,7 @@
    copies game cover icons and splash images, and generates SVG placeholder
    covers for games without an icon. Run: node build.mjs */
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readdirSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { dirname, join, resolve, relative, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { GUIDES, CAT_COPY } from './content.guides.mjs';
@@ -1647,12 +1648,44 @@ function genVercelConfig() {
   console.log(`channel routing: ${prefixes ? prefixes.length : 0} prefixes → matching rewrites + noindex headers (+ immutable cache for hashed assets)`);
 }
 
+/* Per-export cache busting for the game boot chain. Cocos 2.x exports overwrite their boot files
+   in place — main.js, style-desktop.css, cocos2d-js-min.js, src/settings.*.js carry no content
+   hash — so a browser (or a partner webview) holding bytes from the previous export keeps playing
+   the old build after we ship a new one. Here every relative, query-free reference in a game's
+   index.html gets ?v=<md5-8 of the file it points at>; files whose name already embeds a content
+   hash (name.<hex6>.ext) are born versioned and are skipped. Re-runs recompute the same digest, so
+   the step is idempotent and only touches disk state the export already had. */
+function versionStampAssets() {
+  const HASHED = /\.[0-9a-f]{4,}\.(?:js|css|json|png|webp|wasm|mp3|mp4)$/i;
+  const REF = /\b((?:src|href)=")([^"?]*?\.(?:js|css|json))(\?[^"]*")?/g;   /* group3 kept for the skip test */
+  let touched = 0, stamped = 0;
+  for (const slug of readdirSync(dist('hyper-feed'))) {
+    const htmlPath = dist(`hyper-feed/${slug}/index.html`);
+    if (!existsSync(htmlPath)) continue;
+    const dir = `hyper-feed/${slug}`;
+    const before = readFileSync(htmlPath, 'utf8');
+    const after = before.replace(REF, (whole, attr, ref, qs) => {
+      if (qs) return whole;                                   /* an explicit ? already wins */
+      if (!ref || /^(https?:|\/\/|\/|data:|mailto:|tel:)/.test(ref)) return whole;  /* remote or site-absolute */
+      const file = dist(`${dir}/${ref.replace(/^\.\//, '')}`);
+      if (!existsSync(file)) return whole;                    /* nothing on disk: don't invent a query */
+      if (HASHED.test(ref)) return whole;                     /* self-versioned already */
+      const v = createHash('md5').update(readFileSync(file)).digest('hex').slice(0, 8);
+      stamped++;
+      return `${attr}${ref}?v=${v}"`;
+    });
+    if (after !== before) { writeFileSync(htmlPath, after, 'utf8'); touched++; }
+  }
+  console.log(`version stamp: ${stamped} refs rewritten across ${touched} game page(s)`);
+}
+
 /* ---------- run ---------- */
 copyCovers();
 copyAvatars();
 buildHome();
 buildDetails();
 installGameShell();
+versionStampAssets();
 buildCategories();
 buildTags();
 buildStaticPages();
