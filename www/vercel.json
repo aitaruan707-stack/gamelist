@@ -4,6 +4,202 @@
     {
       "source": "/loveat/:path*",
       "destination": "http://club.loveat.cn/:path*"
+    },
+    {
+      "source": "/browser-push/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/browser-zq/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/browser-zq-1/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/browser-zq-2/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/browser-gj/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/browser-hotsite/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/lockscreen/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/lockscreen-hp/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/lockscreen-auto/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/lockscreen-auto-1/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/lockscreen-auto-2/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/lockscreen-auto-3/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/lockscreen-auto-4/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/lockscreen-tab/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/lockscreen-gj/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/lockscreen-cj/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/lockscreen-fallback/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/games-push/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/games-zq/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/games-zq-1/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/games-zq-2/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/games-gj/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/games-mygamesbanner/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/globalsearch-bd/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/globalsearch-bd-1/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/globalsearch-bd-2/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/globalsearch-bd-3/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/globalsearch-bd-4/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/globalsearch-bd-5/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/globalsearch-bd-6/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/globalsearch-bd-7/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/globalsearch-gj/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/globalsearch-banner/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/globalsearch-sa/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/appmarket-zq/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/gamecenter-push/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/gamecenter-zq/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/gamecenter-gj/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/rmshelf-hotsite/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/rmshelf-beforesearching/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/rmdrawer/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/sp-bidding/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/sp-fallback/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/sp-1/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/sp-2/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/sp-3/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/sp-4/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/shelf-recommend/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
+    },
+    {
+      "source": "/miniplay-zq/:slug/:path*",
+      "destination": "/hyper-feed/:slug/:path*"
     }
   ],
   "headers": [
@@ -49,6 +245,447 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/browser-push/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/browser-zq/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/browser-zq-1/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/browser-zq-2/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/browser-gj/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/browser-hotsite/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/lockscreen/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/lockscreen-hp/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/lockscreen-auto/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/lockscreen-auto-1/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/lockscreen-auto-2/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/lockscreen-auto-3/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/lockscreen-auto-4/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/lockscreen-tab/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/lockscreen-gj/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/lockscreen-cj/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/lockscreen-fallback/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/games-push/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/games-zq/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/games-zq-1/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/games-zq-2/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/games-gj/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/games-mygamesbanner/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/globalsearch-bd/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/globalsearch-bd-1/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/globalsearch-bd-2/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/globalsearch-bd-3/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/globalsearch-bd-4/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/globalsearch-bd-5/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/globalsearch-bd-6/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/globalsearch-bd-7/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/globalsearch-gj/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/globalsearch-banner/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/globalsearch-sa/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/appmarket-zq/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/gamecenter-push/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/gamecenter-zq/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/gamecenter-gj/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/rmshelf-hotsite/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/rmshelf-beforesearching/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/rmdrawer/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/sp-bidding/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/sp-fallback/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/sp-1/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/sp-2/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/sp-3/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/sp-4/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/shelf-recommend/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
+      "source": "/miniplay-zq/:slug/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
         }
       ]
     }

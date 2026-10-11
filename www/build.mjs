@@ -1588,6 +1588,54 @@ function auditTrackers() {
   console.log('  note: RISK lines must appear in the privacy policy disclosure table; INFO lines only matter if this site is ever wrapped in a native app (then UMP consent is required).');
 }
 
+/* ---------- channel routing (vercel.json) ----------
+   Every game is reachable under ~50 distribution-channel URL prefixes
+   (browser-push, lockscreen, globalsearch-bd-1 … ) handed to partner surfaces for traffic
+   attribution. None of these is separate content: /<prefix>/<slug>/… is only a rewrite onto the
+   shipped page under /hyper-feed/<slug>/…, so ONE rule per prefix maps the whole subtree — the
+   entry HTML and every relative asset it loads. The rules are generated from channels.json, so
+   adding a channel touches only that file. Each channel copy carries X-Robots-Tag: noindex, follow
+   so these funnels never dilute the canonical /hyper-feed/<slug>/ pages in search. Re-running this
+   replaces only the channel rules; hand-authored entries (the /loveat proxy, the asset cache headers)
+   survive. */
+const SEG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;   /* one clean path segment */
+function expandChannels() {
+  let raw;
+  try { raw = read('channels.json').channels || []; }
+  catch { return null; }
+  const out = [];
+  let stopped = 0;
+  for (const c of raw) {
+    /* 已停投 (status: "stopped") channels stay in the registry as documentation but get no route;
+       flip the value back to "active"/"new" and re-run to re-arm the prefix. "new" (需新增) is live. */
+    if (c.status === 'stopped') { stopped++; continue; }
+    if (!c.prefix || !SEG_RE.test(c.prefix)) { console.error(`channel routing: skip bad prefix "${c.prefix}"`); continue; }
+    out.push(c.prefix);
+    const n = Number(c.variants || 0);
+    for (let i = 1; i <= n; i++) out.push(`${c.prefix}-${i}`);
+  }
+  if (stopped) console.log(`channel routing: ${stopped} stopped prefix(es) registered but not routed`);
+  return [...new Set(out)];
+}
+function genVercelConfig() {
+  const FILE = 'vercel.json';
+  const prefixes = expandChannels();
+  const cfg = existsSync(dist(FILE)) ? JSON.parse(readFileSync(dist(FILE), 'utf8')) : {};
+  cfg.rewrites = cfg.rewrites || [];
+  cfg.headers = cfg.headers || [];
+  const isChannel = (o) => !!o && typeof o.source === 'string' && !!prefixes && prefixes.some((p) => o.source === `/${p}/:slug/:path*`);
+  cfg.rewrites = cfg.rewrites.filter((o) => !isChannel(o));
+  cfg.headers = cfg.headers.filter((o) => !isChannel(o));
+  if (prefixes) {
+    for (const p of prefixes) {
+      cfg.rewrites.push({ source: `/${p}/:slug/:path*`, destination: `/hyper-feed/:slug/:path*` });
+      cfg.headers.push({ source: `/${p}/:slug/:path*`, headers: [{ key: 'X-Robots-Tag', value: 'noindex, follow' }] });
+    }
+  }
+  write(FILE, JSON.stringify(cfg, null, 2) + '\n');
+  console.log(`channel routing: ${prefixes ? prefixes.length : 0} prefixes → matching rewrites + noindex headers`);
+}
+
 /* ---------- run ---------- */
 copyCovers();
 copyAvatars();
@@ -1599,5 +1647,6 @@ buildTags();
 buildStaticPages();
 buildGuides();
 buildSitemap();
+genVercelConfig();
 auditTrackers();
 console.log('Build complete.');

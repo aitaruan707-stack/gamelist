@@ -17,6 +17,14 @@
 
   if (window.top !== window.self) return;   /* embedded in the site: already sized and navigated */
 
+  /* Channel attribution. /<prefix>/<slug>/… is a partner-surface alias of /hyper-feed/<slug>/…
+     that Vercel rewrites onto the shipped page, so the address bar keeps the prefix. The natural
+     site entry is /hyper-feed/<slug>/…; anything else in the first segment is a channel. We expose
+     it on window.__tzChannel (the prefix string, or null for the organic site page) so the ads /
+     analytics layer can tag where the visit came from. Nothing here changes what the page renders. */
+  var seg = (location.pathname || '').split('/').filter(Boolean);
+  window.__tzChannel = (seg.length >= 3 && seg[0] !== 'hyper-feed') ? seg[0] : null;
+
   var BAR = 52;                /* room for the navigation bar */
   var MAXW = 430;              /* phone-class width */
   var RATIO = 750 / 1625;      /* the site phone frame */

@@ -1,0 +1,52 @@
+{
+  "_comment": "Channel routing registry. Each entry defines a URL prefix alias of /hyper-feed/<slug>/… used by partner surfaces for traffic attribution. build.mjs expands these into Vercel rewrites + noindex headers. status: \"active\"=使用中, \"new\"=需新增(仍生成路由), \"stopped\"=已停投(登记但不生成路由，恢复投放把值改回 active 再重跑 build). variants: N auto-generates prefix-1 … prefix-N.",
+  "channels": [
+    { "prefix": "browser-push", "surface": "Push", "group": "browser", "status": "active" },
+    { "prefix": "browser-zq", "surface": "专区", "group": "browser", "status": "active", "variants": 2 },
+    { "prefix": "browser-gj", "surface": "挂件面板", "group": "browser", "status": "active" },
+    { "prefix": "browser-hotsite", "surface": "名站", "group": "browser", "status": "active" },
+
+    { "prefix": "lockscreen", "surface": "划屏", "group": "lockscreen", "status": "active" },
+    { "prefix": "lockscreen-hp", "surface": "划屏", "group": "lockscreen", "status": "active" },
+    { "prefix": "lockscreen-auto", "surface": "容器", "group": "lockscreen", "status": "active", "variants": 4 },
+    { "prefix": "lockscreen-tab", "surface": "Tab", "group": "lockscreen", "status": "active" },
+    { "prefix": "lockscreen-gj", "surface": "挂件面板", "group": "lockscreen", "status": "active" },
+    { "prefix": "lockscreen-cj", "surface": "插件（暂给锁屏详情页用）", "group": "lockscreen", "status": "active" },
+    { "prefix": "lockscreen-fallback", "surface": "详情页兜底", "group": "lockscreen", "status": "active" },
+
+    { "prefix": "games-push", "surface": "Push", "group": "games", "status": "active" },
+    { "prefix": "games-zq", "surface": "专区", "group": "games", "status": "active", "variants": 2 },
+    { "prefix": "games-gj", "surface": "挂件面板", "group": "games", "status": "active" },
+    { "prefix": "games-mygamesbanner", "surface": "Mygames banner", "group": "games", "status": "active" },
+
+    { "prefix": "globalsearch-bd", "surface": "榜单", "group": "globalsearch", "status": "active", "variants": 7 },
+    { "prefix": "globalsearch-gj", "surface": "挂件面板（欧洲测试用）", "group": "globalsearch", "status": "active" },
+    { "prefix": "globalsearch-banner", "surface": "Banner", "group": "globalsearch", "status": "active" },
+    { "prefix": "globalsearch-sa", "surface": "SA", "group": "globalsearch", "status": "active" },
+
+    { "prefix": "appmarket-zq", "surface": "专区", "group": "appmarket", "status": "new" },
+    { "prefix": "appmarket-pwa", "surface": "PWA", "group": "appmarket", "status": "stopped", "_note": "链接 slug 带 -pwa 后缀（/appmarket-pwa/<游戏名>-pwa/…），若重新启用需额外把 <slug>-pwa 剥成 <slug> 的映射，通配规则不覆盖。" },
+
+    { "prefix": "gamecenter-push", "surface": "push", "group": "gamecenter", "status": "active" },
+    { "prefix": "gamecenter-zq", "surface": "专区", "group": "gamecenter", "status": "active" },
+    { "prefix": "gamecenter-gj", "surface": "挂件面板", "group": "gamecenter", "status": "active" },
+
+    { "prefix": "themestore-banner", "surface": "Banner", "group": "themestore", "status": "stopped" },
+    { "prefix": "themestore-float", "surface": "浮标", "group": "themestore", "status": "stopped" },
+
+    { "prefix": "rmshelf-hotsite", "surface": "名站", "group": "rmshelf", "status": "active" },
+    { "prefix": "rmshelf-beforesearching", "surface": "搜前资源位", "group": "rmshelf", "status": "active" },
+    { "prefix": "rmdrawer", "surface": "/", "group": "rm", "status": "active" },
+
+    { "prefix": "sp-bidding", "surface": "竞价", "group": "sp", "status": "active" },
+    { "prefix": "sp-fallback", "surface": "兜底", "group": "sp", "status": "active" },
+    { "prefix": "sp-1", "surface": "渠道1（内投）", "group": "sp", "status": "active" },
+    { "prefix": "sp-2", "surface": "渠道2", "group": "sp", "status": "active" },
+    { "prefix": "sp-3", "surface": "渠道3", "group": "sp", "status": "active" },
+    { "prefix": "sp-4", "surface": "渠道4", "group": "sp", "status": "active" },
+
+    { "prefix": "shelf-recommend", "surface": "卡片", "group": "shelf", "status": "active" },
+
+    { "prefix": "miniplay-zq", "surface": "专区", "group": "miniplay", "status": "active" }
+  ]
+}
