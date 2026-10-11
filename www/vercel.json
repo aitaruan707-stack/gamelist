@@ -688,6 +688,15 @@
           "value": "noindex, follow"
         }
       ]
+    },
+    {
+      "source": "/:prefix/:slug/:file([^/]*\\.[0-9a-f]{4,}\\.(?:js|css|json|png|webp|wasm|mp3|mp4))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ]
 }

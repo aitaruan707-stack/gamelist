@@ -1632,8 +1632,19 @@ function genVercelConfig() {
       cfg.headers.push({ source: `/${p}/:slug/:path*`, headers: [{ key: 'X-Robots-Tag', value: 'noindex, follow' }] });
     }
   }
+  /* Long immutable cache for content-hashed game assets. Cocos roots the engine entry / style /
+     application / splash under <name>.<hex>.<ext> at the game folder root; those carry a content
+     hash so their URL changes whenever bytes do — safe to pin for a year and kill the repeat-visit
+     revalidation round-trip. The :file custom pattern requires a `.hex.ext` segment, so the
+     NON-hashed root files that a re-export overwrites in place (main.js, style-desktop.css,
+     splash.png, cocos2d-js-min.js …) are excluded and keep the default must-revalidate.
+     Matches 3-segment paths only, so canonical /hyper-feed and every channel alias both benefit,
+     while hashed subdir files (assets/, src/) stay on their existing 86400 rule. */
+  const IMMUT = '/:prefix/:slug/:file([^/]*\\.[0-9a-f]{4,}\\.(?:js|css|json|png|webp|wasm|mp3|mp4))';
+  cfg.headers = cfg.headers.filter((o) => o.source !== IMMUT);
+  cfg.headers.push({ source: IMMUT, headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] });
   write(FILE, JSON.stringify(cfg, null, 2) + '\n');
-  console.log(`channel routing: ${prefixes ? prefixes.length : 0} prefixes → matching rewrites + noindex headers`);
+  console.log(`channel routing: ${prefixes ? prefixes.length : 0} prefixes → matching rewrites + noindex headers (+ immutable cache for hashed assets)`);
 }
 
 /* ---------- run ---------- */

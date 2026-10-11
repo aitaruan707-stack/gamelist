@@ -1,66 +1,136 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-<!-- Hidden-context fallback: HTML5 game engines (Cocos 2.x/3.x, Laya) never finish
-     init when the page is hidden (embedded preview webviews, background tabs) —
-     requestAnimationFrame never fires and the engine self-pauses on visibilitychange.
-     We wrap rAF with a setTimeout fallback that engages whenever the page is truly
-     hidden (checked at call time, so late hiding is covered), and spoof visibility
-     so the engine never self-pauses. -->
-<script>
-(function () {
-  var proto = Object.getOwnPropertyDescriptor(Document.prototype, 'hidden') ? Document.prototype : HTMLDocument.prototype;
-  var hiddenGet = (Object.getOwnPropertyDescriptor(proto, 'hidden') || {}).get;
-  if (!hiddenGet) return;
-  var trueHidden = function () { return hiddenGet.call(document); };
+<head>
+  <meta charset="utf-8">
 
-  /* 1) setTimeout-driven rAF whenever truly hidden (native rAF starves there) */
-  var nRAF = window.requestAnimationFrame.bind(window);
-  var nCAF = window.cancelAnimationFrame.bind(window);
-  var slow = {};
-  window.requestAnimationFrame = function (cb) {
-    if (trueHidden()) {
-      var t = setTimeout(function () { delete slow[t]; cb(performance.now()); }, 16);
-      slow[t] = 1;
-      return t;
-    }
-    return nRAF(cb);
-  };
-  window.cancelAnimationFrame = function (id) {
-    if (slow[id]) { clearTimeout(id); delete slow[id]; }
-    else nCAF(id);
-  };
+  <title>Water Sort</title>
 
-  /* 2) spoof visibility so the engine never self-pauses */
-  Object.defineProperty(document, 'hidden', { configurable: true, get: function () { return false; } });
-  Object.defineProperty(document, 'visibilityState', { configurable: true, get: function () { return 'visible'; } });
-  var origAdd = document.addEventListener.bind(document);
-  document.addEventListener = function (type, fn, opts) {
-    if (type === 'visibilitychange') return;
-    return origAdd(type, fn, opts);
-  };
-})();
-</script>
+  <!--http://www.html5rocks.com/en/mobile/mobifying/-->
+  <meta name="viewport"
+        content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
 
-    <meta charset="utf-8" />
-    <title>Puzzle: Water Sort</title>
-    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="renderer" content="webkit" />
-    <meta name="force-rendering" content="webkit" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="full-screen" content="yes" />
-    <meta name="x5-fullscreen" content="true" />
-    <meta name="360-fullscreen" content="true" />
-    <meta name="screen-orientation" content="" />
-    <meta name="x5-orientation" content="" />
-    <meta name="x5-page-mode" content="app" />
-    <link rel="stylesheet" type="text/css" href="style-mobile.css" />
-    <link rel="icon" href="favicon.ico" />
-  <!-- Tapzens standalone shell: phone-sized stage, back bar and ad + more-games rails for direct visits,
+  <!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- force webkit on 360 -->
+  <meta name="renderer" content="webkit"/>
+  <meta name="force-rendering" content="webkit"/>
+  <!-- force edge on IE -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <!-- force full screen on some browser -->
+  <meta name="full-screen" content="yes"/>
+  <meta name="x5-fullscreen" content="true"/>
+  <meta name="360-fullscreen" content="true"/>
+  
+  <!-- force screen orientation on some browser -->
+  <meta name="screen-orientation" content=""/>
+  <meta name="x5-orientation" content="">
+
+  <!--fix fireball/issues/3568 -->
+  <!--<meta name="browsermode" content="application">-->
+  <meta name="x5-page-mode" content="app">
+
+  <!--<link rel="apple-touch-icon" href=".png" />-->
+  <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
+
+  <link rel="stylesheet" type="text/css" href="style-mobile.css"/>
+  <link rel="icon" href="favicon.ico"/>
+
+  <!-- ★ OPPO(instgame) 相关 JS 全部集中在 head，body 尾部只管加载引擎 ★ -->
+
+  <!-- ① 引入 h0.js：必须是【静态标签】，index.html 源码里能直接扫到 ——
+       官方接入说明（oppoH5广告.md 第 4-6 行）就是这一行；渠道包审核 / 静态校验看不到
+       标签就判“未接入 SDK”，广告位不会下发。之前用 document.write 动态注入是错的。
+       位置在上面两个 <link> 之后：解析阻塞型脚本会把它后面的样式表压在后面取，先拿 CSS
+       splash 进度条才不会白屏。
+       defer：下载仍在 head 就发起（早于一切游戏代码），但不卡解析器 —— 实测 SDK 域名
+       “只握手不响应”时，同步标签会让整页 41s 解析不出 #GameCanvas（全白）；defer 下
+       62~95ms 就出 canvas 与进度条。域名不可达 / 超时由下面两个标志位交给门控兜底。 -->
+  <script src="https://sdk.instgame.com/sdk/h0.js" charset="utf-8" defer
+          onload="window.__instgameSdkLoaded = true;"
+          onerror="window.__instgameSdkFailed = true;"></script>
+
+  <!-- ② 环境判定：默认【所有环境】都加载并初始化 SDK，包括 localhost / file://，
+       这样开发时直接在浏览器里就能看到广告。只有 URL 显式带 ?noad=1 才走无广告模式
+       （以前按 hostname 自动跳过，导致本地预览永远看不到广告，排查时极易误判“没接入”） -->
+  <script>
+  (function () {
+      var h = location.hostname;
+      // 仅当信息位：告诉开发“你现在在本地”，但不再据此跳过 SDK
+      window.__LOCAL_PREVIEW__ = !h || location.protocol === 'file:' ||
+          h === 'localhost' || h === '127.0.0.1' || h === '0.0.0.0' || h === '[::1]' || h === '::1';
+      // 真正的开关：?noad=1 才跳过 initializeAsync
+      window.__NO_AD__ = /[?&]noad=1\b/.test(location.search);
+  })();
+  </script>
+  <script>
+  (function () {
+      // 官方要求：先 initializeAsync，再启动引擎。SDK 缺失 / 失败 / 超时一律降级为正常启动
+      function bootGame () {
+          if (typeof window.boot !== 'function') {
+              console.error('[instgame] window.boot 不存在，引擎未就绪');
+              return;
+          }
+          window.boot();
+      }
+
+      // head 里的 h0.js 是 defer：不阻塞解析，但要先等它 onload/onerror 落定再决策
+      // （defer 只保证不早于 DOMContentLoaded，不保证早于动态加载的引擎，故需轮询 + 兜底）
+      function whenSdkSettled (cb) {
+          var waited = 0, step = 30, max = 6000;
+          (function poll () {
+              if (window.__instgameSdkLoaded || window.__instgameSdkFailed) return cb();
+              if (waited >= max) { window.__instgameSdkFailed = true; return cb(); }
+              waited += step;
+              setTimeout(poll, step);
+          })();
+      }
+
+      window.__igBoot = function bootWithInstgame () {
+          if (window.__NO_AD__) {
+              console.log('[instgame] URL 带 ?noad=1，跳过 initializeAsync 门控（无广告模式）');
+              bootGame();
+              return;
+          }
+          whenSdkSettled(function () {
+              var IG = window.instgame;
+              if (window.__instgameSdkFailed || !IG || !IG.initializeAsync) {
+                  console.warn('[instgame] SDK 不可用，以无广告模式启动');
+                  bootGame();
+                  return;
+              }
+              var done = false;
+              var go = function (ok, err) {
+                  if (done) return;
+                  done = true;
+                  clearTimeout(guard);
+                  if (ok) {
+                      window.__instgameInited = true;
+                  } else {
+                      window.__instgameInitFailed = true;
+                      console.warn('[instgame] initializeAsync 失败，以无广告模式启动：', err);
+                  }
+                  bootGame();
+              };
+              var guard = setTimeout(function () { go(false, 'timeout'); }, 8000);
+              try {
+                  IG.initializeAsync().then(function () {
+                      go(true);
+                  }, function (e) {
+                      go(false, e);
+                  });
+              } catch (e) {
+                  go(false, e);
+              }
+          });
+      };
+  })();
+  </script>
+<!-- Tapzens standalone shell: phone-sized stage, back bar and ad + more-games rails for direct visits,
      no-op inside the site iframe. Injected by build.mjs, do not edit by hand. -->
 <script>window.__tz={"title":"Puzzle: Water Sort","back":"/hyper-feed/puzzlewatersort/game.html","cat":"Puzzle","more":"/c/puzzle.html","ad":"ca-pub-3338178325446150","rec":[["LihuaDoku: Cat Logic Puzzle","logic · sudoku","/assets/covers/lihuadoku.webp","/hyper-feed/lihuadoku/game.html"],["Mahjong Valley","mahjong · tile-match","/assets/covers/mahjongvalley.webp","/hyper-feed/mahjongvalley/game.html"],["Wizard Sort","sort · magic","/assets/covers/wizardsort.webp","/hyper-feed/wizardsort/game.html"],["Royal Matcher","match-3 · casual","/assets/covers/royalmatcher.webp","/hyper-feed/royalmatcher/game.html"],["Chroma Jam","sort · match-3","/assets/covers/chromajam.webp","/hyper-feed/chromajam/game.html"],["Puzzle Yarn Fun","match-3 · casual","/assets/covers/puzzleyarnfun.webp","/hyper-feed/puzzleyarnfun/game.html"]]};</script>
 <link rel="stylesheet" href="/assets/css/game-shell.css">
@@ -84,37 +154,60 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
 <!-- consent bridge: persists the CMP decision and exposes the revocation entrypoint -->
 <script defer src="/assets/js/consent.js"></script></template>
 </head>
-  <body>
-    <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
-    <div id="splash">
-      <div class="progress-bar stripes"><span style="width: 0%"></span></div>
+<body>
+  <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
+  <div id="splash">
+    <div class="progress-bar stripes">
+      <span style="width: 0%"></span>
     </div>
-    <script src="src/settings.js" charset="utf-8"></script>
-    <script src="main.js" charset="utf-8"></script>
-    <script>
-      (function () {
-        var splash = document.getElementById("splash");
-        splash.style.display = "none";
-        function loadScript(moduleName, callback) {
-          function scriptLoaded() {
-            document.body.removeChild(script);
-            script.removeEventListener("load", scriptLoaded, false);
-            if (callback) callback();
-          }
-          var script = document.createElement("script");
-          script.async = true;
-          script.src = moduleName;
-          script.addEventListener("load", scriptLoaded, false);
-          document.body.appendChild(script);
-        }
-        loadScript("cocos2d-js-min.js", function () {
-          if (CC_PHYSICS_BUILTIN || CC_PHYSICS_CANNON) {
-            loadScript("physics-min.js", window.boot);
-          } else {
-            window.boot();
-          }
-        });
-      })();
-    </script>
-  </body>
+  </div>
+
+<script src="src/settings.js" charset="utf-8"></script>
+
+<script src="main.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+(function () {
+    // open web debugger console
+    if (typeof VConsole !== 'undefined') {
+        window.vConsole = new VConsole();
+    }
+
+    var debug = window._CCSettings.debug;
+    var splash = document.getElementById('splash');
+    splash.style.display = 'block';
+
+    function loadScript (moduleName, cb) {
+      function scriptLoaded () {
+          document.body.removeChild(domScript);
+          domScript.removeEventListener('load', scriptLoaded, false);
+          cb && cb();
+      };
+      var domScript = document.createElement('script');
+      domScript.async = true;
+      domScript.src = moduleName;
+      domScript.addEventListener('load', scriptLoaded, false);
+      document.body.appendChild(domScript);
+    }
+
+    // 引擎与物理加载完成后，交给 head 里的门控（window.__igBoot）放行
+    var start = typeof window.__igBoot === 'function'
+        ? window.__igBoot
+        : function () { window.boot(); };   // 极端兜底：head 脚本被改写/截断时仍能进游戏
+
+    // ★ 本项目零物理组件（全量 grep assets/：cc.RigidBody / cc.Collider / cc.Joint / RigidBody2D 均无引用），
+    //   但引擎构建把 CC_PHYSICS_CANNON 置成了 true，于是启动时多拉 194K 的 physics-min.js 并串行阻塞一道。
+    //   真要接物理把 USE_PHYSICS 改回 true 即可。
+    var USE_PHYSICS = false;
+    loadScript(debug ? 'cocos2d-js.js' : 'cocos2d-js-min.js', function () {
+      if (USE_PHYSICS && (CC_PHYSICS_BUILTIN || CC_PHYSICS_CANNON)) {
+        loadScript(debug ? 'physics.js' : 'physics-min.js', start);
+      }
+      else {
+        start();
+      }
+    });
+})();
+</script>
+</body>
 </html>
