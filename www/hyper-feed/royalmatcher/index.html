@@ -9,12 +9,22 @@
   <!-- 提前和 SDK 域名完成 DNS + TCP + TLS，省掉下面这一趟往返 -->
   <link rel="preconnect" href="https://sdk.instgame.com">
   <link rel="dns-prefetch" href="https://sdk.instgame.com">
-  <!-- 官方口径的静态引入：不加 async/defer；状态由紧随其后的脚本判定，
-       不用 onload/onerror（内联事件属性在带 CSP 的容器里可能被拦） -->
-<script src="https://sdk.instgame.com/sdk/h0.js"></script>
+  <!-- 站点侧启动优化（维护方改）：静态标签保留（渠道审核要能扫到），但改 async ——
+       实测同步标签把解析器按住 699ms，import-map 要到 DCL 之后才开始取。
+       状态不能再在紧跟其后的脚本里同步断言（那时 SDK 必然还没执行完，会误判成 -1
+       直接走无广告启动），改由 load / error 事件写入：0 = 未知，交给 __oppoBoot
+       已有的 2500ms 轮询裁决。事件用 addEventListener 绑，不用内联 onload/onerror
+       （带 CSP 的容器里内联事件属性可能被拦）。 -->
+<script src="https://sdk.instgame.com/sdk/h0.js" async></script>
 <script>
-  // 同步脚本到这里已执行完：instgame 在不在，一行就能定论
-  window.__oppoSdkState = window.instgame ? 1 : -1;
+  window.__oppoSdkState = window.instgame ? 1 : 0;
+  (function () {
+    if (window.instgame) return;
+    var tag = document.querySelector('script[src*="h0.js"]');
+    if (!tag) { window.__oppoSdkState = -1; return; }
+    tag.addEventListener('load', function () { window.__oppoSdkState = window.instgame ? 1 : -1; });
+    tag.addEventListener('error', function () { window.__oppoSdkState = -1; });
+  })();
   var SDK_WAIT = 2500, INIT_WAIT = 4000;
   function hasSdk() { return !!(window.instgame && typeof window.instgame.initializeAsync === "function"); }
   function bootGame(startGame) {
