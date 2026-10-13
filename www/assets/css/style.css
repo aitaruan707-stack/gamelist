@@ -694,6 +694,11 @@ body.play { background: #05080F; }
   main { padding-bottom: 78px; }
   .hero { padding: 20px 16px; }
   .detail-cover { width: 96px; height: 96px; }
+  /* On a phone the game detail page is the game, not the site around it, so the top bar, the
+     breadcrumb and the bottom nav all step aside — the standalone index.html has no chrome at
+     this width either. Every other page keeps them: there the nav is the only way around. */
+  body.detail .topbar, body.detail .crumb, body.detail .bottomnav { display: none; }
+  body.detail main { padding-bottom: 24px; }
 }
 @media (max-width: 360px) {
   .grid { grid-template-columns: 1fr; }
