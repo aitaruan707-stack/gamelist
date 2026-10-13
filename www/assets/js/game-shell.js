@@ -12,7 +12,7 @@
    The box is <body> itself, so every node an engine appends lands inside it on its own; no game
    file, script or asset is touched.
 
-   A phone-class window (real width <= 430px) is a different animal: there the box already is the
+   A phone-class window (real width <= 480px) is a different animal: there the box already is the
    whole screen, so spending 52px of it on a bar we invented is a tax on the player. On those
    windows the bar is never built and the game owns every pixel edge to edge — the browser's own
    back gesture and the site entry (game.html) still navigate, so nothing is lost but the strip. */
@@ -31,7 +31,12 @@
   window.__tzChannel = (seg.length >= 3 && seg[0] !== 'hyper-feed') ? seg[0] : null;
 
   var BAR = 52;                /* room for the navigation bar, on a window wide enough to spare it */
-  var MAXW = 430;              /* phone-class width */
+  var MAXW = 430;              /* the widest phone box we build on a desktop window */
+  var PHONEW = 480;            /* at or below this real width the window is a handset, not a desk:
+                                  440px is the logical width of an iPhone 16 Pro, 412 of a Galaxy S24,
+                                  and the smallest tablet (iPad portrait) starts at 768 — the two
+                                  classes can never meet in the middle, so the line is safe to draw
+                                  above the handsets and well below the tablets */
   var RATIO = 750 / 1625;      /* the site phone frame */
   var phone = false;           /* real window is phone-class: no bar, box = whole viewport */
   var barH = 0;                /* what the bar actually costs this layout right now */
@@ -51,7 +56,7 @@
   var w = 0, h = 0;
   function measure() {
     var rw = realW();
-    phone = rw <= MAXW;
+    phone = rw <= PHONEW;
     barH = phone ? 0 : BAR;
     var rh = Math.max(200, realH() - barH);
     /* a phone-class window already is a phone: fill it, and on a phone the bar costs nothing */
@@ -236,7 +241,7 @@
       var pw = w, ph = h;
       measure();
       apply();
-      bar();       /* crossing the 430px line either way changes whether the bar exists */
+      bar();       /* crossing the PHONEW line either way changes whether the bar exists */
       askAd();     /* a window dragged out to desktop width earns its ad slot */
       if (pw !== w || ph !== h) window.dispatchEvent(new Event('resize'));   /* let the engine re-fit */
     }, 120);
