@@ -91,6 +91,18 @@
   <meta name="x5-page-mode" content="app">
 
   <link rel="stylesheet" type="text/css" href="style.49b11.css"/>
+
+  <!-- Google Ad Placement API（AdSense 给 HTML5 游戏的广告接口，插屏/激励/横幅共用这一个源）。
+       初始化片段必须排在 adsbygoogle.js 之前：adBreak / adConfig 就是这段挂出来的。
+       官方示例用 const，这里换成 var —— 编译后的游戏代码通过 window.adBreak 取函数，
+       而 const 建立的是全局词法绑定，不会挂到 window 上。 -->
+  <script>
+    window.adsbygoogle = window.adsbygoogle || [];
+    var adBreak = adConfig = function (o) { adsbygoogle.push(o); };
+  </script>
+  <script async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3338178325446150"
+          crossorigin="anonymous"></script>
 <!-- Tapzens standalone shell: phone-sized stage, back bar and ad + more-games rails for direct visits,
      no-op inside the site iframe. Injected by build.mjs, do not edit by hand. -->
 <script>window.__tz={"title":"Mahjong Valley","back":"/hyper-feed/mahjongvalley/game.html","cat":"Puzzle","more":"/c/puzzle.html","ad":"ca-pub-3338178325446150","rec":[["LihuaDoku: Cat Logic Puzzle","logic · sudoku","/assets/covers/lihuadoku.webp","/hyper-feed/lihuadoku/game.html"],["Wizard Sort","sort · magic","/assets/covers/wizardsort.webp","/hyper-feed/wizardsort/game.html"],["Royal Matcher","match-3 · casual","/assets/covers/royalmatcher.webp","/hyper-feed/royalmatcher/game.html"],["Chroma Jam","sort · match-3","/assets/covers/chromajam.webp","/hyper-feed/chromajam/game.html"],["Puzzle Yarn Fun","match-3 · casual","/assets/covers/puzzleyarnfun.webp","/hyper-feed/puzzleyarnfun/game.html"],["Bubble Safari","bubble · match-3","/assets/covers/bubblesafari.webp","/hyper-feed/bubblesafari/game.html"]]};</script>
@@ -121,18 +133,6 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
       <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="99"></canvas>
     </div>
   </div>
-  <!-- OPPO/instgame 聚合 SDK：必须是源码里能直接扫到的静态标签（渠道审核看标签下发广告位），
-       但已不再阻塞解析 —— 就绪时序由下方 DCL 挂钩保证。
-       只注入 build-templates，不注入 preview-template —— Creator 预览保持无 SDK，
-       localhost 才能继续被判定为“非广告环境”，现有的 PREVIEW 遮罩验收能力才不会丢。 -->
-  <!-- PERF:BEGIN 站点侧启动优化（非游戏代码，换包后由维护方重新注入）
-       preconnect 先把 SDK 域名的 DNS+TCP+TLS 走完；h0.js 改 defer，解析器不再被它
-       按住 455ms。defer 脚本在 DOMContentLoaded 之前执行完，而下面的入口脚本被挂到
-       DCL 上启动，所以 bootInstgame() 同步读 window.instgame 时 SDK 必定就位。 -->
-  <link rel="preconnect" href="https://sdk.instgame.com">
-  <link rel="dns-prefetch" href="https://sdk.instgame.com">
-  <script src="https://sdk.instgame.com/sdk/h0.js" defer></script>
-  <!-- PERF:END -->
   
 
 <!-- Polyfills bundle. -->
@@ -144,14 +144,10 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
 <script src="src/system.bundle.543e6.js" charset="utf-8"> </script>
 
 <!-- Import map -->
-<script src="src/import-map.b33fd.json" type="systemjs-importmap" charset="utf-8"> </script>
+<script src="src/import-map.1c019.json" type="systemjs-importmap" charset="utf-8"> </script>
 
 <script>
-    /* 等 DOMContentLoaded 再启动：上面那行 h0.js 是 defer，入口模块里的 bootInstgame()
-       是同步读 window.instgame 的，抢在 DCL 前跑会把广告闸门误判成“无 SDK”。 */
-    function __tzBootMjv() { System.import('./index.3e60f.js').catch(function(err) { console.error(err); }) }
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', __tzBootMjv);
-    else __tzBootMjv();
+    System.import('./index.f91e6.js').catch(function(err) { console.error(err); })
 </script>
 
 </body>

@@ -1,10 +1,14 @@
-System.register(["./application.c9137.js"], function (_export, _context) {
+System.register(["./application.bbd60.js"], function (_export, _context) {
   "use strict";
 
   var Application, canvas, $p, bcr, application;
   function topLevelImport(url) {
     return System["import"](url);
   }
+
+  // AdSense 全局配置。adConfig 只接受 preloadAdBreaks / sound 两个参数，多传的字段 API 会忽略。
+  // preloadAdBreaks 必须是 'on'：实测不预加载时 adBreak 会立即以 breakStatus=noAdPreloaded 定案，
+  // 也就是一条广告都不会出。sound 跟随游戏音量，每次静音状态变化都要重新上报。
   return {
     setters: [function (_applicationJs) {
       Application = _applicationJs.Application;
@@ -15,32 +19,17 @@ System.register(["./application.c9137.js"], function (_export, _context) {
       bcr = $p.getBoundingClientRect();
       canvas.width = bcr.width;
       canvas.height = bcr.height;
-      application = new Application();
-      /**
-       * OPPO/instgame 渠道 SDK 初始化：只发起 initializeAsync，并把结果闸门交给
-       * window.__instgameInit，由 InstgameBridge 在投广告 / startGameAsync / 进度上报之前等它。
-       *
-       * 故意不把 cc.game 串在 initializeAsync 后面：渠道 SDK 域名不可用时游戏必须照常进得去，
-       * 否则就是一个白屏事故。闸门统一 resolve 成布尔值，失败只影响广告投放。
-       */
-      (function bootInstgame() {
-        var sdk = window.instgame;
-        if (!sdk || typeof sdk.initializeAsync !== 'function') {
-          window.__instgameInit = null;
-          return;
-        }
-        try {
-          window.__instgameInit = Promise.resolve(sdk.initializeAsync()).then(function () {
-            return true;
-          }, function (error) {
-            console.error('[instgame] initializeAsync failed', error && error.message);
-            return false;
+      try {
+        if (typeof window.adConfig === 'function') {
+          window.adConfig({
+            preloadAdBreaks: 'on',
+            sound: 'on'
           });
-        } catch (error) {
-          console.error('[instgame] initializeAsync threw', error);
-          window.__instgameInit = null;
         }
-      })();
+      } catch (err) {
+        console.warn('[AdSense] adConfig failed', err);
+      }
+      application = new Application();
       topLevelImport('cc').then(function (engine) {
         // Creator 3.8.7 may still inject its default Splash into settings even when
         // useSplashScreen is false. Runtime overrides are applied before settings
