@@ -378,7 +378,15 @@ section[id] { scroll-margin-top: 76px; }
     margin-left: calc(var(--gutter) * -1);
     align-items: stretch;
   }
-  .gh-stage .phone-frame.portrait { width: 100%; border-radius: 0; box-shadow: none; }
+  /* …but filling the width must not outgrow the screen: a wide handset or a small tablet would get
+     a frame taller than the viewport (624px wide -> 1352px tall), which reads as one long empty
+     page. So the screen height caps it and the frame centres in the leftover width. */
+  .gh-stage .phone-frame.portrait {
+    width: min(100%, calc(100dvh * var(--ar-w) / var(--ar-h)));
+    margin-inline: auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
   /* phone: the game already fills the frame, so the Fullscreen / Favorite row under it is dropped */
   .gh-actions { display: none; }
 }
