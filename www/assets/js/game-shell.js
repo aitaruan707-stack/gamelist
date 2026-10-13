@@ -10,7 +10,12 @@
    document exists we add what the export is missing: a bar with Back, and beside the phone an ad
    column plus a "more games" rail, which is also what makes the empty desktop space worth having.
    The box is <body> itself, so every node an engine appends lands inside it on its own; no game
-   file, script or asset is touched. */
+   file, script or asset is touched.
+
+   A phone-class window (real width <= 430px) is a different animal: there the box already is the
+   whole screen, so spending 52px of it on a bar we invented is a tax on the player. On those
+   windows the bar is never built and the game owns every pixel edge to edge — the browser's own
+   back gesture and the site entry (game.html) still navigate, so nothing is lost but the strip. */
 
 (function () {
   'use strict';
@@ -25,9 +30,11 @@
   var seg = (location.pathname || '').split('/').filter(Boolean);
   window.__tzChannel = (seg.length >= 3 && seg[0] !== 'hyper-feed') ? seg[0] : null;
 
-  var BAR = 52;                /* room for the navigation bar */
+  var BAR = 52;                /* room for the navigation bar, on a window wide enough to spare it */
   var MAXW = 430;              /* phone-class width */
   var RATIO = 750 / 1625;      /* the site phone frame */
+  var phone = false;           /* real window is phone-class: no bar, box = whole viewport */
+  var barH = 0;                /* what the bar actually costs this layout right now */
 
   var de = document.documentElement;
   var info = window.__tz || {};
@@ -43,9 +50,12 @@
 
   var w = 0, h = 0;
   function measure() {
-    var rw = realW(), rh = Math.max(200, realH() - BAR);
-    /* a phone-class window already is a phone: fill it, only pay for the bar */
-    if (rw <= MAXW) { w = Math.round(rw); h = Math.round(rh); return; }
+    var rw = realW();
+    phone = rw <= MAXW;
+    barH = phone ? 0 : BAR;
+    var rh = Math.max(200, realH() - barH);
+    /* a phone-class window already is a phone: fill it, and on a phone the bar costs nothing */
+    if (phone) { w = Math.round(rw); h = Math.round(rh); return; }
     var bw = Math.min(MAXW, rw);
     var bh = Math.min(rh, bw / RATIO);
     bw = Math.min(bw, bh * RATIO);
@@ -63,10 +73,10 @@
   } catch (e) { measure(); }
 
   function apply() {
-    de.style.setProperty('--tz-bar', BAR + 'px');
+    de.style.setProperty('--tz-bar', barH + 'px');
     de.style.setProperty('--tz-w', w + 'px');
     de.style.setProperty('--tz-h', h + 'px');
-    de.style.setProperty('--tz-top', Math.round(BAR + Math.max(0, (realH() - BAR - h) / 2)) + 'px');
+    de.style.setProperty('--tz-top', Math.round(barH + Math.max(0, (realH() - barH - h) / 2)) + 'px');
   }
   de.className += (de.className ? ' ' : '') + 'tz-standalone';
   apply();
@@ -77,9 +87,14 @@
   var fromSite = false;
   try { fromSite = !!document.referrer && document.referrer.indexOf(location.origin + '/') === 0; } catch (e) {}
 
+  /* Reconciles the bar with the current layout: build it on a desktop window, and take it away if
+     the window ever shrinks to phone class (the reverse case is just as real — a rotated tablet). */
   function bar() {
-    if (!document.body || document.getElementById('tz-bar')) return;
-    var el = document.createElement('div');
+    if (!document.body) return;
+    var el = document.getElementById('tz-bar');
+    if (phone) { if (el) el.parentNode.removeChild(el); return; }
+    if (el) return;
+    el = document.createElement('div');
     el.id = 'tz-bar';
 
     var back = document.createElement('a');
@@ -221,7 +236,8 @@
       var pw = w, ph = h;
       measure();
       apply();
-      askAd();   /* a window dragged out to desktop width earns its ad slot */
+      bar();       /* crossing the 430px line either way changes whether the bar exists */
+      askAd();     /* a window dragged out to desktop width earns its ad slot */
       if (pw !== w || ph !== h) window.dispatchEvent(new Event('resize'));   /* let the engine re-fit */
     }, 120);
   }
