@@ -1,7 +1,20 @@
+# Ad quality review needs to reach the playable builds: /hyper-feed/<slug>/index.html is the
+# document that actually carries the AdSense tags (auto ads config, display unit, ad breaks).
+# Blocking these bots there is what makes Google answer ad requests with an empty creative.
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+
+User-agent: AdsBot-Google-Mobile-Apps
+Allow: /
+
 User-agent: *
 Allow: /
-# Keep the raw playable game builds (canvas apps) out of the crawl; the SEO surface is the
-# intro pages at /hyper-feed/<slug>/game.html, which stay allowed.
+# Keep the raw playable game builds (canvas apps) out of the web search crawl; the SEO surface is
+# the intro pages at /hyper-feed/<slug>/game.html, which stay allowed. Ads review bots above are
+# deliberately excluded from this rule.
 Disallow: /hyper-feed/*/index.html
 
 Sitemap: https://tapzens.com/sitemap.xml
