@@ -35,6 +35,9 @@ try{var c=JSON.parse(localStorage.getItem(K)||'null');if(c&&c.consent&&typeof c.
 <script>(function s(){if(!window.frames.googlefcPresent){if(document.body){var f=document.createElement('iframe');f.style.cssText='display:none';f.name='googlefcPresent';document.body.appendChild(f);}else{setTimeout(s,0);}}})();</script>
 <!-- consent bridge: persists the CMP decision and exposes the revocation entrypoint -->
 <script defer src="/assets/js/consent.js"></script>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-06KHTP8DZZ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-06KHTP8DZZ');</script>
 <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
