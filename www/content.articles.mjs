@@ -1,5 +1,5 @@
 /*
- * Tapzens guides — build-time editorial articles rendered to /guides/<slug>.html.
+ * Zupilo guides — build-time editorial articles rendered to /guides/<slug>.html.
  * Written from facts that are verifiable in this repository (the catalogue itself,
  * the control model of each game, and what the build and compliance audit actually do).
  * No invented statistics, no testimonials, no claims about traffic or audience size.
@@ -8,7 +8,7 @@ export const ARTICLES = [
   {
     slug: 'sorting-puzzles',
     title: 'Sorting puzzles: the single rule behind every sort game',
-    desc: 'Water glasses, screws and item stacks all run on one constraint. Understand it and every sorting puzzle on Tapzens gets easier.',
+    desc: 'Water glasses, screws and item stacks all run on one constraint. Understand it and every sorting puzzle on Zupilo gets easier.',
     kicker: 'Genre guide',
     minutes: 5,
     intro: [
@@ -68,7 +68,7 @@ export const ARTICLES = [
   {
     slug: 'match-3-move-budget',
     title: 'Match-3 is a budgeting game, not a spotting game',
-    desc: 'Three swap-and-match puzzles on Tapzens, one shared lesson: the move counter decides almost everything and the pretty board decides almost nothing.',
+    desc: 'Three swap-and-match puzzles on Zupilo, one shared lesson: the move counter decides almost everything and the pretty board decides almost nothing.',
     kicker: 'Strategy',
     minutes: 6,
     intro: [
@@ -128,14 +128,14 @@ export const ARTICLES = [
     kicker: 'Safety',
     minutes: 6,
     intro: [
-      '“Do I need to install anything?” is the first question people ask about a browser game, and the answer for Tapzens is no — but the more useful question is what happens on your device once a page is open. This is that answer, without the reassuring vagueness.',
+      '“Do I need to install anything?” is the first question people ask about a browser game, and the answer for Zupilo is no — but the more useful question is what happens on your device once a page is open. This is that answer, without the reassuring vagueness.',
       'The short version: a game in a browser tab runs inside a sandbox. It cannot install software, read your files, see other tabs, charge you money, or use your camera and microphone unless you explicitly grant permission for that specific site. What it can do is store a small amount of data for itself, make network requests, and display advertising.'
     ],
     sections: [
       {
         h: 'Accounts: there are none here',
         p: [
-          'Tapzens has no sign-up, no login and no profile system, which means there is no password for us to store and no account for anyone to breach. We do not collect your name, email or location to let you play a game.',
+          'Zupilo has no sign-up, no login and no profile system, which means there is no password for us to store and no account for anyone to breach. We do not collect your name, email or location to let you play a game.',
           'The consequence is worth understanding before it surprises you: because there is no account, there is no cloud save. Your progress lives on the device and in the browser you played in. Clear site data, use private browsing, or switch phones and the game starts over. That is a trade-off — less convenience, less personal data held anywhere but your own machine.'
         ]
       },
@@ -165,7 +165,7 @@ export const ARTICLES = [
         h: 'The real risks, which are smaller but not zero',
         p: [
           'Sandboxing handles the dramatic threats. What is genuinely worth caring about on a free game site is different and more mundane: aggressive ad layouts that are hard to distinguish from the game, pages that pretend to be a download button, and pop-unders on sites that are not run carefully.',
-          'Our approach is to keep the game area free of clickable decoration and to place advertising in fixed positions with a visible label. If you ever see something on Tapzens that looks like a fake play button, a fake update notice, or a warning that your device is infected, treat it as hostile, do not click it, and tell us at the contact address — an ad network occasionally serves something that should not have passed review, and a report is the fastest way for it to be pulled.'
+          'Our approach is to keep the game area free of clickable decoration and to place advertising in fixed positions with a visible label. If you ever see something on Zupilo that looks like a fake play button, a fake update notice, or a warning that your device is infected, treat it as hostile, do not click it, and tell us at the contact address — an ad network occasionally serves something that should not have passed review, and a report is the fastest way for it to be pulled.'
         ]
       }
     ],
@@ -179,12 +179,12 @@ export const ARTICLES = [
 
   {
     slug: 'how-we-curate-games',
-    title: 'How Tapzens decides which games to publish',
+    title: 'How Zupilo decides which games to publish',
     desc: 'The actual pipeline a game goes through here before it appears in the catalogue — what we test, what we scan for, and what gets rejected.',
     kicker: 'Behind the scenes',
     minutes: 5,
     intro: [
-      'Most game portals are silent about how a game ends up on them, which makes “hand-picked” meaningless. So here is the concrete process a package goes through on Tapzens, including the automated checks that run every time the site is built.',
+      'Most game portals are silent about how a game ends up on them, which makes “hand-picked” meaningless. So here is the concrete process a package goes through on Zupilo, including the automated checks that run every time the site is built.',
       'Nothing on this site is user-uploaded, and there is no submission form that dumps straight onto a page. A game is added only after it works on a phone, plays reasonably on a desktop, and passes the tracker scan described below.'
     ],
     sections: [
@@ -223,7 +223,7 @@ export const ARTICLES = [
     ],
     closing: 'If you want to suggest a game, or think one of ours is misfiled, the contact page is a real mailbox that a person reads. That is a smaller promise than “millions of games”, and it is the one we can keep.',
     links: [
-      { label: 'About Tapzens', href: '/about.html' },
+      { label: 'About Zupilo', href: '/about.html' },
       { label: 'Partnerships & submissions', href: '/partnerships.html' },
       { label: 'Contact us', href: '/contact.html' }
     ]
@@ -236,7 +236,7 @@ export const ARTICLES = [
     kicker: 'Playing better',
     minutes: 5,
     intro: [
-      'Of the eighteen games on Tapzens, thirteen are portrait and five are landscape. That split is not a stylistic preference of ours — it is inherited from how each game was built, and it changes what the game asks from your hands. Playing a landscape game one-handed, or expecting a portrait shooter to use a wide field, is most of the reason people decide a game is bad when it is really just held wrong.',
+      'Of the eighteen games on Zupilo, thirteen are portrait and five are landscape. That split is not a stylistic preference of ours — it is inherited from how each game was built, and it changes what the game asks from your hands. Playing a landscape game one-handed, or expecting a portrait shooter to use a wide field, is most of the reason people decide a game is bad when it is really just held wrong.',
       'The underlying difference is how many simultaneous inputs you have available and how much of the screen you can see at once.'
     ],
     sections: [
@@ -292,18 +292,18 @@ export const ARTICLES = [
   {
     slug: 'a-parents-guide',
     title: 'A parent’s guide to playing here',
-    desc: 'What a child sees on Tapzens: advertising and consent, in-app purchase prompts, contact with strangers, game content, and the settings worth changing.',
+    desc: 'What a child sees on Zupilo: advertising and consent, in-app purchase prompts, contact with strangers, game content, and the settings worth changing.',
     kicker: 'For families',
     minutes: 5,
     intro: [
-      'Tapzens is a general-audience site (13+) and there is no age gate, because there is no account and nothing to gate. That makes it easy for a child to use and, for the same reason, it is something a parent should decide about knowingly rather than by accident. This page sets out what is actually there.',
+      'Zupilo is a general-audience site (13+) and there is no age gate, because there is no account and nothing to gate. That makes it easy for a child to use and, for the same reason, it is something a parent should decide about knowingly rather than by accident. This page sets out what is actually there.',
       'The three things worth understanding are advertising, purchase prompts inside some games, and the absence of any communication feature.'
     ],
     sections: [
       {
         h: 'Contact with strangers: there is none',
         p: [
-          'There are no chat rooms, no comments, no usernames, no player lists, no friend requests and no messaging anywhere on the site. Nothing on a Tapzens page is submitted by another visitor. A child cannot be contacted by anyone here, and there is no profile for them to fill in.',
+          'There are no chat rooms, no comments, no usernames, no player lists, no friend requests and no messaging anywhere on the site. Nothing on a Zupilo page is submitted by another visitor. A child cannot be contacted by anyone here, and there is no profile for them to fill in.',
           'One caveat belongs in the open: some game bundles ship with leaderboards and ranking screens built into the game itself. Those are part of the original game code rather than something we added, and we cannot guarantee what a future update of a bundled game might contain.'
         ]
       },
@@ -317,7 +317,7 @@ export const ARTICLES = [
       {
         h: '“Not enough coins” — purchase prompts inside some games',
         p: [
-          'Several of these games were originally built for app stores, and they keep their in-game currency screens: a coin total, a shop, a “Not Enough Coins” message, and options that offer currency in exchange for watching a video. In the browser versions here, there is no payment path — no card details are stored or requested anywhere on Tapzens, and we do not sell anything.',
+          'Several of these games were originally built for app stores, and they keep their in-game currency screens: a coin total, a shop, a “Not Enough Coins” message, and options that offer currency in exchange for watching a video. In the browser versions here, there is no payment path — no card details are stored or requested anywhere on Zupilo, and we do not sell anything.',
           'But the buttons are visible, and that matters for a young child who has learned that a button shaped like a shop does something on other apps. Explain that the shop here does nothing. If you want to remove the ambiguity entirely, the games with the least commercial furniture are Puzzle Hex, Arrow Maze Solve, Chroma Jam and Block Puzzle: Save Girl.'
         ]
       },
@@ -331,7 +331,7 @@ export const ARTICLES = [
       {
         h: 'Practical settings worth changing',
         p: [
-          'None of these are Tapzens-specific; they are browser and device controls that apply wherever a child is playing on the web.'
+          'None of these are Zupilo-specific; they are browser and device controls that apply wherever a child is playing on the web.'
         ],
         list: [
           'Use your browser’s profile or a supervised account so the site’s consent choice is one you made.',

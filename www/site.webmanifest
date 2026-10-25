@@ -1,16 +1,25 @@
 {
-  "name": "Tapzens — Free Online Games",
-  "short_name": "Tapzens",
-  "description": "Play free online games on Tapzens. Fast, fun, on any device.",
+  "name": "Zupilo — Free Online Games",
+  "short_name": "Zupilo",
+  "description": "Good games. Great breaks. Play free online, on any device.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#0B1020",
-  "theme_color": "#0B1020",
+  "background_color": "#F5F6FA",
+  "theme_color": "#6254E8",
   "icons": [
-    { "src": "/assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "/assets/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/assets/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
   ]
 }

@@ -53,7 +53,7 @@ export const GUIDES = {
       { q: 'What do + Grid, Clear and Hammer do?', a: 'They are the three tools along the bottom of frame 2, each badged "Free". The names point at the grid panel and at the board. What a Hammer press specifically removes is not shown in the frames we captured, so we are not going to invent it.' },
       { q: 'Why do two spool lanes say Unlock?', a: 'Only two lanes are loaded in the first board. The other two are greyed with a padlock and a video badge in both frames, so the puzzle adds colours as you progress instead of starting with all four.' },
       { q: 'Is there a time limit?', a: 'Nothing on the captured frames counts down. The only gauges are the "0%" bar beside the Newbie Guide and the board itself, so you can leave a board alone while you think.' },
-      { q: 'Does it need an account?', a: 'No. There is no sign-up anywhere on Tapzens. Progress is stored by the game in your own browser, which is also why clearing site data or switching devices starts over.' }
+      { q: 'Does it need an account?', a: 'No. There is no sign-up anywhere on Zupilo. Progress is stored by the game in your own browser, which is also why clearing site data or switching devices starts over.' }
     ],
     shots: [
       'The first lesson, with the whole screen dimmed behind it: the Newbie Guide grid at 0%, one dark red and one green spool lane loaded, two showing "Unlock", and the bubble "First check order colors".',
@@ -327,7 +327,7 @@ export const GUIDES = {
       { q: 'How do you earn stars?', a: 'From burst value. The HUD shows three star slots over a fill bar, and two of the three had turned gold by a score of 6640 while eight popups of 500 each were rising off the board (frame 2).' },
       { q: 'What are the four icons along the bottom?', a: 'Power-ups — a striped rocket, a balloon cluster, a lightning bolt and a pink mallet. Each carries a clapperboard badge and a green plus, meaning charges are added by watching a video.' },
       { q: 'What does the number in the circle at the bottom mean?', a: 'It is one of two counters and the game never labels it: 35 on Level 1 and 30 on Level 2 (frames 1, 3). The other one, the three-bubble icon in the HUD, read 63, then 0 on the same level, then 101 on Level 2. We are not going to tell you which is shots when the frames do not settle it.' },
-      { q: 'Does it need an account?', a: 'No. There is no sign-up on Tapzens, and the game runs in the browser. A "Sign In" style prompt inside a build would be the game\'s own save option, not a requirement to play.' }
+      { q: 'Does it need an account?', a: 'No. There is no sign-up on Zupilo, and the game runs in the browser. A "Sign In" style prompt inside a build would be the game\'s own save option, not a requirement to play.' }
     ],
     shots: [
       'Level 1 before the first shot: the hanging bubble wall in red, orange and green, the reticle loaded with a red bubble and reading 35, and the gift box counting down from 00:54.',

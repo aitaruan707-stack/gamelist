@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Tapzens — zero-dependency static site generator.
+/* Zupilo — zero-dependency static site generator.
    Reads games.json and emits index.html + g/<slug>.html + sitemap.xml,
    copies game cover icons and splash images, and generates SVG placeholder
    covers for games without an icon. Run: node build.mjs */
@@ -9,11 +9,25 @@ import { dirname, join, resolve, relative, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { GUIDES, CAT_COPY } from './content.guides.mjs';
 import { ARTICLES } from './content.articles.mjs';
+import { logo, navigation, mobileNavigation, gameCard } from './site-navigation.mjs';
+import { homeContent } from './site-home.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
 const read = (p) => JSON.parse(readFileSync(join(ROOT, p), 'utf8'));
-const write = (p, c) => writeFileSync(join(ROOT, p), c, 'utf8');
+const changedPages = new Set();
+const write = (p, c) => {
+  const path = join(ROOT, p);
+  if (existsSync(path) && readFileSync(path, 'utf8') === c) return;
+  changedPages.add(p);
+  writeFileSync(path, c, 'utf8');
+};
+const previousDates = new Map(
+  [...(existsSync(join(ROOT, 'sitemap.xml')) ? readFileSync(join(ROOT, 'sitemap.xml'), 'utf8') : '')
+    .matchAll(/<loc>([^<]+)<\/loc><lastmod>([^<]+)<\/lastmod>/g)]
+    .map(([, url, date]) => [url, date])
+);
+
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const pad2 = (n) => (n < 10 ? '0' : '') + n;
 const dist = (p) => join(ROOT, p);
@@ -111,9 +125,6 @@ function copyAvatars() {
 
 /* ---------- shared markup ---------- */
 function coverUrl(g) { return g.cover ? `/assets/covers/${g.cover}` : `/assets/covers/${g.slug}.svg`; }
-function artUrl(g) { return g.art ? `/assets/covers/${g.art}` : coverUrl(g); }
-/* only some entries carry a dedicated 512px icon; the feature card falls back to the square cover */
-function iconUrl(g) { return g.icon ? `/assets/covers/${g.icon}` : coverUrl(g); }
 function detailUrl(g) { return `/hyper-feed/${g.slug}/game.html`; }
 function playUrl(g) { return `/hyper-feed/${g.slug}/index.html`; }
 
@@ -139,14 +150,7 @@ function redirectStub(targetPath) {
 </html>`;
 }
 
-const ICON_SEARCH = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>`;
-const ICON_CLOSE = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>`;
-const ICON_PLAY = `<svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>`;
 const ICON_HEART = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>`;
-const ICON_HOME = `<svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>`;
-const ICON_GRID = `<svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`;
-const ICON_STAR = `<svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 18.9 6.2 21l1.1-6.5L2.6 9.8l6.5-.9z"/></svg>`;
-const ICON_CLOCK = `<svg class="bi" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`;
 
 /* ---------- deterministic rating / plays / category meta / features / tags ---------- */
 const CAT_META = {
@@ -182,14 +186,14 @@ function featuresFor(g) {
   return f.slice(0, 5);
 }
 const HOME_FAQ = [
-  { q: 'Are the games on Tapzens really free?', a: 'Yes — every game is free to play in your browser with no downloads, no sign-ups and no paywalls. Tapzens is supported without ever charging players.' },
+  { q: 'Are the games on Zupilo really free?', a: 'Yes — every game is free to play in your browser with no downloads, no sign-ups and no paywalls. Zupilo is supported without ever charging players.' },
   { q: 'Do I need to install anything to play?', a: 'No. All games run instantly in your browser on phones, tablets and desktops. If it loads, it plays.' },
-  { q: 'Can I play Tapzens games on my phone?', a: 'Absolutely. Every game is touch-optimized and mobile-friendly, from portrait puzzle games to landscape arcade action.' },
+  { q: 'Can I play Zupilo games on my phone?', a: 'Absolutely. Every game is touch-optimized and mobile-friendly, from portrait puzzle games to landscape arcade action.' },
   { q: 'How often are new games added?', a: 'We add new curated games regularly — check the news page or come back often for the latest releases.' },
   { q: 'Do I need an account or sign-up?', a: 'No accounts, ever. Favorites and recently played games are saved privately in your own browser.' },
-  { q: 'Who are Tapzens games designed for?', a: 'Tapzens is a general-audience games site intended for players aged 13 and over, and it is not directed at children under 13. There is no chat, no payment prompts and no external downloads, and ad personalization can be switched off at any time from Manage consent.' },
+  { q: 'Who are Zupilo games designed for?', a: 'Zupilo is a general-audience games site intended for players aged 13 and over, and it is not directed at children under 13. There is no chat, no payment prompts and no external downloads, and ad personalization can be switched off at any time from Manage consent.' },
   { q: 'How do my favorites and progress work?', a: 'They live only in your browser\'s local storage — private to your device, and removable anytime by clearing site data.' },
-  { q: 'Can I play offline?', a: 'Tapzens lives in your browser, so you\'ll need a connection — but every game loads in seconds and never needs an install.' }
+  { q: 'Can I play offline?', a: 'Zupilo lives in your browser, so you\'ll need a connection — but every game loads in seconds and never needs an install.' }
 ];
 /* category FAQs now live in CAT_COPY (content.guides.mjs): they are written from the games
    actually filed in each category, and the old shared copy named titles that belong to a
@@ -262,39 +266,12 @@ function headMonetization(opts = {}) {
   return out;
 }
 
-function logoInline() {
-  return `<a class="logo" href="/" aria-label="Tapzens home"><img src="/assets/logo.svg" alt="Tapzens" width="30" height="30"><span class="word">Tapzens</span></a>`;
-}
-
+function logoInline() { return logo(SITE); }
 function topbar(active) {
-  return `<header class="topbar"><div class="wrap">
-    ${logoInline()}
-    <nav class="nav-main">
-      <a href="/" class="${active === 'home' ? 'active' : ''}">Home</a>
-      <a href="/#categories" class="${active === 'categories' ? 'active' : ''}">Categories</a>
-      <a href="/#favorites" class="${active === 'favorites' ? 'active' : ''}">Favorites</a>
-      <a href="/about.html" class="${active === 'about' ? 'active' : ''}">About</a>
-    </nav>
-    <div class="spacer"></div>
-    <div class="search">
-      <input type="search" placeholder="Search games…" aria-label="Search games" autocomplete="off">
-      <span class="ico">${ICON_SEARCH}</span>
-      <button class="clear" aria-label="Clear search">${ICON_CLOSE}</button>
-      <div class="results" role="listbox" aria-label="Search results"></div>
-    </div>
-    <button class="icon-btn" data-search-toggle aria-label="Search">${ICON_SEARCH}</button>
-  </div></header>`;
+  const catalog = games.map(({ slug, title, category, tags, description, cover, publishedAt }) => ({ slug, title, category, tags, description, cover, publishedAt }));
+  return navigation(SITE, games, active) + `<script type="application/json" id="games-data">${JSON.stringify({ games: catalog }).replace(/</g, '\\u003c')}</script>`;
 }
-
-function bottomNav(active) {
-  const a = (href, label, icon, on) => `<a href="${href}" class="${on ? 'active' : ''}">${icon}<span>${label}</span></a>`;
-  return `<nav class="bottomnav">
-    ${a('/', 'Home', ICON_HOME, active === 'home')}
-    ${a('/#categories', 'Categories', ICON_GRID, false)}
-    ${a('/#favorites', 'Favorites', ICON_STAR, false)}
-    ${a('/#recent', 'Recent', ICON_CLOCK, false)}
-  </nav>`;
-}
+function bottomNav(active) { return mobileNavigation(active); }
 
 function footer() {
   const year = new Date().getFullYear();
@@ -314,20 +291,7 @@ function footer() {
   </div></footer>`;
 }
 
-function cardHtml(g, opts = {}) {
-  const lazy = opts.first ? '' : 'loading="lazy"';
-  const fp = opts.first ? 'fetchpriority="high"' : '';
-  return `<a class="card" href="${detailUrl(g)}" aria-label="${esc(g.title)}">
-    <div class="thumb">
-      <img src="${coverUrl(g)}" alt="${esc(g.title)} cover" ${lazy} ${fp} width="240" height="240">
-      <div class="play-ov"><div class="pcircle">${ICON_PLAY}</div></div>
-    </div>
-    <div class="info">
-      <div class="title">${esc(g.title)}</div>
-      <div class="meta"><span class="cat">${esc(g.category)}</span><span class="plays">Free · No install</span></div>
-    </div>
-  </a>`;
-}
+function cardHtml(g, opts = {}) { return gameCard(g, opts); }
 
 function miniHtml(g) {
   return `<a class="mini" href="${detailUrl(g)}" aria-label="${esc(g.title)}">
@@ -336,161 +300,50 @@ function miniHtml(g) {
   </a>`;
 }
 
-function featCardHtml(g) {
-  return `<a class="fcard" href="${detailUrl(g)}" aria-label="${esc(g.title)}">
-    <div class="fcard-art">
-      <img src="${artUrl(g)}" alt="${esc(g.title)} screenshot" loading="lazy" width="1024" height="576">
-    </div>
-    <div class="fcard-body">
-      <img class="fcard-ico" src="${iconUrl(g)}" alt="${esc(g.title)} icon" loading="lazy" width="52" height="52">
-      <div class="fcard-t">
-        <div class="fcard-title">${esc(g.title)}</div>
-        <div class="fcard-sub">${esc(g.category)} · Free to play</div>
-      </div>
-    </div>
-    <span class="fcard-play"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Play Now</span>
-  </a>`;
-}
-
 /* fabricated reviews, reviewer identities and rating helpers removed — the site collects no real user feedback */
 
 /* ---------- home page ---------- */
 function buildHome() {
-    /* the front block shows the whole catalogue: games.json order is popularWeight descending,
-       which is also the order used by the All Games grid, so both lists agree. */
-    const featured = games;
-  const cats = data.categories || [];
-  const firstFour = games.slice(0, 4);
-
-  const chips = `<div class="chips" data-filter id="cat-chips">
-    <button class="active" data-cat="all">All</button>
-    ${cats.map(c => `<button data-cat="${c.slug}">${esc(c.name)}</button>`).join('')}
-  </div>`;
-
-  const catTiles = `<div class="cat-grid">${cats.map(c => {
-    const count = games.filter(g => g.category.toLowerCase() === c.slug).length;
-    const m = catMeta(c.slug);
-    return `<a class="cat-tile ${m.grad}" href="/c/${c.slug}.html"><span class="ci">${m.emoji}</span><div class="cn">${esc(c.name)}</div><div class="cc">${count} games</div></a>`;
-  }).join('')}</div>`;
-
-  const tags = allTags().slice(0, 18);
-  const tagCloud = `<div class="tagcloud">${tags.map(t => `<a class="t" href="/t/${t.slug}.html">${esc(t.name)} <em>${t.count}</em></a>`).join('')}</div>`;
-  const heroArt = featured.slice(0, 3).map((g, i) => i === 0
-    ? `<img src="${coverUrl(g)}" alt="${esc(g.title)} cover" fetchpriority="high">`
-    : `<img src="${coverUrl(g)}" alt="${esc(g.title)} cover" loading="lazy">`).join('');
-  const faqHtml = `<div class="faq">${HOME_FAQ.map(f => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</div>`;
   const faqLd = JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: HOME_FAQ.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
-
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Free Online Games — Play Puzzle, Action & Arcade | ${esc(SITE.name)}</title>
-<meta name="description" content="Play free online games on ${esc(SITE.name)}. Enjoy puzzle, match-3, sorting, action and arcade games instantly in your browser — no download, mobile-friendly, free forever.">
+<title>Free Online Games to Play Instantly | ${esc(SITE.name)}</title>
+<meta name="description" content="Play free online games on ${esc(SITE.name)}. Discover fun puzzle, sorting, tile-matching and arcade games on desktop or mobile, with no downloads required.">
 <link rel="canonical" href="https://${esc(SITE.domain)}/">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="googlebot" content="index, follow">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0B1020">
+<meta name="theme-color" content="#F5F6FA">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(SITE.name)}">
-<meta property="og:title" content="Free Online Games — Play Puzzle, Action & Arcade | ${esc(SITE.name)}">
-<meta property="og:description" content="${esc(SITE.tagline || '')}">
+<meta property="og:title" content="Free Online Games to Play Instantly | ${esc(SITE.name)}">
+<meta property="og:description" content="Play free online games on ${esc(SITE.name)}. Discover fun puzzle, sorting, tile-matching and arcade games on desktop or mobile, with no downloads required.">
 <meta property="og:url" content="https://${esc(SITE.domain)}/">
 <meta property="og:image" content="https://${esc(SITE.domain)}/assets/og.png">
-<meta name="twitter:card" content="summary">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Zupilo — free online games, instant good times">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"${esc(SITE.name)}","url":"https://${esc(SITE.domain)}/"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"${esc(SITE.name)}","url":"https://${esc(SITE.domain)}/","logo":"https://${esc(SITE.domain)}/assets/logo.png"}</script>
 <script type="application/ld+json">${JSON.stringify({ '@context':'https://schema.org','@type':'ItemList', name: SITE.name + ' Free Online Games', itemListElement: games.map((g,i)=>({ '@type':'ListItem', position:i+1, url:`https://${SITE.domain}${detailUrl(g)}`, name:g.title })) })}</script>
 <script type="application/ld+json">${faqLd}</script>
 ${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/portal.css">
 </head>
 <body>
 ${topbar('home')}
-<main class="container">
-  <section class="hero">
-    <div class="hero-copy">
-      <div class="hero-eyebrow">✦ ${games.length} free online games — every one hand-picked and free in your browser</div>
-      <h1>Play free games, instantly.</h1>
-      <p>${esc(SITE.tagline || '')} No downloads, no sign-ups — just tap and play. Curated puzzle, action and arcade hits, optimized for your phone and desktop.</p>
-      <div class="hero-cta">
-        <a class="btn lg" href="#all">Browse All Games</a>
-        <a class="btn lg white" href="#featured">Featured Picks</a>
-      </div>
-      <div class="badges"><span class="b">${games.length} games</span><span class="b">Mobile-first</span><span class="b">No install</span><span class="b">Free forever</span></div>
-    </div>
-    <div class="hero-art" aria-hidden="true">${heroArt}<span class="hero-sticker">✦ Just tap and play</span></div>
-  </section>
-
-  <section class="block" id="featured">
-    <div class="section-head"><h2>Featured Games</h2></div>
-    <div class="feat-rail">${featured.map(featCardHtml).join('')}</div>
-  </section>
-
-  <section class="block" id="recent">
-    <div class="section-head"><h2>Continue Playing</h2><a class="more" href="#all">All games</a></div>
-    <div class="grid" id="continue-grid"></div>
-    <div class="empty-block" id="continue-empty"><span class="big">No recent games yet</span><span>Games you play will show up here.</span></div>
-  </section>
-
-  <section class="block" id="categories">
-    <div class="section-head"><h2>Browse by Category</h2></div>
-    ${catTiles}
-  </section>
-
-  <section class="block" id="tags">
-    <div class="section-head"><h2>Popular Tags</h2></div>
-    ${tagCloud}
-  </section>
-
-  <section class="block" id="all">
-    <div class="section-head"><h2>All Games</h2></div>
-    ${chips.replace('data-filter', 'data-filter').replace('id="cat-chips"', '')}
-    <div class="grid" id="all-grid" style="margin-top:12px">${games.map((g, i) => cardHtml(g, { first: i < 4 })).join('')}</div>
-  </section>
-
-  <section class="block" id="favorites">
-    <div class="section-head"><h2>Your Favorites</h2></div>
-    <div class="grid" id="fav-grid"></div>
-    <div class="empty-block" id="fav-empty"><span class="big">No favorites yet</span><span>Tap the heart on any game to save it here.</span></div>
-  </section>
-
-  <section class="block" id="why">
-    <div class="section-head"><h2>Why play on ${esc(SITE.name)}?</h2></div>
-    <div class="why-grid">
-      <div class="why"><span class="wi">🌈</span><div><b>Hand-picked quality</b><p>Every game is curated and play-tested — no shovelware, no clones, just games worth your time.</p></div></div>
-      <div class="why"><span class="wi">⚡</span><div><b>Instant play</b><p>No downloads, no sign-ups, no waiting. Click a card and you're playing within seconds.</p></div></div>
-      <div class="why"><span class="wi">📱</span><div><b>Play anywhere</b><p>Touch-optimized for phones and tablets, and just as smooth with a keyboard and mouse.</p></div></div>
-      <div class="why"><span class="wi">💎</span><div><b>Free to play</b><p>No paywalls and no accounts. Advertising on the pages around the games runs through a Google-certified consent prompt, and your favorites and progress stay privately on your device.</p></div></div>
-    </div>
-  </section>
-
-  <section class="block" id="guides">
-    <div class="section-head"><h2>Guides &amp; tips</h2><a class="more" href="/guides.html">All guides</a></div>
-    <div class="guides-grid">
-      ${ARTICLES.slice(0, 4).map(a => `<a href="/guides/${a.slug}.html"><em>${esc(a.kicker)} · ${a.minutes} min read</em><b>${esc(a.title)}</b><span>${esc(a.desc)}</span></a>`).join('\n      ')}
-    </div>
-  </section>
-
-  <section class="block seo-intro">
-    <div class="section-head"><h2>Free online games for every mood</h2></div>
-    <p>${esc(SITE.name)} is a free online games portal for puzzle, action and arcade fans. Every title loads in your browser and runs on phones, tablets and desktops — no downloads, no installs, no sign-ups.</p>
-    <p>Whether you like sorting and stacking puzzles, tile matching, or fast reaction games, the catalogue holds ${games.length} titles, each with a written guide on its own page explaining how its mechanics work and how to get better at them. Bookmark your favorites and jump back into recent games.</p>
-  </section>
-
-  <section class="block" id="faq">
-    <div class="section-head"><h2>Frequently Asked Questions</h2></div>
-    ${faqHtml}
-  </section>
-</main>
+${homeContent({ site: SITE, games, categories: data.categories || [], articles: ARTICLES, faq: HOME_FAQ })}
 ${footer()}
 ${bottomNav('home')}
-<script type="application/json" id="games-data">${JSON.stringify(games.map(g => ({ slug: g.slug, title: g.title, category: g.category, tags: g.tags, description: g.description, cover: g.cover, entry: g.entry })))}</script>
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/discovery.js" defer></script>
 </body>
 </html>`;
   write('index.html', html);
@@ -524,7 +377,7 @@ function buildDetail(g) {
   const guide = GUIDES[g.slug] || null;
   const seoFaq = [
     { q: `How do I play ${g.title} online?`, a: `Just press Play Now — ${g.title} loads instantly in your web browser on ${SITE.name}. No download, install or account is required.` },
-    { q: `Can I play ${g.title} free online without downloading?`, a: `Yes. ${g.title} runs directly in the browser on ${SITE.name}, so it is unblocked, free and there is nothing to download or install on your device.` }
+    { q: `Can I play ${g.title} free online without downloading?`, a: `Yes. ${g.title} runs directly in the browser on ${SITE.name}, so it is free and there is nothing to download or install on your device.` }
   ];
   /* the per-game editorial FAQ replaces the questions that were identical on every page;
      the generic pair is only a fallback for a game that has no guide entry */
@@ -549,12 +402,14 @@ function buildDetail(g) {
     url,
     genre: [g.category, ...(g.tags || [])],
     gamePlatform: ['Web Browser', 'Mobile Browser'],
+    isAccessibleForFree: true,
+    inLanguage: 'en',
     operatingSystem: 'Any',
     applicationCategory: 'Game',
     author: { '@type': 'Organization', name: g.developer || SITE.name },
     publisher: { '@type': 'Organization', name: g.developer || SITE.name },
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
-    playMode: 'FreeToPlay',
+    playMode: 'https://schema.org/SinglePlayer',
     potentialAction: { '@type': 'PlayAction', target: url, name: `Play ${g.title} online` }
   };
   const bcrumb = {
@@ -562,7 +417,7 @@ function buildDetail(g) {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `https://${SITE.domain}/` },
-      { '@type': 'ListItem', position: 2, name: g.category, item: `https://${SITE.domain}/#all` },
+      { '@type': 'ListItem', position: 2, name: g.category, item: `https://${SITE.domain}${catHref}` },
       { '@type': 'ListItem', position: 3, name: g.title, item: url }
     ]
   };
@@ -578,8 +433,8 @@ function buildDetail(g) {
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="googlebot" content="index, follow">
 ${HEAD_ICONS}
-<meta name="theme-color" content="#0B1020">
-<meta property="og:type" content="game">
+<meta name="theme-color" content="#F5F6FA">
+<meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(SITE.name)}">
 <meta property="og:title" content="${esc(g.title)} — Play Free Online">
 <meta property="og:description" content="${esc(desc)}">
@@ -595,10 +450,11 @@ ${g.controls && g.controls.length ? `<script type="application/ld+json">${JSON.s
 ${faqList && faqList.length ? `<script type="application/ld+json">${JSON.stringify({ '@context':'https://schema.org','@type':'FAQPage', mainEntity: faqList.map(f => ({ '@type':'Question', name: f.q, acceptedAnswer: { '@type':'Answer', text: f.a } })) })}</script>` : ''}
 ${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/portal.css">
 </head>
 <body class="detail" data-game="${g.slug}">
 ${topbar('')}
-<main class="container">
+<main class="container" id="main-content" tabindex="-1">
   <nav class="crumb" aria-label="Breadcrumb">
     <a href="/">Home</a><span class="sep">›</span>
     <a href="${catHref}">${esc(g.category)}</a><span class="sep">›</span>
@@ -638,16 +494,8 @@ ${topbar('')}
       </div>
     </div>
 
-    <!-- ambient comment column: decorative pool rolled client-side by danmaku.js -->
-    <aside class="gh-live">
-      <div class="info-card live-card">
-        <h2 class="eyebrow"><span class="live-dot" aria-hidden="true"></span>What Players Are Saying</h2>
-        <div class="gh-comments" aria-hidden="true"></div>
-        <p class="live-note">Ambient activity stream — not verified reviews, ratings or play counts.</p>
-      </div>
-    </aside>
-
     <aside class="gh-side">
+      <div class="info-card quick-controls"><h2 class="eyebrow">Before you play</h2><h3>Make your first move.</h3><p>${esc(howToSteps[0] || 'Use touch or your mouse to interact with the game.')}</p><a href="#game-controls">All controls & tips →</a></div>
       ${related.length ? `<div class="info-card">
         <h2 class="eyebrow">You Might Also Like</h2>
         <div class="mini-list">${related.slice(0, 6).map(miniHtml).join('')}</div>
@@ -676,7 +524,7 @@ ${topbar('')}
       <p class="cat-note">Captured from the build running on this page, not promotional art. Every claim in the guide above names the frame it comes from.</p>
       <div class="shots">${shots.map((s, i) => `<figure><img src="/${SHOT_DIR}/${s.file}" alt="${esc(g.title)} — ${esc(caps[i] || 'gameplay frame')}" loading="lazy"><figcaption><b>${i + 1}</b> ${esc(caps[i] || 'Gameplay frame')}</figcaption></figure>`).join('')}</div>`;
       })()}
-      <div class="how-to">
+      <div class="how-to" id="game-controls">
         <h2>How to Play</h2>
         <ol class="controls">${howToSteps.map(c => `<li>${esc(c)}</li>`).join('')}</ol>
       </div>
@@ -690,10 +538,10 @@ ${topbar('')}
 </main>
 ${footer()}
 ${bottomNav('')}
-<script type="application/json" id="games-data">${JSON.stringify(games.map(gg => ({ slug: gg.slug, title: gg.title, category: gg.category, cover: gg.cover })))}</script>
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/discovery.js" defer></script>
 <script src="/assets/js/scroll-relay.js" defer></script>
-<script src="/assets/js/danmaku.js"></script>
+
 </body>
 </html>`;
   ensureDir(`hyper-feed/${g.slug}`);
@@ -715,8 +563,8 @@ function buildDetails() {
    after the game's own stylesheet. The ad + CMP tags ride along inside a <template>, where they are
    inert: the shell moves them into <head> only on a standalone visit, so no tracker or consent
    prompt ever initializes inside the site's iframe. Re-running replaces the old block, not stacks. */
-const SHELL_MARK = 'Tapzens standalone shell';
-const SHELL_RE = /<!-- Tapzens standalone shell:[\s\S]*?<\/head>/i;
+const SHELL_MARK = 'Zupilo standalone shell';
+const SHELL_RE = /<!-- (?:Tapzens|Zupilo) standalone shell:[\s\S]*?<\/head>/i;
 function installGameShell() {
   let patched = 0, same = 0, skipped = [];
   for (const g of games) {
@@ -740,6 +588,8 @@ function installGameShell() {
     }).replace(/</g, '\\u003c');
     const tag = `<!-- ${SHELL_MARK}: phone-sized stage, back bar and ad + more-games rails for direct visits,
      no-op inside the site iframe. Injected by build.mjs, do not edit by hand. -->
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://${esc(SITE.domain)}${detailUrl(g)}">
 <script>window.__tz=${payload};</script>
 <link rel="stylesheet" href="/assets/css/game-shell.css">
 <script src="/assets/js/game-shell.js"></script>
@@ -760,6 +610,18 @@ function installGameShell() {
   console.log(`game shell: ${patched} entries written, ${same} already current${skipped.length ? ', skipped ' + skipped.join(', ') : ''}`);
 }
 
+function buildLegacyPlayerTags() {
+  const file = 'play.html';
+  let html = readFileSync(dist(file), 'utf8');
+  const tags = `<!-- Zupilo player tags:start -->${headMonetization({ ads: 'cmp' })}\n<!-- Zupilo player tags:end -->`;
+  if (/<!-- Zupilo player tags:start -->[\s\S]*?<!-- Zupilo player tags:end -->/.test(html)) {
+    html = html.replace(/<!-- Zupilo player tags:start -->[\s\S]*?<!-- Zupilo player tags:end -->/, () => tags);
+  } else {
+    html = html.replace(/<!-- Google tag \(gtag\.js\) -->[\s\S]*?<\/script>\s*<script>[\s\S]*?<\/script>/, () => tags);
+  }
+  write(file, html);
+}
+
 /* ---------- static pages ---------- */
 function buildStaticPage({ slug, title, desc, h1, body, navActive = '', faq = [], ads = true, robots = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1', file = null }) {
   const url = 'https://' + SITE.domain + '/' + slug + '.html';
@@ -772,24 +634,28 @@ function buildStaticPage({ slug, title, desc, h1, body, navActive = '', faq = []
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${url}">
 <meta name="robots" content="${esc(robots)}">
-<meta name="googlebot" content="index, follow">
+<meta name="googlebot" content="${esc(robots)}">
 ${HEAD_ICONS}
-<meta name="theme-color" content="#0B1020">
+<meta name="theme-color" content="#F5F6FA">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(SITE.name)}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="https://${esc(SITE.domain)}/assets/og.png">
-<meta name="twitter:card" content="summary">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Zupilo — free online games, instant good times">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: title, url, description: desc, isPartOf: { '@type': 'WebSite', name: SITE.name, url: 'https://' + SITE.domain + '/' } })}</script>
 ${faq.length ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })}</script>` : ''}
 ${headMonetization({ ads })}
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/portal.css">
 </head>
 <body>
 ${topbar(navActive)}
-<main class="container">
+<main class="container" id="main-content" tabindex="-1">
   <nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">›</span><span class="cur">${esc(h1)}</span></nav>
   <section class="static">
     <div class="prose">
@@ -800,14 +666,15 @@ ${body}
 ${footer()}
 ${bottomNav('')}
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/discovery.js" defer></script>
 </body>
 </html>`;
   write(file || slug + '.html', html);
 }
 const CONTACT_EMAIL = 'aitaruan707@gmail.com';
 const aboutBody = `
-<h1 class="static-h1">About Tapzens</h1>
-<p class="static-lead">Tapzens is a free online games portal where you can instantly play curated puzzle, action and arcade games right in your browser — no downloads, no sign-ups, no friction.</p>
+<h1 class="static-h1">About Zupilo</h1>
+<p class="static-lead">Zupilo is a free online games portal where you can instantly play curated puzzle, action and arcade games right in your browser — no downloads, no sign-ups, no friction.</p>
 <h2>Our Mission</h2>
 <p>We believe great casual games should be one tap away. Our mission is to build the fastest, friendliest place to play HTML5 games on any device — phones, tablets, or desktops — without installs, pop-ups, or paywalls.</p>
 <h2>What We Do</h2>
@@ -819,17 +686,17 @@ const aboutBody = `
 </ul>
 <h2>What we are honest about</h2>
 <p>This site is funded by advertising, and it runs behind a Google-certified consent prompt that you can change at any time from the footer. There is no account system, no newsletter and no data sold to anyone — a game portal with no login has nothing to sell.</p>
-<p>We also do not publish numbers we cannot stand behind. You will not find star ratings, review scores, play counts or download totals on Tapzens, because there is no user-feedback system to source them from and we would rather show you nothing than show you something invented. What you get instead is a written guide on every game page, and the game itself, playable immediately.</p>
+<p>We also do not publish numbers we cannot stand behind. You will not find star ratings, review scores, play counts or download totals on Zupilo, because there is no user-feedback system to source them from and we would rather show you nothing than show you something invented. What you get instead is a written guide on every game page, and the game itself, playable immediately.</p>
 <h2>Where the games come from</h2>
 <p>The catalogue is HTML5 titles in the casual genres we care about: sorting and stacking puzzles, tile matching, routing and logic boards, plus a small action and arcade selection. Each entry declares its own orientation and control model, and we publish it in the shape the developers built — no cropping a landscape battlefield into a portrait frame to make the grid of cards look tidy.</p>
-<h2>Why Tapzens</h2>
+<h2>Why Zupilo</h2>
 <div class="info-cards">
   <div class="c"><b>${games.length} games</b><span>Each with a written guide on its own page.</span></div>
   <div class="c"><b>Mobile-first</b><span>Touch-optimised, portrait and landscape.</span></div>
   <div class="c"><b>No install</b><span>Play instantly in the browser.</span></div>
   <div class="c"><b>No account</b><span>Nothing to register, nothing to sell.</span></div>
 </div>
-<h2>More from Tapzens</h2>
+<h2>More from Zupilo</h2>
 <ul>
   <li>Learn how a game gets published here in <a href="/guides/how-we-curate-games.html">How we curate games</a>.</li>
   <li>Bringing children? Read <a href="/guides/a-parents-guide.html">a parent’s guide to playing here</a> first.</li>
@@ -841,9 +708,9 @@ const aboutBody = `
 <p class="cta-mail">Email: <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></p>
 `;
 const jobBody = `
-<h1 class="static-h1">Careers at Tapzens</h1>
+<h1 class="static-h1">Careers at Zupilo</h1>
 <p class="static-lead">We're a small, remote-first team on a mission to make casual games effortless to play. Join us and help build a catalogue worth opening.</p>
-<h2>Why Join Tapzens</h2>
+<h2>Why Join Zupilo</h2>
 <div class="info-cards">
   <div class="c"><b>Ships same day</b><span>The site is generated from one repository and deploys automatically — a change is live within a minute of being merged.</span></div>
   <div class="c"><b>Ship fast</b><span>No red tape. Ideas go from proposal to production in days, not quarters.</span></div>
@@ -911,7 +778,7 @@ const partnershipsBody = `
 <p>Tell us about your game and we'll try it. Email: <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></p>
 `;
 const contactBody = `
-<h1 class="static-h1">Contact Tapzens</h1>
+<h1 class="static-h1">Contact Zupilo</h1>
 <p class="static-lead">Have a question, some feedback, a game to share, or a business enquiry? We read every message and reply by email — usually within one business day.</p>
 <div class="contact-card">
   <b>Email</b>
@@ -921,19 +788,19 @@ const contactBody = `
 <h2>What can we help with?</h2>
 <ul>
   <li><b>Player support</b> — a game that won't load, a display issue on your device, or anything else that got in the way of your fun.</li>
-  <li><b>Feedback &amp; suggestions</b> — what you'd like to see on Tapzens, or which games you love.</li>
+  <li><b>Feedback &amp; suggestions</b> — what you'd like to see on Zupilo, or which games you love.</li>
   <li><b>Game submissions</b> — built a polished HTML5 game? <a href="/partnerships.html">Partner with us</a>.</li>
   <li><b>Business &amp; advertising</b> — partnerships and campaigns are handled on our <a href="/partnerships.html">Partnerships</a> page.</li>
   <li><b>Privacy &amp; reporting</b> — to exercise a data right or report a concern (including copyright / DMCA), see our <a href="/privacy-policy.html">Privacy Policy</a>.</li>
 </ul>
 <h2>Before you write</h2>
-<p>Tapzens is a free, no-account games portal, so we never ask for personal details. The best way to contact us is email at the address above — there is no phone line or physical support desk. For billing or ad-privacy questions relating to Google, please use <a href="https://myadcenter.google.com/" rel="noopener noreferrer">Google's Ad Center</a>.</p>
+<p>Zupilo is a free, no-account games portal, so we never ask for personal details. The best way to contact us is email at the address above — there is no phone line or physical support desk. For billing or ad-privacy questions relating to Google, please use <a href="https://myadcenter.google.com/" rel="noopener noreferrer">Google's Ad Center</a>.</p>
 <p class="cta-mail">Email: <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></p>
 `;
 const newsBody = (() => {
   const edits = [
     { date: '2026-09-28', tag: 'Site Update', title: 'A real 404 page, and a disclosure that matches the build audit', text: 'A dead link now lands on a proper page that points back into the catalogue instead of a bare server error. The privacy policy also stopped describing ad-SDK identifiers that sit dormant inside a few game bundles as if they were live trackers — it quotes what the release scan actually finds.', href: '/privacy-policy.html' },
-    { date: '2026-08-28', tag: 'Site Update', title: 'Tapzens gets a fresh new look', text: 'A brand-new light theme, a redesigned home page, richer category and tag pages and a faster play screen. Every corner of the portal was rebuilt to be quicker, cleaner and easier on the eyes.', href: '/about.html' },
+    { date: '2026-08-28', tag: 'Site Update', title: 'Zupilo gets a fresh new look', text: 'A brand-new light theme, a redesigned home page, richer category and tag pages and a faster play screen. Every corner of the portal was rebuilt to be quicker, cleaner and easier on the eyes.', href: '/about.html' },
     { date: '2026-08-22', tag: 'Site Update', title: 'All Tags: browse the catalogue A to Z', text: 'The new All Tags page groups every tag alphabetically, so you can hop from "match-3" to "relaxing" in one click and discover whole corners of the arcade you hadn\'t tried yet.', href: '/tags.html' },
     { date: '2026-08-15', tag: 'Featured', title: 'Featured lineup: six picks for August', text: 'Puzzle Yarn Fun, Water Sort, Chroma Jam, Hunter: Evolve Uprising, Bubble Safari and Block Puzzle: Save Girl headline this month\'s featured rail — hand-picked for quick sessions and lazy Sundays alike.', href: '/#featured' },
     { date: '2026-08-05', tag: 'Site Update', title: 'A play screen built for focus', text: 'The in-game bar got a frosted-glass makeover, and every game now loads in a perfectly centred stage — portrait or landscape — on desktop and mobile alike.', href: '/about.html' },
@@ -979,14 +846,14 @@ const tagsBody = (() => {
   }).join('\n');
   return `
 <h1 class="static-h1">All Tags</h1>
-<p class="static-lead">Every tag on Tapzens, A to Z — jump straight to the kind of games you love.</p>
+<p class="static-lead">Every tag on Zupilo, A to Z — jump straight to the kind of games you love.</p>
 <div class="az-rail">${rail}</div>
 ${blocks}
 `;
 })();
 const privacyBody = `
 <h1 class="static-h1">Privacy Policy</h1>
-<p class="static-lead">Last updated: September 28, 2026. Tapzens is built to need as little of your data as possible — this page explains exactly what we collect, which third parties are involved, and the choices you have.</p>
+<p class="static-lead">Last updated: September 28, 2026. Zupilo is built to need as little of your data as possible — this page explains exactly what we collect, which third parties are involved, and the choices you have.</p>
 <div class="tldr">
   <b class="h">Quick summary</b>
   <ul>
@@ -1018,7 +885,7 @@ const privacyBody = `
   </ol>
 </div>
 <h2 id="p-1">1. Introduction</h2>
-<p>Tapzens ("we", "us") operates tapzens.com, a free portal of browser games. This policy explains what information is collected when you use the site, where it lives, and the choices you have. We keep it in plain language on purpose — if anything is unclear, email us and we will happily explain.</p>
+<p>Zupilo ("we", "us") operates www.zupilo.net, a free portal of browser games. This policy explains what information is collected when you use the site, where it lives, and the choices you have. We keep it in plain language on purpose — if anything is unclear, email us and we will happily explain.</p>
 <h2 id="p-2">2. What we never collect</h2>
 <ul>
   <li>We do not require registration, so we never collect names, emails, passwords or payment details.</li>
@@ -1035,7 +902,7 @@ const privacyBody = `
 </ul>
 <p>Every cookie is inspectable and removable from your browser settings, and clearing site data removes ours completely.</p>
 <h2 id="consent">5. Advertising &amp; your consent</h2>
-<p>Tapzens is free because of advertising. We use the <b>Google certified consent management platform</b> (Google's own CMP) to collect and honour ad-privacy consent.</p>
+<p>Zupilo is free because of advertising. We use the <b>Google certified consent management platform</b> (Google's own CMP) to collect and honour ad-privacy consent.</p>
 <ul>
   <li><b>EEA and UK visitors:</b> no personalised advertising cookies are used before you make a choice. The consent message appears first, and your decision decides whether ads are personalised, non-personalised, or unmeasured.</li>
   <li><b>Everyone, everywhere:</b> you can change your mind later. Use <a href="#consent" data-consent-manage>Manage consent</a> in the footer, or open any page with <code>?showconsent=1</code> appended to the address.</li>
@@ -1091,9 +958,9 @@ const privacyBody = `
   <li>Advertising data is used by Google to keep the site free; we do not receive or resell it.</li>
 </ul>
 <h2 id="p-9">9. Third-party links &amp; content</h2>
-<p>Some pages link to external sites (for example, app store listings). Once you leave tapzens.com, the privacy practices of those sites apply. We encourage you to read their policies.</p>
+<p>Some pages link to external sites (for example, app store listings). Once you leave www.zupilo.net, the privacy practices of those sites apply. We encourage you to read their policies.</p>
 <h2 id="p-10">10. Audience &amp; children's privacy</h2>
-<p>Tapzens is a <b>general-audience</b> site designed for players aged 13 and over. It is <b>not directed at children under 13</b>, we do not target advertising at children, and we do not knowingly collect personal information from anyone, including children.</p>
+<p>Zupilo is a <b>general-audience</b> site designed for players aged 13 and over. It is <b>not directed at children under 13</b>, we do not target advertising at children, and we do not knowingly collect personal information from anyone, including children.</p>
 <p>Because we rely on advertising, some content on the site may be personalised based on browsing signals; that is why we describe our audience honestly rather than claiming to be a children's site. Parents who believe their child's information has reached us through an ad provider can ask us to help, and can use <a href="#consent" data-consent-manage>Manage consent</a> on this device to turn personalisation off.</p>
 <h2 id="p-11">11. Data security</h2>
 <p>The site is served over HTTPS, and because we hold essentially no personal data, there is essentially no personal data to breach. Game progress and favorites exist only in your own browser.</p>
@@ -1116,7 +983,7 @@ const termsBody = `
 <div class="tldr">
   <b class="h">Quick summary</b>
   <ul>
-    <li>Tapzens is free for personal, non-commercial use — play as much as you like.</li>
+    <li>Zupilo is free for personal, non-commercial use — play as much as you like.</li>
     <li>Don't attack, scrape at scale, or reverse-engineer the games.</li>
     <li>Games and artwork belong to their respective owners; you get a license to play, not to redistribute.</li>
     <li>The service is provided "as is" — we can't promise it will never hiccup.</li>
@@ -1128,7 +995,7 @@ const termsBody = `
     <li><a href="#t-1">1. Accepting these terms</a></li>
     <li><a href="#t-2">2. The service</a></li>
     <li><a href="#t-3">3. Eligibility</a></li>
-    <li><a href="#t-4">4. Your license to use Tapzens</a></li>
+    <li><a href="#t-4">4. Your license to use Zupilo</a></li>
     <li><a href="#t-5">5. User conduct</a></li>
     <li><a href="#t-6">6. Intellectual property</a></li>
     <li><a href="#t-7">7. Third-party content &amp; links</a></li>
@@ -1143,12 +1010,12 @@ const termsBody = `
   </ol>
 </div>
 <h2 id="t-1">1. Accepting these terms</h2>
-<p>By accessing or using tapzens.com (the "Service"), you agree to be bound by these Terms of Service and our <a href="/privacy-policy.html">Privacy Policy</a>. If you do not agree, please do not use the Service.</p>
+<p>By accessing or using www.zupilo.net (the "Service"), you agree to be bound by these Terms of Service and our <a href="/privacy-policy.html">Privacy Policy</a>. If you do not agree, please do not use the Service.</p>
 <h2 id="t-2">2. The service</h2>
-<p>Tapzens provides free, browser-based games and related editorial content. The Service is provided free of charge for personal, non-commercial use.</p>
+<p>Zupilo provides free, browser-based games and related editorial content. The Service is provided free of charge for personal, non-commercial use.</p>
 <h2 id="t-3">3. Eligibility</h2>
 <p>The Service is open to everyone and no account is required. If you are a minor, please use the site with a parent or guardian's awareness, in line with the guidance of your local jurisdiction.</p>
-<h2 id="t-4">4. Your license to use Tapzens</h2>
+<h2 id="t-4">4. Your license to use Zupilo</h2>
 <p>We grant you a limited, non-exclusive, non-transferable, revocable license to access and use the Service for personal entertainment. This license does not include any right to resell, redistribute or publicly perform the content.</p>
 <h2 id="t-5">5. User conduct</h2>
 <p>You agree not to:</p>
@@ -1160,7 +1027,7 @@ const termsBody = `
   <li>use the Service for any unlawful purpose or to transmit malicious code.</li>
 </ul>
 <h2 id="t-6">6. Intellectual property</h2>
-<p>Games, artwork, trademarks and other content remain the property of their respective owners. The Tapzens name, logo and site design are our property. Content is licensed to you solely for personal play and browsing on this site.</p>
+<p>Games, artwork, trademarks and other content remain the property of their respective owners. The Zupilo name, logo and site design are our property. Content is licensed to you solely for personal play and browsing on this site.</p>
 <h2 id="t-7">7. Third-party content &amp; links</h2>
 <p>Some pages link to external services (such as app store listings). We are not responsible for their content, availability or practices; linking does not imply endorsement.</p>
 <h2 id="t-8">8. Your local data</h2>
@@ -1168,13 +1035,13 @@ const termsBody = `
 <h2 id="t-9">9. Disclaimer of warranties</h2>
 <p>To the maximum extent permitted by law, the Service is provided "as is" and "as available", and we disclaim all implied warranties, including merchantability, fitness for a particular purpose and non-infringement. We do not guarantee uninterrupted or error-free service.</p>
 <h2 id="t-10">10. Limitation of liability</h2>
-<p>To the maximum extent permitted by law, Tapzens shall not be liable for any indirect, incidental, special or consequential damages arising from your use of the Service, including loss of data or game progress stored locally in your browser.</p>
+<p>To the maximum extent permitted by law, Zupilo shall not be liable for any indirect, incidental, special or consequential damages arising from your use of the Service, including loss of data or game progress stored locally in your browser.</p>
 <h2 id="t-11">11. Indemnification</h2>
-<p>You agree to indemnify and hold Tapzens harmless from claims arising out of your breach of these terms or your misuse of the Service.</p>
+<p>You agree to indemnify and hold Zupilo harmless from claims arising out of your breach of these terms or your misuse of the Service.</p>
 <h2 id="t-12">12. Suspension &amp; termination</h2>
 <p>We may modify, suspend or discontinue any part of the Service at any time, and may block access from addresses that abuse the Service, without liability.</p>
 <h2 id="t-13">13. Governing law</h2>
-<p>These terms are governed by the laws of the jurisdiction in which the Tapzens operator is established, without regard to conflict-of-law rules.</p>
+<p>These terms are governed by the laws of the jurisdiction in which the Zupilo operator is established, without regard to conflict-of-law rules.</p>
 <h2 id="t-14">14. Changes to the terms</h2>
 <p>We may update these terms from time to time. The new version will be posted on this page with a fresh "last updated" date; continued use after changes constitutes acceptance.</p>
 <h2 id="t-15">15. Contact</h2>
@@ -1202,24 +1069,25 @@ const notFoundBody = `
 <p class="cta-mail">Email: <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a></p>
 `;
 function buildStaticPages() {
-  buildStaticPage({ slug: 'about', title: 'About Us — Tapzens', desc: 'About Tapzens, a free online games portal on a mission to make casual games effortless to play on any device.', h1: 'About Us', body: aboutBody, navActive: 'about' });
-  buildStaticPage({ slug: 'job', title: 'Careers — Tapzens', desc: 'Join Tapzens and help build the fastest, friendliest place to play casual HTML5 games. See open roles, benefits and how we hire.', h1: 'Careers', body: jobBody, faq: [
+  buildStaticPage({ slug: 'about', title: 'About Us — Zupilo', desc: 'About Zupilo, a free online games portal on a mission to make casual games effortless to play on any device.', h1: 'About Us', body: aboutBody, navActive: 'about' });
+  buildStaticPage({ slug: 'job', title: 'Careers — Zupilo', desc: 'Join Zupilo and help build the fastest, friendliest place to play casual HTML5 games. See open roles, benefits and how we hire.', h1: 'Careers', body: jobBody, faq: [
     { q: 'Where can I work from?', a: 'Anywhere with reliable internet. We just ask for a few hours of overlap with our core working window (UTC+8) for team syncs.' },
     { q: 'Do you hire freelancers or part-time?', a: 'Yes — marketing and content roles often start as contract or part-time arrangements, with room to grow into full-time.' },
     { q: 'What language do we work in?', a: 'English is our working language across the team. Japanese fluency is a big plus for JP-market roles.' },
     { q: 'How long does the process take?', a: 'From application to offer is typically two weeks. We keep it lean — no take-home marathons, no endless interview rounds.' }
   ] });
-  buildStaticPage({ slug: 'partnerships', title: 'Partnerships — Tapzens', desc: 'Partner with Tapzens — for game developers, publishers, and brands looking to reach casual gamers worldwide.', h1: 'Partnerships', body: partnershipsBody });
-  buildStaticPage({ slug: 'contact', title: 'Contact Us — Tapzens', desc: 'Get in touch with Tapzens — email us for player support, feedback, game submissions, partnerships and privacy enquiries. We reply within one business day.', h1: 'Contact Us', body: contactBody });
-  buildStaticPage({ slug: 'news', title: 'News & Updates — Tapzens', desc: 'What\'s new on Tapzens — new game releases, features and announcements from the free online games portal.', h1: 'News', body: newsBody });
-  buildStaticPage({ slug: 'tags', title: 'All Tags — Tapzens', desc: 'Explore every game tag on Tapzens, A to Z — match-3, sort, relaxing, arcade and more. Jump straight to the games you love.', h1: 'All Tags', body: tagsBody });
+  buildStaticPage({ slug: 'partnerships', title: 'Partnerships — Zupilo', desc: 'Partner with Zupilo — for game developers, publishers, and brands looking to reach casual gamers worldwide.', h1: 'Partnerships', body: partnershipsBody });
+  buildStaticPage({ slug: 'contact', title: 'Contact Us — Zupilo', desc: 'Get in touch with Zupilo — email us for player support, feedback, game submissions, partnerships and privacy enquiries. We reply within one business day.', h1: 'Contact Us', body: contactBody });
+  buildStaticPage({ slug: 'news', title: 'News & Updates — Zupilo', desc: 'What\'s new on Zupilo — new game releases, features and announcements from the free online games portal.', h1: 'News', body: newsBody });
+  buildStaticPage({ slug: 'tags', title: 'All Tags — Zupilo', desc: 'Explore every game tag on Zupilo, A to Z — match-3, sort, relaxing, arcade and more. Jump straight to the games you love.', h1: 'All Tags', body: tagsBody });
   /* legal pages serve no ads, but they still carry the CMP so the "Manage consent"
      entrypoint in the footer can actually reopen the dialog from here */
-  buildStaticPage({ slug: 'privacy-policy', title: 'Privacy Policy — Tapzens', desc: 'How Tapzens handles privacy: no accounts, Google AdSense advertising behind a consent prompt, local-only game data, and how to change your ad-consent choice.', h1: 'Privacy Policy', body: privacyBody, ads: 'cmp' });
-  buildStaticPage({ slug: 'terms-of-service', title: 'Terms of Service — Tapzens', desc: 'The terms that govern your use of Tapzens, the free online games portal. Fair, simple and player-friendly.', h1: 'Terms of Service', body: termsBody, ads: 'cmp' });
+  buildStaticPage({ slug: 'privacy-policy', title: 'Privacy Policy — Zupilo', desc: 'How Zupilo handles privacy: no accounts, Google AdSense advertising behind a consent prompt, local-only game data, and how to change your ad-consent choice.', h1: 'Privacy Policy', body: privacyBody, ads: 'cmp' });
+  buildStaticPage({ slug: 'terms-of-service', title: 'Terms of Service — Zupilo', desc: 'The terms that govern your use of Zupilo, the free online games portal. Fair, simple and player-friendly.', h1: 'Terms of Service', body: termsBody, ads: 'cmp' });
   /* The 404 exists for the human who followed a bad link, and for a reviewer who goes looking
      for one — so it is deliberately noindex and kept out of the sitemap. */
-  buildStaticPage({ slug: '404', file: '404.html', title: 'Page not found — Tapzens', desc: 'That page is not on tapzens.com. Get back to the game catalogue, the categories or the tag index.', h1: 'Page not found', body: notFoundBody, robots: 'noindex, follow' });
+  buildStaticPage({ slug: '404', file: '404.html', title: 'Page not found — Zupilo', desc: 'That page is not on www.zupilo.net. Get back to the game catalogue, the categories or the tag index.', h1: 'Page not found', body: notFoundBody, robots: 'noindex, follow' });
+  write('careers.html', redirectStub('/job.html'));
   console.log('9 static pages generated');
 }
 
@@ -1260,22 +1128,26 @@ function buildCategory(cat) {
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="googlebot" content="index, follow">
 ${HEAD_ICONS}
-<meta name="theme-color" content="#0B1020">
+<meta name="theme-color" content="#F5F6FA">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(SITE.name)}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="https://${esc(SITE.domain)}/assets/og.png">
-<meta name="twitter:card" content="summary">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Zupilo — free online games, instant good times">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(bcrumb)}</script>
 <script type="application/ld+json">${JSON.stringify(itemList)}</script>
 ${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/portal.css">
 </head>
 <body>
-${topbar('categories')}
-<main class="container">
+${topbar(cat.slug)}
+<main class="container" id="main-content" tabindex="-1">
   <nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">›</span><span class="cur">${esc(cat.name)} Games</span></nav>
   <section class="hero" style="margin-top:18px">
     <div>
@@ -1312,6 +1184,7 @@ ${topbar('categories')}
 ${footer()}
 ${bottomNav('')}
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/discovery.js" defer></script>
 </body>
 </html>`;
   write('c/' + cat.slug + '.html', html);
@@ -1353,22 +1226,26 @@ function buildTags() {
 <meta name="robots" content="${robotsMeta}">
 <meta name="googlebot" content="${robotsMeta}">
 ${HEAD_ICONS}
-<meta name="theme-color" content="#F6F5FB">
+<meta name="theme-color" content="#F5F6FA">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(SITE.name)}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${desc}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="https://${esc(SITE.domain)}/assets/og.png">
-<meta name="twitter:card" content="summary">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Zupilo — free online games, instant good times">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(bcrumb)}</script>
 <script type="application/ld+json">${JSON.stringify(itemList)}</script>
 ${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/portal.css">
 </head>
 <body>
 ${topbar('categories')}
-<main class="container">
+<main class="container" id="main-content" tabindex="-1">
   <nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">›</span><span class="cur">${esc(t.name)} Games</span></nav>
   <section class="hero" style="margin-top:18px">
     <div>
@@ -1396,6 +1273,7 @@ ${topbar('categories')}
 ${footer()}
 ${bottomNav('')}
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/discovery.js" defer></script>
 </body>
 </html>`;
     write('t/' + t.slug + '.html', html);
@@ -1443,22 +1321,26 @@ function buildGuides() {
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <meta name="googlebot" content="index, follow">
 ${HEAD_ICONS}
-<meta name="theme-color" content="#0B1020">
+<meta name="theme-color" content="#F5F6FA">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="${esc(SITE.name)}">
 <meta property="og:title" content="${esc(a.title)}">
 <meta property="og:description" content="${esc(a.desc)}">
 <meta property="og:url" content="${url}">
 <meta property="og:image" content="https://${esc(SITE.domain)}/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Zupilo — free online games, instant good times">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <script type="application/ld+json">${JSON.stringify(bcrumb)}</script>
 ${headMonetization()}
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/portal.css">
 </head>
 <body>
 ${topbar('')}
-<main class="container">
+<main class="container" id="main-content" tabindex="-1">
   <nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">›</span><a href="/guides.html">Guides</a><span class="sep">›</span><span class="cur">${esc(a.kicker)}</span></nav>
   <section class="static">
     <div class="prose">
@@ -1469,6 +1351,7 @@ ${articleBodyHtml(a)}
 ${footer()}
 ${bottomNav('')}
 <script src="/assets/js/app.js"></script>
+<script src="/assets/js/discovery.js" defer></script>
 </body>
 </html>`;
     write('guides/' + a.slug + '.html', html);
@@ -1489,24 +1372,36 @@ ${ARTICLES.map(a => `  <a href="/guides/${a.slug}.html"><em>${esc(a.kicker)} · 
   <li><a href="/c/action.html">Action games</a> — shooters, tanks and squad battles.</li>
   <li><a href="/c/arcade.html">Arcade games</a> — short, fast, score-chasing rounds.</li>
 </ul>`;
-  buildStaticPage({ slug: 'guides', title: 'Game Guides & Playing Tips — Tapzens', desc: 'In-depth guides to free browser games: sorting-puzzle strategy, match-3 move budgets, touch controls, and what actually happens on your device.', h1: 'Guides', body: hubBody });
+  buildStaticPage({ slug: 'guides', title: 'Game Guides & Playing Tips — Zupilo', desc: 'In-depth guides to free browser games: sorting-puzzle strategy, match-3 move budgets, touch controls, and what actually happens on your device.', h1: 'Guides', body: hubBody });
   console.log(`${ARTICLES.length} guide articles + guides.html generated`);
 }
 
 /* ---------- sitemap ---------- */
 function buildSitemap() {
   const today = new Date().toISOString().slice(0, 10);
-  const cats = data.categories || [];
-  const sp = ['about', 'job', 'partnerships', 'contact', 'news', 'guides', 'tags', 'privacy-policy', 'terms-of-service'];
-  const urls = [
-    `\n  <url><loc>https://${SITE.domain}/</loc><lastmod>${today}</lastmod><priority>1.0</priority></url>`,
-    ...ARTICLES.map(a => `\n  <url><loc>https://${SITE.domain}/guides/${a.slug}.html</loc><lastmod>${today}</lastmod><priority>0.8</priority></url>`),
-    ...cats.map(c => `\n  <url><loc>https://${SITE.domain}/c/${c.slug}.html</loc><lastmod>${today}</lastmod><priority>0.9</priority></url>`),
-    ...sp.map(s => `\n  <url><loc>https://${SITE.domain}/${s}.html</loc><lastmod>${today}</lastmod><priority>0.7</priority></url>`),
-    ...games.map(g => `\n  <url><loc>https://${SITE.domain}${detailUrl(g)}</loc><lastmod>${(g.publishedAt || today).slice(0, 10)}</lastmod><priority>0.8</priority></url>`),
-  ].join('');
-  write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}\n</urlset>\n`);
+  const pages = [
+    ['index.html', '/', '1.0'],
+    ...ARTICLES.map(a => [`guides/${a.slug}.html`, `/guides/${a.slug}.html`, '0.8']),
+    ...(data.categories || []).map(c => [`c/${c.slug}.html`, `/c/${c.slug}.html`, '0.9']),
+    ...['about', 'job', 'partnerships', 'contact', 'news', 'guides', 'tags', 'privacy-policy', 'terms-of-service'].map(s => [`${s}.html`, `/${s}.html`, '0.7']),
+    ...games.map(g => [`hyper-feed/${g.slug}/game.html`, detailUrl(g), '0.8'])
+  ];
+  const urls = pages.map(([file, path, priority]) => {
+    const url = `https://${SITE.domain}${path}`;
+    const lastmod = changedPages.has(file) ? today : previousDates.get(url) || today;
+    return `  <url><loc>${url}</loc><lastmod>${lastmod}</lastmod><priority>${priority}</priority></url>`;
+  }).join('\n');
+  write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
   console.log('sitemap.xml generated');
+}
+
+function buildSiteMetadata() {
+  write('robots.txt', `User-agent: *
+Allow: /
+
+Sitemap: https://${SITE.domain}/sitemap.xml
+`);
+  write('site.webmanifest', JSON.stringify({ name: SITE.name + ' — Free Online Games', short_name: SITE.name, description: SITE.tagline, start_url: '/', scope: '/', display: 'standalone', orientation: 'any', background_color: '#F5F6FA', theme_color: '#6254E8', icons: [{ src: '/assets/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' }, { src: '/assets/logo.png', sizes: '512x512', type: 'image/png', purpose: 'any' }] }, null, 2) + '\n');
 }
 
 /* ---------- compliance audit (read-only: flags trackers, never edits any file) ----------
@@ -1624,6 +1519,17 @@ function genVercelConfig() {
   const cfg = existsSync(dist(FILE)) ? JSON.parse(readFileSync(dist(FILE), 'utf8')) : {};
   cfg.rewrites = cfg.rewrites || [];
   cfg.headers = cfg.headers || [];
+  const legacyRoute = '/g/:slug.html';
+  cfg.redirects = (cfg.redirects || []).filter(o => o.source !== legacyRoute);
+  cfg.redirects.push({ source: legacyRoute, destination: '/hyper-feed/:slug/game.html', permanent: true });
+  cfg.redirects = cfg.redirects.filter(o => o.source !== '/index.html' && !o.has?.some(h => h.type === 'host' && h.value === 'zupilo.net'));
+  cfg.redirects.unshift({ source: '/:path*', has: [{ type: 'host', value: 'zupilo.net' }], destination: 'https://www.zupilo.net/:path*', permanent: true });
+  cfg.redirects.push({ source: '/index.html', destination: '/', permanent: true });
+  cfg.redirects = cfg.redirects.filter(o => o.source !== '/careers.html');
+  cfg.redirects.push({ source: '/careers.html', destination: '/job.html', permanent: true });
+  const rawEntry = '/hyper-feed/:slug/index.html';
+  cfg.headers = cfg.headers.filter(o => o.source !== rawEntry);
+  cfg.headers.push({ source: rawEntry, headers: [{ key: 'X-Robots-Tag', value: 'noindex, follow' }] });
   const isChannel = (o) => !!o && typeof o.source === 'string' && !!prefixes && prefixes.some((p) => o.source === `/${p}/:slug/:path*`);
   cfg.rewrites = cfg.rewrites.filter((o) => !isChannel(o));
   cfg.headers = cfg.headers.filter((o) => !isChannel(o));
@@ -1701,12 +1607,14 @@ copyAvatars();
 buildHome();
 buildDetails();
 installGameShell();
+buildLegacyPlayerTags();
 versionStampAssets();
 buildCategories();
 buildTags();
 buildStaticPages();
 buildGuides();
 buildSitemap();
+buildSiteMetadata();
 genVercelConfig();
 auditTrackers();
 console.log('Build complete.');

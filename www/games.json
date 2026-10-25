@@ -1,9 +1,9 @@
 {
   "site": {
-    "name": "Tapzens",
-    "domain": "tapzens.com",
-    "tagline": "Play free online games — fast, fun, on any device.",
-    "ga": "G-06KHTP8DZZ",
+    "name": "Zupilo",
+    "domain": "www.zupilo.net",
+    "tagline": "Good games. Great breaks. Play free online, on any device.",
+    "ga": "G-XJVV1PM7D5",
     "adsense": "ca-pub-3338178325446150",
     "consent": {
       "enabled": true,
@@ -55,7 +55,7 @@
       "featured": false,
       "popularWeight": 1000,
       "publishedAt": "2026-10-09",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is LihuaDoku: Cat Logic Puzzle free?",
@@ -105,7 +105,7 @@
       "featured": false,
       "popularWeight": 980,
       "publishedAt": "2026-10-08",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Mahjong Valley free?",
@@ -149,7 +149,7 @@
       "featured": false,
       "popularWeight": 960,
       "publishedAt": "2026-08-24",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Wizard Sort free?",
@@ -192,7 +192,7 @@
       "featured": false,
       "popularWeight": 940,
       "publishedAt": "2026-08-25",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Royal Matcher free?",
@@ -236,7 +236,7 @@
       "featured": true,
       "popularWeight": 920,
       "publishedAt": "2026-08-10",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Chroma Jam free?",
@@ -281,7 +281,7 @@
       "featured": true,
       "popularWeight": 900,
       "publishedAt": "2026-08-12",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Puzzle Yarn Fun free?",
@@ -326,7 +326,7 @@
       "featured": true,
       "popularWeight": 880,
       "publishedAt": "2026-07-28",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Bubble Safari free?",
@@ -371,7 +371,7 @@
       "featured": true,
       "popularWeight": 860,
       "publishedAt": "2026-08-15",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Water Sort free?",
@@ -416,7 +416,7 @@
       "featured": false,
       "popularWeight": 840,
       "publishedAt": "2026-10-08",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Nuts Snake free?",
@@ -459,7 +459,7 @@
       "featured": true,
       "popularWeight": 820,
       "publishedAt": "2026-08-08",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Hunter: Evolve Uprising free?",
@@ -504,7 +504,7 @@
       "featured": false,
       "popularWeight": 800,
       "publishedAt": "2026-08-05",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Ace Strike free?",
@@ -547,7 +547,7 @@
       "featured": false,
       "popularWeight": 780,
       "publishedAt": "2026-08-02",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Smash Blocks free?",
@@ -590,7 +590,7 @@
       "featured": false,
       "popularWeight": 760,
       "publishedAt": "2026-08-27",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Spin Screw Jam free?",
@@ -633,7 +633,7 @@
       "featured": false,
       "popularWeight": 740,
       "publishedAt": "2026-08-28",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Puzzle Hex free?",
@@ -676,7 +676,7 @@
       "featured": true,
       "popularWeight": 720,
       "publishedAt": "2026-07-20",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Block Puzzle: Save Girl free?",
@@ -721,7 +721,7 @@
       "featured": false,
       "popularWeight": 700,
       "publishedAt": "2026-07-15",
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "faq": [
         {
           "q": "Is Arrow Maze Solve free?",
@@ -747,7 +747,7 @@
       "splash": null,
       "orientation": "portrait",
       "featured": false,
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "publishedAt": "2026-08-29",
       "slug": "zombiedown",
       "title": "Zombie Down",
@@ -791,7 +791,7 @@
       "splash": null,
       "orientation": "portrait",
       "featured": false,
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "publishedAt": "2026-08-29",
       "slug": "tankera",
       "title": "Tank Era",
@@ -835,7 +835,7 @@
       "splash": null,
       "orientation": "portrait",
       "featured": false,
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "publishedAt": "2026-08-29",
       "slug": "shiftdashreac",
       "title": "Shift Dash Reac",
@@ -880,7 +880,7 @@
       "splash": null,
       "orientation": "portrait",
       "featured": false,
-      "developer": "Tapzens",
+      "developer": "Zupilo",
       "publishedAt": "2026-08-29",
       "slug": "satisfyingstack",
       "title": "Satisfying Stack",

@@ -249,6 +249,15 @@
       ]
     },
     {
+      "source": "/hyper-feed/:slug/index.html",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
       "source": "/browser-push/:slug/:path*",
       "headers": [
         {
@@ -697,6 +706,34 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "zupilo.net"
+        }
+      ],
+      "destination": "https://www.zupilo.net/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/g/:slug.html",
+      "destination": "/hyper-feed/:slug/game.html",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/careers.html",
+      "destination": "/job.html",
+      "permanent": true
     }
   ]
 }

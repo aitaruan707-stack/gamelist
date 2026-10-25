@@ -65,7 +65,7 @@
     .catch(function () { fail('Could not load game data. Please check your connection.'); });
 
   function start(g, games, data) {
-    document.title = 'Play ' + g.title + ' — Tapzens';
+    document.title = 'Play ' + g.title + ' — Zupilo';
     if (elTitle) elTitle.textContent = g.title;
     if (elCrumb) elCrumb.textContent = g.title;
     if (elBack) { elBack.setAttribute('href', '/hyper-feed/' + g.slug + '/game.html'); elBack.setAttribute('title', 'Back to ' + g.title); elBack.setAttribute('aria-label', 'Back to ' + g.title); }

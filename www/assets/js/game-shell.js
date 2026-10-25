@@ -112,12 +112,12 @@
 
     var name = document.createElement('span');
     name.id = 'tz-title';
-    name.textContent = title || 'Tapzens';
+    name.textContent = title || 'Zupilo';
 
     var home = document.createElement('a');
     home.id = 'tz-home';
     home.href = '/';
-    home.textContent = 'tapzens.com';
+    home.textContent = 'zupilo.net';
 
     el.appendChild(back);
     el.appendChild(name);
